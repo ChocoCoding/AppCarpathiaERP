@@ -1,0 +1,15 @@
+
+¡
+java:S2142."^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(”ı¾8ìÌÕª™2J$e698bf22-873a-4e18-8bb9-ff1e8d2c50ca
+›
+java:S1128"SRemove this unused import 'org.springframework.beans.factory.annotation.Autowired'.(¡¸Îùÿÿÿÿ8ÎÊÜª™2J$042730d5-e7b6-406b-b4ab-7250858119ef
+ƒ
+java:S1128"@Remove this unused import 'org.springframework.http.HttpEntity'.(ÂéÓ8‹öÛª™2J$77ee708a-b9c9-4797-91b3-88b5ffeb2402
+ˆ
+java:S1128"@Remove this unused import 'org.springframework.http.HttpMethod'.(Ê¨Ä¡øÿÿÿÿ8‹öÛª™2J$49c71eb5-7630-4c4b-ba68-cfa214bdbf56
+Œ
+java:S1128"DRemove this unused import 'org.springframework.http.ResponseEntity'.(¶¯ø¦úÿÿÿÿ8‹öÛª™2J$552e9916-5166-450d-a581-f9b52866c730
+
+java:S1128"HRemove this unused import 'org.springframework.web.client.RestTemplate'.(Îö¼Şûÿÿÿÿ8‹öÛª™2J$8f84f790-f640-4e1d-b92e-9a69fd4467c4
+~
+java:S1128"6Remove this unused import 'java.net.http.HttpHeaders'.(Ş—Š™ûÿÿÿÿ8ŒöÛª™2J$df67d12d-8c09-4eb0-8c99-94761d42b8f6

@@ -1,0 +1,26 @@
+
+…
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8ç›¸©™2J$48ec1a64-3aeb-47a0-98c5-9dcc33e1cfe7
+…
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8ç›¸©™2J$00ba2598-5327-4d71-92d9-c9af252ffac8
+…
+java:S6813!"BRemove this field injection and use constructor injection instead.(êæÄŞ8ç›¸©™2J$68a0988b-a0b3-4800-8c2e-6bbd67220c9e
+…
+java:S6813$"BRemove this field injection and use constructor injection instead.(êæÄŞ8ª÷Ô©™2J$dda72cff-420e-46ec-8c00-33b497391f77
+•
+java:S6204,"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8ê›¸©™2J$8e87eaf0-5ebf-4e3c-afb4-63ce49208837
+•	java:S100L"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(·Èé¼ÿÿÿÿÿ8ğô£ª™2J$e160a22d-f756-4f96-b326-7db787538cf8
+z
+java:S1135K"2Complete the task associated to this TODO comment.(ßéÒÑüÿÿÿÿ8“ «ª™2J$64c38b4e-ab4e-4cdf-9bc2-763a529c3bd5
+
+java:S1612s">Replace this lambda with method reference 'Rol::getNombreRol'.(œëŠ¦8ñ›¸©™2J$6dac90fc-9be2-4f48-a348-7a9dacf45619
+—
+java:S1128"TRemove this unused import 'com.app.microservicio.usuarios.config.CustomUserDetails'.(™Ÿ¥“8òü™ª™2J$5dd0bbe7-4fc7-4f2f-a746-6454d1658e5a
+™
+java:S1128"VRemove this unused import 'org.apache.tomcat.util.net.openssl.ciphers.Authentication'.(Í÷˜­8ô…™ª™2J$00f11b39-4b94-4aa6-a0c2-b63858a0b7c4
+´
+java:S1128"lRemove this unused import 'org.springframework.security.authentication.UsernamePasswordAuthenticationToken'.(ÖÆ„Ùüÿÿÿÿ8òü™ª™2J$43a79b32-159c-4ae4-83d1-37b0246db2bd
+Ÿ
+java:S1128"\Remove this unused import 'org.springframework.security.core.context.SecurityContextHolder'.(ŒÄæë8òü™ª™2J$c3e46d83-ddd6-4b6f-8751-ffc0c3ca6e3a
+™
+java:S1128"VRemove this unused import 'org.springframework.security.core.userdetails.UserDetails'.(ÊÁ¥8òü™ª™2J$ef55cb36-482f-4064-862e-c8111da64cd3
