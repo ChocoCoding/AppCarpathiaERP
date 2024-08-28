@@ -1,18 +1,13 @@
 package com.app.microservicio.usuarios.services;
 
 import com.app.microservicio.usuarios.DTO.UsuarioDTO;
-import com.app.microservicio.usuarios.config.CustomUserDetails;
 import com.app.microservicio.usuarios.entities.Rol;
 import com.app.microservicio.usuarios.entities.Usuario;
 import com.app.microservicio.usuarios.repository.RolRepository;
 import com.app.microservicio.usuarios.repository.UsuarioRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

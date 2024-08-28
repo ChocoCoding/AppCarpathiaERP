@@ -1,0 +1,6 @@
+
+š	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÁŠ¨ ùÿÿÿÿJ$2e94d770-16c5-4d00-8135-91af414115be
+	java:S116"VRename this field "n_operacion" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¡úíóøÿÿÿÿ8ïœ„Ó™2J$2f4a5b39-5bfd-4ce2-b692-fdbfa4493dde
+x	java:S116"WRename this field "n_contenedor" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(«îÏÒÿÿÿÿÿ8»·„Ó™2
+ƒ
+java:S1128";Remove this unused import 'lombok.RequiredArgsConstructor'.(ÑØúøÿÿÿÿ8ÎÈñÒ™2J$a69ccb1f-3244-4f89-be8b-986e1dba48a4

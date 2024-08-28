@@ -1,0 +1,11 @@
+
+…
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8‹ü™Ö™2J$feb6c3ce-43ad-41b5-bb66-391a33144aec
+…
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8‹ü™Ö™2J$878d4a19-f9bf-4238-8b73-df8a9ae34275
+•
+java:S6204"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8ü™Ö™2J$be4dd78a-96c3-4aee-a2f0-4ead7e2e0a3c
+•
+java:S6204#"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8²È›Ö™2J$cc76ecc1-c87d-4730-8200-aab05f1545e3
+t
+java:S1128"RRemove this unused import 'com.app.microservicio.compras.DTO.EliminarPorLineaDTO'.(ÒØ¡¸øÿÿÿÿ8æ±´Ö™2

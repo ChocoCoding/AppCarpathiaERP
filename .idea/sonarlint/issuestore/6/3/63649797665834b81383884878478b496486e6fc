@@ -1,5 +1,5 @@
 
 q
-java:S1948")Make "usuario" transient or serializable.(¥ÆýÈýÿÿÿÿ8—³€ª™2J$4801e4bf-b609-4c0b-a7f4-26280849bb14
+java:S1948")Make "usuario" transient or serializable.(¥ÆýÈýÿÿÿÿ8—³€ª™2J$53448f92-bf28-4ae3-9c10-06c2b4c55680
 •
-java:S6204"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8µè€ª™2J$22b62451-7b2c-492c-b08e-35476bb25cde
+java:S6204"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8µè€ª™2J$ff884461-fa7c-4d6d-a105-42d7757b0bfb
