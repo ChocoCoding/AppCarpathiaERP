@@ -1,0 +1,28 @@
+header {
+    background-color: #007BFF; /* Color azul */
+    padding: 20px;
+    color: white;
+    text-align: center;
+    position: relative;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+header button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+header button:hover {
+    background-color: #003d80;
+}

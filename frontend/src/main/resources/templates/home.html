@@ -2,9 +2,22 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="/css/estiloshome.css">
 </head>
 <body>
-<h2>Welcome!</h2>
-<p>You are now logged in.</p>
+<header>
+    <h1>Welcome to Home Page</h1>
+    <button onclick="logout()">Logout</button>
+</header>
+<div>
+    <p>This is your home page. You are successfully logged in!</p>
+</div>
+
+<script>
+        function logout() {
+            // Redirige a la ruta de logout
+            window.location.href = "/logout";
+        }
+    </script>
 </body>
 </html>

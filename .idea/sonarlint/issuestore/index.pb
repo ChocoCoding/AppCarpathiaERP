@@ -39,3 +39,5 @@ Uusuarios/src/main/java/com/app/microservicio/usuarios/controllers/AuthControlle
 Wusuarios/src/main/java/com/app/microservicio/usuarios/DTO/AuthenticationRequestDTO.java,3\3\334ce62db014c2e096c08fc30901a54a7e901771
 ˆ
 Xusuarios/src/main/java/com/app/microservicio/usuarios/DTO/AuthenticationResponseDTO.java,b\1\b14a4922576cefc8a5223c86881f85b142a4c85e
+r
+Bfrontend/src/main/java/com/app/frontend/config/SecurityConfig.java,5\e\5e920436f5b5f3ec176fcdae786efa2f87b4312a

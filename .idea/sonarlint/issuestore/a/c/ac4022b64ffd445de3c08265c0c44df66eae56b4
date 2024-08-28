@@ -1,7 +1,7 @@
 
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8Óù¶¬™2J$45255158-1e29-42f7-a3f3-ca242f8a94a5
-m	java:S106"+Replace this use of System.out by a logger.(ªÉÛ¦8–¹Â¬™2J$31571e97-8701-4a93-ad16-f2372a712a94
-m	java:S106"+Replace this use of System.out by a logger.(Ö¬ÿ¶8–¹Â¬™2J$d41ce2ce-fcad-4ca2-b4d0-1f6a6a6dc1e0
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8Óù¶¬™2J$1e4953d8-b76a-4314-b923-0f2f7cc864a4
+m	java:S106"+Replace this use of System.out by a logger.(ªÉÛ¦8–¹Â¬™2J$91f3fe63-f5fc-443b-8aa6-a3dfb64814e7
+m	java:S106"+Replace this use of System.out by a logger.(Ö¬ÿ¶8–¹Â¬™2J$cddb2429-03a7-4bda-b35c-df9eac402ff8
 w
-java:S1128"4Remove this unused import 'org.slf4j.LoggerFactory'.(–ÿÚÞ8£‚¹¬™2J$710800bb-7649-404c-a34c-5f7c544ffa24
+java:S1128"4Remove this unused import 'org.slf4j.LoggerFactory'.(–ÿÚÞ8Ï¥‰Å™2J$209c683d-9f23-457c-a962-5fd0cd12c69b

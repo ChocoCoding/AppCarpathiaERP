@@ -27,8 +27,8 @@ public class SecurityConfig {
                         .anyRequest().authenticated()  // Todas las demás rutas requieren autenticación
                 )
                 .httpBasic(withDefaults())
-                .formLogin(form -> form.disable());;
 
+;
 
         return http.build();
     }
