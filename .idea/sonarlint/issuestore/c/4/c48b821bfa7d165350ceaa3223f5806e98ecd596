@@ -1,3 +1,8 @@
 
+>
+java:S1116"Remove this empty statement.(ó³¡âıÿÿÿÿ8ßÊ¿Ã™2
+Ä
+java:S1128"€Remove this unused import 'org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder'.(£ØÓ‰8œÑ¼Ã™2J$c10fe3f3-4821-4ab6-a304-e10ab42bd475
 µ
-java:S1128"rRemove this unused import 'org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer'.(Ç¼Î8±Š ¦™2J$ab7f4ee9-2a07-42b0-be4d-ace7fb91f8bd
+java:S1128
+"rRemove this unused import 'org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer'.(Ç¼Î8œÑ¼Ã™2J$e40ac0d8-2571-4cfb-86fa-80568ede7ef8

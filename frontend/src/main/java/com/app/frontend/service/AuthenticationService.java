@@ -20,9 +20,8 @@ public class AuthenticationService {
 
     private final HttpClient httpClient = HttpClient.newHttpClient();
 
-
-
     public boolean authenticateWithBackend(String username, String password) {
+
         String url = "http://localhost:8701/api/authenticate"; // URL del backend para autenticación
 
         // Crear encabezado de autenticación básica
@@ -33,13 +32,15 @@ public class AuthenticationService {
         // Construir la solicitud HTTP
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
-                .header("Authorization", authHeader)
-                .POST(HttpRequest.BodyPublishers.noBody())
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString("{\"username\":\"" + username + "\",\"contrasena\":\"" + password + "\"}"))
                 .build();
 
         try {
-            // Enviar la solicitud y obtener la respuesta
+            System.out.println("Sending request to backend with Authorization header: " + authHeader);
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println("Received response with status code: " + response.statusCode());
+            System.out.println("Response body: " + response.body());
 
             // Verificar si la autenticación fue exitosa
             return response.statusCode() >= 200 && response.statusCode() < 300;

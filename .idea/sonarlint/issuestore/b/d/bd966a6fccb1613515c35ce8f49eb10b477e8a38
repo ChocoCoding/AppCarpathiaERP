@@ -1,0 +1,8 @@
+
+…
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8Íô‘«™2J$ae91b691-9d5d-4556-b280-88c2ac840aee
+G	java:S106"+Replace this use of System.out by a logger.(¤´³8¥ğÏÂ™2
+ˆ
+java:S1128"@Remove this unused import 'org.springframework.http.HttpStatus'.(íŸ¤Šúÿÿÿÿ8„¢ªÂ™2J$cbfa72df-cb9c-4285-b38c-45e200782dac
+‰
+java:S1128"ARemove this unused import 'javax.naming.AuthenticationException'.(†Ø¯øÿÿÿÿ8…¢ªÂ™2J$a9821b4b-5851-43e4-84cf-057999939b00

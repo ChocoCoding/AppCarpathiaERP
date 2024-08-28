@@ -1,9 +1,7 @@
 
-†
-java:S2583"CChange this condition so that it does not always evaluate to "true"(æé¹æ8ñžÈª™2J$81b41937-9eac-46f3-a30c-ad38efa3dbb2
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8‹”Ýª™2J$d459c63a-743a-4521-9734-7f739dbc9475
-|
-java:S3400*"9Remove this method and declare a constant for this value.(¸œ ’8¹ÍÇª™2J$f1b7a461-e481-4273-8f41-f067c121bdb0
-…
-java:S1172'"=Remove these unused method parameters "username", "password".(ëÉä‡üÿÿÿÿ8»ÍÇª™2J$60e4c05f-ad2c-41b8-ae50-868bc21ee5ee
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8Óù¶¬™2J$45255158-1e29-42f7-a3f3-ca242f8a94a5
+m	java:S106"+Replace this use of System.out by a logger.(ªÉÛ¦8–¹Â¬™2J$31571e97-8701-4a93-ad16-f2372a712a94
+m	java:S106"+Replace this use of System.out by a logger.(Ö¬ÿ¶8–¹Â¬™2J$d41ce2ce-fcad-4ca2-b4d0-1f6a6a6dc1e0
+w
+java:S1128"4Remove this unused import 'org.slf4j.LoggerFactory'.(–ÿÚÞ8£‚¹¬™2J$710800bb-7649-404c-a34c-5f7c544ffa24

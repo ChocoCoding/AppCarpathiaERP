@@ -1,15 +1,18 @@
 
 ¡
-java:S2142."^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(”ı¾8ìÌÕª™2J$e698bf22-873a-4e18-8bb9-ff1e8d2c50ca
+java:S2142/"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(”ı¾8®¼¬™2J$091243c8-10fd-457a-bc2e-c49e640e43da
+m	java:S106("+Replace this use of System.out by a logger.(ë°¸Ú8¯¼¬™2J$1bdcf3e3-00f2-4b68-a7f7-61ea023e957f
+m	java:S106*"+Replace this use of System.out by a logger.(ÿ†â‰8¯¼¬™2J$b0784e11-d708-4eb0-b625-5dac1e090d6a
+r	java:S106+"+Replace this use of System.out by a logger.(ï÷›Äşÿÿÿÿ8ôıš¬™2J$7b03e1bd-db19-4384-9416-43f9d216f77e
 ›
-java:S1128"SRemove this unused import 'org.springframework.beans.factory.annotation.Autowired'.(¡¸Îùÿÿÿÿ8ÎÊÜª™2J$042730d5-e7b6-406b-b4ab-7250858119ef
+java:S1128"SRemove this unused import 'org.springframework.beans.factory.annotation.Autowired'.(¡¸Îùÿÿÿÿ8ÎÊÜª™2J$c79bdc2d-c125-41a0-a67c-c9b79c9bd3d3
 ƒ
-java:S1128"@Remove this unused import 'org.springframework.http.HttpEntity'.(ÂéÓ8‹öÛª™2J$77ee708a-b9c9-4797-91b3-88b5ffeb2402
+java:S1128"@Remove this unused import 'org.springframework.http.HttpEntity'.(ÂéÓ8‹öÛª™2J$bb6cf75b-a7f6-4e29-9281-6a0261b7ff45
 ˆ
-java:S1128"@Remove this unused import 'org.springframework.http.HttpMethod'.(Ê¨Ä¡øÿÿÿÿ8‹öÛª™2J$49c71eb5-7630-4c4b-ba68-cfa214bdbf56
+java:S1128"@Remove this unused import 'org.springframework.http.HttpMethod'.(Ê¨Ä¡øÿÿÿÿ8‹öÛª™2J$b4310a5a-b9e8-4081-8cce-c6021275fee7
 Œ
-java:S1128"DRemove this unused import 'org.springframework.http.ResponseEntity'.(¶¯ø¦úÿÿÿÿ8‹öÛª™2J$552e9916-5166-450d-a581-f9b52866c730
+java:S1128"DRemove this unused import 'org.springframework.http.ResponseEntity'.(¶¯ø¦úÿÿÿÿ8‹öÛª™2J$a01997a2-63b3-4dfe-9305-e2d3135c8b69
 
-java:S1128"HRemove this unused import 'org.springframework.web.client.RestTemplate'.(Îö¼Şûÿÿÿÿ8‹öÛª™2J$8f84f790-f640-4e1d-b92e-9a69fd4467c4
+java:S1128"HRemove this unused import 'org.springframework.web.client.RestTemplate'.(Îö¼Şûÿÿÿÿ8‹öÛª™2J$6764c7c7-bc2b-46b3-83f7-7e5c43a2001e
 ~
-java:S1128"6Remove this unused import 'java.net.http.HttpHeaders'.(Ş—Š™ûÿÿÿÿ8ŒöÛª™2J$df67d12d-8c09-4eb0-8c99-94761d42b8f6
+java:S1128"6Remove this unused import 'java.net.http.HttpHeaders'.(Ş—Š™ûÿÿÿÿ8ŒöÛª™2J$394ffb39-b39a-4a9d-a235-ebeaf4d7d806

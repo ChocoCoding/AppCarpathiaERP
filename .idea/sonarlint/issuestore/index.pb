@@ -33,3 +33,9 @@ z
 Jfrontend/src/main/java/com/app/frontend/service/AuthenticationService.java,0\a\0ac7ba48f12d90fd12fbe9dee761f3dbc063a70e
 @
 usuarios/pom.xml,3\f\3fb81bfc28646eb3418745acd25b3436c26a7b99
+…
+Uusuarios/src/main/java/com/app/microservicio/usuarios/controllers/AuthController.java,b\d\bd966a6fccb1613515c35ce8f49eb10b477e8a38
+‡
+Wusuarios/src/main/java/com/app/microservicio/usuarios/DTO/AuthenticationRequestDTO.java,3\3\334ce62db014c2e096c08fc30901a54a7e901771
+ˆ
+Xusuarios/src/main/java/com/app/microservicio/usuarios/DTO/AuthenticationResponseDTO.java,b\1\b14a4922576cefc8a5223c86881f85b142a4c85e
