@@ -1,0 +1,6 @@
+
+•	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¨ŞÄ”J$dfe5ee1a-daac-4d3e-bfbe-45e42e228354
+–	java:S116"VRename this field "n_operacion" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¡úíóøÿÿÿÿJ$14d2e005-2588-49e6-b46c-32436f0b537f
+’	java:S116"WRename this field "n_fact_flete" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‘ºòJ$a21fe8c9-9f5f-4783-9ec0-a36bfee00d8f
+–	java:S116"[Rename this field "fecha_pago_flete" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(­üÖ÷J$52ddeb7d-aece-4b99-a97c-f27aac365f7a
+Š	java:S116"ORename this field "n_bl" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(·ÔúùJ$572056d9-a1a2-43ed-9cb6-7be7545401a5

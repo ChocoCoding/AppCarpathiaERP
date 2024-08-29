@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Módulo Compras</title>
+  <link rel="stylesheet" type="text/css" href="/css/estilosmodulos.css">
+</head>
+<body>
+<header>
+  <button class="back-button" onclick="goBack()">Volver Atrás</button>
+  <h1>Módulo de Compras</h1>
+  <button class="logout-button" onclick="logout()">Cerrar Sesión</button>
+</header>
+<div class="content-container">
+  <h2>Gestión de Pedidos de Compra</h2>
+  <div class="button-container">
+    <button onclick="window.location.href='/pedidos-compra'">Pedidos de Compra</button>
+    <button onclick="window.location.href='/lineas-pedido-compra'">Líneas Pedido de Compra</button>
+    <button onclick="window.location.href='/detalles-pedido-compra'">Detalles Pedidos de Compra</button>
+  </div>
+</div>
+
+<script>
+    function goBack() {
+        window.history.back(); // Volver a la página anterior
+    }
+
+    function logout() {
+        window.location.href = "/logout"; // Redirigir a la ruta de logout
+    }
+</script>
+</body>
+</html>
+

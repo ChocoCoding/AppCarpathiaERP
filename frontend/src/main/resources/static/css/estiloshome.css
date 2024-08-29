@@ -1,3 +1,4 @@
+/* Estilo del header */
 header {
     background-color: #007BFF; /* Color azul */
     padding: 20px;
@@ -25,4 +26,37 @@ header button {
 
 header button:hover {
     background-color: #003d80;
+}
+
+/* Estilo del contenedor principal */
+.content-container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+/* Estilo del contenedor de botones */
+.button-container {
+    margin-top: 30px;
+}
+
+.button-container button {
+    padding: 15px 30px;
+    margin: 10px;
+    font-size: 16px;
+    background-color: #28a745; /* Color verde */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button-container button:hover {
+    background-color: #218838; /* Color verde oscuro */
+}
+
+/* Estilo adicional para el mensaje de bienvenida */
+.content-container p {
+    font-size: 18px;
+    color: #333;
 }

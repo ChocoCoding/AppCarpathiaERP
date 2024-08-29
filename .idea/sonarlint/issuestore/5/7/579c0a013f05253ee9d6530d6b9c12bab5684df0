@@ -1,5 +1,8 @@
 
+ˆ	java:S112<"FDefine and throw a dedicated exception instead of using a generic one.(†¦İ½8Õë›ë™2J$256a6e64-0494-49c9-b53f-cc49b6f1da78
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8ş„ÆÑ™2J$fdd9f396-0b6a-4cf5-a1dd-0e4dbe13509d
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8ş„ÆÑ™2J$41a39454-1d5d-45f8-bd63-30a62546b026
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8ÿ„ÆÑ™2J$2dc159f7-bfc4-48a4-bfa9-01435951435f
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8ÿ„ÆÑ™2J$e0e4909e-0d19-4689-9492-d29dbee07f9c
+“
+java:S1128"PRemove this unused import 'com.app.microservicio.compras.entities.PedidoCompra'.(èŞÄÃ8Êœë™2J$2986354d-89d0-42d9-9877-c3cff2a0b142

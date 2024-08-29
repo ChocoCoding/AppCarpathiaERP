@@ -1,0 +1,7 @@
+
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¨ÞÄ”
+l	java:S116"RRename this field "n_linea" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(éñäÕÿÿÿÿÿ
+p	java:S116"VRename this field "n_operacion" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¡úíóøÿÿÿÿ
+q	java:S116"WRename this field "n_contenedor" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(«îÏÒÿÿÿÿÿ
+e	java:S116"QRename this field "p_neto" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³Õ¿h
+q	java:S116"WRename this field "valor_compra" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Úøó…øÿÿÿÿ

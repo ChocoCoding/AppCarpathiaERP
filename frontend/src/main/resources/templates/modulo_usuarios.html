@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Gestionar Usuarios</title>
+    <link rel="stylesheet" type="text/css" href="/css/estilosmodulo.css">
+</head>
+<body>
+<header>
+    <h1>Gestión de Usuarios</h1>
+    <button onclick="goBack()">Volver Atrás</button>
+    <button onclick="logout()">Cerrar Sesión</button>
+</header>
+<div class="content-container">
+    <p>Bienvenido al módulo de gestión de usuarios.</p>
+    <!-- Aquí puedes agregar más contenido relacionado con la gestión de usuarios -->
+</div>
+<script>
+    function logout() {
+        window.location.href = "/logout";
+    }
+</script>
+<script>
+    function goBack() {
+        window.history.back(); // Volver a la página anterior
+    }
+</script>
+</body>
+</html>

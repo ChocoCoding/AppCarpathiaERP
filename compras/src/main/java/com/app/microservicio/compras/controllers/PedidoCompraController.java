@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/compras/pedidos_compra")
+@CrossOrigin(origins = "http://localhost:8708")
 public class PedidoCompraController {
 
     @Autowired
@@ -34,7 +35,21 @@ public class PedidoCompraController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarPedidoCompra(@PathVariable Long id) {
-        pedidoCompraService.eliminarPedidoCompra(id);
-        return ResponseEntity.noContent().build();
+        boolean eliminado = pedidoCompraService.eliminarPedidoCompra(id);
+        if (eliminado) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PedidoCompraDTO> actualizarPedidoCompra(@PathVariable Long id, @RequestBody PedidoCompraDTO pedidoCompraDTO) {
+        PedidoCompraDTO actualizado = pedidoCompraService.actualizarPedidoCompra(id, pedidoCompraDTO);
+        if (actualizado != null) {
+            return ResponseEntity.ok(actualizado);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

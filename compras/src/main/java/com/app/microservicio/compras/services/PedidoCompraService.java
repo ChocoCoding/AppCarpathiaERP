@@ -39,13 +39,40 @@ public class PedidoCompraService {
     }
 
     @Transactional
-    public void eliminarPedidoCompra(Long id) {
-        // Eliminar las relaciones en la tabla usuario_roles
-        entityManager.createNativeQuery("DELETE FROM lineas_pedidos_compra WHERE id_pedido_compra = :id")
-                .setParameter("id", id)
-                .executeUpdate();
+    public boolean eliminarPedidoCompra(Long id) {
+        if (pedidoCompraRepository.existsById(id)) {
+            // Eliminar las relaciones en la tabla usuario_roles
+            entityManager.createNativeQuery("DELETE FROM lineas_pedidos_compra WHERE id_pedido_compra = :id")
+                    .setParameter("id", id)
+                    .executeUpdate();
 
-        pedidoCompraRepository.deleteById(id);
+            pedidoCompraRepository.deleteById(id);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Transactional
+    public PedidoCompraDTO actualizarPedidoCompra(Long id, PedidoCompraDTO pedidoCompraDTO) {
+        Optional<PedidoCompra> pedidoCompraOpt = pedidoCompraRepository.findById(id);
+
+        if (pedidoCompraOpt.isPresent()) {
+            PedidoCompra pedidoCompra = pedidoCompraOpt.get();
+            // Actualizar los campos
+            pedidoCompra.setNOperacion(pedidoCompraDTO.getN_operacion());
+            pedidoCompra.setNContenedor(pedidoCompraDTO.getN_contenedor());
+            pedidoCompra.setProforma(pedidoCompraDTO.getProforma());
+            pedidoCompra.setProveedor(pedidoCompraDTO.getProveedor());
+            pedidoCompra.setCliente(pedidoCompraDTO.getCliente());
+            pedidoCompra.setIncoterm(pedidoCompraDTO.getIncoterm());
+            pedidoCompra.setReferenciaProveedor(pedidoCompraDTO.getReferenciaProveedor());
+
+            PedidoCompra actualizado = pedidoCompraRepository.save(pedidoCompra);
+            return convertirADTO(actualizado);
+        } else {
+            return null;
+        }
     }
 
     private PedidoCompraDTO convertirADTO(PedidoCompra pedidoCompra) {

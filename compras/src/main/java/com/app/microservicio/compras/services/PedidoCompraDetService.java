@@ -31,6 +31,38 @@ public class PedidoCompraDetService {
         return convertirADTO(nuevoPedidoCompraDet);
     }
 
+    public PedidoCompraDet actualizarPedidoCompraDet(Long id, PedidoCompraDetDTO pedidoCompraDetDTO) {
+        Optional<PedidoCompraDet> pedidoCompraDetOpt = pedidoCompraDetRepository.findById(id);
+
+        if (pedidoCompraDetOpt.isPresent()) {
+            PedidoCompraDet pedidoCompraDet = pedidoCompraDetOpt.get();
+
+            // Actualizar los campos con los valores del DTO
+            pedidoCompraDet.setContratoCompra(pedidoCompraDetDTO.getContratoCompra());
+            pedidoCompraDet.setTerminado(pedidoCompraDetDTO.getTerminado());
+            pedidoCompraDet.setFactProveedor(pedidoCompraDetDTO.getFactProveedor());
+            pedidoCompraDet.setNFactFlete(pedidoCompraDetDTO.getN_fact_flete());
+
+            if (pedidoCompraDetDTO.getFecha_pago_flete() != null) {
+                pedidoCompraDet.setFechaPagoFlete(Date.valueOf(pedidoCompraDetDTO.getFecha_pago_flete()));
+            }
+
+            pedidoCompraDet.setNBl(pedidoCompraDetDTO.getN_bl());
+            pedidoCompraDet.setPesoNetoTotal(pedidoCompraDetDTO.getPesoNetoTotal());
+            pedidoCompraDet.setTotalBultos(pedidoCompraDetDTO.getTotalBultos());
+            pedidoCompraDet.setPromedio(pedidoCompraDetDTO.getPromedio());
+            pedidoCompraDet.setValorCompraTotal(pedidoCompraDetDTO.getValorCompraTotal());
+            pedidoCompraDet.setObservaciones(pedidoCompraDetDTO.getObservaciones());
+
+            // Guardar los cambios en la base de datos
+            return pedidoCompraDetRepository.save(pedidoCompraDet);
+        } else {
+            throw new RuntimeException("PedidoCompraDet con ID " + id + " no encontrado.");
+        }
+    }
+
+
+
     private PedidoCompraDetDTO convertirADTO(PedidoCompraDet pedidoCompraDet) {
         PedidoCompraDetDTO pedidoCompraDetDTO = new PedidoCompraDetDTO();
         pedidoCompraDetDTO.setIdPedidoCompra(pedidoCompraDet.getPedidoCompra().getIdPedidoCompra());

@@ -6,18 +6,24 @@
 </head>
 <body>
 <header>
-    <h1>Welcome  to Home Page</h1>
+    <h1>Welcome to Home Page</h1>
     <button onclick="logout()">Cerrar Sesión</button>
 </header>
-<div>
-    <p>This is your home page. You are successfully logged in!</p>
+
+<div class="content-container">
+    <div class="button-container">
+        <button onclick="window.location.href='/compras'">Gestionar Compras</button>
+        <button onclick="window.location.href='/ventas'">Gestionar Ventas</button>
+        <button onclick="window.location.href='/usuarios'">Gestionar Usuarios</button>
+    </div>
 </div>
 
 <script>
-        function logout() {
-            // Redirige a la ruta de logout
-            window.location.href = "/logout";
-        }
-    </script>
+    function logout() {
+        // Redirige a la ruta de logout
+        window.location.href = "/logout";
+    }
+</script>
+
 </body>
 </html>
