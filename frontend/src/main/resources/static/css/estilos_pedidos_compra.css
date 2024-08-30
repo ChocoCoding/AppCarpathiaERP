@@ -60,3 +60,94 @@ td[contenteditable="true"]:hover {
     background-color: #f0f8ff;
     cursor: text;
 }
+
+
+.search-container {
+            display: inline-block;
+            position: relative;
+        }
+
+        .search-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 8px;
+            margin-left: 10px;
+        }
+
+        #search-input {
+            position: absolute;
+            right: 0;
+            top: 100%;
+            margin-top: 5px;
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 200px;
+        }
+
+        .search-container input.expanded {
+            display: block;
+        }
+
+        /* Table and general styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            table-layout: fixed;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ccc;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 150px;
+            white-space: nowrap;
+        }
+
+        th {
+            background-color: #007BFF;
+            color: white;
+            font-weight: bold;
+            border-bottom: 2px solid #004a99;
+            white-space: normal;
+            overflow: visible;
+        }
+
+        td:focus {
+            white-space: normal;
+            overflow: visible;
+            outline: none;
+        }
+
+        /* New row background */
+        .new-row {
+            background-color: #80F5D2;
+        }
+
+        /* Hover effect to indicate editable cells */
+        td[contenteditable="true"]:hover {
+            background-color: #f0f8ff;
+            cursor: text;
+        }
+
+        .sortable {
+            cursor: pointer;
+        }
+
+        .sortable:after {
+            content: ' ▼';
+        }
+
+        .sortable.asc:after {
+            content: ' ▲';
+        }
+
+
+

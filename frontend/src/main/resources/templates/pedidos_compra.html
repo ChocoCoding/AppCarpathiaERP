@@ -5,26 +5,24 @@
     <link rel="stylesheet" href="/css/estilos_pedidos_compra.css">
     <link rel="stylesheet" type="text/css" href="/css/estilosmodulo.css">
     <style>
-        .sortable {
-            cursor: pointer;
-        }
-        .sortable:after {
-            content: ' ▼'; /* Flecha hacia abajo como predeterminada */
-        }
-        .sortable.asc:after {
-            content: ' ▲'; /* Flecha hacia arriba cuando se ordena ascendentemente */
-        }
+
     </style>
 </head>
 <body>
 <header>
-
     <h1>Pedidos de Compra</h1>
     <div class="actions">
         <button class="back-button" onclick="goBack()">Volver Atrás</button>
         <button class="save-button" onclick="guardarCambios()">Guardar</button>
         <button class="create-button" onclick="crearPedidoCompra()">Crear Pedido de Compra</button>
         <button class="logout-button" onclick="logout()">Cerrar Sesión</button>
+        <!-- Botón de búsqueda -->
+        <div class="search-container">
+            <button class="search-button" onclick="toggleSearch()">
+                🔍
+            </button>
+            <input type="text" id="search-input" oninput="filtrarPedidos()" placeholder="Buscar..." style="display: none;">
+        </div>
     </div>
 </header>
 <div class="content-container">
@@ -32,7 +30,7 @@
     <table>
         <thead>
         <tr>
-            <th>Eliminar</th> <!-- Nueva columna para el icono de eliminación -->
+            <th>Eliminar</th>
             <th class="sortable" onclick="sortTable(1)">ID</th>
             <th class="sortable" onclick="sortTable(2)">Nº Operación</th>
             <th class="sortable" onclick="sortTable(3)">Nº Contenedor</th>
@@ -51,29 +49,30 @@
                 </button>
             </td>
             <td th:text="${pedido.idPedidoCompra}">ID</td>
-            <td contenteditable="true"  tabindex="0" class="editable" oninput="marcarModificado(this)" th:text="${pedido.n_operacion}">Nº Operación</td>
-            <td contenteditable="true"  tabindex="0" class="editable" oninput="marcarModificado(this)" th:text="${pedido.n_contenedor}">Nº Contenedor</td>
-            <td contenteditable="true"  tabindex="0" class="editable" oninput="marcarModificado(this)" th:text="${pedido.proforma}">Proforma</td>
-            <td contenteditable="true"  tabindex="0" class="editable" oninput="marcarModificado(this)" th:text="${pedido.proveedor}">Proveedor</td>
-            <td contenteditable="true"  tabindex="0" class="editable" oninput="marcarModificado(this)" th:text="${pedido.cliente}">Cliente</td>
-            <td contenteditable="true"  tabindex="0" class="editable" oninput="marcarModificado(this)" th:text="${pedido.incoterm}">Incoterm</td>
-            <td contenteditable="true"  tabindex="0" class="editable" oninput="marcarModificado(this)" th:text="${pedido.referenciaProveedor}">Referencia Proveedor</td>
+            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${pedido.n_operacion}">Nº Operación</td>
+            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${pedido.n_contenedor}">Nº Contenedor</td>
+            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${pedido.proforma}">Proforma</td>
+            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${pedido.proveedor}">Proveedor</td>
+            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${pedido.cliente}">Cliente</td>
+            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${pedido.incoterm}">Incoterm</td>
+            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${pedido.referenciaProveedor}">Referencia Proveedor</td>
         </tr>
         </tbody>
     </table>
 </div>
 
 <script>
- function marcarModificado(elemento) {
-        const fila = elemento.closest('tr');
-        fila.classList.add('modificado');
-    }
     function goBack() {
         window.history.back();
     }
 
     function logout() {
         window.location.href = "/logout";
+    }
+
+       function marcarModificado(elemento) {
+        const fila = elemento.closest('tr');
+        fila.classList.add('modificado');
     }
 
     function guardarCambios() {
@@ -136,7 +135,6 @@
     });
 }
 
-
     function eliminarPedido(idPedidoCompra) {
         console.log('Eliminar pedido con ID:', idPedidoCompra);
         if (confirm("¿Estás seguro de que deseas eliminar este pedido?")) {
@@ -191,28 +189,74 @@
     }
 
     function sortTable(columnIndex) {
-    const table = document.querySelector("tbody");
-    const rows = Array.from(table.querySelectorAll("tr"));
-    const headerCells = document.querySelectorAll("thead th.sortable");
-    const isAscending = headerCells[columnIndex - 1].classList.contains("asc");
-    const newDirection = isAscending ? "desc" : "asc";
+        const table = document.querySelector("tbody");
+        const rows = Array.from(table.querySelectorAll("tr"));
+        const isAscending = table.getAttribute("data-sort-direction") === "asc";
+        const newDirection = isAscending ? "desc" : "asc";
 
-    rows.sort((a, b) => {
-        const aText = a.children[columnIndex].innerText.trim();
-        const bText = b.children[columnIndex].innerText.trim();
+        rows.sort((a, b) => {
+            const aText = a.children[columnIndex].innerText.trim();
+            const bText = b.children[columnIndex].innerText.trim();
 
-        return isAscending
-            ? aText.localeCompare(bText, undefined, {numeric: true})
-            : bText.localeCompare(aText, undefined, {numeric: true});
-    });
+            return isAscending
+                ? aText.localeCompare(bText, undefined, {numeric: true})
+                : bText.localeCompare(aText, undefined, {numeric: true});
+        });
 
-    // Reinsert the sorted rows into the table
-    rows.forEach(row => table.appendChild(row));
+        rows.forEach(row => table.appendChild(row));
 
-    // Update the arrow icons
-    headerCells.forEach(th => th.classList.remove("asc", "desc"));
-    headerCells[columnIndex - 1].classList.add(newDirection);
+        table.setAttribute("data-sort-direction", newDirection);
+
+        document.querySelectorAll(".sortable").forEach(th => th.classList.remove("asc", "desc"));
+        document.querySelector(`.sortable:nth-child(${columnIndex + 1})`).classList.add(newDirection);
+    }
+
+function toggleSearch() {
+    const searchInput = document.getElementById('search-input');
+    if (searchInput.style.display === 'none' || searchInput.style.display === '') {
+        searchInput.style.display = 'block';
+        searchInput.classList.add('expanded');
+        searchInput.focus();
+    } else {
+        searchInput.style.display = 'none';
+        searchInput.classList.remove('expanded');
+        searchInput.value = '';
+        filtrarPedidos();
+    }
 }
+
+function filtrarPedidos() {
+    const searchInput = document.getElementById('search-input').value.toLowerCase();
+    const filas = document.querySelectorAll('tbody tr');
+
+    filas.forEach(fila => {
+        const columnas = fila.querySelectorAll('td');
+        let match = false;
+
+        columnas.forEach(columna => {
+            if (columna.innerText.toLowerCase().includes(searchInput)) {
+                match = true;
+            }
+        });
+
+        if (match) {
+            fila.style.display = '';
+        } else {
+            fila.style.display = 'none';
+        }
+    });
+}
+
+// Ocultar el campo de búsqueda cuando se hace clic fuera de él
+document.addEventListener('click', function(event) {
+    const searchContainer = document.querySelector('.search-container');
+    const searchInput = document.getElementById('search-input');
+
+    if (!searchContainer.contains(event.target)) {
+        searchInput.style.display = 'none';
+        searchInput.classList.remove('expanded');
+    }
+});
 
 </script>
 </body>
