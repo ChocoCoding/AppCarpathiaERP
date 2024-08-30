@@ -4,7 +4,17 @@
     <title>Pedidos de Compra</title>
     <link rel="stylesheet" href="/css/estilos_pedidos_compra.css">
     <link rel="stylesheet" type="text/css" href="/css/estilosmodulo.css">
-
+    <style>
+        .sortable {
+            cursor: pointer;
+        }
+        .sortable:after {
+            content: ' ▼'; /* Flecha hacia abajo como predeterminada */
+        }
+        .sortable.asc:after {
+            content: ' ▲'; /* Flecha hacia arriba cuando se ordena ascendentemente */
+        }
+    </style>
 </head>
 <body>
 <header>
@@ -23,14 +33,14 @@
         <thead>
         <tr>
             <th>Eliminar</th> <!-- Nueva columna para el icono de eliminación -->
-            <th>ID</th>
-            <th>Nº Operación</th>
-            <th>Nº Contenedor</th>
-            <th>Proforma</th>
-            <th>Proveedor</th>
-            <th>Cliente</th>
-            <th>Incoterm</th>
-            <th>Referencia Proveedor</th>
+            <th class="sortable" onclick="sortTable(1)">ID</th>
+            <th class="sortable" onclick="sortTable(2)">Nº Operación</th>
+            <th class="sortable" onclick="sortTable(3)">Nº Contenedor</th>
+            <th class="sortable" onclick="sortTable(4)">Proforma</th>
+            <th class="sortable" onclick="sortTable(5)">Proveedor</th>
+            <th class="sortable" onclick="sortTable(6)">Cliente</th>
+            <th class="sortable" onclick="sortTable(7)">Incoterm</th>
+            <th class="sortable" onclick="sortTable(8)">Referencia Proveedor</th>
         </tr>
         </thead>
         <tbody>
@@ -41,25 +51,23 @@
                 </button>
             </td>
             <td th:text="${pedido.idPedidoCompra}">ID</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${pedido.n_operacion}">Nº Operación</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${pedido.n_contenedor}">Nº Contenedor</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${pedido.proforma}">Proforma</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${pedido.proveedor}">Proveedor</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${pedido.cliente}">Cliente</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${pedido.incoterm}">Incoterm</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${pedido.referenciaProveedor}">Referencia Proveedor</td>
+            <td contenteditable="true"  tabindex="0" class="editable" oninput="marcarModificado(this)" th:text="${pedido.n_operacion}">Nº Operación</td>
+            <td contenteditable="true"  tabindex="0" class="editable" oninput="marcarModificado(this)" th:text="${pedido.n_contenedor}">Nº Contenedor</td>
+            <td contenteditable="true"  tabindex="0" class="editable" oninput="marcarModificado(this)" th:text="${pedido.proforma}">Proforma</td>
+            <td contenteditable="true"  tabindex="0" class="editable" oninput="marcarModificado(this)" th:text="${pedido.proveedor}">Proveedor</td>
+            <td contenteditable="true"  tabindex="0" class="editable" oninput="marcarModificado(this)" th:text="${pedido.cliente}">Cliente</td>
+            <td contenteditable="true"  tabindex="0" class="editable" oninput="marcarModificado(this)" th:text="${pedido.incoterm}">Incoterm</td>
+            <td contenteditable="true"  tabindex="0" class="editable" oninput="marcarModificado(this)" th:text="${pedido.referenciaProveedor}">Referencia Proveedor</td>
         </tr>
         </tbody>
     </table>
 </div>
 
 <script>
-    // Marcar una fila como modificada
-    function marcarModificado(elemento) {
+ function marcarModificado(elemento) {
         const fila = elemento.closest('tr');
         fila.classList.add('modificado');
     }
-
     function goBack() {
         window.history.back();
     }
@@ -69,65 +77,65 @@
     }
 
     function guardarCambios() {
-        const filasModificadas = document.querySelectorAll('tbody tr.modificado');
+    const filasModificadas = document.querySelectorAll('tbody tr.modificado');
 
-        filasModificadas.forEach(fila => {
-            const idPedidoCompra = fila.getAttribute('data-id-pedido-compra');
-            const datos = {
-                n_operacion: fila.children[2].innerText.trim(),
-                n_contenedor: fila.children[3].innerText.trim(),
-                proforma: fila.children[4].innerText.trim(),
-                proveedor: fila.children[5].innerText.trim(),
-                cliente: fila.children[6].innerText.trim(),
-                incoterm: fila.children[7].innerText.trim(),
-                referenciaProveedor: fila.children[8].innerText.trim()
-            };
+    filasModificadas.forEach(fila => {
+        const idPedidoCompra = fila.getAttribute('data-id-pedido-compra');
+        const datos = {
+            n_operacion: fila.children[2].innerText.trim(),
+            n_contenedor: fila.children[3].innerText.trim(),
+            proforma: fila.children[4].innerText.trim(),
+            proveedor: fila.children[5].innerText.trim(),
+            cliente: fila.children[6].innerText.trim(),
+            incoterm: fila.children[7].innerText.trim(),
+            referenciaProveedor: fila.children[8].innerText.trim()
+        };
 
-            // Si idPedidoCompra es null o vacío, es un nuevo pedido (POST), de lo contrario es una actualización (PUT)
-            if (!idPedidoCompra) {
-                fetch('http://localhost:8702/api/compras/pedidos_compra', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(datos)
-                })
-                .then(response => {
-                    if (response.ok) {
-                        alert('Pedido creado con éxito');
-                        location.reload(); // Recarga la página para mostrar la nueva fila con su ID
-                    } else {
-                        alert('Error al crear el pedido');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error en la solicitud:', error);
+        if (!idPedidoCompra) {
+            fetch('http://localhost:8702/api/compras/pedidos_compra', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(datos)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Pedido creado con éxito');
+                    location.reload();
+                } else {
                     alert('Error al crear el pedido');
-                });
-            } else {
-                fetch(`http://localhost:8702/api/compras/pedidos_compra/${idPedidoCompra}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(datos)
-                })
-                .then(response => {
-                    if (response.ok) {
-                        alert('Cambios guardados con éxito');
-                        fila.classList.remove('modificado');
-                        fila.classList.remove('new-row'); // Elimina la clase new-row una vez guardado
-                    } else {
-                        alert('Error al guardar los cambios');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error en la solicitud:', error);
+                }
+            })
+            .catch(error => {
+                console.error('Error en la solicitud:', error);
+                alert('Error al crear el pedido');
+            });
+        } else {
+            fetch(`http://localhost:8702/api/compras/pedidos_compra/${idPedidoCompra}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(datos)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Cambios guardados con éxito');
+                    fila.classList.remove('modificado');
+                    fila.classList.remove('new-row');
+                } else {
                     alert('Error al guardar los cambios');
-                });
-            }
-        });
-    }
+                }
+            })
+            .catch(error => {
+                console.error('Error en la solicitud:', error);
+                alert('Error al guardar los cambios');
+            });
+        }
+    });
+}
+
 
     function eliminarPedido(idPedidoCompra) {
         console.log('Eliminar pedido con ID:', idPedidoCompra);
@@ -141,7 +149,7 @@
             .then(response => {
                 if (response.ok) {
                     alert('Pedido eliminado con éxito');
-                    location.reload(); // Recarga la página para reflejar los cambios
+                    location.reload();
                 } else {
                     alert('Error al eliminar el pedido');
                 }
@@ -154,7 +162,6 @@
     }
 
     function crearPedidoCompra() {
-        // Crea un nuevo elemento de fila (tr) en la tabla para el nuevo pedido
         const tbody = document.querySelector('tbody');
         const nuevaFila = document.createElement('tr');
 
@@ -164,7 +171,7 @@
                     🗑️
                 </button>
             </td>
-            <td></td> <!-- ID vacío porque es un nuevo pedido -->
+            <td></td>
             <td contenteditable="true" class="editable"></td>
             <td contenteditable="true" class="editable"></td>
             <td contenteditable="true" class="editable"></td>
@@ -174,16 +181,39 @@
             <td contenteditable="true" class="editable"></td>
         `;
 
-        // Inserta la nueva fila al principio del tbody
         tbody.insertBefore(nuevaFila, tbody.firstChild);
-        nuevaFila.classList.add('modificado', 'new-row'); // Marca la fila como modificada y nueva
+        nuevaFila.classList.add('modificado', 'new-row');
     }
 
-    // Función para eliminar una fila que aún no ha sido guardada en el backend
     function eliminarFila(boton) {
         const fila = boton.closest('tr');
         fila.remove();
     }
+
+    function sortTable(columnIndex) {
+    const table = document.querySelector("tbody");
+    const rows = Array.from(table.querySelectorAll("tr"));
+    const headerCells = document.querySelectorAll("thead th.sortable");
+    const isAscending = headerCells[columnIndex - 1].classList.contains("asc");
+    const newDirection = isAscending ? "desc" : "asc";
+
+    rows.sort((a, b) => {
+        const aText = a.children[columnIndex].innerText.trim();
+        const bText = b.children[columnIndex].innerText.trim();
+
+        return isAscending
+            ? aText.localeCompare(bText, undefined, {numeric: true})
+            : bText.localeCompare(aText, undefined, {numeric: true});
+    });
+
+    // Reinsert the sorted rows into the table
+    rows.forEach(row => table.appendChild(row));
+
+    // Update the arrow icons
+    headerCells.forEach(th => th.classList.remove("asc", "desc"));
+    headerCells[columnIndex - 1].classList.add(newDirection);
+}
+
 </script>
 </body>
 </html>

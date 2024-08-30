@@ -18,11 +18,13 @@ table {
     border-collapse: collapse;
     margin: 20px 0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    table-layout: fixed; /* Fija el tamaño de las celdas */
 }
 
 th, td {
     padding: 12px;
     text-align: left;
+    border: 1px solid #ccc;
 }
 
 th {
@@ -30,8 +32,31 @@ th {
     color: white;
     font-weight: bold;
     border-bottom: 2px solid #004a99;
+    white-space: normal; /* Permite que el texto en los th se muestre completo */
+    overflow: visible; /* Asegura que no haya recorte en los th */
 }
 
+td {
+    white-space: nowrap; /* Evita que el texto se desborde a nuevas líneas */
+    overflow: hidden; /* Oculta el texto que no cabe en la celda */
+    text-overflow: ellipsis; /* Añade puntos suspensivos al texto que no cabe */
+    max-width: 150px; /* Fija el ancho máximo de las celdas */
+}
+
+/* Al hacer clic, se muestra todo el contenido */
+td:focus {
+    white-space: normal; /* Permite que el texto haga wrap */
+    overflow: visible; /* Muestra todo el contenido */
+    outline: none; /* Elimina el borde de enfoque predeterminado */
+}
+
+/* New row background */
 .new-row {
     background-color: #80F5D2; /* Verde clarito */
+}
+
+/* Hover effect to indicate editable cells */
+td[contenteditable="true"]:hover {
+    background-color: #f0f8ff;
+    cursor: text;
 }
