@@ -32,6 +32,6 @@ th {
     border-bottom: 2px solid #004a99;
 }
 
-td {
-    border-bottom: 1px solid #dddddd;
-    backgr
+.new-row {
+    background-color: #80F5D2; /* Verde clarito */
+}

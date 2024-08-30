@@ -28,7 +28,7 @@ public class PedidoCompraController {
         return ResponseEntity.of(Optional.ofNullable(pedidoCompraService.obtenerPedidoCompra(id)));
     }
 
-    @PostMapping("/crear")
+    @PostMapping()
     public ResponseEntity<PedidoCompraDTO> crearPedidoCompra(@RequestBody PedidoCompraDTO pedidoCompraDTO) {
         return ResponseEntity.ok(pedidoCompraService.guardarPedidoCompra(pedidoCompraDTO));
     }
