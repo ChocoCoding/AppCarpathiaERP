@@ -1,4 +1,3 @@
-/* General styles */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f7f6;
@@ -12,37 +11,12 @@ h1 {
     color: #007BFF;
 }
 
-/* Header container */
-.header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0;
-}
-
-/* Align blocks */
-.left-block {
-    flex: 1;
-    text-align: left;
-}
-
-.center-block {
-    flex: 1;
-    text-align: center;
-}
-
-.right-block {
-    flex: 1;
-    text-align: right;
-}
-
-/* Table styles */
 table {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    table-layout: fixed; /* Fija el tamaño de las celdas */
+    table-layout: fixed;
 }
 
 th, td {
@@ -56,30 +30,27 @@ th {
     color: white;
     font-weight: bold;
     border-bottom: 2px solid #004a99;
-    white-space: normal; /* Permite que el texto en los th se muestre completo */
-    overflow: visible; /* Asegura que no haya recorte en los th */
+    white-space: normal;
+    overflow: visible;
 }
 
 td {
-    white-space: nowrap; /* Evita que el texto se desborde a nuevas líneas */
-    overflow: hidden; /* Oculta el texto que no cabe en la celda */
-    text-overflow: ellipsis; /* Añade puntos suspensivos al texto que no cabe */
-    max-width: 150px; /* Fija el ancho máximo de las celdas */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
 }
 
-/* Al hacer clic, se muestra todo el contenido */
 td:focus {
-    white-space: normal; /* Permite que el texto haga wrap */
-    overflow: visible; /* Muestra todo el contenido */
-    outline: none; /* Elimina el borde de enfoque predeterminado */
+    white-space: normal;
+    overflow: visible;
+    outline: none;
 }
 
-/* New row background */
 .new-row {
-    background-color: #80F5D2; /* Verde clarito */
+    background-color: #80F5D2;
 }
 
-/* Hover effect to indicate editable cells */
 td[contenteditable="true"]:hover {
     background-color: #f0f8ff;
     cursor: text;
@@ -115,34 +86,32 @@ td[contenteditable="true"]:hover {
     display: block;
 }
 
-/* Dropdown styles */
 .filter-container {
     display: none;
     position: absolute;
     top: 100%;
-    left: 0; /* Ajusta los filtros a la izquierda */
-    background-color: #007BFF; /* Mismo color que las cabeceras */
+    left: 0;
+    background-color: #007BFF;
     border: 1px solid #004a99;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 10;
     padding: 10px;
-    width: 220px; /* Aumentado para que quepan los nombres */
+    width: 220px;
     color: white;
-    margin-left: 10px; /* Pequeña separación del borde izquierdo */
-    text-align: left; /* Alinea el texto a la izquierda */
+    margin-left: 10px;
+    text-align: left;
 }
 
 .filter-container label {
     display: block;
     margin: 5px 0;
-    text-align: left; /* Alinea cada etiqueta a la izquierda */
+    text-align: left;
 }
 
 .filter-container.expanded {
     display: block;
 }
 
-/* Sortable styles */
 .sortable {
     cursor: pointer;
 }
@@ -171,4 +140,27 @@ td[contenteditable="true"]:hover {
 
 .icon-button:hover .icon {
     color: #0056b3;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.left-actions {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.center-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.right-actions {
+    display: flex;
+    justify-content: flex-end;
 }

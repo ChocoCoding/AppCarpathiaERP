@@ -43,6 +43,7 @@ public class PedidoCompraController {
         }
     }
 
+
     @PutMapping("/{id}")
     public ResponseEntity<PedidoCompraDTO> actualizarPedidoCompra(@PathVariable Long id, @RequestBody PedidoCompraDTO pedidoCompraDTO) {
         PedidoCompraDTO actualizado = pedidoCompraService.actualizarPedidoCompra(id, pedidoCompraDTO);

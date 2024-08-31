@@ -14,15 +14,7 @@ import java.util.Optional;
 
 @Repository
 public interface LineaPedidoCompraRepository extends JpaRepository<LineaPedidoCompra, Long> {
-    @Modifying
-    @Transactional
-    @Query("DELETE FROM LineaPedidoCompra l WHERE l.nLinea = :nLinea AND l.pedidoCompra.idPedidoCompra = :idPedidoCompra")
-    void deleteByNLineaAndIdPedidoCompra(@Param("nLinea") Long nLinea, @Param("idPedidoCompra") Long idPedidoCompra);
 
-
-    @Query("SELECT l FROM LineaPedidoCompra l WHERE l.nLinea = :nLinea AND l.pedidoCompra.idPedidoCompra = :idPedidoCompra")
-    Optional<LineaPedidoCompra> findByNLineaAndIdPedidoCompra(@Param("nLinea") Long nLinea, @Param("idPedidoCompra") Long idPedidoCompra);
-
-    @Query("SELECT l FROM LineaPedidoCompra l WHERE l.pedidoCompra.idPedidoCompra = :idPedidoCompra")
-    List<LineaPedidoCompra> findLineasPedidoCompra(@Param("idPedidoCompra") Long idPedidoCompra);
+    @Query("SELECT l FROM LineaPedidoCompra l WHERE l.pedidoCompra.idPedidoCompra =: idPedidoCOmpra")
+    List<LineaPedidoCompra> findByIdPedidoCompra(@Param("idPedidoCompra") Long idPedidoCompra);
 }

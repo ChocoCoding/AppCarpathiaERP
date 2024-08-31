@@ -1,98 +1,103 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Pedidos de Compra</title>
+    <title>Líneas de Pedido de Compra</title>
     <link rel="stylesheet" href="/css/estilos_lineas_pedido_compra.css">
-    <link rel="stylesheet" type="text/css" href="/css/estilosmodulo.css">
-    <script src="/js/lineas_pedido_compra.js"></script>
 </head>
 <body>
 <header>
-    <div class="header-container">
-        <div class="left-block">
+    <h1>Líneas de Pedido de Compra</h1>
+    <div class="actions">
+        <div class="left-actions">
             <button class="icon-button" onclick="goBack()">
                 <span class="icon">🔙</span> <!-- Icono de Volver Atrás -->
             </button>
         </div>
-        <div class="center-block">
+        <div class="center-actions">
             <button class="icon-button" onclick="guardarCambios()">
                 <span class="icon">💾</span> <!-- Icono de Guardar -->
             </button>
-            <button class="icon-button" onclick="crearPedidoCompra()">
-                <span class="icon">➕</span> <!-- Icono de Crear Pedido -->
+            <button class="icon-button" onclick="crearLineaPedido()">
+                <span class="icon">➕</span> <!-- Icono de Crear Línea -->
             </button>
             <div class="search-container">
-                <button class="icon-button search-button" onclick="toggleSearch()">🔍</button>
-                <input type="text" id="search-input" oninput="filtrarPedidos()" placeholder="Buscar..." style="display: none;">
-                <button class="icon-button filter-button" onclick="toggleFilter()">⚙️</button>
+                <button class="search-button" onclick="toggleSearch()">🔍</button>
+                <button class="filter-button" onclick="toggleFilter()">⚙️</button>
+                <input type="text" id="search-input" oninput="filtrarLineas()" placeholder="Buscar..." style="display: none;">
                 <div class="filter-container">
-                    <label><input type="checkbox" name="columnFilter" value="2"> ID Linea</label>
-                    <label><input type="checkbox" name="columnFilter" value="3"> ID Pedido Compra</label>
-                    <label><input type="checkbox" name="columnFilter" value="4"> Nº Linea</label>
-                    <label><input type="checkbox" name="columnFilter" value="5"> Nº Operación</label>
-                    <label><input type="checkbox" name="columnFilter" value="6"> Proveedor</label>
-                    <label><input type="checkbox" name="columnFilter" value="7"> Cliente</label>
-                    <label><input type="checkbox" name="columnFilter" value="8"> Nº Contenedor</label>
-                    <label><input type="checkbox" name="columnFilter" value="9"> Producto</label>
-                    <label><input type="checkbox" name="columnFilter" value="10"> Talla</label>
-                    <label><input type="checkbox" name="columnFilter" value="11"> Peso Neto</label>
-                    <label><input type="checkbox" name="columnFilter" value="12"> Unidad</label>
-                    <label><input type="checkbox" name="columnFilter" value="13"> Bultos</label>
-                    <label><input type="checkbox" name="columnFilter" value="14"> Precio</label>
-                    <label><input type="checkbox" name="columnFilter" value="15"> Valor Compra</label>
-                    <label><input type="checkbox" name="columnFilter" value="16"> Moneda</label>
-                    <label><input type="checkbox" name="columnFilter" value="17"> Pais Origen</label>
+                    <label><input type="checkbox" name="columnFilter" value="2"> ID Pedido Compra</label>
+                    <label><input type="checkbox" name="columnFilter" value="3"> Nº Línea</label>
+                    <label><input type="checkbox" name="columnFilter" value="4"> Nº Operación</label>
+                    <label><input type="checkbox" name="columnFilter" value="5"> Proveedor</label>
+                    <label><input type="checkbox" name="columnFilter" value="6"> Cliente</label>
+                    <label><input type="checkbox" name="columnFilter" value="7"> Nº Contenedor</label>
+                    <label><input type="checkbox" name="columnFilter" value="8"> Producto</label>
+                    <label><input type="checkbox" name="columnFilter" value="9"> Talla</label>
+                    <label><input type="checkbox" name="columnFilter" value="10"> Peso Neto</label>
+                    <label><input type="checkbox" name="columnFilter" value="11"> Unidad</label>
+                    <label><input type="checkbox" name="columnFilter" value="12"> Bultos</label>
+                    <label><input type="checkbox" name="columnFilter" value="13"> Precio</label>
+                    <label><input type="checkbox" name="columnFilter" value="14"> Valor Compra</label>
+                    <label><input type="checkbox" name="columnFilter" value="15"> Moneda</label>
+                    <label><input type="checkbox" name="columnFilter" value="16"> País de Origen</label>
                 </div>
             </div>
         </div>
-        <div class="right-block">
+        <div class="right-actions">
             <button class="icon-button" onclick="logout()">
                 <span class="icon">🔒</span> <!-- Icono de Cerrar Sesión -->
             </button>
         </div>
     </div>
-    <h1>Pedidos de Compra</h1>
 </header>
 <div class="content-container">
-    <h2>Lista de Pedidos de Compra</h2>
+    <h2>Lista de Líneas de Pedido de Compra</h2>
     <table>
         <thead>
         <tr>
             <th>Eliminar</th>
-            <th class="sortable" onclick="sortTable(1)">ID Linea</th>
-            <th class="sortable" onclick="sortTable(2)">ID Pedido Compra</th>
-            <th class="sortable" onclick="sortTable(3)">Nº Linea</th>
-            <th class="sortable" onclick="sortTable(4)">Nº Operación</th>
-            <th class="sortable" onclick="sortTable(5)">Proveedor</th>
-            <th class="sortable" onclick="sortTable(6)">Cliente</th>
-            <th class="sortable" onclick="sortTable(7)">Nº Contenedor</th>
-            <th class="sortable" onclick="sortTable(8)">Producto</th>
-            <th class="sortable" onclick="sortTable(9)">Talla</th>
-            <th class="sortable" onclick="sortTable(10)">Peso Neto</th>
-            <th class="sortable" onclick="sortTable(11)">Unidad</th>
-            <th class="sortable" onclick="sortTable(12)">Bultos</th>
-            <th class="sortable" onclick="sortTable(13)">Precio</th>
-            <th class="sortable" onclick="sortTable(14)">Valor Compra</th>
-            <th class="sortable" onclick="sortTable(15)">Moneda</th>
-            <th class="sortable" onclick="sortTable(16)">Pais Origen</Incoterm</th>
+            <th class="sortable" onclick="sortTable(1)">ID Pedido Compra</th>
+            <th class="sortable" onclick="sortTable(2)">Nº Línea</th>
+            <th class="sortable" onclick="sortTable(3)">Nº Operación</th>
+            <th class="sortable" onclick="sortTable(4)">Proveedor</th>
+            <th class="sortable" onclick="sortTable(5)">Cliente</th>
+            <th class="sortable" onclick="sortTable(6)">Nº Contenedor</th>
+            <th class="sortable" onclick="sortTable(7)">Producto</th>
+            <th class="sortable" onclick="sortTable(8)">Talla</th>
+            <th class="sortable" onclick="sortTable(9)">Peso Neto</th>
+            <th class="sortable" onclick="sortTable(10)">Unidad</th>
+            <th class="sortable" onclick="sortTable(11)">Bultos</th>
+            <th class="sortable" onclick="sortTable(12)">Precio</th>
+            <th class="sortable" onclick="sortTable(13)">Valor Compra</th>
+            <th class="sortable" onclick="sortTable(14)">Moneda</th>
+            <th class="sortable" onclick="sortTable(15)">País de Origen</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="linea : ${lineas_pedido_compra}" th:data-id-lineas-pedido-compra="${lineas_pedido_compra.idNumeroLinea}">
+        <tr th:each="linea : ${lineasPedidoCompra}" th:data-id-linea-pedido="${linea.idNumeroLinea}">
             <td>
-                <button class="delete-button" th:onclick="'eliminarLineaPedidoCompra(' + ${lineas_pedido_compra.idNumeroLinea} + ')'">🗑️</button>
+                <button class="delete-button" th:onclick="'eliminarLineaPedido(' + ${linea.idNumeroLinea} + ')'">🗑️</button>
             </td>
-            <td th:text="${lineas_pedido_compra.idNumeroLinea}">ID</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${pedido.n_operacion}">Nº Operación</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${pedido.n_contenedor}">Nº Contenedor</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${pedido.proforma}">Proforma</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${pedido.proveedor}">Proveedor</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${pedido.cliente}">Cliente</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${pedido.incoterm}">Incoterm</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${pedido.referenciaProveedor}">Referencia Proveedor</td>
+            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.idPedidoCompra}">ID Pedido Compra</td>
+            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.n_linea}">Nº Línea</td>
+            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.n_operacion}">Nº Operación</td>
+            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.proveedor}">Proveedor</td>
+            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.cliente}">Cliente</td>
+            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.n_contenedor}">Nº Contenedor</td>
+            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.producto}">Producto</td>
+            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.talla}">Talla</td>
+            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.p_neto}">Peso Neto</td>
+            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.unidad}">Unidad</td>
+            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.bultos}">Bultos</td>
+            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.precio}">Precio</td>
+            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.valor_compra}">Valor Compra</td>
+            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.moneda}">Moneda</td>
+            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.paisOrigen}">País de Origen</td>
         </tr>
         </tbody>
     </table>
 </div>
+
+<script src="/js/lineas_pedido_compra.js"></script>
 </body>
 </html>

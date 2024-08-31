@@ -23,37 +23,28 @@ public class LineaPedidoCompraService {
     @Autowired
     private PedidoCompraRepository pedidoCompraRepository;
 
-    public List<LineaPedidoCompraDTO> listarLineasPedidosCompra() {
+    public List<LineaPedidoCompraDTO> obtenerTodasLasLineasPedidoCompra() {
+        // Supongamos que tienes un repositorio que devuelve la lista de LineaPedidoCompraDTO
         return lineaPedidoCompraRepository.findAll().stream()
                 .map(this::convertirADTO)
                 .collect(Collectors.toList());
     }
 
-    public List<LineaPedidoCompraDTO> listarLineasPedidoCompra(Long idPedidoCompra) {
-        return lineaPedidoCompraRepository.findLineasPedidoCompra(idPedidoCompra).stream()
+
+    public List<LineaPedidoCompraDTO> getLineasByPedidoCompra(Long idPedidoCompra) {
+        return lineaPedidoCompraRepository.findByIdPedidoCompra(idPedidoCompra)
+                .stream()
                 .map(this::convertirADTO)
                 .collect(Collectors.toList());
     }
 
-    public Optional<LineaPedidoCompraDTO> obtenerLineaPedidoCompra(Long idPedidoCompra, Long nLinea) {
-        return lineaPedidoCompraRepository.findByNLineaAndIdPedidoCompra(nLinea,idPedidoCompra)
-                .map(this::convertirADTO);
-    }
-
-    public LineaPedidoCompraDTO guardarLineaPedidoCompra(LineaPedidoCompraDTO lineaPedidoCompraDTO) {
-        LineaPedidoCompra lineaPedidoCompra = convertirAEntidad(lineaPedidoCompraDTO);
-        LineaPedidoCompra nuevaLineaPedidoCompra = lineaPedidoCompraRepository.save(lineaPedidoCompra);
-        return convertirADTO(nuevaLineaPedidoCompra);
+    public LineaPedidoCompraDTO crearLineaPedido(LineaPedidoCompraDTO lineaPedidoCompraDTO) {
+        return convertirADTO(lineaPedidoCompraRepository.save(convertirAEntidad(lineaPedidoCompraDTO)));
     }
 
     @Transactional
-    public void eliminarLineaPedidoCompra(Long idPedidoCompra, Long nLinea) {
-        lineaPedidoCompraRepository.deleteByNLineaAndIdPedidoCompra(nLinea,idPedidoCompra);
-    }
-
-    @Transactional
-    public LineaPedidoCompraDTO actualizarLineaPedidoCompra(Long idPedidoCompra, Long nLinea, LineaPedidoCompraDTO lineaPedidoCompraDTO) {
-        Optional<LineaPedidoCompra> optionalLinea = lineaPedidoCompraRepository.findByNLineaAndIdPedidoCompra(nLinea, idPedidoCompra);
+    public LineaPedidoCompraDTO actualizarLineaPedido(Long idNumeroLinea, LineaPedidoCompraDTO lineaPedidoCompraDTO) {
+        Optional<LineaPedidoCompra> optionalLinea = lineaPedidoCompraRepository.findById(idNumeroLinea);
 
         if (optionalLinea.isPresent()) {
             LineaPedidoCompra lineaPedidoCompra = optionalLinea.get();
@@ -81,10 +72,14 @@ public class LineaPedidoCompraService {
         }
     }
 
-
+    @Transactional
+    public void eliminarLineaPedido(Long idNumeroLinea) {
+        lineaPedidoCompraRepository.deleteById(idNumeroLinea);
+    }
 
     private LineaPedidoCompraDTO convertirADTO(LineaPedidoCompra lineaPedidoCompra) {
         LineaPedidoCompraDTO lineaPedidoCompraDTO = new LineaPedidoCompraDTO();
+        lineaPedidoCompraDTO.setIdNumeroLinea(lineaPedidoCompra.getIdNumeroLinea());
         lineaPedidoCompraDTO.setIdPedidoCompra(lineaPedidoCompra.getPedidoCompra().getIdPedidoCompra());
         lineaPedidoCompraDTO.setN_linea(lineaPedidoCompra.getNLinea());
         lineaPedidoCompraDTO.setN_operacion(lineaPedidoCompra.getNOperacion());
