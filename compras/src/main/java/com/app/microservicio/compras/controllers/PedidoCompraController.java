@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.*;
 import com.app.microservicio.compras.DTO.PedidoCompraDTO;
 
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -53,4 +55,11 @@ public class PedidoCompraController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/{idPedidoCompra}/exists")
+    public ResponseEntity<Map<String, Boolean>> existePedidoCompra(@PathVariable Long idPedidoCompra) {
+        boolean existe = pedidoCompraService.existePedidoCompra(idPedidoCompra);
+        return ResponseEntity.ok(Collections.singletonMap("existe", existe));
+    }
 }
+

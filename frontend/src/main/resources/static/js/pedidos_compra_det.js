@@ -15,79 +15,76 @@ function guardarCambios() {
     const filasModificadas = document.querySelectorAll('tbody tr.modificado');
 
     filasModificadas.forEach(fila => {
-        const idLineaPedido = fila.getAttribute('data-id-linea-pedido');
-        const idPedidoCompra = fila.children[1].innerText.trim();
+            const idPedidoCompraDet = fila.getAttribute('data-id-pedido-compra-det');
+            const idPedidoCompra = fila.children[1].innerText.trim();
 
-        // Validar si el idPedidoCompra existe antes de continuar
-        validarExistenciaPedidoCompra(idPedidoCompra)
-            .then(existe => {
-                if (!existe) {
-                    alert('El ID del Pedido de Compra no existe. Por favor, verifíquelo.');
-                    return;
-                }
+            validarExistenciaPedidoCompra(idPedidoCompra)
+                        .then(existe => {
+                            if (!existe) {
+                                alert('El ID del Pedido de Compra no existe. Por favor, verifíquelo.');
+                                return;
+                            }
 
-                const datos = {
-                    idPedidoCompra: idPedidoCompra,
-                    n_linea: fila.children[2].innerText.trim(),
-                    n_operacion: fila.children[3].innerText.trim(),
-                    proveedor: fila.children[4].innerText.trim(),
-                    cliente: fila.children[5].innerText.trim(),
-                    n_contenedor: fila.children[6].innerText.trim(),
-                    producto: fila.children[7].innerText.trim(),
-                    talla: fila.children[8].innerText.trim(),
-                    p_neto: fila.children[9].innerText.trim(),
-                    unidad: fila.children[10].innerText.trim(),
-                    bultos: fila.children[11].innerText.trim(),
-                    precio: fila.children[12].innerText.trim(),
-                    valor_compra: fila.children[13].innerText.trim(),
-                    moneda: fila.children[14].innerText.trim(),
-                    paisOrigen: fila.children[15].innerText.trim()
-                };
+        const datos = {
+            idPedidoCompra: fila.children[1].innerText.trim(),
+            n_operacion: fila.children[2].innerText.trim(),
+            contratoCompra: fila.children[3].innerText.trim(),
+            terminado: fila.children[4].innerText.trim(),
+            factProveedor: fila.children[5].innerText.trim(),
+            n_fact_flete: fila.children[6].innerText.trim(),
+            fecha_pago_flete: fila.children[7].innerText.trim(),
+            n_bl: fila.children[8].innerText.trim(),
+            pesoNetoTotal: fila.children[9].innerText.trim(),
+            totalBultos: fila.children[10].innerText.trim(),
+            promedio: fila.children[11].innerText.trim(),
+            valorCompraTotal: fila.children[12].innerText.trim(),
+            observaciones: fila.children[13].innerText.trim()
+        };
 
-                if (!idLineaPedido) {
-                    // Crear una nueva línea de pedido
-                    fetch('http://localhost:8702/api/compras/lineas_pedidos_compra', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(datos)
-                    })
-                    .then(response => {
-                        if (response.ok) {
-                            alert('Línea creada con éxito');
-                            location.reload();
-                        } else {
-                            alert('Error al crear la línea');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error en la solicitud:', error);
-                        alert('Error al crear la línea');
-                    });
+        if (!idPedidoCompraDet) {
+            // Crear un nuevo detalle de pedido de compra
+            fetch('http://localhost:8702/api/compras/pedidos_compra_det', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(datos)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Detalle creado con éxito');
+                    location.reload();
                 } else {
-                    // Actualizar la línea existente
-                    fetch(`http://localhost:8702/api/compras/lineas_pedidos_compra/${idLineaPedido}`, {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(datos)
-                    })
-                    .then(response => {
-                        if (response.ok) {
-                            alert('Cambios guardados con éxito');
-                            fila.classList.remove('modificado');
-                        } else {
-                            alert('Error al guardar los cambios');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error en la solicitud:', error);
-                        alert('Error al guardar los cambios');
-                    });
+                    alert('Error al crear el detalle');
                 }
             })
+            .catch(error => {
+                console.error('Error en la solicitud:', error);
+                alert('Error al crear el detalle');
+            });
+        } else {
+            // Actualizar el detalle existente
+            fetch(`http://localhost:8702/api/compras/pedidos_compra_det/${idPedidoCompraDet}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(datos)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Cambios guardados con éxito');
+                    fila.classList.remove('modificado');
+                } else {
+                    alert('Error al guardar los cambios');
+                }
+            })
+            .catch(error => {
+                console.error('Error en la solicitud:', error);
+                alert('Error al guardar los cambios');
+            });
+        }
+    })
             .catch(error => {
                 console.error('Error al validar el ID del Pedido de Compra:', error);
                 alert('Error al validar el ID del Pedido de Compra.');
@@ -110,18 +107,15 @@ function validarExistenciaPedidoCompra(idPedidoCompra) {
     });
 }
 
-
-function eliminarLineaPedido(idLineaPedido) {
-
-    if (!idLineaPedido) {
-        console.error("ID de línea de pedido no válido:", idLineaPedido);
-        alert("No se puede eliminar esta línea porque el ID es nulo.");
+function eliminarPedidoCompraDet(idPedidoCompraDet) {
+    if (!idPedidoCompraDet) {
+        console.error("ID de detalle de pedido de compra no válido:", idPedidoCompraDet);
+        alert("No se puede eliminar este detalle porque el ID es nulo.");
         return;
     }
 
-
-    if (confirm("¿Estás seguro de que deseas eliminar esta línea?")) {
-        fetch(`http://localhost:8702/api/compras/lineas_pedidos_compra/${idLineaPedido}`, {
+    if (confirm("¿Estás seguro de que deseas eliminar este detalle?")) {
+        fetch(`http://localhost:8702/api/compras/pedidos_compra_det/${idPedidoCompraDet}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
@@ -129,20 +123,20 @@ function eliminarLineaPedido(idLineaPedido) {
         })
         .then(response => {
             if (response.ok) {
-                alert('Línea eliminada con éxito');
+                alert('Detalle eliminado con éxito');
                 location.reload();
             } else {
-                alert('Error al eliminar la línea');
+                alert('Error al eliminar el detalle');
             }
         })
         .catch(error => {
             console.error('Error en la solicitud:', error);
-            alert('Error al eliminar la línea');
+            alert('Error al eliminar el detalle');
         });
     }
 }
 
-function crearLineaPedido() {
+function crearPedidoCompraDet() {
     const tbody = document.querySelector('tbody');
     const nuevaFila = document.createElement('tr');
 
@@ -150,8 +144,6 @@ function crearLineaPedido() {
         <td>
             <button class="delete-button" onclick="eliminarFila(this)">🗑️</button>
         </td>
-        <td contenteditable="true" class="editable"></td>
-        <td contenteditable="true" class="editable"></td>
         <td contenteditable="true" class="editable"></td>
         <td contenteditable="true" class="editable"></td>
         <td contenteditable="true" class="editable"></td>
@@ -218,7 +210,7 @@ function toggleFilter() {
     filterContainer.classList.toggle('expanded');
 }
 
-function filtrarLineas() {
+function filtrarDetalles() {
     const searchInput = document.getElementById('search-input').value.toLowerCase();
     const columnasSeleccionadas = Array.from(document.querySelectorAll('input[name="columnFilter"]:checked')).map(input => parseInt(input.value));
     const filas = document.querySelectorAll('tbody tr');

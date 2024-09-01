@@ -4,8 +4,10 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Data
@@ -36,7 +38,7 @@ public class PedidoCompraDet {
     private String nFactFlete;
 
     @Column(name = "fecha_pago_flete")
-    private java.sql.Date fechaPagoFlete;
+    private LocalDate fechaPagoFlete;
 
     @Column(name = "n_bl", length = 20)
     private String nBl;

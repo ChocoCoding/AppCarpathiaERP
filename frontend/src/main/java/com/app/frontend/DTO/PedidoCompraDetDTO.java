@@ -1,8 +1,11 @@
 package com.app.frontend.DTO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Data
 public class PedidoCompraDetDTO {
@@ -13,7 +16,9 @@ public class PedidoCompraDetDTO {
     private char terminado;
     private String factProveedor;
     private String n_fact_flete;
-    private String fecha_pago_flete;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private LocalDate fecha_pago_flete;
     private String n_bl;
     private BigDecimal pesoNetoTotal;
     private Long totalBultos;

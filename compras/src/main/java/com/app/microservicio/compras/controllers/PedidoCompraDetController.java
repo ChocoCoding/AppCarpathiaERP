@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.app.microservicio.compras.DTO.PedidoCompraDetDTO;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -16,24 +17,34 @@ public class PedidoCompraDetController {
     @Autowired
     private PedidoCompraDetService pedidoCompraDetService;
 
+    @GetMapping()
+    public ResponseEntity<List<PedidoCompraDetDTO>> listarPedidosCompraDet(){
+        return ResponseEntity.ok(pedidoCompraDetService.listarPedidosCompraDet());
+    }
+
     @GetMapping("/{idPedidoCompra}")
     public ResponseEntity<Optional<PedidoCompraDetDTO>> obtenerPedidoCompraDet(@PathVariable Long idPedidoCompra) {
         return ResponseEntity.of(Optional.ofNullable(pedidoCompraDetService.obtenerPedidoCompraDet(idPedidoCompra)));
     }
 
-    @PostMapping("/crear")
+    @PostMapping()
     public ResponseEntity<PedidoCompraDetDTO> crearPedidoCompraDet(@RequestBody PedidoCompraDetDTO pedidoCompraDetDTO) {
-        return ResponseEntity.ok(pedidoCompraDetService.guardarPedidoCompraDet(pedidoCompraDetDTO));
+        return ResponseEntity.ok(pedidoCompraDetService.crearPedidoCompraDet(pedidoCompraDetDTO));
     }
 
         // Endpoint para actualizar PedidoCompraDet
         @PutMapping("/{id}")
-        public ResponseEntity<PedidoCompraDet> actualizarPedidoCompraDet(
+        public ResponseEntity<PedidoCompraDetDTO> actualizarPedidoCompraDet(
                 @PathVariable Long id, @RequestBody PedidoCompraDetDTO pedidoCompraDetDTO) {
-            PedidoCompraDet actualizado = pedidoCompraDetService.actualizarPedidoCompraDet(id, pedidoCompraDetDTO);
+            PedidoCompraDetDTO actualizado = pedidoCompraDetService.actualizarPedidoCompraDet(id, pedidoCompraDetDTO);
             return ResponseEntity.ok(actualizado);
         }
 
+    @DeleteMapping("/{idPedidoCompraDet}")
+    public ResponseEntity<Void> eliminarPedidoDet(@PathVariable Long idPedidoCompraDet) {
+        pedidoCompraDetService.eliminarPedidoCompraDet(idPedidoCompraDet);
+        return ResponseEntity.noContent().build();
+    }
 
     }
 

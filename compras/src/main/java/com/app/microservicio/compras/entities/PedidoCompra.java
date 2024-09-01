@@ -42,10 +42,10 @@ public class PedidoCompra {
     @Column(name = "referencia_proveedor", length = 50)
     private String referenciaProveedor;
 
-    @OneToMany(mappedBy = "pedidoCompra", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "pedidoCompra")
     private Set<LineaPedidoCompra> lineasPedidoCompra;
 
-    @OneToOne(mappedBy = "pedidoCompra", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "pedidoCompra")
     private PedidoCompraDet pedidoCompraDet;
 
 }

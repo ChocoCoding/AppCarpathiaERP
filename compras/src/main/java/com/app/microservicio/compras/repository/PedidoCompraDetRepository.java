@@ -6,4 +6,6 @@ import com.app.microservicio.compras.entities.PedidoCompraDet;
 
 @Repository
 public interface PedidoCompraDetRepository extends JpaRepository<PedidoCompraDet, Long> {
+void deleteByidPedidoCompraDet(Long idPedidoCompraDet);
+
 }

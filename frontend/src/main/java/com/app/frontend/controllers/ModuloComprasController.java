@@ -43,6 +43,6 @@ public class ModuloComprasController {
     public String gestionarDetallesPedidoCompra(Model model) {
         List<PedidoCompraDetDTO> detallesPedidoCompra = pedidoCompraDetService.obtenerTodosLosDetallesPedidoCompra();
         model.addAttribute("detallesPedidoCompra", detallesPedidoCompra);
-        return "detalles_pedido_compra";
+        return "pedidos_compra_det";
     }
 }

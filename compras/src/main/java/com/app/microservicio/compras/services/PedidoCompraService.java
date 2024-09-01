@@ -46,6 +46,10 @@ public class PedidoCompraService {
                     .setParameter("id", id)
                     .executeUpdate();
 
+            entityManager.createNativeQuery("DELETE FROM pedidos_compra_det WHERE id_pedido_compra = :id")
+                    .setParameter("id", id)
+                    .executeUpdate();
+
             pedidoCompraRepository.deleteById(id);
             return true;
         } else {
@@ -74,6 +78,11 @@ public class PedidoCompraService {
             return null;
         }
     }
+
+    public boolean existePedidoCompra(Long idPedidoCompra) {
+        return pedidoCompraRepository.existsById(idPedidoCompra);
+    }
+
 
     private PedidoCompraDTO convertirADTO(PedidoCompra pedidoCompra) {
         PedidoCompraDTO pedidoCompraDTO = new PedidoCompraDTO();
