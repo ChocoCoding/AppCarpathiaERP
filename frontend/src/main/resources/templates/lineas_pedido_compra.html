@@ -86,11 +86,10 @@
             <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.n_contenedor}">Nº Contenedor</td>
             <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.producto}">Producto</td>
             <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.talla}">Talla</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.p_neto}">Peso Neto</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.unidad}">Unidad</td>
+            <td contenteditable="true" class="editable peso-neto" oninput="calcularValorCompra(this)" th:text="${linea.p_neto}">Peso Neto</td>            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.unidad}">Unidad</td>
             <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.bultos}">Bultos</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.precio}">Precio</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.valor_compra}">Valor Compra</td>
+            <td contenteditable="true" class="editable precio" oninput="calcularValorCompra(this)" th:text="${linea.precio}">Precio</td>
+            <td contenteditable="true" class="editable valor-compra-total" th:text="${linea.valor_compra}">Valor Compra Total</td>
             <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.moneda}">Moneda</td>
             <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.paisOrigen}">País de Origen</td>
         </tr>

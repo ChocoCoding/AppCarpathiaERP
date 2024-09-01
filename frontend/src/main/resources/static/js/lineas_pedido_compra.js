@@ -39,7 +39,7 @@ function guardarCambios() {
                     unidad: fila.children[10].innerText.trim(),
                     bultos: fila.children[11].innerText.trim(),
                     precio: fila.children[12].innerText.trim(),
-                    valor_compra: fila.children[13].innerText.trim(),
+                    valor_compra: fila.querySelector('.valor-compra-total').innerText.trim(),
                     moneda: fila.children[14].innerText.trim(),
                     paisOrigen: fila.children[15].innerText.trim()
                 };
@@ -93,6 +93,17 @@ function guardarCambios() {
                 alert('Error al validar el ID del Pedido de Compra.');
             });
     });
+}
+
+function calcularValorCompra(elemento) {
+    const fila = elemento.closest('tr');
+    const pesoNeto = parseFloat(fila.querySelector('.peso-neto').innerText.trim()) || 0;
+    const precio = parseFloat(fila.querySelector('.precio').innerText.trim()) || 0;
+
+    const valorCompraTotal = pesoNeto * precio;
+
+    fila.querySelector('.valor-compra-total').innerText = valorCompraTotal.toFixed(2);
+    fila.classList.add('modificado'); // Marca la fila como modificada
 }
 
 function validarExistenciaPedidoCompra(idPedidoCompra) {
