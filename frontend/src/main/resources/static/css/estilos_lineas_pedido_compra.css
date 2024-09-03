@@ -1,166 +1,175 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f7f6;
-    margin: 0;
-    padding: 20px;
-    color: #333;
+:root {
+    --background-color: #f0f4f8;
+    --header-color: #2c3e50;
+    --text-color: #333333;
 }
 
-h1 {
-    text-align: center;
-    color: #007BFF;
-}
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    table-layout: fixed;
-}
+        header{
+        background-color: var(--header-color);
 
-th, td {
-    padding: 12px;
-    text-align: left;
-    border: 1px solid #ccc;
-}
+        }
 
-th {
-    background-color: #007BFF;
-    color: white;
-    font-weight: bold;
-    border-bottom: 2px solid #004a99;
-    white-space: normal;
-    overflow: visible;
-}
+        h3 {
+            text-align: center;
+            color: #007BFF;
+            padding-top: 20px;
+        }
 
-td {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 150px;
-}
+        .table-container {
+            overflow-x: auto; /* Hace que la tabla sea desplazable horizontalmente */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
 
-td:focus {
-    white-space: normal;
-    overflow: visible;
-    outline: none;
-}
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed; /* Asegura que las celdas tengan un ancho fijo */
+            min-width: 1500px; /* Ancho mínimo de la tabla */
+        }
 
-.new-row {
-    background-color: #80F5D2;
-}
+        th, td {
+            font-family: 'Arial', sans-serif;
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ccc;
+            white-space: nowrap; /* Evita que el texto se envuelva */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 150px; /* Ancho fijo para las celdas */
+        }
 
-td[contenteditable="true"]:hover {
-    background-color: #f0f8ff;
-    cursor: text;
-}
+        th {
+            background-color: #007BFF;
+            color: white;
+            font-weight: bold;
+            border-bottom: 2px solid #004a99;
+        }
 
-.search-container {
-    display: inline-block;
-    position: relative;
-}
+        td:focus {
+            outline: none;
+        }
 
-.search-button, .filter-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 18px;
-    padding: 8px;
-    margin-left: 10px;
-}
+        td[contenteditable="true"]:hover {
+            background-color: #f0f8ff;
+            cursor: text;
+        }
 
-#search-input {
-    position: absolute;
-    right: 0;
-    top: 100%;
-    margin-top: 5px;
-    padding: 8px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 200px;
-}
+        .sortable {
+            cursor: pointer;
+        }
 
-.search-container input.expanded {
-    display: block;
-}
+        .sortable:after {
+            content: ' ▼';
+        }
 
-.filter-container {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: #007BFF;
-    border: 1px solid #004a99;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 10;
-    padding: 10px;
-    width: 220px;
-    color: white;
-    margin-left: 10px;
-    text-align: left;
-}
+        .sortable.asc:after {
+            content: ' ▲';
+        }
 
-.filter-container label {
-    display: block;
-    margin: 5px 0;
-    text-align: left;
-}
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+        }
 
-.filter-container.expanded {
-    display: block;
-}
+        .left-actions, .center-actions, .right-actions {
+            display: flex;
+            gap: 10px;
+        }
 
-.sortable {
-    cursor: pointer;
-}
+        .icon-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 8px;
+            margin-left: 10px;
+        }
 
-.sortable:after {
-    content: ' ▼';
-}
+        .icon-button .icon {
+            font-size: 24px;
+            color: #007BFF;
+        }
 
-.sortable.asc:after {
-    content: ' ▲';
-}
+        .icon-button:hover .icon {
+            color: #0056b3;
+        }
 
-.icon-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 18px;
-    padding: 8px;
-    margin-left: 10px;
-}
+        .search-container {
+            display: inline-block;
+            position: relative;
+        }
 
-.icon-button .icon {
-    font-size: 24px;
-    color: #007BFF;
-}
+        .search-button, .filter-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 8px;
+            margin-left: 10px;
+        }
 
-.icon-button:hover .icon {
-    color: #0056b3;
-}
+        #search-input {
+            position: absolute;
+            right: 0;
+            top: 100%;
+            margin-top: 5px;
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 200px;
+        }
 
-.actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-}
+        .search-container input.expanded {
+            display: block;
+        }
 
-.left-actions {
-    display: flex;
-    justify-content: flex-start;
-}
+        .filter-container {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #007BFF;
+            border: 1px solid #004a99;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            padding: 10px;
+            width: 220px;
+            color: white;
+            margin-left: 10px;
+            text-align: left;
+        }
 
-.center-actions {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-}
+        .filter-container label {
+            display: block;
+            margin: 5px 0;
+            text-align: left;
+        }
 
-.right-actions {
-    display: flex;
-    justify-content: flex-end;
-}
+        .filter-container.expanded {
+            display: block;
+        }
+
+        .new-row {
+            background-color: #80F5D2;
+        }
+
+
+        /*Moverte por la pantalla*/
+        .table-container {
+            cursor: grab;
+        }
+
+        .table-container.active {
+            cursor: grabbing;
+        }

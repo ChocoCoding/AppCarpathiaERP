@@ -1,28 +1,39 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="/css/estiloslogin.css">
 </head>
 <body>
 <div class="login-container">
+    <div class="logo-container">
+        <img src="images/logo_carpathia.png" alt="Logo Carpathia" class="logo">
+    </div>
     <h2>Login</h2>
     <form th:action="@{/authenticate}" method="post">
-        <div>
-            <label>Username:</label>
-            <input type="text" name="username" required />
+        <div class="input-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required />
         </div>
-        <div>
-            <label>Password:</label>
-            <input type="password" name="password" required />
+        <div class="input-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required />
         </div>
-        <div>
+        <div class="button-container">
             <button type="submit">Login</button>
         </div>
     </form>
-    <p th:if="${error}" style="color:red;">[[${error}]]</p>
-    <p th:if="${param.logout}" style="color:green;">You have been logged out successfully.</p>
+    <p th:if="${error}" class="error-message" th:text="${error}"></p>
+    <p th:if="${param.logout}" class="success-message">You have been logged out successfully.</p>
 </div>
+<script>
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', function() {
+                this.classList.toggle('has-text', this.value.length > 0);
+            });
+        });
+    </script>
 </body>
 </html>
-

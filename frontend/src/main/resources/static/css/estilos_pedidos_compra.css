@@ -1,174 +1,175 @@
-/* General styles */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f7f6;
-    margin: 0;
-    padding: 20px;
-    color: #333;
+:root {
+    --background-color: #f0f4f8;
+    --header-color: #2c3e50;
+    --text-color: #333333;
 }
 
-h1 {
-    text-align: center;
-    color: #007BFF;
-}
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
 
-/* Header container */
-.header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0;
-}
+        header{
+        background-color: var(--header-color);
 
-/* Align blocks */
-.left-block {
-    flex: 1;
-    text-align: left;
-}
+        }
 
-.center-block {
-    flex: 1;
-    text-align: center;
-}
+        h3 {
+             text-align: center;
+             color: #007BFF;
+             padding-top: 20px;
+        }
 
-.right-block {
-    flex: 1;
-    text-align: right;
-}
+        .table-container {
+            overflow-x: auto; /* Hace que la tabla sea desplazable horizontalmente */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
 
-/* Table styles */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    table-layout: fixed; /* Fija el tamaño de las celdas */
-}
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed; /* Asegura que las celdas tengan un ancho fijo */
+            min-width: 1500px; /* Ancho mínimo de la tabla */
+        }
 
-th, td {
-    padding: 12px;
-    text-align: left;
-    border: 1px solid #ccc;
-}
+        th, td {
+            font-family: 'Arial', sans-serif;
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ccc;
+            white-space: nowrap; /* Evita que el texto se envuelva */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 150px; /* Ancho fijo para las celdas */
+        }
 
-th {
-    background-color: #007BFF;
-    color: white;
-    font-weight: bold;
-    border-bottom: 2px solid #004a99;
-    white-space: normal; /* Permite que el texto en los th se muestre completo */
-    overflow: visible; /* Asegura que no haya recorte en los th */
-}
+        th {
+            background-color: #007BFF;
+            color: white;
+            font-weight: bold;
+            border-bottom: 2px solid #004a99;
+        }
 
-td {
-    white-space: nowrap; /* Evita que el texto se desborde a nuevas líneas */
-    overflow: hidden; /* Oculta el texto que no cabe en la celda */
-    text-overflow: ellipsis; /* Añade puntos suspensivos al texto que no cabe */
-    max-width: 150px; /* Fija el ancho máximo de las celdas */
-}
+        td:focus {
+            outline: none;
+        }
 
-/* Al hacer clic, se muestra todo el contenido */
-td:focus {
-    white-space: normal; /* Permite que el texto haga wrap */
-    overflow: visible; /* Muestra todo el contenido */
-    outline: none; /* Elimina el borde de enfoque predeterminado */
-}
+        td[contenteditable="true"]:hover {
+            background-color: #f0f8ff;
+            cursor: text;
+        }
 
-/* New row background */
-.new-row {
-    background-color: #80F5D2; /* Verde clarito */
-}
+        .sortable {
+            cursor: pointer;
+        }
 
-/* Hover effect to indicate editable cells */
-td[contenteditable="true"]:hover {
-    background-color: #f0f8ff;
-    cursor: text;
-}
+        .sortable:after {
+            content: ' ▼';
+        }
 
-.search-container {
-    display: inline-block;
-    position: relative;
-}
+        .sortable.asc:after {
+            content: ' ▲';
+        }
 
-.search-button, .filter-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 18px;
-    padding: 8px;
-    margin-left: 10px;
-}
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+        }
 
-#search-input {
-    position: absolute;
-    right: 0;
-    top: 100%;
-    margin-top: 5px;
-    padding: 8px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 200px;
-}
+        .left-actions, .center-actions, .right-actions {
+            display: flex;
+            gap: 10px;
+        }
 
-.search-container input.expanded {
-    display: block;
-}
+        .icon-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 8px;
+            margin-left: 10px;
+        }
 
-/* Dropdown styles */
-.filter-container {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0; /* Ajusta los filtros a la izquierda */
-    background-color: #007BFF; /* Mismo color que las cabeceras */
-    border: 1px solid #004a99;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 10;
-    padding: 10px;
-    width: 220px; /* Aumentado para que quepan los nombres */
-    color: white;
-    margin-left: 10px; /* Pequeña separación del borde izquierdo */
-    text-align: left; /* Alinea el texto a la izquierda */
-}
+        .icon-button .icon {
+            font-size: 24px;
+            color: #007BFF;
+        }
 
-.filter-container label {
-    display: block;
-    margin: 5px 0;
-    text-align: left; /* Alinea cada etiqueta a la izquierda */
-}
+        .icon-button:hover .icon {
+            color: #0056b3;
+        }
 
-.filter-container.expanded {
-    display: block;
-}
+        .search-container {
+            display: inline-block;
+            position: relative;
+        }
 
-/* Sortable styles */
-.sortable {
-    cursor: pointer;
-}
+        .search-button, .filter-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 8px;
+            margin-left: 10px;
+        }
 
-.sortable:after {
-    content: ' ▼';
-}
+        #search-input {
+            position: absolute;
+            right: 0;
+            top: 100%;
+            margin-top: 5px;
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 200px;
+        }
 
-.sortable.asc:after {
-    content: ' ▲';
-}
+        .search-container input.expanded {
+            display: block;
+        }
 
-.icon-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 18px;
-    padding: 8px;
-    margin-left: 10px;
-}
+        .filter-container {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #007BFF;
+            border: 1px solid #004a99;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            padding: 10px;
+            width: 220px;
+            color: white;
+            margin-left: 10px;
+            text-align: left;
+        }
 
-.icon-button .icon {
-    font-size: 24px;
-    color: #007BFF;
-}
+        .filter-container label {
+            display: block;
+            margin: 5px 0;
+            text-align: left;
+        }
 
-.icon-button:hover .icon {
-    color: #0056b3;
-}
+        .filter-container.expanded {
+            display: block;
+        }
+
+        .new-row {
+            background-color: #80F5D2;
+        }
+
+
+        /*Moverte por la pantalla*/
+        .table-container {
+            cursor: grab;
+        }
+
+        .table-container.active {
+            cursor: grabbing;
+        }

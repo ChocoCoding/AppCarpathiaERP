@@ -22,9 +22,22 @@ function guardarCambios() {
         validarExistenciaPedidoCompra(idPedidoCompra)
             .then(existe => {
                 if (!existe) {
-                    alert('El ID del Pedido de Compra no existe. Por favor, verifíquelo.');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'ID no válido',
+                        text: 'El ID del Pedido de Compra no existe. Por favor, verifíquelo.',
+                        toast: true,
+                        position: 'top-end',
+                        timer: 3000,
+                        timerProgressBar: true,
+                        showConfirmButton: false
+                    });
                     return;
                 }
+
+                // Validaciones de formato para campos específicos
+                const precioField = fila.querySelector('.precio');
+                const pesoNetoField = fila.querySelector('.peso-neto');
 
                 const datos = {
                     idPedidoCompra: idPedidoCompra,
@@ -55,15 +68,43 @@ function guardarCambios() {
                     })
                     .then(response => {
                         if (response.ok) {
-                            alert('Línea creada con éxito');
-                            location.reload();
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Creación exitosa',
+                                text: 'Línea creada con éxito.',
+                                toast: true,
+                                position: 'top-end',
+                                timer: 500,
+                                timerProgressBar: true,
+                                showConfirmButton: false
+                            }).then(() => {
+                                location.reload();
+                            });
                         } else {
-                            alert('Error al crear la línea');
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: 'Error al crear la línea.',
+                                toast: true,
+                                position: 'top-end',
+                                timer: 2000,
+                                timerProgressBar: true,
+                                showConfirmButton: false
+                            });
                         }
                     })
                     .catch(error => {
                         console.error('Error en la solicitud:', error);
-                        alert('Error al crear la línea');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Error al crear la línea.',
+                            toast: true,
+                            position: 'top-end',
+                            timer: 2000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        });
                     });
                 } else {
                     // Actualizar la línea existente
@@ -76,35 +117,106 @@ function guardarCambios() {
                     })
                     .then(response => {
                         if (response.ok) {
-                            alert('Cambios guardados con éxito');
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Guardado exitoso',
+                                text: 'Cambios guardados con éxito.',
+                                toast: true,
+                                position: 'top-end',
+                                timer: 500,
+                                timerProgressBar: true,
+                                showConfirmButton: false
+                            });
                             fila.classList.remove('modificado');
                         } else {
-                            alert('Error al guardar los cambios');
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: 'Error al guardar los cambios. Revisa los campos',
+                                toast: true,
+                                position: 'top-end',
+                                timer: 2000,
+                                timerProgressBar: true,
+                                showConfirmButton: false
+                            });
                         }
                     })
                     .catch(error => {
                         console.error('Error en la solicitud:', error);
-                        alert('Error al guardar los cambios');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Error al guardar los cambios.',
+                            toast: true,
+                            position: 'top-end',
+                            timer: 2000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        });
                     });
                 }
             })
             .catch(error => {
                 console.error('Error al validar el ID del Pedido de Compra:', error);
-                alert('Error al validar el ID del Pedido de Compra.');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Error al validar el ID del Pedido de Compra.',
+                    toast: true,
+                    position: 'top-end',
+                    timer: 2000,
+                    timerProgressBar: true,
+                    showConfirmButton: false
+                });
             });
     });
 }
 
 function calcularValorCompra(elemento) {
     const fila = elemento.closest('tr');
-    const pesoNeto = parseFloat(fila.querySelector('.peso-neto').innerText.trim()) || 0;
-    const precio = parseFloat(fila.querySelector('.precio').innerText.trim()) || 0;
+    const pesoNetoField = fila.querySelector('.peso-neto');
+    const precioField = fila.querySelector('.precio');
+
+    // Función para corregir el formato y mantener la posición del cursor
+    function corregirFormatoDecimal(field) {
+        let selection = window.getSelection();
+        let range = selection.getRangeAt(0);
+        let startOffset = range.startOffset;
+
+        // Reemplazar comas por puntos
+        const originalText = field.innerText;
+        const newText = originalText.replace(',', '.');
+
+        // Actualiza el texto solo si es necesario
+        if (originalText !== newText) {
+            field.innerText = newText;
+
+            // Coloca el cursor en la posición correcta
+            let textNode = field.firstChild;
+            if (textNode) {
+                let newOffset = Math.min(startOffset + (newText.length - originalText.length), newText.length);
+                range.setStart(textNode, newOffset);
+                range.setEnd(textNode, newOffset);
+                selection.removeAllRanges();
+                selection.addRange(range);
+            }
+        }
+    }
+
+    // Aplicar corrección de formato en ambos campos
+    corregirFormatoDecimal(pesoNetoField);
+    corregirFormatoDecimal(precioField);
+
+    const pesoNeto = parseFloat(pesoNetoField.innerText.trim()) || 0;
+    const precio = parseFloat(precioField.innerText.trim()) || 0;
 
     const valorCompraTotal = pesoNeto * precio;
 
     fila.querySelector('.valor-compra-total').innerText = valorCompraTotal.toFixed(2);
     fila.classList.add('modificado'); // Marca la fila como modificada
 }
+
+
 
 function validarExistenciaPedidoCompra(idPedidoCompra) {
     return fetch(`http://localhost:8702/api/compras/pedidos_compra/${idPedidoCompra}/exists`, {
@@ -121,36 +233,81 @@ function validarExistenciaPedidoCompra(idPedidoCompra) {
     });
 }
 
-
 function eliminarLineaPedido(idLineaPedido) {
-
     if (!idLineaPedido) {
         console.error("ID de línea de pedido no válido:", idLineaPedido);
-        alert("No se puede eliminar esta línea porque el ID es nulo.");
+        Swal.fire({
+            icon: 'error',
+            title: 'ID no válido',
+            text: 'No se puede eliminar esta línea porque el ID es nulo.',
+            toast: true,
+            position: 'top-end',
+            timer: 2000,
+            timerProgressBar: true,
+            showConfirmButton: false
+        });
         return;
     }
 
-
-    if (confirm("¿Estás seguro de que deseas eliminar esta línea?")) {
-        fetch(`http://localhost:8702/api/compras/lineas_pedidos_compra/${idLineaPedido}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => {
-            if (response.ok) {
-                alert('Línea eliminada con éxito');
-                location.reload();
-            } else {
-                alert('Error al eliminar la línea');
-            }
-        })
-        .catch(error => {
-            console.error('Error en la solicitud:', error);
-            alert('Error al eliminar la línea');
-        });
-    }
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: "¿Estás seguro de que deseas eliminar esta línea? ¡Esta acción no se puede deshacer!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch(`http://localhost:8702/api/compras/lineas_pedidos_compra/${idLineaPedido}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Eliminado',
+                        text: 'Línea eliminada con éxito.',
+                        toast: true,
+                        position: 'top-end',
+                        timer: 300,
+                        timerProgressBar: true,
+                        showConfirmButton: false
+                    }).then(() => {
+                        location.reload(); // Recargar la página después de eliminar
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Error al eliminar la línea.',
+                        toast: true,
+                        position: 'top-end',
+                        timer: 2000,
+                        timerProgressBar: true,
+                        showConfirmButton: false
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error en la solicitud:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Error al eliminar la línea.',
+                    toast: true,
+                    position: 'top-end',
+                    timer: 2000,
+                    timerProgressBar: true,
+                    showConfirmButton: false
+                });
+            });
+        }
+    });
 }
 
 function crearLineaPedido() {
@@ -169,11 +326,11 @@ function crearLineaPedido() {
         <td contenteditable="true" class="editable"></td>
         <td contenteditable="true" class="editable"></td>
         <td contenteditable="true" class="editable"></td>
+        <td contenteditable="true" class="editable peso-neto" oninput="calcularValorCompra(this)"></td>
         <td contenteditable="true" class="editable"></td>
         <td contenteditable="true" class="editable"></td>
-        <td contenteditable="true" class="editable"></td>
-        <td contenteditable="true" class="editable"></td>
-        <td contenteditable="true" class="editable"></td>
+        <td contenteditable="true" class="editable precio" oninput="calcularValorCompra(this)"></td>
+        <td contenteditable="true" class="editable valor-compra-total"></td>
         <td contenteditable="true" class="editable"></td>
         <td contenteditable="true" class="editable"></td>
     `;
@@ -264,4 +421,37 @@ document.addEventListener('click', function(event) {
         searchInput.classList.remove('expanded');
         filterContainer.classList.remove('expanded');
    }
-   });
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    const tableContainer = document.querySelector('.table-container');
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    tableContainer.addEventListener('mousedown', (e) => {
+        isDown = true;
+        tableContainer.classList.add('active');
+        startX = e.pageX - tableContainer.offsetLeft;
+        scrollLeft = tableContainer.scrollLeft;
+    });
+
+    tableContainer.addEventListener('mouseleave', () => {
+        isDown = false;
+        tableContainer.classList.remove('active');
+    });
+
+    tableContainer.addEventListener('mouseup', () => {
+        isDown = false;
+        tableContainer.classList.remove('active');
+    });
+
+    tableContainer.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - tableContainer.offsetLeft;
+        const walk = (x - startX) * 2; // El valor multiplica la velocidad de desplazamiento
+        tableContainer.scrollLeft = scrollLeft - walk;
+    });
+});
+

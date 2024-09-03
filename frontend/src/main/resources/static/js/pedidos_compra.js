@@ -200,3 +200,35 @@ function goBack() {
             filterContainer.classList.remove('expanded');
         }
     });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const tableContainer = document.querySelector('.table-container');
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        tableContainer.addEventListener('mousedown', (e) => {
+            isDown = true;
+            tableContainer.classList.add('active');
+            startX = e.pageX - tableContainer.offsetLeft;
+            scrollLeft = tableContainer.scrollLeft;
+        });
+
+        tableContainer.addEventListener('mouseleave', () => {
+            isDown = false;
+            tableContainer.classList.remove('active');
+        });
+
+        tableContainer.addEventListener('mouseup', () => {
+            isDown = false;
+            tableContainer.classList.remove('active');
+        });
+
+        tableContainer.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - tableContainer.offsetLeft;
+            const walk = (x - startX) * 2; // El valor multiplica la velocidad de desplazamiento
+            tableContainer.scrollLeft = scrollLeft - walk;
+        });
+    });

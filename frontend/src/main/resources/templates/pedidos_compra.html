@@ -3,28 +3,28 @@
 <head>
     <title>Pedidos de Compra</title>
     <link rel="stylesheet" href="/css/estilos_pedidos_compra.css">
-    <link rel="stylesheet" type="text/css" href="/css/estilosmodulo.css">
     <script src="/js/pedidos_compra.js"></script>
 </head>
 <body>
 <header>
-    <div class="header-container">
-        <div class="left-block">
+    <h3>Pedidos de Compra</h3>
+    <div class="actions">
+        <div class="left-actions">
             <button class="icon-button" onclick="goBack()">
                 <span class="icon">🔙</span> <!-- Icono de Volver Atrás -->
             </button>
         </div>
-        <div class="center-block">
+        <div class="center-actions">
             <button class="icon-button" onclick="guardarCambios()">
                 <span class="icon">💾</span> <!-- Icono de Guardar -->
             </button>
             <button class="icon-button" onclick="crearPedidoCompra()">
-                <span class="icon">➕</span> <!-- Icono de Crear Pedido -->
+                <span class="icon">➕</span> <!-- Icono de Crear Línea -->
             </button>
             <div class="search-container">
                 <button class="icon-button search-button" onclick="toggleSearch()">🔍</button>
-                <input type="text" id="search-input" oninput="filtrarPedidos()" placeholder="Buscar..." style="display: none;">
                 <button class="icon-button filter-button" onclick="toggleFilter()">⚙️</button>
+                <input type="text" id="search-input" oninput="filtrarPedidos()" placeholder="Buscar..." style="display: none;">
                 <div class="filter-container">
                     <label><input type="checkbox" name="columnFilter" value="2"> ID</label>
                     <label><input type="checkbox" name="columnFilter" value="3"> Nº Operación</label>
@@ -37,16 +37,14 @@
                 </div>
             </div>
         </div>
-        <div class="right-block">
+        <div class="right-actions">
             <button class="icon-button" onclick="logout()">
                 <span class="icon">🔒</span> <!-- Icono de Cerrar Sesión -->
             </button>
         </div>
     </div>
-    <h1>Pedidos de Compra</h1>
 </header>
-<div class="content-container">
-    <h2>Lista de Pedidos de Compra</h2>
+<div class="table-container">
     <table>
         <thead>
         <tr>

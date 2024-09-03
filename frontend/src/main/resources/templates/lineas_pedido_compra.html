@@ -2,11 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Líneas de Pedido de Compra</title>
-    <link rel="stylesheet" href="/css/estilos_pedidos_compra_det.css">
+    <link rel="stylesheet" href="/css/estilos_lineas_pedido_compra.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/js/lineas_pedido_compra.js"></script>
 </head>
 <body>
 <header>
-    <h1>Líneas de Pedido de Compra</h1>
+    <h3>Lineas pedidos de compra</h3>
     <div class="actions">
         <div class="left-actions">
             <button class="icon-button" onclick="goBack()">
@@ -50,8 +52,8 @@
         </div>
     </div>
 </header>
-<div class="content-container">
-    <h2>Lista de Líneas de Pedido de Compra</h2>
+
+<div class="table-container"> <!-- Este contenedor permite el desplazamiento horizontal -->
     <table>
         <thead>
         <tr>
@@ -86,7 +88,8 @@
             <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.n_contenedor}">Nº Contenedor</td>
             <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.producto}">Producto</td>
             <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.talla}">Talla</td>
-            <td contenteditable="true" class="editable peso-neto" oninput="calcularValorCompra(this)" th:text="${linea.p_neto}">Peso Neto</td>            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.unidad}">Unidad</td>
+            <td contenteditable="true" class="editable peso-neto" oninput="calcularValorCompra(this)" th:text="${linea.p_neto}">Peso Neto</td>
+            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.unidad}">Unidad</td>
             <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.bultos}">Bultos</td>
             <td contenteditable="true" class="editable precio" oninput="calcularValorCompra(this)" th:text="${linea.precio}">Precio</td>
             <td contenteditable="true" class="editable valor-compra-total" th:text="${linea.valor_compra}">Valor Compra Total</td>
@@ -97,6 +100,6 @@
     </table>
 </div>
 
-<script src="/js/lineas_pedido_compra.js"></script>
+
 </body>
 </html>
