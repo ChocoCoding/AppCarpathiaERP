@@ -3,12 +3,14 @@ import com.app.microservicio.compras.repository.LineaPedidoCompraRepository;
 import com.app.microservicio.compras.repository.PedidoCompraRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.app.microservicio.compras.entities.PedidoCompraDet;
 import com.app.microservicio.compras.repository.PedidoCompraDetRepository;
 import com.app.microservicio.compras.DTO.PedidoCompraDetDTO;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -25,17 +27,16 @@ public class PedidoCompraDetService {
     @Autowired
     private LineaPedidoCompraRepository lineaPedidoCompraRepository;
 
+    @Autowired
+    private CalculoService calculoService;
+
     public Optional<PedidoCompraDetDTO> obtenerPedidoCompraDet(Long idPedidoCompra) {
         return pedidoCompraDetRepository.findById(idPedidoCompra)
                 .map(this::convertirADTO);
     }
 
-    public PedidoCompraDetDTO guardarPedidoCompraDet(PedidoCompraDetDTO pedidoCompraDetDTO) {
-        return convertirADTO(pedidoCompraDetRepository.save(convertirAEntidad(pedidoCompraDetDTO)));
-    }
-
     public PedidoCompraDetDTO actualizarPedidoCompraDet(Long id, PedidoCompraDetDTO pedidoCompraDetDTO) {
-// Verificar si ya existe un registro con el mismo ID
+        // Verificar si ya existe un registro con el mismo ID
         Optional<PedidoCompraDet> existente = pedidoCompraDetRepository.findById(id);
 
         PedidoCompraDet pedidoCompraDet;
@@ -62,8 +63,12 @@ public class PedidoCompraDetService {
         pedidoCompraDet.setObservaciones(pedidoCompraDetDTO.getObservaciones());
         pedidoCompraDet.setPedidoCompra(pedidoCompraRepository.findById(pedidoCompraDetDTO.getIdPedidoCompra()).orElse(null));
 
+        //Calculamos el promedio
+        calculoService.recalcularPromedio(pedidoCompraDet.getIdPedidoCompraDet());
         return convertirADTO(pedidoCompraDetRepository.save(pedidoCompraDet));
     }
+
+
 
     private PedidoCompraDetDTO convertirADTO(PedidoCompraDet pedidoCompraDet) {
         PedidoCompraDetDTO pedidoCompraDetDTO = new PedidoCompraDetDTO();
@@ -121,6 +126,8 @@ public class PedidoCompraDetService {
          Long totalBultos = lineaPedidoCompraRepository.sumBultosByPedidoCompraId(idPedidoCompra);
          pedidoCompraDetDTO.setPesoNetoTotal(pesoNetoTotal);
          pedidoCompraDetDTO.setTotalBultos(totalBultos);
+        //Calculamos el promedio
+        calculoService.recalcularPromedio(pedidoCompraDetDTO.getIdPedidoCompra());
     return convertirADTO(pedidoCompraDetRepository.save(convertirAEntidad(pedidoCompraDetDTO)));
     }
 }

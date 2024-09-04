@@ -30,6 +30,9 @@ public class LineaPedidoCompraService {
     @Autowired
     private PedidoCompraDetRepository pedidoCompraDetRepository;
 
+    @Autowired
+    private CalculoService calculoService;
+
     public List<LineaPedidoCompraDTO> obtenerTodasLasLineasPedidoCompra() {
         // Supongamos que tienes un repositorio que devuelve la lista de LineaPedidoCompraDTO
         return lineaPedidoCompraRepository.findAll().stream()
@@ -74,8 +77,9 @@ public class LineaPedidoCompraService {
             // Guardar la línea de pedido actualizada
             LineaPedidoCompra lineaActualizada = lineaPedidoCompraRepository.save(lineaPedidoCompra);
             actualizarPesoNetoTotal(lineaActualizada.getPedidoCompra().getIdPedidoCompra());
-            recalcularTotalBultos(lineaActualizada.getPedidoCompra().getIdPedidoCompra());
-            recalcularValoresCompra(lineaActualizada.getPedidoCompra().getIdPedidoCompra());
+            calculoService.recalcularTotalBultos(lineaActualizada.getPedidoCompra().getIdPedidoCompra());
+            calculoService.recalcularValoresCompra(lineaActualizada.getPedidoCompra().getIdPedidoCompra());
+            calculoService.recalcularPromedio(lineaActualizada.getPedidoCompra().getIdPedidoCompra());
             return convertirADTO(lineaActualizada);
         } else {
             throw new EntityNotFoundException("LineaPedidoCompra no encontrada para el ID de pedido y número de línea especificados.");
@@ -90,8 +94,9 @@ public class LineaPedidoCompraService {
         Long idPedidoCompra = lineaExistente.getPedidoCompra().getIdPedidoCompra();
         lineaPedidoCompraRepository.deleteById(idNumeroLinea);
         actualizarPesoNetoTotal(idPedidoCompra);
-        recalcularTotalBultos(idPedidoCompra);
-        recalcularValoresCompra(idPedidoCompra);
+        calculoService.recalcularTotalBultos(idPedidoCompra);
+        calculoService.recalcularValoresCompra(idPedidoCompra);
+        calculoService.recalcularPromedio(idPedidoCompra);
     }
 
     private void actualizarPesoNetoTotal(Long idPedidoCompra) {
@@ -106,31 +111,7 @@ public class LineaPedidoCompraService {
     }
 
 
-    public ResponseEntity<Integer> recalcularTotalBultos(Long pedidoCompraId) {
-        // Sumar los bultos
-        int totalBultos = Math.toIntExact(lineaPedidoCompraRepository.sumBultosByPedidoCompraId(pedidoCompraId));
 
-        // Actualizar el total de bultos en PedidoCompraDet
-        PedidoCompraDet pedidoCompraDet = pedidoCompraDetRepository.findByIdPedidoCompra(pedidoCompraId).orElse(null);
-        if (pedidoCompraDet!= null){
-            pedidoCompraDet.setTotalBultos((long) totalBultos);
-            pedidoCompraDetRepository.save(pedidoCompraDet);
-        }
-        return ResponseEntity.ok(totalBultos);
-    }
-
-    public ResponseEntity<BigDecimal> recalcularValoresCompra(Long pedidoCompraId) {
-        // Sumar los bultos
-        BigDecimal totalValoresCompra = lineaPedidoCompraRepository.sumValorCompraByPedidoCompraId(pedidoCompraId);
-
-        // Actualizar el total de bultos en PedidoCompraDet
-        PedidoCompraDet pedidoCompraDet = pedidoCompraDetRepository.findByIdPedidoCompra(pedidoCompraId).orElse(null);
-        if (pedidoCompraDet!= null){
-            pedidoCompraDet.setValorCompraTotal(totalValoresCompra);
-            pedidoCompraDetRepository.save(pedidoCompraDet);
-        }
-        return ResponseEntity.ok(totalValoresCompra);
-    }
 
 
     private LineaPedidoCompraDTO convertirADTO(LineaPedidoCompra lineaPedidoCompra) {

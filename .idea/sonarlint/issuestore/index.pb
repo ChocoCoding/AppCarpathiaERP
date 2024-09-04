@@ -103,3 +103,5 @@ Vcompras/src/main/java/com/app/microservicio/compras/controllers/ComprasControll
 Qcompras/src/main/java/com/app/microservicio/compras/services/ComprasServices.java,7\e\7ef0d9caf1b4e35c535b736e6dd9ca1ecba920bd
 €
 Pcompras/src/main/java/com/app/microservicio/compras/services/ComprasService.java,a\7\a76d2fea1a83ea92cc15d5f646ae689e2c37bb80
+€
+Pcompras/src/main/java/com/app/microservicio/compras/services/CalculoService.java,5\f\5f31cc2ccc88f191e2fcd34ac24766687a107da4

@@ -1,6 +1,7 @@
 package com.app.microservicio.compras.controllers;
 
 import com.app.microservicio.compras.DTO.LineaPedidoCompraDTO;
+import com.app.microservicio.compras.services.CalculoService;
 import com.app.microservicio.compras.services.LineaPedidoCompraService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,9 @@ public class LineaPedidoCompraController {
 
     @Autowired
     private LineaPedidoCompraService lineaPedidoCompraService;
+
+    @Autowired
+    private CalculoService calculoService;
 
     @GetMapping()
     public ResponseEntity<List<LineaPedidoCompraDTO>> obtenerTodasLasLineasPedidoCompra() {
@@ -31,8 +35,9 @@ public class LineaPedidoCompraController {
     @PostMapping
     public ResponseEntity<LineaPedidoCompraDTO> crearLineaPedido(@RequestBody LineaPedidoCompraDTO lineaPedidoCompraDTO) {
         LineaPedidoCompraDTO nuevaLinea = lineaPedidoCompraService.crearLineaPedido(lineaPedidoCompraDTO);
-        lineaPedidoCompraService.recalcularTotalBultos(nuevaLinea.getIdPedidoCompra());
-        lineaPedidoCompraService.recalcularValoresCompra(nuevaLinea.getIdPedidoCompra());
+        calculoService.recalcularTotalBultos(nuevaLinea.getIdPedidoCompra());
+        calculoService.recalcularValoresCompra(nuevaLinea.getIdPedidoCompra());
+        calculoService.recalcularPromedio(nuevaLinea.getIdPedidoCompra());
         return ResponseEntity.ok(nuevaLinea);
     }
 
