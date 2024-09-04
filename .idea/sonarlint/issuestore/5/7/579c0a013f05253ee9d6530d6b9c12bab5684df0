@@ -1,8 +1,9 @@
 
-ˆ	java:S112<"FDefine and throw a dedicated exception instead of using a generic one.(†¦İ½8Õë›ë™2J$256a6e64-0494-49c9-b53f-cc49b6f1da78
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8ş„ÆÑ™2J$41a39454-1d5d-45f8-bd63-30a62546b026
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8É¿¿ğ›2J$35b11625-3b68-484e-8448-cda3254068fe
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8ÿ„ÆÑ™2J$e0e4909e-0d19-4689-9492-d29dbee07f9c
-“
-java:S1128"PRemove this unused import 'com.app.microservicio.compras.entities.PedidoCompra'.(èŞÄÃ8Êœë™2J$2986354d-89d0-42d9-9877-c3cff2a0b142
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8É¿¿ğ›2J$a29eb44c-daa4-4adf-9274-3cda7a09805c
+…
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8É¿¿ğ›2J$f6d40cf6-bb30-4330-ab7c-5066fa552fb7
+•
+java:S6204n"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8Ñ¿¿ğ›2J$92b656c4-44c4-4172-8b76-9090fab44e22

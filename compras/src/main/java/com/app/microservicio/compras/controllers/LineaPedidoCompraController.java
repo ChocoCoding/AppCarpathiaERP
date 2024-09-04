@@ -31,6 +31,8 @@ public class LineaPedidoCompraController {
     @PostMapping
     public ResponseEntity<LineaPedidoCompraDTO> crearLineaPedido(@RequestBody LineaPedidoCompraDTO lineaPedidoCompraDTO) {
         LineaPedidoCompraDTO nuevaLinea = lineaPedidoCompraService.crearLineaPedido(lineaPedidoCompraDTO);
+        lineaPedidoCompraService.recalcularTotalBultos(nuevaLinea.getIdPedidoCompra());
+        lineaPedidoCompraService.recalcularValoresCompra(nuevaLinea.getIdPedidoCompra());
         return ResponseEntity.ok(nuevaLinea);
     }
 
@@ -45,4 +47,6 @@ public class LineaPedidoCompraController {
         lineaPedidoCompraService.eliminarLineaPedido(idNumeroLinea);
         return ResponseEntity.noContent().build();
     }
+
+
 }

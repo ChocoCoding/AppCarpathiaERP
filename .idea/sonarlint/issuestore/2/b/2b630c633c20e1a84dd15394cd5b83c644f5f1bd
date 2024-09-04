@@ -1,7 +1,7 @@
 
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8¬²ØÒ™2J$51f0d338-c91d-46c9-94fe-fd44d023610f
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8¬²ØÒ™2J$1f1105ed-c1ad-4209-8ad9-4b1c7d7718da
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8ß³¤Ô™2J$4c79448a-00bd-41c6-aa44-82afb9c29a4c
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8ß³¤Ô™2J$73d8fb47-165d-4970-b547-a14cbd4c5d8d
 •
-java:S6204"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8ôÛ°Ó™2J$bd202d5a-6678-4ce1-bca0-91d990fe65d4
+java:S6204"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8ôÛ°Ó™2J$5ec5fe04-b777-4281-b852-996d5d314915

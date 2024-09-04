@@ -207,14 +207,19 @@ function calcularValorCompra(elemento) {
     corregirFormatoDecimal(pesoNetoField);
     corregirFormatoDecimal(precioField);
 
+    // Convertir el valor a número flotante con precisión completa
     const pesoNeto = parseFloat(pesoNetoField.innerText.trim()) || 0;
     const precio = parseFloat(precioField.innerText.trim()) || 0;
 
-    const valorCompraTotal = pesoNeto * precio;
+    // Multiplicar considerando la precisión completa
+    const valorCompraTotal = (pesoNeto * precio).toFixed(6); // Ajustar a 6 decimales, si es necesario
 
-    fila.querySelector('.valor-compra-total').innerText = valorCompraTotal.toFixed(2);
+    // Mostrar el resultado con la precisión deseada (por ejemplo, 6 decimales)
+    fila.querySelector('.valor-compra-total').innerText = valorCompraTotal;
+
     fila.classList.add('modificado'); // Marca la fila como modificada
 }
+
 
 
 

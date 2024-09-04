@@ -1,15 +1,19 @@
 package com.app.microservicio.compras.services;
 
 import com.app.microservicio.compras.DTO.EliminarPorLineaDTO;
+import com.app.microservicio.compras.entities.PedidoCompraDet;
+import com.app.microservicio.compras.repository.PedidoCompraDetRepository;
 import com.app.microservicio.compras.repository.PedidoCompraRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.app.microservicio.compras.entities.LineaPedidoCompra;
 import com.app.microservicio.compras.repository.LineaPedidoCompraRepository;
 import com.app.microservicio.compras.DTO.LineaPedidoCompraDTO;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,6 +26,9 @@ public class LineaPedidoCompraService {
 
     @Autowired
     private PedidoCompraRepository pedidoCompraRepository;
+
+    @Autowired
+    private PedidoCompraDetRepository pedidoCompraDetRepository;
 
     public List<LineaPedidoCompraDTO> obtenerTodasLasLineasPedidoCompra() {
         // Supongamos que tienes un repositorio que devuelve la lista de LineaPedidoCompraDTO
@@ -66,6 +73,9 @@ public class LineaPedidoCompraService {
 
             // Guardar la línea de pedido actualizada
             LineaPedidoCompra lineaActualizada = lineaPedidoCompraRepository.save(lineaPedidoCompra);
+            actualizarPesoNetoTotal(lineaActualizada.getPedidoCompra().getIdPedidoCompra());
+            recalcularTotalBultos(lineaActualizada.getPedidoCompra().getIdPedidoCompra());
+            recalcularValoresCompra(lineaActualizada.getPedidoCompra().getIdPedidoCompra());
             return convertirADTO(lineaActualizada);
         } else {
             throw new EntityNotFoundException("LineaPedidoCompra no encontrada para el ID de pedido y número de línea especificados.");
@@ -74,8 +84,54 @@ public class LineaPedidoCompraService {
 
     @Transactional
     public void eliminarLineaPedido(Long idNumeroLinea) {
+        LineaPedidoCompra lineaExistente = lineaPedidoCompraRepository.findById(idNumeroLinea)
+                .orElseThrow(() -> new RuntimeException("Línea de pedido no encontrada"));
+
+        Long idPedidoCompra = lineaExistente.getPedidoCompra().getIdPedidoCompra();
         lineaPedidoCompraRepository.deleteById(idNumeroLinea);
+        actualizarPesoNetoTotal(idPedidoCompra);
+        recalcularTotalBultos(idPedidoCompra);
+        recalcularValoresCompra(idPedidoCompra);
     }
+
+    private void actualizarPesoNetoTotal(Long idPedidoCompra) {
+        BigDecimal pesoNetoTotal = lineaPedidoCompraRepository.sumPesoNetoByPedidoCompraId(idPedidoCompra);
+
+        PedidoCompraDet pedidoCompraDet = pedidoCompraDetRepository.findByIdPedidoCompra(idPedidoCompra).orElse(null);
+
+        if (pedidoCompraDet != null){
+            pedidoCompraDet.setPesoNetoTotal(pesoNetoTotal);
+            pedidoCompraDetRepository.save(pedidoCompraDet);
+        }
+    }
+
+
+    public ResponseEntity<Integer> recalcularTotalBultos(Long pedidoCompraId) {
+        // Sumar los bultos
+        int totalBultos = Math.toIntExact(lineaPedidoCompraRepository.sumBultosByPedidoCompraId(pedidoCompraId));
+
+        // Actualizar el total de bultos en PedidoCompraDet
+        PedidoCompraDet pedidoCompraDet = pedidoCompraDetRepository.findByIdPedidoCompra(pedidoCompraId).orElse(null);
+        if (pedidoCompraDet!= null){
+            pedidoCompraDet.setTotalBultos((long) totalBultos);
+            pedidoCompraDetRepository.save(pedidoCompraDet);
+        }
+        return ResponseEntity.ok(totalBultos);
+    }
+
+    public ResponseEntity<BigDecimal> recalcularValoresCompra(Long pedidoCompraId) {
+        // Sumar los bultos
+        BigDecimal totalValoresCompra = lineaPedidoCompraRepository.sumValorCompraByPedidoCompraId(pedidoCompraId);
+
+        // Actualizar el total de bultos en PedidoCompraDet
+        PedidoCompraDet pedidoCompraDet = pedidoCompraDetRepository.findByIdPedidoCompra(pedidoCompraId).orElse(null);
+        if (pedidoCompraDet!= null){
+            pedidoCompraDet.setValorCompraTotal(totalValoresCompra);
+            pedidoCompraDetRepository.save(pedidoCompraDet);
+        }
+        return ResponseEntity.ok(totalValoresCompra);
+    }
+
 
     private LineaPedidoCompraDTO convertirADTO(LineaPedidoCompra lineaPedidoCompra) {
         LineaPedidoCompraDTO lineaPedidoCompraDTO = new LineaPedidoCompraDTO();
@@ -95,6 +151,7 @@ public class LineaPedidoCompraService {
         lineaPedidoCompraDTO.setValor_compra(lineaPedidoCompra.getValorCompra());
         lineaPedidoCompraDTO.setMoneda(lineaPedidoCompra.getMoneda());
         lineaPedidoCompraDTO.setPaisOrigen(lineaPedidoCompra.getPaisOrigen());
+
         return lineaPedidoCompraDTO;
     }
 

@@ -1,11 +1,11 @@
 
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8‹ü™Ö™2J$feb6c3ce-43ad-41b5-bb66-391a33144aec
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8«Ó³ñ›2J$33579a05-0e4d-4cdc-b649-cd133ca7665f
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8‹ü™Ö™2J$878d4a19-f9bf-4238-8b73-df8a9ae34275
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8«Ó³ñ›2J$ff80e3ae-db39-4a45-8643-203cba805439
+…
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8«Ó³ñ›2J$014d1d21-ed02-44de-a697-05474d777ac8
 •
-java:S6204"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8ü™Ö™2J$be4dd78a-96c3-4aee-a2f0-4ead7e2e0a3c
+java:S6204%"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8®Ó³ñ›2J$fa8ef364-d2bc-4c1a-95a0-b96152aa788f
 •
-java:S6204#"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8²È›Ö™2J$cc76ecc1-c87d-4730-8200-aab05f1545e3
-t
-java:S1128"RRemove this unused import 'com.app.microservicio.compras.DTO.EliminarPorLineaDTO'.(ÒØ¡¸øÿÿÿÿ8æ±´Ö™2
+java:S6204-"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8¯Ó³ñ›2J$63dbd125-494f-4842-9d09-d65c2dc01352

@@ -36,15 +36,43 @@ function goBack() {
                 })
                 .then(response => {
                     if (response.ok) {
-                        alert('Pedido creado con éxito');
-                        location.reload();
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Creación exitosa',
+                            text: 'Pedido creado con éxito.',
+                            toast: true,
+                            position: 'top-end',
+                            timer: 2000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        }).then(() => {
+                            location.reload();
+                        });
                     } else {
-                        alert('Error al crear el pedido');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Error al crear el pedido.',
+                            toast: true,
+                            position: 'top-end',
+                            timer: 2000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        });
                     }
                 })
                 .catch(error => {
                     console.error('Error en la solicitud:', error);
-                    alert('Error al crear el pedido');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Error al crear el pedido.',
+                        toast: true,
+                        position: 'top-end',
+                        timer: 2000,
+                        timerProgressBar: true,
+                        showConfirmButton: false
+                    });
                 });
             } else {
                 fetch(`http://localhost:8702/api/compras/pedidos_compra/${idPedidoCompra}`, {
@@ -56,24 +84,60 @@ function goBack() {
                 })
                 .then(response => {
                     if (response.ok) {
-                        alert('Cambios guardados con éxito');
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Guardado exitoso',
+                            text: 'Cambios guardados con éxito.',
+                            toast: true,
+                            position: 'top-end',
+                            timer: 2000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        });
                         fila.classList.remove('modificado');
                         fila.classList.remove('new-row');
                     } else {
-                        alert('Error al guardar los cambios');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Error al guardar los cambios.',
+                            toast: true,
+                            position: 'top-end',
+                            timer: 2000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        });
                     }
                 })
                 .catch(error => {
                     console.error('Error en la solicitud:', error);
-                    alert('Error al guardar los cambios');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Error al guardar los cambios.',
+                        toast: true,
+                        position: 'top-end',
+                        timer: 2000,
+                        timerProgressBar: true,
+                        showConfirmButton: false
+                    });
                 });
             }
         });
     }
 
-    function eliminarPedido(idPedidoCompra) {
-        console.log('Eliminar pedido con ID:', idPedidoCompra);
-        if (confirm("¿Estás seguro de que deseas eliminar este pedido?")) {
+function eliminarPedido(idPedidoCompra) {
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: "¿Estás seguro de que deseas eliminar este pedido? ¡Esta acción no se puede deshacer!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
             fetch(`http://localhost:8702/api/compras/pedidos_compra/${idPedidoCompra}`, {
                 method: 'DELETE',
                 headers: {
@@ -82,18 +146,47 @@ function goBack() {
             })
             .then(response => {
                 if (response.ok) {
-                    alert('Pedido eliminado con éxito');
-                    location.reload();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Eliminado',
+                        text: 'Pedido eliminado con éxito.',
+                        toast: true,
+                        position: 'top-end',
+                        timer: 2000,
+                        timerProgressBar: true,
+                        showConfirmButton: false
+                    }).then(() => {
+                        location.reload(); // Recargar la página después de eliminar
+                    });
                 } else {
-                    alert('Error al eliminar el pedido');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Error al eliminar el pedido.',
+                        toast: true,
+                        position: 'top-end',
+                        timer: 2000,
+                        timerProgressBar: true,
+                        showConfirmButton: false
+                    });
                 }
             })
             .catch(error => {
                 console.error('Error en la solicitud:', error);
-                alert('Error al eliminar el pedido');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Error al eliminar el pedido.',
+                    toast: true,
+                    position: 'top-end',
+                    timer: 2000,
+                    timerProgressBar: true,
+                    showConfirmButton: false
+                });
             });
         }
-    }
+    });
+}
 
     function crearPedidoCompra() {
         const tbody = document.querySelector('tbody');

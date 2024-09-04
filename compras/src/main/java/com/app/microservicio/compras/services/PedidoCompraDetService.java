@@ -1,7 +1,5 @@
 package com.app.microservicio.compras.services;
-
-import com.app.microservicio.compras.entities.LineaPedidoCompra;
-import com.app.microservicio.compras.entities.PedidoCompra;
+import com.app.microservicio.compras.repository.LineaPedidoCompraRepository;
 import com.app.microservicio.compras.repository.PedidoCompraRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +8,7 @@ import com.app.microservicio.compras.entities.PedidoCompraDet;
 import com.app.microservicio.compras.repository.PedidoCompraDetRepository;
 import com.app.microservicio.compras.DTO.PedidoCompraDetDTO;
 
-import java.sql.Date;
-import java.text.DateFormat;
-import java.time.LocalDate;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -25,6 +21,9 @@ public class PedidoCompraDetService {
 
     @Autowired
     private PedidoCompraRepository pedidoCompraRepository;
+
+    @Autowired
+    private LineaPedidoCompraRepository lineaPedidoCompraRepository;
 
     public Optional<PedidoCompraDetDTO> obtenerPedidoCompraDet(Long idPedidoCompra) {
         return pedidoCompraDetRepository.findById(idPedidoCompra)
@@ -117,6 +116,11 @@ public class PedidoCompraDetService {
     }
 
     public PedidoCompraDetDTO crearPedidoCompraDet(PedidoCompraDetDTO pedidoCompraDetDTO) {
+         Long idPedidoCompra = pedidoCompraDetDTO.getIdPedidoCompra();
+         BigDecimal pesoNetoTotal = lineaPedidoCompraRepository.sumPesoNetoByPedidoCompraId(idPedidoCompra);
+         Long totalBultos = lineaPedidoCompraRepository.sumBultosByPedidoCompraId(idPedidoCompra);
+         pedidoCompraDetDTO.setPesoNetoTotal(pesoNetoTotal);
+         pedidoCompraDetDTO.setTotalBultos(totalBultos);
     return convertirADTO(pedidoCompraDetRepository.save(convertirAEntidad(pedidoCompraDetDTO)));
     }
 }

@@ -3,6 +3,7 @@
 <head>
     <title>Detalles de Pedido de Compra</title>
     <link rel="stylesheet" href="/css/estilos_pedidos_compra_det.css">
+
 </head>
 <body>
 <header>
@@ -80,7 +81,7 @@
             <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${detalle.terminado}">Terminado</td>
             <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${detalle.factProveedor}">Fact. Proveedor</td>
             <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${detalle.n_fact_flete}">Nº Fact. Flete</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${detalle.fecha_pago_flete}">Fecha Pago Flete</td>
+            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${detalle.fechaPagoFleteFormatted}">Fecha Pago Flete</td>
             <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${detalle.n_bl}">Nº BL</td>
             <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${detalle.pesoNetoTotal}">Peso Neto Total</td>
             <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${detalle.totalBultos}">Total Bultos</td>
@@ -91,7 +92,7 @@
         </tbody>
     </table>
 </div>
-
+<script src="/js/sweet-alert2/dist/sweetalert2.all.min.js"></script>
 <script src="/js/pedidos_compra_det.js"></script>
 </body>
 </html>

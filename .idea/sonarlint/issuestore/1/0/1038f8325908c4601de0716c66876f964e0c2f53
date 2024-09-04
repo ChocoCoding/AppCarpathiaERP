@@ -1,6 +1,6 @@
 
-•	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¨ŞÄ”J$dfe5ee1a-daac-4d3e-bfbe-45e42e228354
-–	java:S116"VRename this field "n_operacion" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¡úíóøÿÿÿÿJ$14d2e005-2588-49e6-b46c-32436f0b537f
-’	java:S116"WRename this field "n_fact_flete" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‘ºòJ$a21fe8c9-9f5f-4783-9ec0-a36bfee00d8f
-–	java:S116"[Rename this field "fecha_pago_flete" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(­üÖ÷J$52ddeb7d-aece-4b99-a97c-f27aac365f7a
-Š	java:S116"ORename this field "n_bl" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(·ÔúùJ$572056d9-a1a2-43ed-9cb6-7be7545401a5
+•	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¨ŞÄ”J$7872a5b4-ebd8-4d4d-b5a1-a733c00c5e76
+–	java:S116"VRename this field "n_operacion" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¡úíóøÿÿÿÿJ$fa369be0-318f-49f8-8767-539f2df627fc
+’	java:S116"WRename this field "n_fact_flete" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‘ºòJ$9d7594cc-5fa6-4d0e-85cb-57188ac273f6
+¢	java:S116"[Rename this field "fecha_pago_flete" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¸õ‚Ûùÿÿÿÿ8ºó©º›2J$59c20e4d-2cf7-4edf-9f8a-38ac902a5c49
+‘	java:S116"ORename this field "n_bl" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(·Ôúù8ºó©º›2J$7eed5bde-4df2-4091-9cfa-030cae12678b

@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import com.app.microservicio.compras.entities.LineaPedidoCompra;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,4 +18,14 @@ public interface LineaPedidoCompraRepository extends JpaRepository<LineaPedidoCo
 
     @Query("SELECT l FROM LineaPedidoCompra l WHERE l.pedidoCompra.idPedidoCompra =: idPedidoCOmpra")
     List<LineaPedidoCompra> findByIdPedidoCompra(@Param("idPedidoCompra") Long idPedidoCompra);
+
+    @Query("SELECT SUM(l.pNeto) FROM LineaPedidoCompra l WHERE l.pedidoCompra.idPedidoCompra = :pedidoCompraId")
+    BigDecimal sumPesoNetoByPedidoCompraId(@Param("pedidoCompraId") Long pedidoCompraId);
+
+    @Query("SELECT SUM(lp.bultos) FROM LineaPedidoCompra lp WHERE lp.pedidoCompra.idPedidoCompra = :idPedidoCompra")
+    Long sumBultosByPedidoCompraId(@Param("idPedidoCompra") Long idPedidoCompra);
+
+    @Query("SELECT SUM(lp.valorCompra) FROM LineaPedidoCompra lp WHERE lp.pedidoCompra.idPedidoCompra = :idPedidoCompra")
+    BigDecimal sumValorCompraByPedidoCompraId(@Param("idPedidoCompra") Long idPedidoCompra);
+
 }

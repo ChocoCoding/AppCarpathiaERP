@@ -1,3 +1,5 @@
 
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8”ˆŸë™2J$c5fadca3-6221-4125-a5c9-5142b15c100c
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8”ˆŸë™2J$0ba7f7ac-0e05-4fbb-b3dd-5d4f85c92977
+›
+java:S1128"SRemove this unused import 'com.app.microservicio.compras.entities.PedidoCompraDet'.(®ž…ªüÿÿÿÿ8ü’‘º›2J$bad1ce1f-5f1b-4c55-a83b-693ce32d0680
