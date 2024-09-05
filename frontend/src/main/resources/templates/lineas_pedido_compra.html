@@ -3,28 +3,27 @@
 <head>
     <title>Líneas de Pedido de Compra</title>
     <link rel="stylesheet" href="/css/estilos_lineas_pedido_compra.css">
-
 </head>
 <body>
 <header>
     <h3>Lineas pedidos de compra</h3>
     <div class="actions">
         <div class="left-actions">
-            <button class="icon-button" onclick="goBack()">
+            <button class="icon-button" onclick="LineasPedidoApp.goBack()">
                 <span class="icon">🔙</span> <!-- Icono de Volver Atrás -->
             </button>
         </div>
         <div class="center-actions">
-            <button class="icon-button" onclick="guardarCambios()">
+            <button class="icon-button" onclick="LineasPedidoApp.guardarCambios()">
                 <span class="icon">💾</span> <!-- Icono de Guardar -->
             </button>
-            <button class="icon-button" onclick="crearLineaPedido()">
+            <button class="icon-button" onclick="LineasPedidoApp.crearLineaPedido()">
                 <span class="icon">➕</span> <!-- Icono de Crear Línea -->
             </button>
             <div class="search-container">
-                <button class="search-button" onclick="toggleSearch()">🔍</button>
-                <button class="filter-button" onclick="toggleFilter()">⚙️</button>
-                <input type="text" id="search-input" oninput="filtrarLineas()" placeholder="Buscar..." style="display: none;">
+                <button class="search-button" onclick="LineasPedidoApp.toggleSearch()">🔍</button>
+                <button class="filter-button" onclick="LineasPedidoApp.toggleFilter()">⚙️</button>
+                <input type="text" id="search-input" oninput="LineasPedidoApp.filtrarLineas()" placeholder="Buscar..." style="display: none;">
                 <div class="filter-container">
                     <label><input type="checkbox" name="columnFilter" value="2"> ID Pedido Compra</label>
                     <label><input type="checkbox" name="columnFilter" value="3"> Nº Línea</label>
@@ -45,7 +44,7 @@
             </div>
         </div>
         <div class="right-actions">
-            <button class="icon-button" onclick="logout()">
+            <button class="icon-button" onclick="LineasPedidoApp.logout()">
                 <span class="icon">🔒</span> <!-- Icono de Cerrar Sesión -->
             </button>
         </div>
@@ -57,49 +56,48 @@
         <thead>
         <tr>
             <th>Eliminar</th>
-            <th class="sortable" onclick="sortTable(1)">ID Pedido Compra</th>
-            <th class="sortable" onclick="sortTable(2)">Nº Línea</th>
-            <th class="sortable" onclick="sortTable(3)">Nº Operación</th>
-            <th class="sortable" onclick="sortTable(4)">Proveedor</th>
-            <th class="sortable" onclick="sortTable(5)">Cliente</th>
-            <th class="sortable" onclick="sortTable(6)">Nº Contenedor</th>
-            <th class="sortable" onclick="sortTable(7)">Producto</th>
-            <th class="sortable" onclick="sortTable(8)">Talla</th>
-            <th class="sortable" onclick="sortTable(9)">Peso Neto</th>
-            <th class="sortable" onclick="sortTable(10)">Unidad</th>
-            <th class="sortable" onclick="sortTable(11)">Bultos</th>
-            <th class="sortable" onclick="sortTable(12)">Precio</th>
-            <th class="sortable" onclick="sortTable(13)">Valor Compra Total</th>
-            <th class="sortable" onclick="sortTable(14)">Moneda</th>
-            <th class="sortable" onclick="sortTable(15)">País de Origen</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable(1)">ID Pedido Compra</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable(2)">Nº Línea</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable(3)">Nº Operación</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable(4)">Proveedor</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable(5)">Cliente</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable(6)">Nº Contenedor</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable(7)">Producto</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable(8)">Talla</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable(9)">Peso Neto</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable(10)">Unidad</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable(11)">Bultos</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable(12)">Precio</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable(13)">Valor Compra Total</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable(14)">Moneda</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable(15)">País de Origen</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="linea : ${lineasPedidoCompra}" th:data-id-linea-pedido="${linea.idNumeroLinea}">
             <td>
-                <button class="delete-button" th:onclick="'eliminarLineaPedido(' + ${linea.idNumeroLinea} + ')'">🗑️</button>
+                <button class="delete-button" th:onclick="'LineasPedidoApp.eliminarLineaPedido(' + ${linea.idNumeroLinea} + ')'">🗑️</button>
             </td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.idPedidoCompra}">ID Pedido Compra</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.n_linea}">Nº Línea</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.n_operacion}">Nº Operación</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.proveedor}">Proveedor</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.cliente}">Cliente</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.n_contenedor}">Nº Contenedor</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.producto}">Producto</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.talla}">Talla</td>
-            <td contenteditable="true" class="editable peso-neto" oninput="calcularValorCompra(this)" th:text="${linea.p_neto}">Peso Neto</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.unidad}">Unidad</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.bultos}">Bultos</td>
-            <td contenteditable="true" class="editable precio" oninput="calcularValorCompra(this)" th:text="${linea.precio}">Precio</td>
+            <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)" th:text="${linea.idPedidoCompra}">ID Pedido Compra</td>
+            <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)" th:text="${linea.n_linea}">Nº Línea</td>
+            <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)" th:text="${linea.n_operacion}">Nº Operación</td>
+            <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)" th:text="${linea.proveedor}">Proveedor</td>
+            <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)" th:text="${linea.cliente}">Cliente</td>
+            <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)" th:text="${linea.n_contenedor}">Nº Contenedor</td>
+            <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)" th:text="${linea.producto}">Producto</td>
+            <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)" th:text="${linea.talla}">Talla</td>
+            <td contenteditable="true" class="editable peso-neto" oninput="LineasPedidoApp.calcularValorCompra(this)" th:text="${linea.p_neto}">Peso Neto</td>
+            <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)" th:text="${linea.unidad}">Unidad</td>
+            <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)" th:text="${linea.bultos}">Bultos</td>
+            <td contenteditable="true" class="editable precio" oninput="LineasPedidoApp.calcularValorCompra(this)" th:text="${linea.precio}">Precio</td>
             <td contenteditable="true" class="editable valor-compra-total" th:text="${linea.valor_compra}">Valor Compra Total</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.moneda}">Moneda</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${linea.paisOrigen}">País de Origen</td>
+            <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)" th:text="${linea.moneda}">Moneda</td>
+            <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)" th:text="${linea.paisOrigen}">País de Origen</td>
         </tr>
         </tbody>
     </table>
 </div>
 <script src="/js/sweet-alert2/dist/sweetalert2.all.min.js"></script>
-<script src="/js/lineas_pedido_compra.js"></script>
-
+<script type="module" src="/js/lineas_pedido_compra.js"></script>
 </body>
 </html>

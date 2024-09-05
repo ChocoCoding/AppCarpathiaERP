@@ -10,21 +10,21 @@
     <h3>Detalles pedido de compra</h3>
     <div class="actions">
         <div class="left-actions">
-            <button class="icon-button" onclick="goBack()">
+            <button class="icon-button" onclick="PedidoCompraDetApp.goBack()">
                 <span class="icon">🔙</span> <!-- Icono de Volver Atrás -->
             </button>
         </div>
         <div class="center-actions">
-            <button class="icon-button" onclick="guardarCambios()">
+            <button class="icon-button" onclick="PedidoCompraDetApp.guardarCambios()">
                 <span class="icon">💾</span> <!-- Icono de Guardar -->
             </button>
-            <button class="icon-button" onclick="crearPedidoCompraDet()">
+            <button class="icon-button" onclick="PedidoCompraDetApp.crearPedidoCompraDet()">
                 <span class="icon">➕</span> <!-- Icono de Crear Línea -->
             </button>
             <div class="search-container">
-                <button class="search-button" onclick="toggleSearch()">🔍</button>
-                <button class="filter-button" onclick="toggleFilter()">⚙️</button>
-                <input type="text" id="search-input" oninput="filtrarDetalles()" placeholder="Buscar..." style="display: none;">
+                <button class="search-button" onclick="PedidoCompraDetApp.toggleSearch()">🔍</button>
+                <button class="filter-button" onclick="PedidoCompraDetApp.toggleFilter()">⚙️</button>
+                <input type="text" id="search-input" oninput="PedidoCompraDetApp.filtrarDetalles()" placeholder="Buscar..." style="display: none;">
                 <div class="filter-container">
                     <label><input type="checkbox" name="columnFilter" value="2"> ID Pedido Compra</label>
                     <label><input type="checkbox" name="columnFilter" value="3"> Nº Operación</label>
@@ -43,7 +43,7 @@
             </div>
         </div>
         <div class="right-actions">
-            <button class="icon-button" onclick="logout()">
+            <button class="icon-button" onclick="PedidoCompraDetApp.logout()">
                 <span class="icon">🔒</span> <!-- Icono de Cerrar Sesión -->
             </button>
         </div>
@@ -55,44 +55,44 @@
         <thead>
         <tr>
             <th>Eliminar</th>
-            <th class="sortable" onclick="sortTable(1)">ID Pedido Compra</th>
-            <th class="sortable" onclick="sortTable(2)">Nº Operación</th>
-            <th class="sortable" onclick="sortTable(3)">Contrato Compra</th>
-            <th class="sortable" onclick="sortTable(4)">Terminado(S/N)</th>
-            <th class="sortable" onclick="sortTable(5)">Fact. Proveedor</th>
-            <th class="sortable" onclick="sortTable(6)">Nº Fact. Flete</th>
-            <th class="sortable" onclick="sortTable(7)">Fecha Pago Flete</th>
-            <th class="sortable" onclick="sortTable(8)">Nº BL</th>
-            <th class="sortable" onclick="sortTable(9)">Peso Neto Total</th>
-            <th class="sortable" onclick="sortTable(10)">Total Bultos</th>
-            <th class="sortable" onclick="sortTable(11)">Promedio</th>
-            <th class="sortable" onclick="sortTable(12)">Valor Compra Total</th>
-            <th class="sortable" onclick="sortTable(13)">Observaciones</th>
+            <th class="sortable" onclick="PedidoCompraDetApp.sortTable(1)">ID Pedido Compra</th>
+            <th class="sortable" onclick="PedidoCompraDetApp.sortTable(2)">Nº Operación</th>
+            <th class="sortable" onclick="PedidoCompraDetApp.sortTable(3)">Contrato Compra</th>
+            <th class="sortable" onclick="PedidoCompraDetApp.sortTable(4)">Terminado(S/N)</th>
+            <th class="sortable" onclick="PedidoCompraDetApp.sortTable(5)">Fact. Proveedor</th>
+            <th class="sortable" onclick="PedidoCompraDetApp.sortTable(6)">Nº Fact. Flete</th>
+            <th class="sortable" onclick="PedidoCompraDetApp.sortTable(7)">Fecha Pago Flete</th>
+            <th class="sortable" onclick="PedidoCompraDetApp.sortTable(8)">Nº BL</th>
+            <th class="sortable" onclick="PedidoCompraDetApp.sortTable(9)">Peso Neto Total</th>
+            <th class="sortable" onclick="PedidoCompraDetApp.sortTable(10)">Total Bultos</th>
+            <th class="sortable" onclick="PedidoCompraDetApp.sortTable(11)">Promedio</th>
+            <th class="sortable" onclick="PedidoCompraDetApp.sortTable(12)">Valor Compra Total</th>
+            <th class="sortable" onclick="PedidoCompraDetApp.sortTable(13)">Observaciones</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="detalle : ${detallesPedidoCompra}" th:data-id-pedido-compra-det="${detalle.idPedidoCompraDet}">
             <td>
-                <button class="delete-button" th:onclick="'eliminarPedidoCompraDet(' + ${detalle.idPedidoCompraDet} + ')'">🗑️</button>
+                <button class="delete-button" th:onclick="'PedidoCompraDetApp.eliminarPedidoCompraDet(' + ${detalle.idPedidoCompraDet} + ')'">🗑️</button>
             </td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${detalle.idPedidoCompra}">ID Pedido Compra</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${detalle.n_operacion}">Nº Operación</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${detalle.contratoCompra}">Contrato Compra</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${detalle.terminado}">Terminado</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${detalle.factProveedor}">Fact. Proveedor</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${detalle.n_fact_flete}">Nº Fact. Flete</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${detalle.fechaPagoFleteFormatted}">Fecha Pago Flete</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${detalle.n_bl}">Nº BL</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${detalle.pesoNetoTotal}">Peso Neto Total</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${detalle.totalBultos}">Total Bultos</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${detalle.promedio}">Promedio</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${detalle.valorCompraTotal}">Valor Compra Total</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${detalle.observaciones}">Observaciones</td>
+            <td contenteditable="true" class="editable" oninput="PedidoCompraDetApp.marcarModificado(this)" th:text="${detalle.idPedidoCompra}">ID Pedido Compra</td>
+            <td contenteditable="true" class="editable" oninput="PedidoCompraDetApp.marcarModificado(this)" th:text="${detalle.n_operacion}">Nº Operación</td>
+            <td contenteditable="true" class="editable" oninput="PedidoCompraDetApp.marcarModificado(this)" th:text="${detalle.contratoCompra}">Contrato Compra</td>
+            <td contenteditable="true" class="editable" oninput="PedidoCompraDetApp.marcarModificado(this)" th:text="${detalle.terminado}">Terminado</td>
+            <td contenteditable="true" class="editable" oninput="PedidoCompraDetApp.marcarModificado(this)" th:text="${detalle.factProveedor}">Fact. Proveedor</td>
+            <td contenteditable="true" class="editable" oninput="PedidoCompraDetApp.marcarModificado(this)" th:text="${detalle.n_fact_flete}">Nº Fact. Flete</td>
+            <td contenteditable="true" class="editable" oninput="PedidoCompraDetApp.marcarModificado(this)" th:text="${detalle.fechaPagoFleteFormatted}">Fecha Pago Flete</td>
+            <td contenteditable="true" class="editable" oninput="PedidoCompraDetApp.marcarModificado(this)" th:text="${detalle.n_bl}">Nº BL</td>
+            <td contenteditable="true" class="editable" oninput="PedidoCompraDetApp.marcarModificado(this)" th:text="${detalle.pesoNetoTotal}">Peso Neto Total</td>
+            <td contenteditable="true" class="editable" oninput="PedidoCompraDetApp.marcarModificado(this)" th:text="${detalle.totalBultos}">Total Bultos</td>
+            <td contenteditable="true" class="editable" oninput="PedidoCompraDetApp.marcarModificado(this)" th:text="${detalle.promedio}">Promedio</td>
+            <td contenteditable="true" class="editable" oninput="PedidoCompraDetApp.marcarModificado(this)" th:text="${detalle.valorCompraTotal}">Valor Compra Total</td>
+            <td contenteditable="true" class="editable" oninput="PedidoCompraDetApp.marcarModificado(this)" th:text="${detalle.observaciones}">Observaciones</td>
         </tr>
         </tbody>
     </table>
 </div>
 <script src="/js/sweet-alert2/dist/sweetalert2.all.min.js"></script>
-<script src="/js/pedidos_compra_det.js"></script>
+<script type="module" src="/js/pedidos_compra_det.js"></script>
 </body>
 </html>

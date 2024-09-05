@@ -7,6 +7,7 @@ import com.app.frontend.service.LineaPedidoCompraService;
 import com.app.frontend.service.PedidoCompraDetService;
 import com.app.frontend.service.PedidoCompraService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,24 +26,53 @@ public class ModuloComprasController {
     @Autowired
     private PedidoCompraDetService pedidoCompraDetService;
 
-    @GetMapping("/pedidos-compra")
+    // Inyectar las URLs desde el archivo application.properties
+    @Value("${modulo.compras.url.pedidos-compra}")
+    private String pedidosCompraUrl;
+
+    @Value("${modulo.compras.url.lineas-pedido-compra}")
+    private String lineasPedidoCompraUrl;
+
+    @Value("${modulo.compras.url.detalles-pedido-compra}")
+    private String detallesPedidoCompraUrl;
+
+    @Value("${modulo.compras.model.pedidos-compra}")
+    private String pedidosCompraModel;
+
+    @Value("${modulo.compras.model.lineas-pedido-compra}")
+    private String lineasPedidoCompraModel;
+
+    @Value("${modulo.compras.model.detalles-pedido-compra}")
+    private String detallesPedidoCompraModel;
+
+    @Value("${modulo.compras.view.pedidos-compra}")
+    private String pedidosCompraView;
+
+    @Value("${modulo.compras.view.lineas-pedido-compra}")
+    private String lineasPedidoCompraView;
+
+    @Value("${modulo.compras.view.detalles-pedido-compra}")
+    private String detallesPedidoCompraView;
+
+
+    @GetMapping("${modulo.compras.url.pedidos-compra}")
     public String gestionarPedidosCompra(Model model) {
         List<PedidoCompraDTO> pedidosCompra = pedidoCompraService.obtenerTodosLosPedidosCompra();
-        model.addAttribute("pedidosCompra", pedidosCompra);
-        return "pedidos_compra";
+        model.addAttribute(pedidosCompraModel, pedidosCompra);
+        return pedidosCompraView;
     }
 
-    @GetMapping("/lineas-pedido-compra")
+    @GetMapping("${modulo.compras.url.lineas-pedido-compra}")
     public String gestionarLineasPedidoCompra(Model model) {
         List<LineaPedidoCompraDTO> lineasPedidoCompra = lineaPedidoCompraService.obtenerTodasLasLineasPedidoCompra();
-        model.addAttribute("lineasPedidoCompra", lineasPedidoCompra);
-        return "lineas_pedido_compra";
+        model.addAttribute(lineasPedidoCompraModel, lineasPedidoCompra);
+        return lineasPedidoCompraView;
     }
 
-    @GetMapping("/detalles-pedido-compra")
+    @GetMapping("${modulo.compras.url.detalles-pedido-compra}")
     public String gestionarDetallesPedidoCompra(Model model) {
         List<PedidoCompraDetDTO> detallesPedidoCompra = pedidoCompraDetService.obtenerTodosLosDetallesPedidoCompra();
-        model.addAttribute("detallesPedidoCompra", detallesPedidoCompra);
-        return "pedidos_compra_det";
+        model.addAttribute(detallesPedidoCompraModel, detallesPedidoCompra);
+        return detallesPedidoCompraView;
     }
 }

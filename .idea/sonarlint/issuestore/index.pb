@@ -97,11 +97,7 @@ u
 Efrontend/src/main/java/com/app/frontend/DTO/LineaPedidoCompraDTO.java,8\2\822accc7eb866e34b5c47644fdc2d8e5cbf9015b
 y
 Icompras/src/main/java/com/app/microservicio/compras/config/WebConfig.java,5\9\59f671d6925bab0880f86518a79706eb41b5b7e5
-Ü
-Vcompras/src/main/java/com/app/microservicio/compras/controllers/ComprasController.java,8\f\8f08c8c5e5749fb2ac36035278783fb08a380a4c
-Å
-Qcompras/src/main/java/com/app/microservicio/compras/services/ComprasServices.java,7\e\7ef0d9caf1b4e35c535b736e6dd9ca1ecba920bd
-Ä
-Pcompras/src/main/java/com/app/microservicio/compras/services/ComprasService.java,a\7\a76d2fea1a83ea92cc15d5f646ae689e2c37bb80
 Ä
 Pcompras/src/main/java/com/app/microservicio/compras/services/CalculoService.java,5\f\5f31cc2ccc88f191e2fcd34ac24766687a107da4
+h
+8frontend/src/main/java/com/app/frontend/model.properties,5\1\513adf8f02e3d162b4beb0bc2967557360dc7a41

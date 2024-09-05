@@ -9,21 +9,21 @@
     <h3>Pedidos de Compra</h3>
     <div class="actions">
         <div class="left-actions">
-            <button class="icon-button" onclick="goBack()">
+            <button class="icon-button" onclick="PedidoCompraApp.goBack()">
                 <span class="icon">🔙</span> <!-- Icono de Volver Atrás -->
             </button>
         </div>
         <div class="center-actions">
-            <button class="icon-button" onclick="guardarCambios()">
+            <button class="icon-button" onclick="PedidoCompraApp.guardarCambios()">
                 <span class="icon">💾</span> <!-- Icono de Guardar -->
             </button>
-            <button class="icon-button" onclick="crearPedidoCompra()">
+            <button class="icon-button" onclick="PedidoCompraApp.crearPedidoCompra()">
                 <span class="icon">➕</span> <!-- Icono de Crear Línea -->
             </button>
             <div class="search-container">
-                <button class="icon-button search-button" onclick="toggleSearch()">🔍</button>
-                <button class="icon-button filter-button" onclick="toggleFilter()">⚙️</button>
-                <input type="text" id="search-input" oninput="filtrarPedidos()" placeholder="Buscar..." style="display: none;">
+                <button class="icon-button search-button" onclick="PedidoCompraApp.toggleSearch()">🔍</button>
+                <button class="icon-button filter-button" onclick="PedidoCompraApp.toggleFilter()">⚙️</button>
+                <input type="text" id="search-input" oninput="PedidoCompraApp.filtrarPedidos()" placeholder="Buscar..." style="display: none;">
                 <div class="filter-container">
                     <label><input type="checkbox" name="columnFilter" value="2"> ID</label>
                     <label><input type="checkbox" name="columnFilter" value="3"> Nº Operación</label>
@@ -37,7 +37,7 @@
             </div>
         </div>
         <div class="right-actions">
-            <button class="icon-button" onclick="logout()">
+            <button class="icon-button" onclick="PedidoCompraApp.logout()">
                 <span class="icon">🔒</span> <!-- Icono de Cerrar Sesión -->
             </button>
         </div>
@@ -48,34 +48,34 @@
         <thead>
         <tr>
             <th>Eliminar</th>
-            <th class="sortable" onclick="sortTable(1)">ID</th>
-            <th class="sortable" onclick="sortTable(2)">Nº Operación</th>
-            <th class="sortable" onclick="sortTable(3)">Nº Contenedor</th>
-            <th class="sortable" onclick="sortTable(4)">Proforma</th>
-            <th class="sortable" onclick="sortTable(5)">Proveedor</th>
-            <th class="sortable" onclick="sortTable(6)">Cliente</th>
-            <th class="sortable" onclick="sortTable(7)">Incoterm</th>
-            <th class="sortable" onclick="sortTable(8)">Referencia Proveedor</th>
+            <th class="sortable" onclick="PedidoCompraApp.sortTable(1)">ID</th>
+            <th class="sortable" onclick="PedidoCompraApp.sortTable(2)">Nº Operación</th>
+            <th class="sortable" onclick="PedidoCompraApp.sortTable(3)">Nº Contenedor</th>
+            <th class="sortable" onclick="PedidoCompraApp.sortTable(4)">Proforma</th>
+            <th class="sortable" onclick="PedidoCompraApp.sortTable(5)">Proveedor</th>
+            <th class="sortable" onclick="PedidoCompraApp.sortTable(6)">Cliente</th>
+            <th class="sortable" onclick="PedidoCompraApp.sortTable(7)">Incoterm</th>
+            <th class="sortable" onclick="PedidoCompraApp.sortTable(8)">Referencia Proveedor</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="pedido : ${pedidosCompra}" th:data-id-pedido-compra="${pedido.idPedidoCompra}">
             <td>
-                <button class="delete-button" th:onclick="'eliminarPedido(' + ${pedido.idPedidoCompra} + ')'">🗑️</button>
+                <button class="delete-button" th:onclick="'PedidoCompraApp.eliminarPedido(' + ${pedido.idPedidoCompra} + ')'">🗑️</button>
             </td>
             <td th:text="${pedido.idPedidoCompra}">ID</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${pedido.n_operacion}">Nº Operación</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${pedido.n_contenedor}">Nº Contenedor</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${pedido.proforma}">Proforma</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${pedido.proveedor}">Proveedor</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${pedido.cliente}">Cliente</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${pedido.incoterm}">Incoterm</td>
-            <td contenteditable="true" class="editable" oninput="marcarModificado(this)" th:text="${pedido.referenciaProveedor}">Referencia Proveedor</td>
+            <td contenteditable="true" class="editable" oninput="PedidoCompraApp.marcarModificado(this)" th:text="${pedido.n_operacion}">Nº Operación</td>
+            <td contenteditable="true" class="editable" oninput="PedidoCompraApp.marcarModificado(this)" th:text="${pedido.n_contenedor}">Nº Contenedor</td>
+            <td contenteditable="true" class="editable" oninput="PedidoCompraApp.marcarModificado(this)" th:text="${pedido.proforma}">Proforma</td>
+            <td contenteditable="true" class="editable" oninput="PedidoCompraApp.marcarModificado(this)" th:text="${pedido.proveedor}">Proveedor</td>
+            <td contenteditable="true" class="editable" oninput="PedidoCompraApp.marcarModificado(this)" th:text="${pedido.cliente}">Cliente</td>
+            <td contenteditable="true" class="editable" oninput="PedidoCompraApp.marcarModificado(this)" th:text="${pedido.incoterm}">Incoterm</td>
+            <td contenteditable="true" class="editable" oninput="PedidoCompraApp.marcarModificado(this)" th:text="${pedido.referenciaProveedor}">Referencia Proveedor</td>
         </tr>
         </tbody>
     </table>
 </div>
 <script src="/js/sweet-alert2/dist/sweetalert2.all.min.js"></script>
-<script src="/js/pedidos_compra.js"></script>
+<script type="module" src="/js/pedidos_compra.js"></script>
 </body>
 </html>

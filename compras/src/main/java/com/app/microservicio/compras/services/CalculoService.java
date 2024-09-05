@@ -55,12 +55,14 @@ public class CalculoService{
         BigDecimal promedio = new BigDecimal(0);
         if (pedidoCompraDet!= null){
             BigDecimal valorCompraTotal = pedidoCompraDetRepository.findValorCompraTotalByIdPedidoCompra(pedidoCompraDet.getIdPedidoCompraDet());
-            BigDecimal pesoNetoTotal = pedidoCompraDetRepository.findPesoNetoTotalByIdPedidoCompra(pedidoCompraDet.getIdPedidoCompraDet());
+            if (valorCompraTotal != null){
+                BigDecimal pesoNetoTotal = pedidoCompraDetRepository.findPesoNetoTotalByIdPedidoCompra(pedidoCompraDet.getIdPedidoCompraDet());
 
-            promedio = valorCompraTotal.divide(pesoNetoTotal,4, RoundingMode.HALF_UP);
+                promedio = valorCompraTotal.divide(pesoNetoTotal,4, RoundingMode.HALF_UP);
 
-            pedidoCompraDet.setPromedio(promedio);
-            pedidoCompraDetRepository.save(pedidoCompraDet);
+                pedidoCompraDet.setPromedio(promedio);
+                pedidoCompraDetRepository.save(pedidoCompraDet);
+            }
         }
         return ResponseEntity.ok(promedio);
     }

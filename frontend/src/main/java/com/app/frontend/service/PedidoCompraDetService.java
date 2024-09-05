@@ -2,6 +2,7 @@ package com.app.frontend.service;
 
 import com.app.frontend.DTO.PedidoCompraDetDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -18,8 +19,11 @@ public class PedidoCompraDetService {
         this.restTemplate = restTemplate;
     }
 
+    @Value("${api.url.getPedidoCompraDet}")
+    private String getPedidoCompraDet;
+
     public List<PedidoCompraDetDTO> obtenerTodosLosDetallesPedidoCompra() {
-        String url = "http://localhost:8702/api/compras/pedidos_compra_det";  // URL del endpoint en el backend
+        String url = getPedidoCompraDet;  // URL del endpoint en el backend
         PedidoCompraDetDTO[] detalles = restTemplate.getForObject(url, PedidoCompraDetDTO[].class);
         return Arrays.asList(detalles);
     }

@@ -127,6 +127,7 @@ public class PedidoCompraDetService {
          pedidoCompraDetDTO.setPesoNetoTotal(pesoNetoTotal);
          pedidoCompraDetDTO.setTotalBultos(totalBultos);
         //Calculamos el promedio
+        calculoService.recalcularValoresCompra(pedidoCompraDetDTO.getIdPedidoCompra());
         calculoService.recalcularPromedio(pedidoCompraDetDTO.getIdPedidoCompra());
     return convertirADTO(pedidoCompraDetRepository.save(convertirAEntidad(pedidoCompraDetDTO)));
     }

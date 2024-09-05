@@ -1,17 +1,18 @@
-function goBack() {
+const PedidoCompraApp = {
+    goBack: () => {
         window.history.back();
-    }
+    },
 
-    function logout() {
+    logout: () => {
         window.location.href = "/logout";
-    }
+    },
 
-    function marcarModificado(elemento) {
+    marcarModificado: (elemento) => {
         const fila = elemento.closest('tr');
         fila.classList.add('modificado');
-    }
+    },
 
-    function guardarCambios() {
+    guardarCambios: () => {
         const filasModificadas = document.querySelectorAll('tbody tr.modificado');
 
         filasModificadas.forEach(fila => {
@@ -124,41 +125,55 @@ function goBack() {
                 });
             }
         });
-    }
+    },
 
-function eliminarPedido(idPedidoCompra) {
-    Swal.fire({
-        title: '¿Estás seguro?',
-        text: "¿Estás seguro de que deseas eliminar este pedido? ¡Esta acción no se puede deshacer!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí, eliminar',
-        cancelButtonText: 'Cancelar'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            fetch(`http://localhost:8702/api/compras/pedidos_compra/${idPedidoCompra}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => {
-                if (response.ok) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Eliminado',
-                        text: 'Pedido eliminado con éxito.',
-                        toast: true,
-                        position: 'top-end',
-                        timer: 2000,
-                        timerProgressBar: true,
-                        showConfirmButton: false
-                    }).then(() => {
-                        location.reload(); // Recargar la página después de eliminar
-                    });
-                } else {
+    eliminarPedido: (idPedidoCompra) => {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "¿Estás seguro de que deseas eliminar este pedido? ¡Esta acción no se puede deshacer!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`http://localhost:8702/api/compras/pedidos_compra/${idPedidoCompra}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Eliminado',
+                            text: 'Pedido eliminado con éxito.',
+                            toast: true,
+                            position: 'top-end',
+                            timer: 2000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        }).then(() => {
+                            location.reload(); // Recargar la página después de eliminar
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Error al eliminar el pedido.',
+                            toast: true,
+                            position: 'top-end',
+                            timer: 2000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error en la solicitud:', error);
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
@@ -169,32 +184,18 @@ function eliminarPedido(idPedidoCompra) {
                         timerProgressBar: true,
                         showConfirmButton: false
                     });
-                }
-            })
-            .catch(error => {
-                console.error('Error en la solicitud:', error);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Error al eliminar el pedido.',
-                    toast: true,
-                    position: 'top-end',
-                    timer: 2000,
-                    timerProgressBar: true,
-                    showConfirmButton: false
                 });
-            });
-        }
-    });
-}
+            }
+        });
+    },
 
-    function crearPedidoCompra() {
+    crearPedidoCompra: () => {
         const tbody = document.querySelector('tbody');
         const nuevaFila = document.createElement('tr');
 
         nuevaFila.innerHTML = `
             <td>
-                <button class="delete-button" onclick="eliminarFila(this)">🗑️</button>
+                <button class="delete-button" onclick="PedidoCompraApp.eliminarFila(this)">🗑️</button>
             </td>
             <td></td>
             <td contenteditable="true" class="editable"></td>
@@ -208,14 +209,14 @@ function eliminarPedido(idPedidoCompra) {
 
         tbody.insertBefore(nuevaFila, tbody.firstChild);
         nuevaFila.classList.add('modificado', 'new-row');
-    }
+    },
 
-    function eliminarFila(boton) {
+    eliminarFila: (boton) => {
         const fila = boton.closest('tr');
         fila.remove();
-    }
+    },
 
-    function sortTable(columnIndex) {
+    sortTable: (columnIndex) => {
         const table = document.querySelector("tbody");
         const rows = Array.from(table.querySelectorAll("tr"));
         const isAscending = table.getAttribute("data-sort-direction") === "asc";
@@ -236,9 +237,9 @@ function eliminarPedido(idPedidoCompra) {
 
         document.querySelectorAll(".sortable").forEach(th => th.classList.remove("asc", "desc"));
         document.querySelector(`.sortable:nth-child(${columnIndex + 1})`).classList.add(newDirection);
-    }
+    },
 
-    function toggleSearch() {
+    toggleSearch: () => {
         const searchInput = document.getElementById('search-input');
         if (searchInput.style.display === 'none' || searchInput.style.display === '') {
             searchInput.style.display = 'block';
@@ -248,16 +249,16 @@ function eliminarPedido(idPedidoCompra) {
             searchInput.style.display = 'none';
             searchInput.classList.remove('expanded');
             searchInput.value = '';
-            filtrarPedidos();
+            PedidoCompraApp.filtrarPedidos();
         }
-    }
+    },
 
-    function toggleFilter() {
+    toggleFilter: () => {
         const filterContainer = document.querySelector('.filter-container');
         filterContainer.classList.toggle('expanded');
-    }
+    },
 
-    function filtrarPedidos() {
+    filtrarPedidos: () => {
         const searchInput = document.getElementById('search-input').value.toLowerCase();
         const columnasSeleccionadas = Array.from(document.querySelectorAll('input[name="columnFilter"]:checked')).map(input => parseInt(input.value));
         const filas = document.querySelectorAll('tbody tr');
@@ -279,22 +280,9 @@ function eliminarPedido(idPedidoCompra) {
                 fila.style.display = 'none';
             }
         });
-    }
+    },
 
-    // Ocultar el campo de búsqueda y los filtros cuando se hace clic fuera de ellos
-    document.addEventListener('click', function(event) {
-        const searchContainer = document.querySelector('.search-container');
-        const searchInput = document.getElementById('search-input');
-        const filterContainer = document.querySelector('.filter-container');
-
-        if (!searchContainer.contains(event.target)) {
-            searchInput.style.display = 'none';
-            searchInput.classList.remove('expanded');
-            filterContainer.classList.remove('expanded');
-        }
-    });
-
-    document.addEventListener('DOMContentLoaded', function () {
+    initTableScroll: () => {
         const tableContainer = document.querySelector('.table-container');
         let isDown = false;
         let startX;
@@ -321,7 +309,14 @@ function eliminarPedido(idPedidoCompra) {
             if (!isDown) return;
             e.preventDefault();
             const x = e.pageX - tableContainer.offsetLeft;
-            const walk = (x - startX) * 2; // El valor multiplica la velocidad de desplazamiento
+            const walk = (x - startX) * 2;
             tableContainer.scrollLeft = scrollLeft - walk;
         });
-    });
+    }
+};
+
+// Inicializar la tabla con scroll
+document.addEventListener('DOMContentLoaded', PedidoCompraApp.initTableScroll);
+
+// Exponer globalmente
+window.PedidoCompraApp = PedidoCompraApp;

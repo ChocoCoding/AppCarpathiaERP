@@ -1,15 +1,15 @@
 
-…
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8äœ¢ó›2J$ab555571-fda2-4b4e-bcff-d90a377cd8d1
-…
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8äœ¢ó›2J$72221217-9e18-4a86-a985-73af564d07bc
-…
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8äœ¢ó›2J$0bad161e-22fb-458c-a8cc-036c169be435
-…
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8©íô›2J$e541306b-74ba-4ca2-95f2-0f9748d389d2
-•
-java:S6204s"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8ËÓ€ô›2J$b4cd4644-bd68-49eb-bb35-c0f39cf214c8
-Œ
-java:S1128"DRemove this unused import 'org.springframework.http.ResponseEntity'.(¶¯ø¦úÿÿÿÿ8äØ‡ô›2J$9b3f42fa-c80c-4990-971b-c3574e240443
-v
-java:S1128"3Remove this unused import 'java.math.RoundingMode'.(¿ì†‹8äØ‡ô›2J$7ad04baf-34cd-40c0-94d2-5e0e01df0453
+_
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8¾œ­œ2
+_
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8¾œ­œ2
+_
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8¾œ­œ2
+_
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8¾œ­œ2
+o
+java:S6204s"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8Òœ­œ2
+f
+java:S1128"DRemove this unused import 'org.springframework.http.ResponseEntity'.(¶¯ø¦úÿÿÿÿ8Öœ­œ2
+P
+java:S1128"3Remove this unused import 'java.math.RoundingMode'.(¿ì†‹8Öœ­œ2
