@@ -99,5 +99,3 @@ y
 Icompras/src/main/java/com/app/microservicio/compras/config/WebConfig.java,5\9\59f671d6925bab0880f86518a79706eb41b5b7e5
 €
 Pcompras/src/main/java/com/app/microservicio/compras/services/CalculoService.java,5\f\5f31cc2ccc88f191e2fcd34ac24766687a107da4
-h
-8frontend/src/main/java/com/app/frontend/model.properties,5\1\513adf8f02e3d162b4beb0bc2967557360dc7a41
