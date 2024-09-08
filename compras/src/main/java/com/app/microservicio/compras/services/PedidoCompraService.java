@@ -40,20 +40,29 @@ public class PedidoCompraService {
 
     @Transactional
     public boolean eliminarPedidoCompra(Long id) {
-        if (pedidoCompraRepository.existsById(id)) {
-            // Eliminar las relaciones en la tabla usuario_roles
-            entityManager.createNativeQuery("DELETE FROM lineas_pedidos_compra WHERE id_pedido_compra = :id")
-                    .setParameter("id", id)
-                    .executeUpdate();
+        try {
+            if (pedidoCompraRepository.existsById(id)) {
+                // Eliminar las relaciones en la tabla lineas_pedidos_compra
+                entityManager.createNativeQuery("DELETE FROM lineas_pedidos_compra WHERE id_pedido_compra = :id")
+                        .setParameter("id", id)
+                        .executeUpdate();
 
-            entityManager.createNativeQuery("DELETE FROM pedidos_compra_det WHERE id_pedido_compra = :id")
-                    .setParameter("id", id)
-                    .executeUpdate();
+                // Eliminar las relaciones en la tabla pedidos_compra_det
+                entityManager.createNativeQuery("DELETE FROM pedidos_compra_det WHERE id_pedido_compra = :id")
+                        .setParameter("id", id)
+                        .executeUpdate();
 
-            pedidoCompraRepository.deleteById(id);
-            return true;
-        } else {
-            return false;
+                // Eliminar el pedido en pedidos_compra
+                pedidoCompraRepository.deleteById(id);
+
+                return true;
+            } else {
+                return false; // El pedido no existe
+            }
+        } catch (Exception e) {
+            // Manejo de cualquier error que pueda ocurrir durante el proceso
+            System.err.println("Error al eliminar el pedido con id " + id + ": " + e.getMessage());
+            return false; // Error durante la eliminación
         }
     }
 

@@ -60,6 +60,7 @@ public class LineaPedidoCompraService {
             LineaPedidoCompra lineaPedidoCompra = optionalLinea.get();
 
             // Actualizar los campos con los valores del DTO
+            lineaPedidoCompra.setNLinea(lineaPedidoCompraDTO.getN_linea());
             lineaPedidoCompra.setNOperacion(lineaPedidoCompraDTO.getN_operacion());
             lineaPedidoCompra.setProveedor(lineaPedidoCompraDTO.getProveedor());
             lineaPedidoCompra.setCliente(lineaPedidoCompraDTO.getCliente());
@@ -76,7 +77,7 @@ public class LineaPedidoCompraService {
 
             // Guardar la línea de pedido actualizada
             LineaPedidoCompra lineaActualizada = lineaPedidoCompraRepository.save(lineaPedidoCompra);
-            actualizarPesoNetoTotal(lineaActualizada.getPedidoCompra().getIdPedidoCompra());
+            calculoService.recalcularPesoNetoTotal(lineaActualizada.getPedidoCompra().getIdPedidoCompra());
             calculoService.recalcularTotalBultos(lineaActualizada.getPedidoCompra().getIdPedidoCompra());
             calculoService.recalcularValoresCompra(lineaActualizada.getPedidoCompra().getIdPedidoCompra());
             calculoService.recalcularPromedio(lineaActualizada.getPedidoCompra().getIdPedidoCompra());
@@ -92,25 +93,18 @@ public class LineaPedidoCompraService {
                 .orElseThrow(() -> new RuntimeException("Línea de pedido no encontrada"));
 
         Long idPedidoCompra = lineaExistente.getPedidoCompra().getIdPedidoCompra();
-        lineaPedidoCompraRepository.deleteById(idNumeroLinea);
-        actualizarPesoNetoTotal(idPedidoCompra);
+        lineaExistente.setPNeto(new BigDecimal(0));
+        lineaExistente.setBultos(0L);
+        lineaExistente.setPrecio(new BigDecimal(0));
+        lineaExistente.setValorCompra(new BigDecimal("0.0"));
+        calculoService.recalcularPesoNetoTotal(idPedidoCompra);
         calculoService.recalcularTotalBultos(idPedidoCompra);
         calculoService.recalcularValoresCompra(idPedidoCompra);
         calculoService.recalcularPromedio(idPedidoCompra);
+        lineaPedidoCompraRepository.save(lineaExistente);
+        lineaPedidoCompraRepository.deleteById(idNumeroLinea);
+
     }
-
-    private void actualizarPesoNetoTotal(Long idPedidoCompra) {
-        BigDecimal pesoNetoTotal = lineaPedidoCompraRepository.sumPesoNetoByPedidoCompraId(idPedidoCompra);
-
-        PedidoCompraDet pedidoCompraDet = pedidoCompraDetRepository.findByIdPedidoCompra(idPedidoCompra).orElse(null);
-
-        if (pedidoCompraDet != null){
-            pedidoCompraDet.setPesoNetoTotal(pesoNetoTotal);
-            pedidoCompraDetRepository.save(pedidoCompraDet);
-        }
-    }
-
-
 
 
 

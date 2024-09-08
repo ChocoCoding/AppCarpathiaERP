@@ -29,15 +29,15 @@ public class PedidoCompraDetController {
 
     @PostMapping()
     public ResponseEntity<PedidoCompraDetDTO> crearPedidoCompraDet(@RequestBody PedidoCompraDetDTO pedidoCompraDetDTO) {
+        System.out.println("Estoy llamando a crear pedido de compra");
         return ResponseEntity.ok(pedidoCompraDetService.crearPedidoCompraDet(pedidoCompraDetDTO));
     }
 
         // Endpoint para actualizar PedidoCompraDet
-        @PutMapping("/{id}")
-        public ResponseEntity<PedidoCompraDetDTO> actualizarPedidoCompraDet(
-                @PathVariable Long id, @RequestBody PedidoCompraDetDTO pedidoCompraDetDTO) {
-            PedidoCompraDetDTO actualizado = pedidoCompraDetService.actualizarPedidoCompraDet(id, pedidoCompraDetDTO);
-            return ResponseEntity.ok(actualizado);
+    @PutMapping("/{id}")
+    public ResponseEntity<PedidoCompraDetDTO> actualizarPedidoCompraDet(@PathVariable Long id, @RequestBody PedidoCompraDetDTO pedidoCompraDetDTO) {
+        PedidoCompraDetDTO actualizado = pedidoCompraDetService.actualizarPedidoCompraDet(id, pedidoCompraDetDTO);
+        return ResponseEntity.ok(actualizado);
         }
 
     @DeleteMapping("/{idPedidoCompraDet}")

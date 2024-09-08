@@ -1,9 +1,6 @@
-const API_BASE_URL = 'http://localhost:8702/api/compras';
-
-// Middleware para manejar las peticiones
 const middleware = {
     get: (url) => {
-        return fetch(`${API_BASE_URL}${url}`, {
+        return fetch(url, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -17,7 +14,7 @@ const middleware = {
     },
 
     post: (url, data) => {
-        return fetch(`${API_BASE_URL}${url}`, {
+        return fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -32,7 +29,7 @@ const middleware = {
     },
 
     put: (url, data) => {
-        return fetch(`${API_BASE_URL}${url}`, {
+        return fetch(url, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -46,20 +43,19 @@ const middleware = {
         });
     },
 
-delete: (url) => {
-        return fetch(`${API_BASE_URL}${url}`, {
+    delete: (url) => {
+        return fetch(url, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
             }
         })
         .then(response => {
-            // Solo intentar convertir a JSON si hay contenido
-            if (response.status !== 204) {
-                return response.json();
+            if (response.ok) {
+                return Promise.resolve();
+            } else {
+                return Promise.reject(new Error('Error en la solicitud DELETE.'));
             }
-            // Para respuestas 204 No Content, no se debe intentar parsear JSON
-            return Promise.resolve();
         })
         .catch(error => {
             console.error(`Error en la solicitud DELETE a ${url}:`, error);
@@ -68,5 +64,4 @@ delete: (url) => {
     }
 };
 
-// Exportar el middleware para usarlo en otras partes del proyecto
 export default middleware;

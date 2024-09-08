@@ -28,6 +28,4 @@ public class AuthController {
         // Retorna una respuesta exitosa
         return ResponseEntity.ok(new AuthenticationResponseDTO("Autenticación exitosa"));
     }
-
-
 }

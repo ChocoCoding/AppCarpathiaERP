@@ -24,12 +24,31 @@ public class CalculoService{
     private PedidoCompraRepository pedidoCompraRepository;
 
 
-    public ResponseEntity<Integer> recalcularTotalBultos(Long pedidoCompraId) {
-        // Sumar los bultos
-        int totalBultos = Math.toIntExact(lineaPedidoCompraRepository.sumBultosByPedidoCompraId(pedidoCompraId));
-
-        // Actualizar el total de bultos en PedidoCompraDet
+    public ResponseEntity<BigDecimal> recalcularPesoNetoTotal(Long pedidoCompraId) {
         PedidoCompraDet pedidoCompraDet = pedidoCompraDetRepository.findByIdPedidoCompra(pedidoCompraId).orElse(null);
+        BigDecimal pesoNetoTotal = BigDecimal.valueOf(0.0);
+        if (pedidoCompraDet !=null){
+            pesoNetoTotal = lineaPedidoCompraRepository.sumPesoNetoByPedidoCompraId(pedidoCompraId);
+            pedidoCompraDet.setPesoNetoTotal(pesoNetoTotal);
+            pedidoCompraDetRepository.save(pedidoCompraDet);
+        }
+        return ResponseEntity.ok(pesoNetoTotal);
+    }
+
+
+    public ResponseEntity<Integer> recalcularTotalBultos(Long pedidoCompraId) {
+        int totalBultos = 0;
+        PedidoCompraDet pedidoCompraDet = pedidoCompraDetRepository.findByIdPedidoCompra(pedidoCompraId).orElse(null);
+        try {
+            totalBultos =  Math.toIntExact(lineaPedidoCompraRepository.sumBultosByPedidoCompraId(pedidoCompraId));
+        }catch (NullPointerException n){
+            // Actualizar el total de bultos en PedidoCompraDet
+            if (pedidoCompraDet!= null){
+                pedidoCompraDet.setTotalBultos((long) totalBultos);
+                pedidoCompraDetRepository.save(pedidoCompraDet);
+                return ResponseEntity.ok(totalBultos);
+            }
+        }
         if (pedidoCompraDet!= null){
             pedidoCompraDet.setTotalBultos((long) totalBultos);
             pedidoCompraDetRepository.save(pedidoCompraDet);
@@ -40,7 +59,7 @@ public class CalculoService{
     public ResponseEntity<BigDecimal> recalcularValoresCompra(Long pedidoCompraId) {
         // Sumar los bultos
         BigDecimal totalValoresCompra = lineaPedidoCompraRepository.sumValorCompraByPedidoCompraId(pedidoCompraId);
-
+        System.out.println("Estoy calculando la compra " + totalValoresCompra);
         // Actualizar el total de bultos en PedidoCompraDet
         PedidoCompraDet pedidoCompraDet = pedidoCompraDetRepository.findByIdPedidoCompra(pedidoCompraId).orElse(null);
         if (pedidoCompraDet!= null){
@@ -54,12 +73,15 @@ public class CalculoService{
         PedidoCompraDet pedidoCompraDet = pedidoCompraDetRepository.findByIdPedidoCompra(idPedidoCompra).orElse(null);
         BigDecimal promedio = new BigDecimal(0);
         if (pedidoCompraDet!= null){
-            BigDecimal valorCompraTotal = pedidoCompraDetRepository.findValorCompraTotalByIdPedidoCompra(pedidoCompraDet.getIdPedidoCompraDet());
+            BigDecimal valorCompraTotal = pedidoCompraDet.getValorCompraTotal();
             if (valorCompraTotal != null){
-                BigDecimal pesoNetoTotal = pedidoCompraDetRepository.findPesoNetoTotalByIdPedidoCompra(pedidoCompraDet.getIdPedidoCompraDet());
-
-                promedio = valorCompraTotal.divide(pesoNetoTotal,4, RoundingMode.HALF_UP);
-
+                BigDecimal pesoNetoTotal = pedidoCompraDet.getPesoNetoTotal();
+                try{
+                    promedio = valorCompraTotal.divide(pesoNetoTotal,4, RoundingMode.HALF_UP);
+                }catch (ArithmeticException e){
+                    pedidoCompraDet.setPromedio(new BigDecimal(0));
+                    return ResponseEntity.ok(new BigDecimal(0));
+                }
                 pedidoCompraDet.setPromedio(promedio);
                 pedidoCompraDetRepository.save(pedidoCompraDet);
             }
@@ -67,5 +89,21 @@ public class CalculoService{
         return ResponseEntity.ok(promedio);
     }
 
+    public ResponseEntity<BigDecimal> calcularPromedio(Long idPedidoCompra) {
+        BigDecimal promedio = new BigDecimal(0);
+            BigDecimal valorCompraTotal = lineaPedidoCompraRepository.sumValorCompraByPedidoCompraId(idPedidoCompra);
+            if (valorCompraTotal != null){
+                BigDecimal pesoNetoTotal = lineaPedidoCompraRepository.sumPesoNetoByPedidoCompraId(idPedidoCompra);
+                promedio = valorCompraTotal.divide(pesoNetoTotal,4, RoundingMode.HALF_UP);
+
+            }
+        return ResponseEntity.ok(promedio);
+        }
+
+    public ResponseEntity<BigDecimal> calcularValoresCompra(Long pedidoCompraId) {
+        // Sumar los bultos
+        BigDecimal totalValoresCompra = lineaPedidoCompraRepository.sumValorCompraByPedidoCompraId(pedidoCompraId);
+        return ResponseEntity.ok(totalValoresCompra);
+    }
 
 }

@@ -1,138 +1,156 @@
 import middleware from '/js/middleware.js';
 
-const PedidoCompraDetApp = {
-    goBack: () => {
-        window.history.back();
-    },
+let config = {};
 
-    logout: () => {
-        window.location.href = "/logout";
-    },
-
-    marcarModificado: (elemento) => {
-        const fila = elemento.closest('tr');
-        fila.classList.add('modificado');
-    },
-
-    mostrarAlerta: (tipo, titulo, texto, timer = 2000) => {
-        Swal.fire({
-            icon: tipo,
-            title: titulo,
-            text: texto,
-            toast: true,
-            position: 'top-end',
-            timer: timer,
-            timerProgressBar: true,
-            showConfirmButton: false
+// Cargar configuraciones de endpoints y mensajes desde el backend
+function cargarConfiguraciones() {
+    return fetch('http://localhost:8702/api/config')
+        .then(response => response.json())
+        .then(data => {
+            config = data;
+            return config;
+        })
+        .catch(error => {
+            console.error('Error al cargar la configuración:', error);
         });
-    },
+}
 
-    guardarCambios: () => {
-        const filasModificadas = document.querySelectorAll('tbody tr.modificado');
-        const formatoFecha = /^\d{2}\/\d{2}\/\d{4}$/;
+cargarConfiguraciones().then(() => {
+    const PedidoCompraDetApp = {
+        goBack: () => {
+            window.history.back();
+        },
 
-        filasModificadas.forEach(fila => {
-            const idPedidoCompraDet = fila.getAttribute('data-id-pedido-compra-det');
-            const idPedidoCompra = fila.children[1].innerText.trim();
-            const fechaPagoFlete = fila.children[7].innerText.trim();
-            const terminado = fila.children[4].innerText.trim().toUpperCase();
+        logout: () => {
+            window.location.href = "/logout";
+        },
 
-            if (fechaPagoFlete && !formatoFecha.test(fechaPagoFlete)) {
-                PedidoCompraDetApp.mostrarAlerta('error', 'Formato de fecha incorrecto', 'El formato de fecha es incorrecto. Debe ser dd/MM/yyyy.', 3000);
-                return;
-            }
+        marcarModificado: (elemento) => {
+            const fila = elemento.closest('tr');
+            fila.classList.add('modificado');
+        },
 
-            if (terminado && terminado !== 'S' && terminado !== 'N') {
-                PedidoCompraDetApp.mostrarAlerta('error', 'Valor incorrecto', 'El campo "Terminado" debe ser "S" o "N".', 3000);
-                return;
-            }
-
-            PedidoCompraDetApp.validarExistenciaPedidoCompra(idPedidoCompra)
-                .then(existe => {
-                    if (!existe) {
-                        PedidoCompraDetApp.mostrarAlerta('error', 'ID no válido', 'El ID del Pedido de Compra no existe. Por favor, verifíquelo.', 3000);
-                        return;
-                    }
-
-                    const datos = {
-                        idPedidoCompra,
-                        n_operacion: fila.children[2].innerText.trim(),
-                        contratoCompra: fila.children[3].innerText.trim(),
-                        terminado,
-                        factProveedor: fila.children[5].innerText.trim(),
-                        n_fact_flete: fila.children[6].innerText.trim(),
-                        fecha_pago_flete: fechaPagoFlete,
-                        n_bl: fila.children[8].innerText.trim(),
-                        pesoNetoTotal: fila.children[9].innerText.trim(),
-                        totalBultos: fila.children[10].innerText.trim(),
-                        promedio: fila.children[11].innerText.trim(),
-                        valorCompraTotal: fila.children[12].innerText.trim(),
-                        observaciones: fila.children[13].innerText.trim()
-                    };
-
-                    if (!idPedidoCompraDet) {
-                        middleware.post('/pedidos_compra_det', datos)
-                            .then(() => {
-                                PedidoCompraDetApp.mostrarAlerta('success', 'Creación exitosa', 'Detalle creado con éxito.', 2000);
-                                location.reload();
-                            })
-                            .catch(error => {
-                                PedidoCompraDetApp.mostrarAlerta('error', 'Error', 'Error al crear el detalle.');
-                            });
-                    } else {
-                        middleware.put(`/pedidos_compra_det/${idPedidoCompraDet}`, datos)
-                            .then(() => {
-                                PedidoCompraDetApp.mostrarAlerta('success', 'Guardado exitoso', 'Cambios guardados con éxito.', 2000);
-                                fila.classList.remove('modificado');
-                            })
-                            .catch(error => {
-                                PedidoCompraDetApp.mostrarAlerta('error', 'Error', 'Error al guardar los cambios.');
-                            });
-                    }
-                })
-                .catch(error => {
-                    PedidoCompraDetApp.mostrarAlerta('error', 'Error', 'Error al validar el ID del Pedido de Compra.');
-                });
-        });
-    },
-
-    validarExistenciaPedidoCompra: (idPedidoCompra) => {
-        return middleware.get(`/pedidos_compra/${idPedidoCompra}/exists`)
-            .then(data => data.existe)
-            .catch(error => {
-                console.error('Error en la validación del ID del Pedido de Compra:', error);
-                return false;
+        mostrarAlerta: (tipo, titulo, texto, timer = 2000) => {
+            Swal.fire({
+                icon: tipo,
+                title: titulo,
+                text: texto,
+                toast: true,
+                position: 'top-end',
+                timer: timer,
+                timerProgressBar: true,
+                showConfirmButton: false
             });
-    },
+        },
 
-    eliminarPedidoCompraDet: (idPedidoCompraDet) => {
-        if (!idPedidoCompraDet) {
-            PedidoCompraDetApp.mostrarAlerta('error', 'ID no válido', 'No se puede eliminar este detalle porque el ID es nulo.');
-            return;
-        }
+        guardarCambios: () => {
+            const filasModificadas = document.querySelectorAll('tbody tr.modificado');
+            const formatoFecha = /^\d{2}\/\d{2}\/\d{4}$/;
 
-        Swal.fire({
-            title: '¿Estás seguro?',
-            text: "¿Estás seguro de que deseas eliminar este detalle? ¡Esta acción no se puede deshacer!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí, eliminar',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                middleware.delete(`/pedidos_compra_det/${idPedidoCompraDet}`)
-                    .then(() => {
-                        PedidoCompraDetApp.mostrarAlerta('success', 'Eliminado', 'Detalle eliminado con éxito.', 2000);
-                        location.reload();
+            filasModificadas.forEach(fila => {
+                const idPedidoCompraDet = fila.getAttribute('data-id-pedido-compra-det');
+                const idPedidoCompra = fila.children[1].innerText.trim();
+                const fechaPagoFlete = fila.children[7].innerText.trim();
+                const terminado = fila.children[4].innerText.trim().toUpperCase();
+
+                if (fechaPagoFlete && !formatoFecha.test(fechaPagoFlete)) {
+                    PedidoCompraDetApp.mostrarAlerta('error', config.errorFormatoFechaIncorrecto, config.errorFechaFormato, 3000);
+                    return;
+                }
+
+                if (terminado && terminado !== 'S' && terminado !== 'N') {
+                    PedidoCompraDetApp.mostrarAlerta('error', config.errorValorIncorrecto, config.errorTerminado, 3000);
+                    return;
+                }
+
+                PedidoCompraDetApp.validarExistenciaPedidoCompra(idPedidoCompra)
+                    .then(existe => {
+                        if (!existe) {
+                            PedidoCompraDetApp.mostrarAlerta('error', config.error, config.errorIdPedidoInvalido, 3000);
+                            return;
+                        }
+
+                        const datos = {
+                            idPedidoCompra,
+                            n_operacion: fila.children[2].innerText.trim(),
+                            contratoCompra: fila.children[3].innerText.trim(),
+                            terminado,
+                            factProveedor: fila.children[5].innerText.trim(),
+                            n_fact_flete: fila.children[6].innerText.trim(),
+                            fecha_pago_flete: fechaPagoFlete,
+                            n_bl: fila.children[8].innerText.trim(),
+                            pesoNetoTotal: fila.children[9].innerText.trim(),
+                            totalBultos: fila.children[10].innerText.trim(),
+                            promedio: fila.children[11].innerText.trim(),
+                            valorCompraTotal: fila.children[12].innerText.trim(),
+                            observaciones: fila.children[13].innerText.trim()
+                        };
+
+                        if (!idPedidoCompraDet) {
+                            middleware.post(config.pedidosCompraDetEndpoint, datos)
+                                .then(() => {
+                                    PedidoCompraDetApp.mostrarAlerta('success', config.creacionExitosa, config.detalleCreadoExito, 2000);
+                                    location.reload();
+                                })
+                                .catch(error => {
+                                    PedidoCompraDetApp.mostrarAlerta('error', config.error, config.errorCrearDetalle);
+                                });
+                        } else {
+                            const url = config.pedidoCompraDetIdEndpoint.replace('{id}', idPedidoCompraDet);
+                            middleware.put(url, datos)
+                                .then(() => {
+                                    PedidoCompraDetApp.mostrarAlerta('success', config.guardadoExitoso, config.cambiosGuardadosExito, 2000);
+                                    fila.classList.remove('modificado');
+                                })
+                                .catch(error => {
+                                    PedidoCompraDetApp.mostrarAlerta('error', config.error, config.errorGuardarCambios);
+                                });
+                        }
                     })
                     .catch(error => {
-                        PedidoCompraDetApp.mostrarAlerta('error', 'Error', 'Error al eliminar el detalle.');
+                        PedidoCompraDetApp.mostrarAlerta('error', config.error, config.errorIdPedidoInvalido);
                     });
+            });
+        },
+
+        validarExistenciaPedidoCompra: (idPedidoCompra) => {
+            return middleware.get(`${config.pedidosCompraEndpoint}/${idPedidoCompra}/exists`)
+                .then(data => data.existe)
+                .catch(error => {
+                    console.error('Error en la validación del ID del Pedido de Compra:', error);
+                    return false;
+                });
+        },
+
+        eliminarPedidoCompraDet: (idPedidoCompraDet) => {
+            if (!idPedidoCompraDet) {
+                PedidoCompraDetApp.mostrarAlerta('error', config.error, config.errorIdInvalido);
+                return;
             }
-        });
-    },
+
+            Swal.fire({
+                title: config.confirmarEliminarDetalle,
+                text: config.confirmarEliminarDetalleTexto,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: config.confirmarEliminar,
+                cancelButtonText: config.cancelar
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const url = config.pedidoCompraDetIdEndpoint.replace('{id}', idPedidoCompraDet);
+                    middleware.delete(url)
+                        .then(() => {
+                            PedidoCompraDetApp.mostrarAlerta('success', config.eliminado, config.detalleEliminadoExito, 2000);
+                            location.reload();
+                        })
+                        .catch(error => {
+                            PedidoCompraDetApp.mostrarAlerta('error', config.error, config.errorEliminarDetalle);
+                        });
+                }
+            });
+        },
 
         crearPedidoCompraDet: () => {
             const tbody = document.querySelector('tbody');
@@ -270,4 +288,4 @@ const PedidoCompraDetApp = {
 
     // Exponer globalmente
     window.PedidoCompraDetApp = PedidoCompraDetApp;
-
+});
