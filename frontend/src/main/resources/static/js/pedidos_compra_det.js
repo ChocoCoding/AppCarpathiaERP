@@ -184,28 +184,51 @@ cargarConfiguraciones().then(() => {
             fila.remove();
         },
 
-        sortTable: (columnIndex) => {
-            const table = document.querySelector("tbody");
-            const rows = Array.from(table.querySelectorAll("tr"));
-            const isAscending = table.getAttribute("data-sort-direction") === "asc";
-            const newDirection = isAscending ? "desc" : "asc";
+     sortTable: (columnIndex) => {
+         const table = document.querySelector("tbody");
+         const rows = Array.from(table.querySelectorAll("tr"));
+         const isAscending = table.getAttribute("data-sort-direction") === "asc";
+         const newDirection = isAscending ? "desc" : "asc";
 
-            rows.sort((a, b) => {
-                const aText = a.children[columnIndex].innerText.trim();
-                const bText = b.children[columnIndex].innerText.trim();
+         // Función para verificar si un texto tiene el formato dd/MM/yyyy
+         const isDateFormat = (text) => {
+             return /^\d{2}\/\d{2}\/\d{4}$/.test(text);
+         };
 
-                return isAscending
-                    ? aText.localeCompare(bText, undefined, {numeric: true})
-                    : bText.localeCompare(aText, undefined, {numeric: true});
-            });
+         // Función para convertir cadenas de fecha en formato dd/MM/yyyy a objetos Date
+         const parseDate = (dateStr) => {
+             const [day, month, year] = dateStr.split('/').map(Number);
+             return new Date(year, month - 1, day); // Meses en JavaScript van de 0 a 11
+         };
 
-            rows.forEach(row => table.appendChild(row));
+         rows.sort((a, b) => {
+             const aText = a.children[columnIndex].innerText.trim();
+             const bText = b.children[columnIndex].innerText.trim();
 
-            table.setAttribute("data-sort-direction", newDirection);
+             // Si ambas son fechas, las ordenamos como fechas
+             if (isDateFormat(aText) && isDateFormat(bText)) {
+                 const aDate = parseDate(aText);
+                 const bDate = parseDate(bText);
+                 return isAscending ? aDate - bDate : bDate - aDate;
+             }
 
-            document.querySelectorAll(".sortable").forEach(th => th.classList.remove("asc", "desc"));
-            document.querySelector(`.sortable:nth-child(${columnIndex + 1})`).classList.add(newDirection);
-        },
+             // Si no son fechas, hacer comparación de texto/numérico
+             return isAscending
+                 ? aText.localeCompare(bText, undefined, {numeric: true})
+                 : bText.localeCompare(aText, undefined, {numeric: true});
+         });
+
+         // Reagregar las filas ordenadas al DOM
+         rows.forEach(row => table.appendChild(row));
+
+         // Actualizar la dirección de ordenamiento
+         table.setAttribute("data-sort-direction", newDirection);
+
+         // Ajustar los estilos visuales de los encabezados
+         document.querySelectorAll(".sortable").forEach(th => th.classList.remove("asc", "desc"));
+         document.querySelector(`.sortable:nth-child(${columnIndex + 1})`).classList.add(newDirection);
+     },
+
 
         toggleSearch: () => {
             const searchInput = document.getElementById('search-input');
@@ -226,29 +249,43 @@ cargarConfiguraciones().then(() => {
             filterContainer.classList.toggle('expanded');
         },
 
-        filtrarDetalles: () => {
-            const searchInput = document.getElementById('search-input').value.toLowerCase();
-            const columnasSeleccionadas = Array.from(document.querySelectorAll('input[name="columnFilter"]:checked')).map(input => parseInt(input.value));
-            const filas = document.querySelectorAll('tbody tr');
+    filtrarDetalles: () => {
+        const searchInput = document.getElementById('search-input').value.toLowerCase();
+        const columnasSeleccionadas = Array.from(document.querySelectorAll('input[name="columnFilter"]:checked')).map(input => parseInt(input.value));
+        const filas = document.querySelectorAll('tbody tr');
 
-            filas.forEach(fila => {
-                const columnas = fila.querySelectorAll('td');
-                let match = false;
+        // Verificar si la búsqueda es completamente numérica para aplicar comparación exacta
+        const esBusquedaExacta = /^\d+$/.test(searchInput);
 
-                columnas.forEach((columna, index) => {
-                    if ((columnasSeleccionadas.length === 0 || columnasSeleccionadas.includes(index + 1)) &&
-                        columna.innerText.toLowerCase().includes(searchInput) && index !== 0) {
-                        match = true;
+        filas.forEach(fila => {
+            const columnas = fila.querySelectorAll('td');
+            let match = false;
+
+            columnas.forEach((columna, index) => {
+                const columnaTexto = columna.innerText.toLowerCase().trim();
+
+                if ((columnasSeleccionadas.length === 0 || columnasSeleccionadas.includes(index + 1))) {
+                    if (esBusquedaExacta) {
+                        // Si la búsqueda es numérica, se hace comparación exacta
+                        if (columnaTexto === searchInput) {
+                            match = true;
+                        }
+                    } else {
+                        // Si la búsqueda no es numérica, usar includes para coincidencias parciales
+                        if (columnaTexto.includes(searchInput)) {
+                            match = true;
+                        }
                     }
-                });
-
-                if (match) {
-                    fila.style.display = '';
-                } else {
-                    fila.style.display = 'none';
                 }
             });
-        },
+
+            if (match) {
+                fila.style.display = '';
+            } else {
+                fila.style.display = 'none';
+            }
+        });
+    },
 
         initTableScroll: () => {
             const tableContainer = document.querySelector('.table-container');
@@ -275,16 +312,18 @@ cargarConfiguraciones().then(() => {
 
             tableContainer.addEventListener('mousemove', (e) => {
                 if (!isDown) return;
-                e.preventDefault();
-                const x = e.pageX - tableContainer.offsetLeft;
-                const walk = (x - startX) * 2;
-                tableContainer.scrollLeft = scrollLeft - walk;
+                  e.preventDefault();
+                  const x = e.pageX - tableContainer.offsetLeft;
+                  const walk = (x - startX) * 2;
+                  tableContainer.scrollLeft = scrollLeft - walk;
             });
         }
     };
 
+
+
     // Inicializar la tabla con scroll
-    document.addEventListener('DOMContentLoaded', PedidoCompraDetApp.initTableScroll);
+    document.addEventListener('DOMContentLoaded', PedidoCompraDetApp.initTableScroll());
 
     // Exponer globalmente
     window.PedidoCompraDetApp = PedidoCompraDetApp;

@@ -60,7 +60,6 @@ public class LineaPedidoCompra {
     @Column(name = "pais_origen", length = 50)
     private String paisOrigen;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_pedido_compra")
     private PedidoCompra pedidoCompra;

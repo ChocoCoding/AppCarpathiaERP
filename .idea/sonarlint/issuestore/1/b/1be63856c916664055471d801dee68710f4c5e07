@@ -1,18 +1,20 @@
 
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8«Ó³ñ›2J$ce331f5f-240b-4393-8543-6eea0db536e0
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8«Ó³ñ›2J$655c7854-ea8d-44c4-9eee-4ef789249925
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8«Ó³ñ›2J$2b2cd129-4a51-422c-8c1f-e93983fbdfdc
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8«Ó³ñ›2J$fdcb44a0-2757-45f7-b45a-8ac13786690c
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8«Ó³ñ›2J$b6fe2eb9-b344-4e5e-8877-211ae36ca5db
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8«Ó³ñ›2J$79f6bbe8-f306-4726-8d78-2ffb28713ecd
 …
-java:S6813!"BRemove this field injection and use constructor injection instead.(êæÄŞ8—°şó›2J$8a53c8e0-bd60-4d9e-8fed-1b5eacb197d1
+java:S6813!"BRemove this field injection and use constructor injection instead.(êæÄŞ8—°şó›2J$d49c0dde-62b3-4851-bba7-b8051c6dec13
 •
-java:S6204("RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8®Ó³ñ›2J$960858d0-4899-446f-979a-eca507e52ea3
+java:S6204("RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8®Ó³ñ›2J$2ace29b6-e453-4c78-b954-7bb4b460a912
 •
-java:S62040"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8¯Ó³ñ›2J$dc241703-6efc-4ae6-810d-d22350b9da1e
-t
-java:S1128"RRemove this unused import 'com.app.microservicio.compras.DTO.EliminarPorLineaDTO'.(ÒØ¡¸øÿÿÿÿ8ÏÅ¬ô›2
-f
+java:S6204j"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8Ë®Úå2J$fc780bc1-be85-4dbc-bacb-b4c87badbe8a
+š
+java:S1128"RRemove this unused import 'com.app.microservicio.compras.DTO.EliminarPorLineaDTO'.(ÒØ¡¸øÿÿÿÿ8ÏÅ¬ô›2J$f17536a9-e971-42b3-aec0-9eda4d1dae58
+›
+java:S1128"SRemove this unused import 'com.app.microservicio.compras.entities.PedidoCompraDet'.(®…ªüÿÿÿÿ8ßĞå2J$2aff3c0e-e32a-460c-8c9f-1f386e150370
+Œ
 java:S1128
-"DRemove this unused import 'org.springframework.http.ResponseEntity'.(¶¯ø¦úÿÿÿÿ8ÏÅ¬ô›2
+"DRemove this unused import 'org.springframework.http.ResponseEntity'.(¶¯ø¦úÿÿÿÿ8ÏÅ¬ô›2J$ce1b3f6d-c032-4b07-8d34-2c6f31e4dcf1

@@ -1,7 +1,7 @@
 
-š	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÁŠ¨ ùÿÿÿÿJ$7868c624-f882-4e1c-8506-71bf5f385e0e
-™	java:S116"RRename this field "n_linea" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(éñäÕÿÿÿÿÿ8•¼Ô™2J$9ac75daf-897e-487e-a3af-caaf4b4b0d98
-	java:S116"VRename this field "n_operacion" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¡úíóøÿÿÿÿ8ÈåæÓ™2J$21ffd921-ebf3-4c15-a156-97e55d2c264f
-	java:S116"WRename this field "n_contenedor" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(«îÏÒÿÿÿÿÿ8úçÓ™2J$cb0de136-3f69-4a03-89c1-d19fa2adbd83
-’	java:S116"QRename this field "p_neto" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³Õ¿h8°ãÔ™2J$1e647041-2e15-4e43-b766-88823c41f0a1
-	java:S116"WRename this field "valor_compra" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Úøó…øÿÿÿÿ8‡ÅŒÔ™2J$a20eab75-0f53-434e-b079-68e809c17cb6
+š	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÁŠ¨ ùÿÿÿÿJ$6ea6ecea-7e94-4e26-9f8e-1e6e4af26874
+™	java:S116"RRename this field "n_linea" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(éñäÕÿÿÿÿÿ8•¼Ô™2J$f98a0838-ccd3-4ede-948e-a4a7ba130e36
+	java:S116"VRename this field "n_operacion" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¡úíóøÿÿÿÿ8ÈåæÓ™2J$738ff540-0157-4e82-9a6d-32a58df2e9dd
+	java:S116"WRename this field "n_contenedor" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(«îÏÒÿÿÿÿÿ8úçÓ™2J$51e43a69-8247-4658-a1af-32541d7e1863
+’	java:S116"QRename this field "p_neto" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³Õ¿h8°ãÔ™2J$0deb8c0a-4060-48e7-82a9-b77b890f873f
+	java:S116"WRename this field "valor_compra" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Úøó…øÿÿÿÿ8‡ÅŒÔ™2J$41ef7b86-2fb7-493e-9be7-5eaf90acc3de

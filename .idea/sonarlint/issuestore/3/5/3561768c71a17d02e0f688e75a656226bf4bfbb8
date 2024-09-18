@@ -1,0 +1,9 @@
+
+…
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8×¶¼¯ž2J$0f03027d-2851-4bf6-b9d4-90c1cef4ea0f
+…
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8Ø¶¼¯ž2J$9ddceaf1-d2bf-4aca-b489-353d2ac4991c
+t
+java:S6204W"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(…‰‹¿þÿÿÿÿ8–™„¦ 2
+m
+java:S1128"PRemove this unused import 'com.app.microservicio.compras.entities.PedidoCompra'.(èÞÄÃ8™™„¦ 2

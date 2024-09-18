@@ -168,6 +168,8 @@
         /*Moverte por la pantalla*/
         .table-container {
             cursor: grab;
+            overflow-x: auto;
+            white-space: nowrap;
         }
 
         .table-container.active {

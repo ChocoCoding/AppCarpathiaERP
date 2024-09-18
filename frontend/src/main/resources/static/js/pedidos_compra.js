@@ -178,29 +178,44 @@ cargarConfiguraciones().then(() => {
             filterContainer.classList.toggle('expanded');
         },
 
-        filtrarPedidos: () => {
-            const searchInput = document.getElementById('search-input').value.toLowerCase();
-            const columnasSeleccionadas = Array.from(document.querySelectorAll('input[name="columnFilter"]:checked')).map(input => parseInt(input.value));
-            const filas = document.querySelectorAll('tbody tr');
+filtrarPedidos: () => {
+    const searchInput = document.getElementById('search-input').value.toLowerCase();
+    const columnasSeleccionadas = Array.from(document.querySelectorAll('input[name="columnFilter"]:checked')).map(input => parseInt(input.value));
+    const filas = document.querySelectorAll('tbody tr');
 
-            filas.forEach(fila => {
-                const columnas = fila.querySelectorAll('td');
-                let match = false;
+    // Verificar si la búsqueda es completamente numérica para aplicar comparación exacta
+    const esBusquedaExacta = /^\d+$/.test(searchInput);
 
-                columnas.forEach((columna, index) => {
-                    if ((columnasSeleccionadas.length === 0 || columnasSeleccionadas.includes(index + 1)) &&
-                        columna.innerText.toLowerCase().includes(searchInput) && index !== 0) {
+    filas.forEach(fila => {
+        const columnas = fila.querySelectorAll('td');
+        let match = false;
+
+        columnas.forEach((columna, index) => {
+            const columnaTexto = columna.innerText.toLowerCase().trim();
+
+            if ((columnasSeleccionadas.length === 0 || columnasSeleccionadas.includes(index + 1))) {
+                if (esBusquedaExacta) {
+                    // Si la búsqueda es numérica, se hace comparación exacta
+                    if (columnaTexto === searchInput) {
                         match = true;
                     }
-                });
-
-                if (match) {
-                    fila.style.display = '';
                 } else {
-                    fila.style.display = 'none';
+                    // Si la búsqueda no es numérica, usar includes para coincidencias parciales
+                    if (columnaTexto.includes(searchInput)) {
+                        match = true;
+                    }
                 }
-            });
-        },
+            }
+        });
+
+        if (match) {
+            fila.style.display = '';
+        } else {
+            fila.style.display = 'none';
+        }
+    });
+},
+
 
         initTableScroll: () => {
             const tableContainer = document.querySelector('.table-container');
@@ -236,7 +251,7 @@ cargarConfiguraciones().then(() => {
     };
 
     // Inicializar la tabla con scroll
-    document.addEventListener('DOMContentLoaded', PedidoCompraApp.initTableScroll);
+    document.addEventListener('DOMContentLoaded', PedidoCompraApp.initTableScroll());
 
     // Exponer globalmente
     window.PedidoCompraApp = PedidoCompraApp;

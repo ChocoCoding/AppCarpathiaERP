@@ -5,3 +5,4 @@ java:S6813"BRemove this field injection and use constructor injection instead.
 java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8£îİœ2J$584161b8-0470-4284-979e-e55313211070
 …
 java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8£îİœ2J$f161ae58-f928-4809-a946-a401a98dee55
+G	java:S106>"+Replace this use of System.out by a logger.(„’Ú™8¨èÄå2

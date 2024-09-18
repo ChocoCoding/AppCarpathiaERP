@@ -40,16 +40,27 @@ public class LineaPedidoCompraService {
                 .collect(Collectors.toList());
     }
 
-
-    public List<LineaPedidoCompraDTO> getLineasByPedidoCompra(Long idPedidoCompra) {
-        return lineaPedidoCompraRepository.findByIdPedidoCompra(idPedidoCompra)
-                .stream()
-                .map(this::convertirADTO)
-                .collect(Collectors.toList());
-    }
-
     public LineaPedidoCompraDTO crearLineaPedido(LineaPedidoCompraDTO lineaPedidoCompraDTO) {
         return convertirADTO(lineaPedidoCompraRepository.save(convertirAEntidad(lineaPedidoCompraDTO)));
+    }
+
+    @Transactional
+    public void eliminarLineaPedido(Long idNumeroLinea) {
+        LineaPedidoCompra lineaExistente = lineaPedidoCompraRepository.findById(idNumeroLinea)
+                .orElseThrow(() -> new RuntimeException("Línea de pedido no encontrada"));
+
+        Long idPedidoCompra = lineaExistente.getPedidoCompra().getIdPedidoCompra();
+        lineaExistente.setPNeto(new BigDecimal(0));
+        lineaExistente.setBultos(0L);
+        lineaExistente.setPrecio(new BigDecimal(0));
+        lineaExistente.setValorCompra(new BigDecimal("0.0"));
+        calculoService.recalcularPesoNetoTotal(idPedidoCompra);
+        calculoService.recalcularTotalBultos(idPedidoCompra);
+        calculoService.recalcularValoresCompra(idPedidoCompra);
+        calculoService.recalcularPromedio(idPedidoCompra);
+        lineaPedidoCompraRepository.save(lineaExistente);
+        lineaPedidoCompraRepository.deleteById(idNumeroLinea);
+
     }
 
     @Transactional
@@ -87,24 +98,15 @@ public class LineaPedidoCompraService {
         }
     }
 
-    @Transactional
-    public void eliminarLineaPedido(Long idNumeroLinea) {
-        LineaPedidoCompra lineaExistente = lineaPedidoCompraRepository.findById(idNumeroLinea)
-                .orElseThrow(() -> new RuntimeException("Línea de pedido no encontrada"));
 
-        Long idPedidoCompra = lineaExistente.getPedidoCompra().getIdPedidoCompra();
-        lineaExistente.setPNeto(new BigDecimal(0));
-        lineaExistente.setBultos(0L);
-        lineaExistente.setPrecio(new BigDecimal(0));
-        lineaExistente.setValorCompra(new BigDecimal("0.0"));
-        calculoService.recalcularPesoNetoTotal(idPedidoCompra);
-        calculoService.recalcularTotalBultos(idPedidoCompra);
-        calculoService.recalcularValoresCompra(idPedidoCompra);
-        calculoService.recalcularPromedio(idPedidoCompra);
-        lineaPedidoCompraRepository.save(lineaExistente);
-        lineaPedidoCompraRepository.deleteById(idNumeroLinea);
-
+    public List<LineaPedidoCompraDTO> getLineasByPedidoCompra(Long idPedidoCompra) {
+        return lineaPedidoCompraRepository.findByIdPedidoCompra(idPedidoCompra)
+                .stream()
+                .map(this::convertirADTO)
+                .collect(Collectors.toList());
     }
+
+
 
 
 
