@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Costes Pedido de Compra</title>
+    <link rel="stylesheet" href="/css/estilos_costes_compra.css">
+
+</head>
+<body>
+<header>
+    <h3>Costes pedido de compra</h3>
+    <div class="actions">
+        <div class="left-actions">
+            <button class="icon-button" onclick="CosteCompraApp.goBack()">
+                <span class="icon">🔙</span> <!-- Icono de Volver Atrás -->
+            </button>
+        </div>
+        <div class="center-actions">
+            <button class="icon-button" onclick="CosteCompraApp.guardarCambios()">
+                <span class="icon">💾</span> <!-- Icono de Guardar -->
+            </button>
+            <button class="icon-button" onclick="CosteCompraApp.crearCosteCompra()">
+                <span class="icon">➕</span> <!-- Icono de Crear Línea -->
+            </button>
+            <div class="search-container">
+                <button class="search-button" onclick="CosteCompraApp.toggleSearch()">🔍</button>
+                <button class="filter-button" onclick="CosteCompraApp.toggleFilter()">⚙️</button>
+                <input type="text" id="search-input" oninput="CosteCompraApp.filtrarCostes()" placeholder="Buscar..." style="display: none;">
+                <div class="filter-container">
+                    <label><input type="checkbox" name="columnFilter" value="2"> ID Pedido Compra</label>
+                    <label><input type="checkbox" name="columnFilter" value="3"> Nº Operación</label>
+                    <label><input type="checkbox" name="columnFilter" value="4"> Nº Contenedor</label>
+                    <label><input type="checkbox" name="columnFilter" value="5"> Arancel</label>
+                    <label><input type="checkbox" name="columnFilter" value="6"> Sanidad</label>
+                    <label><input type="checkbox" name="columnFilter" value="7"> Plástico</label>
+                    <label><input type="checkbox" name="columnFilter" value="8"> Carga</label>
+                    <label><input type="checkbox" name="columnFilter" value="9"> Inland</label>
+                    <label><input type="checkbox" name="columnFilter" value="10"> Muellaje</label>
+                    <label><input type="checkbox" name="columnFilter" value="11"> PIF</label>
+                    <label><input type="checkbox" name="columnFilter" value="12"> Despacho</label>
+                    <label><input type="checkbox" name="columnFilter" value="13"> IVA</label>
+                    <label><input type="checkbox" name="columnFilter" value="14"> Dec.Iva</label>
+                    <label><input type="checkbox" name="columnFilter" value="15"> Tasa Sanitaria</label>
+                    <label><input type="checkbox" name="columnFilter" value="16"> Suma Costes</label>
+                    <label><input type="checkbox" name="columnFilter" value="17"> Gasto Total</label>
+                </div>
+            </div>
+        </div>
+        <div class="right-actions">
+            <button class="icon-button" onclick="CosteCompraApp.logout()">
+                <span class="icon">🔒</span> <!-- Icono de Cerrar Sesión -->
+            </button>
+        </div>
+    </div>
+</header>
+
+<div class="table-container">
+    <table>
+        <thead>
+        <tr>
+            <th>Eliminar</th>
+            <th class="sortable" onclick="CosteCompraApp.sortTable(1)">ID Pedido Compra</th>
+            <th class="sortable" onclick="CosteCompraApp.sortTable(2)">Nº Operación</th>
+            <th class="sortable" onclick="CosteCompraApp.sortTable(3)">Nº Contenedor</th>
+            <th class="sortable" onclick="CosteCompraApp.sortTable(4)">Arancel</th>
+            <th class="sortable" onclick="CosteCompraApp.sortTable(5)">Sanidad</th>
+            <th class="sortable" onclick="CosteCompraApp.sortTable(6)">Plástico</th>
+            <th class="sortable" onclick="CosteCompraApp.sortTable(7)">Carga</th>
+            <th class="sortable" onclick="CosteCompraApp.sortTable(8)">Inland</th>
+            <th class="sortable" onclick="CosteCompraApp.sortTable(9)">Muellaje</th>
+            <th class="sortable" onclick="CosteCompraApp.sortTable(10)">PIF</th>
+            <th class="sortable" onclick="CosteCompraApp.sortTable(11)">Despacho</th>
+            <th class="sortable" onclick="CosteCompraApp.sortTable(12)">IVA</th>
+            <th class="sortable" onclick="CosteCompraApp.sortTable(13)">Dec.Iva</th>
+            <th class="sortable" onclick="CosteCompraApp.sortTable(14)">Tasa Sanitaria</th>
+            <th class="sortable" onclick="CosteCompraApp.sortTable(15)">Suma Costes</th>
+            <th class="sortable" onclick="CosteCompraApp.sortTable(16)">Gasto Total</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="coste : ${costesPedidoCompra}" th:data-id-coste-compra="${coste.idCosteCompra}">
+            <td>
+                <button class="delete-button" th:onclick="'CosteCompraApp.eliminarCosteCompra(' + ${coste.idCosteCompra} + ')'">🗑️</button>
+            </td>
+            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.idPedidoCompra}">ID Pedido Compra</td>
+            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.n_operacion}">Nº Operación</td>
+            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.n_contenedor}">Nº Contenedor</td>
+            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.arancel}">Arancel</td>
+            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.sanidad}">Sanidad</td>
+            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.plastico}">Plástico</td>
+            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.carga}">Carga</td>
+            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.inland}">Inland</td>
+            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.muellaje}">Muellaje</td>
+            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.pif}">PIF</td>
+            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.despacho}">Despacho</td>
+            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.conexiones}">IVA</td>
+            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.iva}">Dec.Iva</td>
+            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.dec_iva}">Tasa Sanitaria</td>
+            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.tasa_sanitaria}">Suma Costes</td>
+            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.gasto_total}">Gasto Total</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script src="/js/sweet-alert2/dist/sweetalert2.all.min.js"></script>
+<script type="module" src="/js/costes_compra.js"></script>
+</body>
+</html>

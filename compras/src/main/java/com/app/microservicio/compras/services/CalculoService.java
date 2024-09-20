@@ -1,6 +1,8 @@
 package com.app.microservicio.compras.services;
 
+import com.app.microservicio.compras.entities.CostePedidoCompra;
 import com.app.microservicio.compras.entities.PedidoCompraDet;
+import com.app.microservicio.compras.repository.CostePedidoRepository;
 import com.app.microservicio.compras.repository.LineaPedidoCompraRepository;
 import com.app.microservicio.compras.repository.PedidoCompraDetRepository;
 import com.app.microservicio.compras.repository.PedidoCompraRepository;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Optional;
 
 @Service
 public class CalculoService{
@@ -22,6 +25,9 @@ public class CalculoService{
 
     @Autowired
     private PedidoCompraRepository pedidoCompraRepository;
+
+    @Autowired
+    private CostePedidoRepository costePedidoRepository;
 
 
     public ResponseEntity<BigDecimal> recalcularPesoNetoTotal(Long pedidoCompraId) {
@@ -104,6 +110,15 @@ public class CalculoService{
         // Sumar los bultos
         BigDecimal totalValoresCompra = lineaPedidoCompraRepository.sumValorCompraByPedidoCompraId(pedidoCompraId);
         return ResponseEntity.ok(totalValoresCompra);
+    }
+
+    public ResponseEntity<BigDecimal> calcularSumaCostes(Long idPedidoCompra) {
+        BigDecimal sumaCostes = new BigDecimal(0.0);
+        Optional<CostePedidoCompra> costePedidoCompra = costePedidoRepository.findByIdPedidoCompra(idPedidoCompra);
+        if (costePedidoCompra!=null){
+            sumaCostes = costePedidoRepository.sumaCostes(idPedidoCompra);
+        }
+        return ResponseEntity.ok(sumaCostes);
     }
 
 }

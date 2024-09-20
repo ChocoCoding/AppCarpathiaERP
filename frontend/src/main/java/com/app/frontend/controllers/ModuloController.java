@@ -27,6 +27,10 @@ public class ModuloController {
     @Value("${modulo.view.modulo-usuarios}")
     private String moduloUsuariosView;
 
+    @Value("${modulo.view.modulo-costes}")
+    private String moduloCostesView;
+
+
     // Usar las rutas inyectadas en los métodos del controlador
     @GetMapping("${modulo.url.compras}")
     public String gestionarCompras() {
@@ -41,5 +45,10 @@ public class ModuloController {
     @GetMapping("${modulo.url.usuarios}")
     public String gestionarUsuarios() {
         return moduloUsuariosView;
+    }
+
+    @GetMapping("${modulo.url.costes}")
+    public String gestionarCostes() {
+        return moduloCostesView;
     }
 }

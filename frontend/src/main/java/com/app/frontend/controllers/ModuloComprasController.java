@@ -1,8 +1,10 @@
 package com.app.frontend.controllers;
 
+import com.app.frontend.DTO.CostesDTO;
 import com.app.frontend.DTO.LineaPedidoCompraDTO;
 import com.app.frontend.DTO.PedidoCompraDTO;
 import com.app.frontend.DTO.PedidoCompraDetDTO;
+import com.app.frontend.service.CostesPedidoCompraService;
 import com.app.frontend.service.LineaPedidoCompraService;
 import com.app.frontend.service.PedidoCompraDetService;
 import com.app.frontend.service.PedidoCompraService;
@@ -26,6 +28,9 @@ public class ModuloComprasController {
     @Autowired
     private PedidoCompraDetService pedidoCompraDetService;
 
+    @Autowired
+    private CostesPedidoCompraService costesPedidoCompraService;
+
     // Inyectar las URLs desde el archivo application.properties
     @Value("${modulo.compras.url.pedidos-compra}")
     private String pedidosCompraUrl;
@@ -33,8 +38,7 @@ public class ModuloComprasController {
     @Value("${modulo.compras.url.lineas-pedido-compra}")
     private String lineasPedidoCompraUrl;
 
-    @Value("${modulo.compras.url.detalles-pedido-compra}")
-    private String detallesPedidoCompraUrl;
+
 
     @Value("${modulo.compras.model.pedidos-compra}")
     private String pedidosCompraModel;
@@ -42,17 +46,33 @@ public class ModuloComprasController {
     @Value("${modulo.compras.model.lineas-pedido-compra}")
     private String lineasPedidoCompraModel;
 
-    @Value("${modulo.compras.model.detalles-pedido-compra}")
-    private String detallesPedidoCompraModel;
+    @Value("${modulo.compras.view.lineas-pedido-compra}")
+    private String lineasPedidoCompraView;
 
     @Value("${modulo.compras.view.pedidos-compra}")
     private String pedidosCompraView;
 
-    @Value("${modulo.compras.view.lineas-pedido-compra}")
-    private String lineasPedidoCompraView;
+    @Value("${modulo.compras.url.detalles-pedido-compra}")
+    private String detallesPedidoCompraUrl;
+
+    @Value("${modulo.compras.model.detalles-pedido-compra}")
+    private String detallesPedidoCompraModel;
 
     @Value("${modulo.compras.view.detalles-pedido-compra}")
     private String detallesPedidoCompraView;
+
+
+
+    @Value("${modulo.compras.view.costes-pedido-compra}")
+    private String costesPedidoCompraView;
+
+    @Value("${modulo.compras.model.costes-pedido-compra}")
+    private String costesPedidoCompraModel;
+
+    @Value("${modulo.compras.url.costes-pedido-compra}")
+    private String costesPedidoCompraUrl;
+
+
 
 
     @GetMapping("${modulo.compras.url.pedidos-compra}")
@@ -75,4 +95,13 @@ public class ModuloComprasController {
         model.addAttribute(detallesPedidoCompraModel, detallesPedidoCompra);
         return detallesPedidoCompraView;
     }
+
+    @GetMapping("${modulo.compras.url.costes-pedido-compra}")
+    public String gestionarCostesPedidoCompra(Model model) {
+        List<CostesDTO> costesPedidoCompra = costesPedidoCompraService.obtenerTodosLosCostesPedidoCompra();
+        model.addAttribute(costesPedidoCompraModel, costesPedidoCompra);
+        return costesPedidoCompraView;
+    }
+
+
 }

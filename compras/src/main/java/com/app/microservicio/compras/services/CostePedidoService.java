@@ -3,7 +3,6 @@ package com.app.microservicio.compras.services;
 import com.app.microservicio.compras.DTO.CostesDTO;
 import com.app.microservicio.compras.entities.CostePedidoCompra;
 import com.app.microservicio.compras.repository.CostePedidoRepository;
-import com.app.microservicio.compras.entities.PedidoCompra;
 import com.app.microservicio.compras.repository.PedidoCompraRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,6 +39,7 @@ public class CostePedidoService {
         costePedidoCompraDTO.setIva(costePedidoCompra.getIva());
         costePedidoCompraDTO.setDec_iva(costePedidoCompra.getDec_iva());
         costePedidoCompraDTO.setTasa_sanitaria(costePedidoCompra.getTasa_sanitaria());
+        costePedidoCompraDTO.setGasto_total(costePedidoCompra.getGasto_total());
 
         return costePedidoCompraDTO;
     }
@@ -64,6 +64,7 @@ public class CostePedidoService {
         costePedidoCompra.setIva(costePedidoCompraDTO.getIva());
         costePedidoCompra.setDec_iva(costePedidoCompraDTO.getDec_iva());
         costePedidoCompra.setTasa_sanitaria(costePedidoCompraDTO.getTasa_sanitaria());
+        costePedidoCompra.setGasto_total(costePedidoCompraDTO.getGasto_total());
 
         return costePedidoCompra;
     }

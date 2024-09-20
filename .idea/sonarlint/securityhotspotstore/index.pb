@@ -111,3 +111,7 @@ Scompras/src/main/java/com/app/microservicio/compras/entities/CostePedidoCompra.
 Zcompras/src/main/java/com/app/microservicio/compras/controllers/CostePedidoController.java,7\5\7571535d79306a51f7690fadf9615f074bdbb781
 „
 Tcompras/src/main/java/com/app/microservicio/compras/services/CostePedidoService.java,3\5\3561768c71a17d02e0f688e75a656226bf4bfbb8
+j
+:frontend/src/main/java/com/app/frontend/DTO/CostesDTO.java,1\2\125e1153a0e12bab27740db234a22bcb0273dccd
+~
+Nfrontend/src/main/java/com/app/frontend/service/CostesPedidoCompraService.java,d\1\d1e135e4c45f1b67d20ff72a3ac1e667cc0da832

@@ -1,0 +1,7 @@
+
+•	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¨ŞÄ”J$6b03e53a-812d-42d5-8ff7-7c2249c2926b
+–	java:S116"VRename this field "n_operacion" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¡úíóøÿÿÿÿJ$fb9e3217-ac23-42f3-b080-aba33bff0f31
+—	java:S116"WRename this field "n_contenedor" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(«îÏÒÿÿÿÿÿJ$0c2ed7fb-6a6a-48bc-bcd9-26951fdbe6fa
+	java:S116"RRename this field "dec_iva" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(£âıJ$9da3d906-335b-4a47-a665-d9b27583327b
+”	java:S116"YRename this field "tasa_sanitaria" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(±ŸÉ­J$a9fa0e4e-0adf-497d-95a6-e391afcb9793
+	java:S116"VRename this field "gasto_total" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(î°²úÿÿÿÿ8ú…“© 2J$5eacd54e-c812-40f4-b27c-d9f8f1423f3f

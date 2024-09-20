@@ -60,6 +60,10 @@ public class CostePedidoCompra {
     @Column(name = "tasa_sanitaria", precision = 15, scale = 6)
     private BigDecimal tasa_sanitaria;
 
+    @Column(name = "gasto_total", precision = 15, scale = 6)
+    private BigDecimal gasto_total;
+
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_pedido_compra")
     private PedidoCompra pedidoCompra;

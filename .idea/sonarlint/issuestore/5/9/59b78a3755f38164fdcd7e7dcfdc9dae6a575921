@@ -1,3 +1,4 @@
 
-”	java:S116:"RRename this field "dec_iva" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(£âı8™ı¡å2J$2fb6d026-d77f-4b5e-81b4-1ad5e1b62131
-›	java:S116="YRename this field "tasa_sanitaria" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(±ŸÉ­8–À¤å2J$7fcd477f-4ff6-4ae1-a827-52bef45f83bc
+”	java:S116:"RRename this field "dec_iva" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(£âı8™ı¡å2J$b3bf28ce-9b05-4c49-882d-3d46e908c3cf
+›	java:S116="YRename this field "tasa_sanitaria" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(±ŸÉ­8–À¤å2J$29698b70-3024-4aad-b151-506f06ed4e51
+	java:S116@"VRename this field "gasto_total" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(î°²úÿÿÿÿ8Ô¼ˆ© 2J$1e6c5b75-0770-4c4a-b3b3-6e0fcb617f5f

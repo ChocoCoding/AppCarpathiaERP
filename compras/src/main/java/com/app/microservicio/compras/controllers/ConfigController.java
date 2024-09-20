@@ -32,6 +32,12 @@ public class ConfigController {
     @Value("${endpoint.api.pedido_compra_det_id}")
     private String pedidoCompraDetIdEndpoint;
 
+    @Value("${endpoint.api.costes_pedido_compra}")
+    private String costesPedidosCompraEndpoint;
+
+    @Value("${endpoint.api.costes_pedido_compra_id}")
+    private String costesPedidosCompraIdEndpoint;
+
     // Mensajes
     @Value("${mensaje.creacion_exitosa}")
     private String creacionExitosa;
@@ -81,20 +87,28 @@ public class ConfigController {
     @Value("${mensaje.error_eliminar_linea}")
     private String errorEliminarLinea;
 
+
+
+    @Value("${mensaje.error_id_invalido}")
+    private String errorIdInvalido;
+
     @Value("${mensaje.detalle_creado_exito}")
     private String detalleCreadoExito;
 
     @Value("${mensaje.error_crear_detalle}")
     private String errorCrearDetalle;
 
-    @Value("${mensaje.error_id_invalido}")
-    private String errorIdInvalido;
-
     @Value("${mensaje.confirmar_eliminar_detalle}")
     private String confirmarEliminarDetalle;
 
     @Value("${mensaje.confirmar_eliminar_detalle_texto}")
     private String confirmarEliminarDetalleTexto;
+
+    @Value("${mensaje.detalle_eliminado_exito}")
+    private String detalleEliminadoExito;
+
+    @Value("${mensaje.error_eliminar_detalle}")
+    private String errorEliminarDetalle;
 
     @Value("${mensaje.confirmar_eliminar}")
     private String confirmarEliminar;
@@ -104,12 +118,6 @@ public class ConfigController {
 
     @Value("${mensaje.eliminado}")
     private String eliminado;
-
-    @Value("${mensaje.detalle_eliminado_exito}")
-    private String detalleEliminadoExito;
-
-    @Value("${mensaje.error_eliminar_detalle}")
-    private String errorEliminarDetalle;
 
     @Value("${mensaje.error_formato_fecha_incorrecto}")
     private String errorFormatoFechaIncorrecto;
@@ -129,6 +137,27 @@ public class ConfigController {
     @Value("${mensaje.confirmarEliminarLineaTexto}")
     private String confirmarEliminarLineaTexto;
 
+    @Value("${mensaje.coste_creado_exito}")
+    private String costeCreadoExito;
+
+    @Value("${mensaje.error_crear_coste}")
+    private String errorCrearCoste;
+
+    @Value("${mensaje.confirmar_eliminar_coste}")
+    private String confirmarEliminarCoste;
+
+    @Value("${mensaje.confirmar_eliminar_coste_texto}")
+    private String confirmarEliminarcosteTexto;
+
+    @Value("${mensaje.coste_eliminado_exito}")
+    private String costeEliminadoExito;
+
+    @Value("${mensaje.error_eliminar_coste}")
+    private String errorEliminarCoste;
+
+    @Value("${mensaje.confirmar_eliminar_coste_texto}")
+    private String confirmarEliminarCosteTexto;
+
     @GetMapping("/api/config")
     public Map<String, String> getConfig() {
         Map<String, String> config = new HashMap<>();
@@ -140,8 +169,11 @@ public class ConfigController {
         config.put("lineasPedidosCompraIdEndpoint", lineasPedidosCompraIdEndpoint);
         config.put("pedidosCompraDetEndpoint", pedidosCompraDetEndpoint);
         config.put("pedidoCompraDetIdEndpoint", pedidoCompraDetIdEndpoint);
+        config.put("costesPedidosCompraEndpoint", costesPedidosCompraEndpoint);
+        config.put("costesPedidosCompraIdEndpoint", costesPedidosCompraIdEndpoint);
 
-        // Mensajes
+
+        // Mensajes genericos
         config.put("creacionExitosa", creacionExitosa);
         config.put("pedidoCreadoExito", pedidoCreadoExito);
         config.put("error", error);
@@ -149,31 +181,46 @@ public class ConfigController {
         config.put("guardadoExitoso", guardadoExitoso);
         config.put("cambiosGuardadosExito", cambiosGuardadosExito);
         config.put("errorGuardarCambios", errorGuardarCambios);
-        config.put("eliminarPedidoConfirmacion", eliminarPedidoConfirmacion);
-        config.put("pedidoEliminadoExito", pedidoEliminadoExito);
-        config.put("errorEliminarPedido", errorEliminarPedido);
-        config.put("lineaCreadaExito", lineaCreadaExito);
-        config.put("errorCrearLinea", errorCrearLinea);
         config.put("errorIdPedidoInvalido", errorIdPedidoInvalido);
-        config.put("eliminarLineaConfirmacion", eliminarLineaConfirmacion);
-        config.put("lineaEliminadaExito", lineaEliminadaExito);
-        config.put("errorEliminarLinea", errorEliminarLinea);
-        config.put("detalleCreadoExito", detalleCreadoExito);
-        config.put("errorCrearDetalle", errorCrearDetalle);
         config.put("errorIdInvalido", errorIdInvalido);
-        config.put("confirmarEliminarDetalle", confirmarEliminarDetalle);
-        config.put("confirmarEliminarDetalleTexto", confirmarEliminarDetalleTexto);
         config.put("confirmarEliminar", confirmarEliminar);
         config.put("cancelar", cancelar);
         config.put("eliminado", eliminado);
-        config.put("detalleEliminadoExito", detalleEliminadoExito);
-        config.put("errorEliminarDetalle", errorEliminarDetalle);
         config.put("errorFormatoFechaIncorrecto", errorFormatoFechaIncorrecto);
         config.put("errorFechaFormato", errorFechaFormato);
         config.put("errorValorIncorrecto", errorValorIncorrecto);
-        config.put("errorTerminado", errorTerminado);
+
+        //Mensajes Pedido Compra
+        config.put("eliminarPedidoConfirmacion", eliminarPedidoConfirmacion);
+        config.put("pedidoEliminadoExito", pedidoEliminadoExito);
+        config.put("errorEliminarPedido", errorEliminarPedido);
+
+        //Mensajes LineaPedido Compra
+        config.put("lineaCreadaExito", lineaCreadaExito);
+        config.put("errorCrearLinea", errorCrearLinea);
+        config.put("eliminarLineaConfirmacion", eliminarLineaConfirmacion);
+        config.put("lineaEliminadaExito", lineaEliminadaExito);
+        config.put("errorEliminarLinea", errorEliminarLinea);
         config.put("confirmarEliminarLinea", confirmarEliminarLinea);
         config.put("confirmarEliminarLineaTexto", confirmarEliminarLineaTexto);
+
+        //Mensajes Detalles
+        config.put("detalleCreadoExito", detalleCreadoExito);
+        config.put("errorCrearDetalle", errorCrearDetalle);
+        config.put("confirmarEliminarDetalle", confirmarEliminarDetalle);
+        config.put("confirmarEliminarDetalleTexto", confirmarEliminarDetalleTexto);
+        config.put("detalleEliminadoExito", detalleEliminadoExito);
+        config.put("errorEliminarDetalle", errorEliminarDetalle);
+        config.put("errorTerminado", errorTerminado);
+
+
+        //Mensajes Costes
+        config.put("costeCreadoExito", costeCreadoExito);
+        config.put("errorCrearCoste", errorCrearCoste);
+        config.put("confirmarEliminarCoste", confirmarEliminarCoste);
+        config.put("confirmarEliminarCosteTexto", confirmarEliminarCosteTexto);
+        config.put("costeEliminadoExito", costeEliminadoExito);
+        config.put("errorEliminarCoste", errorEliminarCoste);
 
         return config;
     }

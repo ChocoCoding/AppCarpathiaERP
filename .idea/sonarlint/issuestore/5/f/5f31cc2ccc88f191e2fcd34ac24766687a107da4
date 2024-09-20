@@ -1,8 +1,14 @@
 
+
+java:S2789v"FEnsure this "Optional" could never be null and remove this null-check.(‚£õÅÿÿÿÿÿ8ÖÆ‡« 2J$cbcb4520-ec73-4251-92c6-e8cf05901330
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8£îİœ2J$f97790f7-e54c-413c-b01b-601855a980b8
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8³Ÿ¦ª 2J$baa157ef-6a95-490b-b325-a70d09bb46be
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8£îİœ2J$584161b8-0470-4284-979e-e55313211070
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8³Ÿ¦ª 2J$17027e5d-95d8-4afa-9271-59d0c706dce3
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8£îİœ2J$f161ae58-f928-4809-a946-a401a98dee55
-G	java:S106>"+Replace this use of System.out by a logger.(„’Ú™8¨èÄå2
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8³Ÿ¦ª 2J$5ed4a615-3f8b-407c-a72c-2ecf81aee5c2
+…
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8³Ÿ¦ª 2J$9953d033-f026-470e-aacf-96709362cf70
+m	java:S106D"+Replace this use of System.out by a logger.(„’Ú™8¸Ÿ¦ª 2J$b9d2c96f-4ff2-41db-908c-082e185c614d
+d
+java:S2111t"!Use "BigDecimal.valueOf" instead.(åŒ½8“Ïˆ« 2J$2816927a-c6bc-4832-853c-57d89f973bf8

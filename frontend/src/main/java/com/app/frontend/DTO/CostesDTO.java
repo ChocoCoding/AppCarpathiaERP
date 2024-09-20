@@ -1,4 +1,4 @@
-package com.app.microservicio.compras.DTO;
+package com.app.frontend.DTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
