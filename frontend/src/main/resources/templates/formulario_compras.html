@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Pedido de Compra</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+    .step-indicator {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #ccc;
+    }
+    .step-active {
+      background-color: #0d6efd;
+      color: white;
+    }
+    .line-active {
+      background-color: #0d6efd;
+    }
+  </style>
+</head>
+<body class="bg-light">
+
+<div class="container my-5">
+    <div class="card mx-auto" style="max-width: 800px;">
+        <div class="card-header text-center">
+            <h2 class="card-title">Formulario de Pedido de Compra</h2>
+            <div class="d-flex justify-content-between align-items-center mt-4">
+                <div class="d-flex align-items-center">
+                    <div class="step-indicator step-active" id="step1Indicator">1</div>
+                    <div class="step-line line-active mx-2" style="width: 50px; height: 2px;"></div>
+                    <div class="step-indicator" id="step2Indicator">2</div>
+                    <div class="step-line mx-2" style="width: 50px; height: 2px;"></div>
+                    <div class="step-indicator" id="step3Indicator">3</div>
+                    <div class="step-line mx-2" style="width: 50px; height: 2px;"></div>
+                    <div class="step-indicator" id="step4Indicator">4</div>
+                    <div class="step-line mx-2" style="width: 50px; height: 2px;"></div>
+                    <div class="step-indicator" id="step5Indicator">5</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <!-- Step 1: Pedido de Compra -->
+            <div id="step1" class="step-content">
+                <h3 class="mb-3">Pedido de Compra</h3>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="id" class="form-label">ID</label>
+                        <input type="text" class="form-control" id="id" placeholder="ID">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="operacion" class="form-label">Nº Operación</label>
+                        <input type="text" class="form-control" id="operacion" placeholder="Nº Operación">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="contenedor" class="form-label">Nº Contenedor</label>
+                        <input type="text" class="form-control" id="contenedor" placeholder="Nº Contenedor">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="proforma" class="form-label">Proforma</label>
+                        <input type="text" class="form-control" id="proforma" placeholder="Proforma">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="proveedor" class="form-label">Proveedor</label>
+                        <input type="text" class="form-control" id="proveedor" placeholder="Proveedor">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="cliente" class="form-label">Cliente</label>
+                        <input type="text" class="form-control" id="cliente" placeholder="Cliente">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="incoterm" class="form-label">Incoterm</label>
+                        <select class="form-select" id="incoterm">
+                            <option value="" selected>Seleccionar Incoterm</option>
+                            <option value="FOB">FOB</option>
+                            <option value="CIF">CIF</option>
+                            <option value="EXW">EXW</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="referencia" class="form-label">Referencia Proveedor</label>
+                        <input type="text" class="form-control" id="referencia" placeholder="Referencia Proveedor">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Líneas de Pedido -->
+            <div id="step2" class="step-content d-none">
+                <h3 class="mb-3">Líneas Pedido de Compra</h3>
+                <div id="orderLinesContainer"></div>
+                <button class="btn btn-primary w-100 mt-3" id="addLineBtn">Agregar Línea de Pedido</button>
+            </div>
+
+            <!-- Step 3: Detalles del Pedido -->
+            <div id="step3" class="step-content d-none">
+                <h3 class="mb-3">Detalles del Pedido</h3>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="idPedido" class="form-label">ID Pedido Compra</label>
+                        <input type="text" class="form-control" id="idPedido" placeholder="ID Pedido Compra">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="operacionDetalle" class="form-label">Nº Operación</label>
+                        <input type="text" class="form-control" id="operacionDetalle" placeholder="Nº Operación">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="contrato" class="form-label">Contrato Compra</label>
+                        <input type="text" class="form-control" id="contrato" placeholder="Contrato Compra">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="terminado" class="form-label">Terminado (S/N)</label>
+                        <select class="form-select" id="terminado">
+                            <option value="" selected>Seleccionar</option>
+                            <option value="S">Sí</option>
+                            <option value="N">No</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="factProveedor" class="form-label">Fact. Proveedor</label>
+                        <input type="text" class="form-control" id="factProveedor" placeholder="Fact. Proveedor">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="factFlete" class="form-label">Nº Fact. Flete</label>
+                        <input type="text" class="form-control" id="factFlete" placeholder="Nº Fact. Flete">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="fechaPago" class="form-label">Fecha Pago Flete</label>
+                        <input type="date" class="form-control" id="fechaPago">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="bl" class="form-label">Nº BL</label>
+                        <input type="text" class="form-control" id="bl" placeholder="Nº BL">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="pesoNeto" class="form-label">Peso Neto Total</label>
+                        <input type="number" class="form-control" id="pesoNeto" placeholder="Peso Neto Total">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="bultos" class="form-label">Total Bultos</label>
+                        <input type="number" class="form-control" id="bultos" placeholder="Total Bultos">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="promedio" class="form-label">Promedio</label>
+                        <input type="number" class="form-control" id="promedio" placeholder="Promedio">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="valorCompra" class="form-label">Valor Compra Total</label>
+                        <input type="number" class="form-control" id="valorCompra" placeholder="Valor Compra Total">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="observaciones" class="form-label">Observaciones</label>
+                    <textarea id="observaciones" class="form-control" rows="3" placeholder="Observaciones"></textarea>
+                </div>
+            </div>
+
+            <!-- Step 4: Datos del Barco -->
+            <div id="step4" class="step-content d-none">
+                <h3 class="mb-3">Datos del Barco</h3>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="idPedidoBarco" class="form-label">ID Pedido Compra</label>
+                        <input type="text" class="form-control" id="idPedidoBarco" placeholder="ID Pedido Compra">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="operacionBarco" class="form-label">Nº Operación</label>
+                        <input type="text" class="form-control" id="operacionBarco" placeholder="Nº Operación">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="nombreBarco" class="form-label">Nombre Barco</label>
+                        <input type="text" class="form-control" id="nombreBarco" placeholder="Nombre Barco">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="viaje" class="form-label">Viaje</label>
+                        <input type="text" class="form-control" id="viaje" placeholder="Viaje">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="naviera" class="form-label">Naviera</label>
+                        <input type="text" class="form-control" id="naviera" placeholder="Naviera">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="puertoEmbarque" class="form-label">Puerto Embarque</label>
+                        <input type="text" class="form-control" id="puertoEmbarque" placeholder="Puerto Embarque">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="puertoLlegada" class="form-label">Puerto Llegada</label>
+                        <input type="text" class="form-control" id="puertoLlegada" placeholder="Puerto Llegada">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="fechaEmbarque" class="form-label">Fecha Embarque</label>
+                        <input type="date" class="form-control" id="fechaEmbarque">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="fechaLlegada" class="form-label">Fecha Llegada</label>
+                        <input type="date" class="form-control" id="fechaLlegada">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="flete" class="form-label">Flete</label>
+                        <input type="number" class="form-control" id="flete" placeholder="Flete">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="fechaPagoFleteBarco" class="form-label">Fecha Pago Flete</label>
+                        <input type="date" class="form-control" id="fechaPagoFleteBarco">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="facturaFlete" class="form-label">Factura Flete</label>
+                        <input type="text" class="form-control" id="facturaFlete" placeholder="Factura Flete">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 5: Costes -->
+            <div id="step5" class="step-content d-none">
+                <h3 class="mb-3">Costes</h3>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="idPedidoCostes" class="form-label">ID Pedido Compra</label>
+                        <input type="text" class="form-control" id="idPedidoCostes" placeholder="ID Pedido Compra">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="operacionCostes" class="form-label">Nº Operación</label>
+                        <input type="text" class="form-control" id="operacionCostes" placeholder="Nº Operación">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="contenedorCostes" class="form-label">Nº Contenedor</label>
+                        <input type="text" class="form-control" id="contenedorCostes" placeholder="Nº Contenedor">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="arancel" class="form-label">Arancel</label>
+                        <input type="number" class="form-control" id="arancel" placeholder="Arancel">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="sanidad" class="form-label">Sanidad</label>
+                        <input type="number" class="form-control" id="sanidad" placeholder="Sanidad">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="plastico" class="form-label">Plástico</label>
+                        <input type="number" class="form-control" id="plastico" placeholder="Plástico">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="carga" class="form-label">Carga</label>
+                        <input type="number" class="form-control" id="carga" placeholder="Carga">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inland" class="form-label">Inland</label>
+                        <input type="number" class="form-control" id="inland" placeholder="Inland">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="muellaje" class="form-label">Muellaje</label>
+                        <input type="number" class="form-control" id="muellaje" placeholder="Muellaje">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="pif" class="form-label">PIF</label>
+                        <input type="number" class="form-control" id="pif" placeholder="PIF">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="despacho" class="form-label">Despacho</label>
+                        <input type="number" class="form-control" id="despacho" placeholder="Despacho">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="conexiones" class="form-label">Conexiones</label>
+                        <input type="number" class="form-control" id="conexiones" placeholder="Conexiones">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="iva" class="form-label">IVA</label>
+                        <input type="number" class="form-control" id="iva" placeholder="IVA">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="decIva" class="form-label">Dec. IVA</label>
+                        <input type="number" class="form-control" id="decIva" placeholder="Dec. IVA">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="tasaSanitaria" class="form-label">Tasa Sanitaria</label>
+                        <input type="number" class="form-control" id="tasaSanitaria" placeholder="Tasa Sanitaria">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="sumaCostes" class="form-label">Suma Costes</label>
+                        <input type="number" class="form-control" id="sumaCostes" placeholder="Suma Costes">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="gastoTotal" class="form-label">Gasto Total</label>
+                        <input type="number" class="form-control" id="gastoTotal" placeholder="Gasto Total">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="card-footer d-flex justify-content-between">
+            <button class="btn btn-outline-primary" id="prevBtn" disabled>Anterior</button>
+            <button class="btn btn-primary" id="nextBtn">Siguiente</button>
+        </div>
+    </div>
+</div>
+
+<script>
+  let currentStep = 1;
+  const totalSteps = 5;
+
+  document.getElementById('nextBtn').addEventListener('click', () => {
+    if (currentStep < totalSteps) {
+      currentStep++;
+      updateStep();
+    }
+  });
+
+  document.getElementById('prevBtn').addEventListener('click', () => {
+    if (currentStep > 1) {
+      currentStep--;
+      updateStep();
+    }
+  });
+
+
+
+  function updateStep() {
+    document.querySelectorAll('.step-content').forEach((el, index) => {
+      el.classList.toggle('d-none', index !== currentStep - 1);
+    });
+
+    document.getElementById('prevBtn').disabled = currentStep === 1;
+    document.getElementById('nextBtn').textContent = currentStep === totalSteps ? 'Enviar' : 'Siguiente';
+
+    document.getElementById('step1Indicator').classList.toggle('step-active', currentStep >= 1);
+    document.getElementById('step2Indicator').classList.toggle('step-active', currentStep >= 2);
+    document.getElementById('step3Indicator').classList.toggle('step-active', currentStep >= 3);
+    document.getElementById('step4Indicator').classList.toggle('step-active', currentStep >= 4);
+    document.getElementById('step5Indicator').classList.toggle('step-active', currentStep === 5);
+  }
+
+let lineCounter = 0;
+
+// Función para agregar una nueva línea de pedido
+document.getElementById('addLineBtn').addEventListener('click', () => {
+  lineCounter++;
+  const container = document.getElementById('orderLinesContainer');
+  const lineId = `line-${lineCounter}`;
+  const line = document.createElement('div');
+
+  line.id = lineId;
+  line.classList.add('position-relative', 'mb-3', 'card', 'p-3');  // Agrega clases para formato
+
+  line.innerHTML = `
+    <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2" onclick="removeLine(${lineCounter})">
+      <i class="fas fa-trash-alt"></i>
+    </button>
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label for="lineaIdPedido" class="form-label">ID Pedido de Compra</label>
+        <input type="text" class="form-control" placeholder="ID Pedido de Compra">
+      </div>
+      <div class="col-md-6">
+        <label for="numLinea" class="form-label">Nº Línea</label>
+        <input type="text" class="form-control" placeholder="Nº Línea">
+      </div>
+      <div class="col-md-6">
+        <label for="numOperacion" class="form-label">Nº Operación</label>
+        <input type="text" class="form-control" placeholder="Nº Operación">
+      </div>
+      <div class="col-md-6">
+        <label for="proveedorLinea" class="form-label">Proveedor</label>
+        <input type="text" class="form-control" placeholder="Proveedor">
+      </div>
+      <div class="col-md-6">
+        <label for="clienteLinea" class="form-label">Cliente</label>
+        <input type="text" class="form-control" placeholder="Cliente">
+      </div>
+      <div class="col-md-6">
+        <label for="numContenedor" class="form-label">Nº Contenedor</label>
+        <input type="text" class="form-control" placeholder="Nº Contenedor">
+      </div>
+      <div class="col-md-6">
+        <label for="producto" class="form-label">Producto</label>
+        <input type="text" class="form-control" placeholder="Producto">
+      </div>
+      <div class="col-md-6">
+        <label for="talla" class="form-label">Talla</label>
+        <input type="text" class="form-control" placeholder="Talla">
+      </div>
+      <div class="col-md-6">
+        <label for="pesoNeto" class="form-label">Peso Neto</label>
+        <input type="number" class="form-control" placeholder="Peso Neto">
+      </div>
+      <div class="col-md-6">
+        <label for="unidad" class="form-label">Unidad</label>
+        <input type="text" class="form-control" placeholder="Unidad">
+      </div>
+      <div class="col-md-6">
+        <label for="bultos" class="form-label">Bultos</label>
+        <input type="number" class="form-control" placeholder="Bultos">
+      </div>
+      <div class="col-md-6">
+        <label for="precio" class="form-label">Precio</label>
+        <input type="number" class="form-control" placeholder="Precio">
+      </div>
+      <div class="col-md-6">
+        <label for="valorCompraLinea" class="form-label">Valor Compra Total</label>
+        <input type="number" class="form-control" placeholder="Valor Compra Total">
+      </div>
+      <div class="col-md-6">
+        <label for="moneda" class="form-label">Moneda</label>
+        <input type="text" class="form-control" placeholder="Moneda">
+      </div>
+      <div class="col-md-6">
+        <label for="paisOrigen" class="form-label">País de Origen</label>
+        <input type="text" class="form-control" placeholder="País de Origen">
+      </div>
+    </div>
+  `;
+  container.appendChild(line);
+});
+
+// Función para eliminar una línea de pedido
+function removeLine(lineId) {
+  const lineElement = document.getElementById(`line-${lineId}`);
+  lineElement.remove();
+}
+
+  updateStep();
+
+
+</script>
+
+</body>
+</html>
+

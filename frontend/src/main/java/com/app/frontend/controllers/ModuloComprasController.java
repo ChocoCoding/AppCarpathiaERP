@@ -114,5 +114,10 @@ public class ModuloComprasController {
         return datosBarcoPedidoCompraView;
     }
 
+    @GetMapping("/formulario-compras")
+    public String gestionarFormularioCompra(){
+        return "formulario_compras";
+    }
+
 
 }

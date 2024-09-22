@@ -158,9 +158,4 @@ public class CalculoService{
         }
         return ResponseEntity.ok(gastoCompraTotal);
     }
-
-
-
-
-
 }
