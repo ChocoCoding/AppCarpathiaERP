@@ -48,4 +48,10 @@ public class PedidoCompra {
     @OneToOne(mappedBy = "pedidoCompra")
     private PedidoCompraDet pedidoCompraDet;
 
+    @OneToOne(mappedBy = "pedidoCompra")
+    private CostePedidoCompra costePedidoCompra;
+
+    @OneToOne(mappedBy = "pedidoCompra")
+    private DatosBarcoPedidoCompra datosBarcoPedidoCompra;
+
 }

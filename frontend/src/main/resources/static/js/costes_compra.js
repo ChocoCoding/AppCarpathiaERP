@@ -45,23 +45,11 @@ cargarConfiguraciones().then(() => {
 
         guardarCambios: () => {
             const filasModificadas = document.querySelectorAll('tbody tr.modificado');
-            const formatoFecha = /^\d{2}\/\d{2}\/\d{4}$/;
+
 
             filasModificadas.forEach(fila => {
                 const idCosteCompra = fila.getAttribute('data-id-coste-compra');
                 const idPedidoCompra = fila.children[1].innerText.trim();
-                const fechaPagoFlete = fila.children[7].innerText.trim();
-                const terminado = fila.children[4].innerText.trim().toUpperCase();
-
-                if (fechaPagoFlete && !formatoFecha.test(fechaPagoFlete)) {
-                    CosteCompraApp.mostrarAlerta('error', config.errorFormatoFechaIncorrecto, config.errorFechaFormato, 3000);
-                    return;
-                }
-
-                if (terminado && terminado !== 'S' && terminado !== 'N') {
-                    CosteCompraApp.mostrarAlerta('error', config.errorValorIncorrecto, config.errorTerminado, 3000);
-                    return;
-                }
 
                 CosteCompraApp.validarExistenciaPedidoCompra(idPedidoCompra)
                     .then(existe => {
@@ -73,17 +61,21 @@ cargarConfiguraciones().then(() => {
                         const datos = {
                             idPedidoCompra,
                             n_operacion: fila.children[2].innerText.trim(),
-                            contratoCompra: fila.children[3].innerText.trim(),
-                            terminado,
-                            factProveedor: fila.children[5].innerText.trim(),
-                            n_fact_flete: fila.children[6].innerText.trim(),
-                            fecha_pago_flete: fechaPagoFlete,
-                            n_bl: fila.children[8].innerText.trim(),
-                            pesoNetoTotal: fila.children[9].innerText.trim(),
-                            totalBultos: fila.children[10].innerText.trim(),
-                            promedio: fila.children[11].innerText.trim(),
-                            valorCompraTotal: fila.children[12].innerText.trim(),
-                            observaciones: fila.children[13].innerText.trim()
+                            n_contenedor: fila.children[3].innerText.trim(),
+                            arancel:fila.children[4].innerText.trim(),
+                            sanidad: fila.children[5].innerText.trim(),
+                            plastico: fila.children[6].innerText.trim(),
+                            carga: fila.children[7].innerText.trim(),
+                            inland: fila.children[8].innerText.trim(),
+                            muellaje: fila.children[9].innerText.trim(),
+                            pif: fila.children[10].innerText.trim(),
+                            despacho: fila.children[11].innerText.trim(),
+                            conexiones: fila.children[12].innerText.trim(),
+                            iva: fila.children[13].innerText.trim(),
+                            dec_iva: fila.children[14].innerText.trim(),
+                            tasa_sanitaria: fila.children[15].innerText.trim(),
+                            suma_costes: fila.children[16].innerText.trim(),
+                            gasto_total: fila.children[17].innerText.trim()
                         };
 
                         if (!idCosteCompra) {
@@ -93,7 +85,11 @@ cargarConfiguraciones().then(() => {
                                     location.reload();
                                 })
                                 .catch(error => {
-                                    CosteCompraApp.mostrarAlerta('error', config.error, config.errorCrearCoste);
+                                    if(error.message.includes('El coste ya existe.')){
+                                         CosteCompraApp.mostrarAlerta('error',config.error, config.costeYaExiste);
+                                         }else{
+                                            CosteCompraApp.mostrarAlerta('error', config.error, config.errorCrearCoste);
+                                         }
                                 });
                         } else {
                             const url = config.costesPedidosCompraIdEndpoint.replace('{id}', idCosteCompra);
@@ -101,6 +97,7 @@ cargarConfiguraciones().then(() => {
                                 .then(() => {
                                     CosteCompraApp.mostrarAlerta('success', config.guardadoExitoso, config.cambiosGuardadosExito, 2000);
                                     fila.classList.remove('modificado');
+                                    location.reload();
                                 })
                                 .catch(error => {
                                     CosteCompraApp.mostrarAlerta('error', config.error, config.errorGuardarCambios);
@@ -139,7 +136,7 @@ cargarConfiguraciones().then(() => {
                 cancelButtonText: config.cancelar
             }).then((result) => {
                 if (result.isConfirmed) {
-                    const url = config.costeCompraIdEndpoint.replace('{id}', idCosteCompra);
+                    const url = config.costesPedidosCompraIdEndpoint.replace('{id}', idCosteCompra);
                     middleware.delete(url)
                         .then(() => {
                             CosteCompraApp.mostrarAlerta('success', config.eliminado, config.costeEliminadoExito, 2000);
@@ -160,6 +157,7 @@ cargarConfiguraciones().then(() => {
                 <td>
                     <button class="delete-button" onclick="CosteCompraApp.eliminarFila(this)">🗑️</button>
                 </td>
+                <td contenteditable="true" class="editable"></td>
                 <td contenteditable="true" class="editable"></td>
                 <td contenteditable="true" class="editable"></td>
                 <td contenteditable="true" class="editable"></td>

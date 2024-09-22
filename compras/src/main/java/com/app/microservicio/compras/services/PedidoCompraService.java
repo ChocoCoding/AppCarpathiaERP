@@ -52,6 +52,17 @@ public class PedidoCompraService {
                         .setParameter("id", id)
                         .executeUpdate();
 
+                // Eliminar las relaciones en la tabla pedidos_compra_det
+                entityManager.createNativeQuery("DELETE FROM costes_compra WHERE id_pedido_compra = :id")
+                        .setParameter("id", id)
+                        .executeUpdate();
+
+                // Eliminar las relaciones en la tabla pedidos_compra_det
+                entityManager.createNativeQuery("DELETE FROM datos_barco WHERE id_pedido_compra = :id")
+                        .setParameter("id", id)
+                        .executeUpdate();
+
+
                 // Eliminar el pedido en pedidos_compra
                 pedidoCompraRepository.deleteById(id);
 

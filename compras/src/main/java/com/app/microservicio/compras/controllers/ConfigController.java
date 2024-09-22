@@ -38,6 +38,12 @@ public class ConfigController {
     @Value("${endpoint.api.costes_pedido_compra_id}")
     private String costesPedidosCompraIdEndpoint;
 
+    @Value("${endpoint.api.datos_barco_pedido_compra}")
+    private String datosBarcoEndpoint;
+
+    @Value("${endpoint.api.datos_barco_pedido_compra_id}")
+    private String datosBarcoIdEndpoint;
+
     // Mensajes
     @Value("${mensaje.creacion_exitosa}")
     private String creacionExitosa;
@@ -104,6 +110,9 @@ public class ConfigController {
     @Value("${mensaje.confirmar_eliminar_detalle_texto}")
     private String confirmarEliminarDetalleTexto;
 
+    @Value("${mensaje.error_detalle_existe}")
+    private String detalleYaExiste;
+
     @Value("${mensaje.detalle_eliminado_exito}")
     private String detalleEliminadoExito;
 
@@ -137,6 +146,8 @@ public class ConfigController {
     @Value("${mensaje.confirmarEliminarLineaTexto}")
     private String confirmarEliminarLineaTexto;
 
+
+
     @Value("${mensaje.coste_creado_exito}")
     private String costeCreadoExito;
 
@@ -158,6 +169,34 @@ public class ConfigController {
     @Value("${mensaje.confirmar_eliminar_coste_texto}")
     private String confirmarEliminarCosteTexto;
 
+    @Value("${mensaje.error_coste_existe}")
+    private String costeYaExiste;
+
+
+
+    @Value("${mensaje.datos_barco_creado_exito}")
+    private String datosBarcoCreadoExito;
+
+    @Value("${mensaje.error_crear_datos_barco}")
+    private String errorCrearDatosBarco;
+
+    @Value("${mensaje.confirmar_eliminar_datos_barco}")
+    private String confirmarEliminarDatosBarco;
+
+    @Value("${mensaje.confirmar_eliminar_datos_barco_texto}")
+    private String confirmarEliminarDatosBarcoTexto;
+
+    @Value("${mensaje.datos_barco_eliminado_exito}")
+    private String errorEliminarDatosBarco;
+
+    @Value("${mensaje.error_eliminar_datos_barco}")
+    private String datosBarcoEliminadoExito;
+
+    @Value("${mensaje.error_datos_barco_existe}")
+    private String datosBarcoYaExiste;
+
+
+
     @GetMapping("/api/config")
     public Map<String, String> getConfig() {
         Map<String, String> config = new HashMap<>();
@@ -171,6 +210,8 @@ public class ConfigController {
         config.put("pedidoCompraDetIdEndpoint", pedidoCompraDetIdEndpoint);
         config.put("costesPedidosCompraEndpoint", costesPedidosCompraEndpoint);
         config.put("costesPedidosCompraIdEndpoint", costesPedidosCompraIdEndpoint);
+        config.put("datosBarcoEndpoint", datosBarcoEndpoint);
+        config.put("datosBarcoIdEndpoint", datosBarcoIdEndpoint);
 
 
         // Mensajes genericos
@@ -212,6 +253,7 @@ public class ConfigController {
         config.put("detalleEliminadoExito", detalleEliminadoExito);
         config.put("errorEliminarDetalle", errorEliminarDetalle);
         config.put("errorTerminado", errorTerminado);
+        config.put("detalleYaExiste",detalleYaExiste);
 
 
         //Mensajes Costes
@@ -221,6 +263,16 @@ public class ConfigController {
         config.put("confirmarEliminarCosteTexto", confirmarEliminarCosteTexto);
         config.put("costeEliminadoExito", costeEliminadoExito);
         config.put("errorEliminarCoste", errorEliminarCoste);
+        config.put("costeYaExiste",costeYaExiste);
+
+        //Mensajes Datos Barco
+        config.put("datosBarcoCreadoExito", datosBarcoCreadoExito);
+        config.put("confirmarEliminarDatosBarco", confirmarEliminarDatosBarco);
+        config.put("errorCrearDatosBarco", errorCrearDatosBarco);
+        config.put("confirmarEliminarDatosBarcoTexto", confirmarEliminarDatosBarcoTexto);
+        config.put("errorEliminarDatosBarco", errorEliminarDatosBarco);
+        config.put("datosBarcoEliminadoExito", datosBarcoEliminadoExito);
+        config.put("datosBarcoYaExiste",datosBarcoYaExiste);
 
         return config;
     }

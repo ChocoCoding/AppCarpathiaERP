@@ -1,13 +1,7 @@
 package com.app.frontend.controllers;
 
-import com.app.frontend.DTO.CostesDTO;
-import com.app.frontend.DTO.LineaPedidoCompraDTO;
-import com.app.frontend.DTO.PedidoCompraDTO;
-import com.app.frontend.DTO.PedidoCompraDetDTO;
-import com.app.frontend.service.CostesPedidoCompraService;
-import com.app.frontend.service.LineaPedidoCompraService;
-import com.app.frontend.service.PedidoCompraDetService;
-import com.app.frontend.service.PedidoCompraService;
+import com.app.frontend.DTO.*;
+import com.app.frontend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -31,14 +25,15 @@ public class ModuloComprasController {
     @Autowired
     private CostesPedidoCompraService costesPedidoCompraService;
 
+    @Autowired
+    private DatosBarcoPedidoCompraService datosBarcoPedidoCompraService;
+
     // Inyectar las URLs desde el archivo application.properties
     @Value("${modulo.compras.url.pedidos-compra}")
     private String pedidosCompraUrl;
 
     @Value("${modulo.compras.url.lineas-pedido-compra}")
     private String lineasPedidoCompraUrl;
-
-
 
     @Value("${modulo.compras.model.pedidos-compra}")
     private String pedidosCompraModel;
@@ -73,6 +68,15 @@ public class ModuloComprasController {
     private String costesPedidoCompraUrl;
 
 
+    @Value("${modulo.compras.model.datos-barco-pedido-compra}")
+    private String datosBarcoPedidoCompraModel;
+
+    @Value("${modulo.compras.view.datos-barco-pedido-compra}")
+    private String datosBarcoPedidoCompraView;
+
+    @Value("${modulo.compras.url.datos-barco-pedido-compra}")
+    private String datosBarcoPedidoCompraUrl;
+
 
 
     @GetMapping("${modulo.compras.url.pedidos-compra}")
@@ -101,6 +105,13 @@ public class ModuloComprasController {
         List<CostesDTO> costesPedidoCompra = costesPedidoCompraService.obtenerTodosLosCostesPedidoCompra();
         model.addAttribute(costesPedidoCompraModel, costesPedidoCompra);
         return costesPedidoCompraView;
+    }
+
+    @GetMapping("${modulo.compras.url.datos-barco-pedido-compra}")
+    public String gestionarDatosBarcoPedidoCompra(Model model) {
+        List<DatosBarcoDTO> datosBarco = datosBarcoPedidoCompraService.obtenerTodosLosDatosBarcoPedidoCompra();
+        model.addAttribute(datosBarcoPedidoCompraModel, datosBarco);
+        return datosBarcoPedidoCompraView;
     }
 
 

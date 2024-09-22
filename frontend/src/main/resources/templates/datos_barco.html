@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Detalles de Datos del Barco</title>
+    <link rel="stylesheet" href="/css/estilos_datos_barco.css">
+</head>
+<body>
+<header>
+    <h3>Detalles de Datos del Barco</h3>
+    <div class="actions">
+        <div class="left-actions">
+            <button class="icon-button" onclick="DatosBarcoApp.goBack()">
+                <span class="icon">🔙</span> <!-- Icono de Volver Atrás -->
+            </button>
+        </div>
+        <div class="center-actions">
+            <button class="icon-button" onclick="DatosBarcoApp.guardarCambios()">
+                <span class="icon">💾</span> <!-- Icono de Guardar -->
+            </button>
+            <button class="icon-button" onclick="DatosBarcoApp.crearDatosBarco()">
+                <span class="icon">➕</span> <!-- Icono de Crear Línea -->
+            </button>
+            <div class="search-container">
+                <button class="search-button" onclick="DatosBarcoApp.toggleSearch()">🔍</button>
+                <button class="filter-button" onclick="DatosBarcoApp.toggleFilter()">⚙️</button>
+                <input type="text" id="search-input" oninput="DatosBarcoApp.filtrarDetalles()" placeholder="Buscar..." style="display: none;">
+                <div class="filter-container">
+                    <label><input type="checkbox" name="columnFilter" value="1"> ID Pedido Compra</label>
+                    <label><input type="checkbox" name="columnFilter" value="2"> Nº Operación</label>
+                    <label><input type="checkbox" name="columnFilter" value="3"> Nombre Barco</label>
+                    <label><input type="checkbox" name="columnFilter" value="4"> Viaje</label>
+                    <label><input type="checkbox" name="columnFilter" value="5"> Naviera</label>
+                    <label><input type="checkbox" name="columnFilter" value="6"> Puerto Embarque</label>
+                    <label><input type="checkbox" name="columnFilter" value="7"> Puerto Llegada</label>
+                    <label><input type="checkbox" name="columnFilter" value="8"> Fecha Embarque</label>
+                    <label><input type="checkbox" name="columnFilter" value="9"> Fecha Llegada</label>
+                    <label><input type="checkbox" name="columnFilter" value="10"> Flete</label>
+                    <label><input type="checkbox" name="columnFilter" value="11"> Fecha Pago Flete</label>
+                    <label><input type="checkbox" name="columnFilter" value="12"> Factura Flete</label>
+                </div>
+            </div>
+        </div>
+        <div class="right-actions">
+            <button class="icon-button" onclick="DatosBarcoApp.logout()">
+                <span class="icon">🔒</span> <!-- Icono de Cerrar Sesión -->
+            </button>
+        </div>
+    </div>
+</header>
+
+<div class="table-container">
+    <table>
+        <thead>
+        <tr>
+            <th>Eliminar</th>
+            <th class="sortable" onclick="DatosBarcoApp.sortTable(1)">ID Pedido Compra</th>
+            <th class="sortable" onclick="DatosBarcoApp.sortTable(2)">Nº Operación</th>
+            <th class="sortable" onclick="DatosBarcoApp.sortTable(3)">Nombre Barco</th>
+            <th class="sortable" onclick="DatosBarcoApp.sortTable(4)">Viaje</th>
+            <th class="sortable" onclick="DatosBarcoApp.sortTable(5)">Naviera</th>
+            <th class="sortable" onclick="DatosBarcoApp.sortTable(6)">Puerto Embarque</th>
+            <th class="sortable" onclick="DatosBarcoApp.sortTable(7)">Puerto Llegada</th>
+            <th class="sortable" onclick="DatosBarcoApp.sortTable(8)">Fecha Embarque</th>
+            <th class="sortable" onclick="DatosBarcoApp.sortTable(9)">Fecha Llegada</th>
+            <th class="sortable" onclick="DatosBarcoApp.sortTable(10)">Flete</th>
+            <th class="sortable" onclick="DatosBarcoApp.sortTable(11)">Fecha Pago Flete</th>
+            <th class="sortable" onclick="DatosBarcoApp.sortTable(12)">Factura Flete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="dato : ${datosBarcoPedidoCompra}" th:data-id-datos-barco="${dato.idDatosBarco}">
+            <td>
+                <button class="delete-button" th:onclick="'DatosBarcoApp.eliminarDatosBarco(' + ${dato.idDatosBarco} + ')'">🗑️</button>
+            </td>
+            <td contenteditable="true" class="editable" oninput="DatosBarcoApp.marcarModificado(this)" th:text="${dato.idPedidoCompra}">ID Pedido Compra</td>
+            <td contenteditable="true" class="editable" oninput="DatosBarcoApp.marcarModificado(this)" th:text="${dato.n_operacion}">Nº Operación</td>
+            <td contenteditable="true" class="editable" oninput="DatosBarcoApp.marcarModificado(this)" th:text="${dato.nombreBarco}">Nombre Barco</td>
+            <td contenteditable="true" class="editable" oninput="DatosBarcoApp.marcarModificado(this)" th:text="${dato.viaje}">Viaje</td>
+            <td contenteditable="true" class="editable" oninput="DatosBarcoApp.marcarModificado(this)" th:text="${dato.naviera}">Naviera</td>
+            <td contenteditable="true" class="editable" oninput="DatosBarcoApp.marcarModificado(this)" th:text="${dato.puertoEmbarque}">Puerto Embarque</td>
+            <td contenteditable="true" class="editable" oninput="DatosBarcoApp.marcarModificado(this)" th:text="${dato.puertoLlegada}">Puerto Llegada</td>
+            <td contenteditable="true" class="editable" oninput="DatosBarcoApp.marcarModificado(this)" th:text="${dato.fechaEmbarqueFormatted}">Fecha Embarque</td>
+            <td contenteditable="true" class="editable" oninput="DatosBarcoApp.marcarModificado(this)" th:text="${dato.fechaLlegadaFormatted}">Fecha Llegada</td>
+            <td contenteditable="true" class="editable" oninput="DatosBarcoApp.marcarModificado(this)" th:text="${dato.flete}">Flete</td>
+            <td contenteditable="true" class="editable" oninput="DatosBarcoApp.marcarModificado(this)" th:text="${dato.fechaPagoFleteBarcoFormatted}">Fecha Pago Flete</td>
+            <td contenteditable="true" class="editable" oninput="DatosBarcoApp.marcarModificado(this)" th:text="${dato.facturaFlete}">Factura Flete</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script src="/js/sweet-alert2/dist/sweetalert2.all.min.js"></script>
+<script type="module" src="/js/datos_barco.js"></script>
+</body>
+</html>

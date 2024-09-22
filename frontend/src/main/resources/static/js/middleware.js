@@ -21,7 +21,17 @@ const middleware = {
             },
             body: JSON.stringify(data)
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                const contentType = response.headers.get("content-type");
+                if (contentType && contentType.includes("application/json")) {
+                    return response.json().then(json => { throw new Error(json.error || 'Error en la solicitud.'); });
+                } else {
+                    return response.text().then(text => { throw new Error(text); });
+                }
+            }
+            return response.json();
+        })
         .catch(error => {
             console.error(`Error en la solicitud POST a ${url}:`, error);
             throw error;
@@ -36,11 +46,21 @@ const middleware = {
             },
             body: JSON.stringify(data)
         })
-        .then(response => response.json())
-        .catch(error => {
-            console.error(`Error en la solicitud PUT a ${url}:`, error);
-            throw error;
-        });
+        .then(response => {
+                    if (!response.ok) {
+                        const contentType = response.headers.get("content-type");
+                        if (contentType && contentType.includes("application/json")) {
+                            return response.json().then(json => { throw new Error(json.error || 'Error en la solicitud.'); });
+                        } else {
+                            return response.text().then(text => { throw new Error(text); });
+                        }
+                    }
+                    return response.json();
+                })
+                .catch(error => {
+                    console.error(`Error en la solicitud POST a ${url}:`, error);
+                    throw error;
+                });
     },
 
     delete: (url) => {

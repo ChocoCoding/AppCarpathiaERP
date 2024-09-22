@@ -4,9 +4,11 @@ import com.app.microservicio.compras.DTO.CostesDTO;
 import com.app.microservicio.compras.entities.CostePedidoCompra;
 import com.app.microservicio.compras.repository.CostePedidoRepository;
 import com.app.microservicio.compras.repository.PedidoCompraRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -19,6 +21,9 @@ public class CostePedidoService {
 
     @Autowired
     private PedidoCompraRepository pedidoCompraRepository;
+
+    @Autowired
+    private CalculoService calculoService;
 
     // Convertir Entidad a DTO
     private CostesDTO convertirADTO(CostePedidoCompra costePedidoCompra) {
@@ -39,6 +44,7 @@ public class CostePedidoService {
         costePedidoCompraDTO.setIva(costePedidoCompra.getIva());
         costePedidoCompraDTO.setDec_iva(costePedidoCompra.getDec_iva());
         costePedidoCompraDTO.setTasa_sanitaria(costePedidoCompra.getTasa_sanitaria());
+        costePedidoCompraDTO.setSuma_costes(costePedidoCompra.getSuma_costes());
         costePedidoCompraDTO.setGasto_total(costePedidoCompra.getGasto_total());
 
         return costePedidoCompraDTO;
@@ -47,9 +53,8 @@ public class CostePedidoService {
     // Convertir DTO a Entidad
     private CostePedidoCompra convertirAEntidad(CostesDTO costePedidoCompraDTO) {
         CostePedidoCompra costePedidoCompra = new CostePedidoCompra();
-
-        costePedidoCompra.setPedidoCompra(pedidoCompraRepository.findById(costePedidoCompraDTO.getIdPedidoCompra()).orElse(null));
         costePedidoCompra.setIdCosteCompra(costePedidoCompraDTO.getIdCosteCompra());
+        costePedidoCompra.setPedidoCompra(pedidoCompraRepository.findById(costePedidoCompraDTO.getIdPedidoCompra()).orElse(null));
         costePedidoCompra.setNOperacion(costePedidoCompraDTO.getN_operacion());
         costePedidoCompra.setNContenedor(costePedidoCompraDTO.getN_contenedor());
         costePedidoCompra.setArancel(costePedidoCompraDTO.getArancel());
@@ -64,6 +69,7 @@ public class CostePedidoService {
         costePedidoCompra.setIva(costePedidoCompraDTO.getIva());
         costePedidoCompra.setDec_iva(costePedidoCompraDTO.getDec_iva());
         costePedidoCompra.setTasa_sanitaria(costePedidoCompraDTO.getTasa_sanitaria());
+        costePedidoCompra.setSuma_costes(costePedidoCompraDTO.getSuma_costes());
         costePedidoCompra.setGasto_total(costePedidoCompraDTO.getGasto_total());
 
         return costePedidoCompra;
@@ -72,8 +78,11 @@ public class CostePedidoService {
     // Crear un nuevo coste
     public CostesDTO crearCoste(CostesDTO costesDTO) {
         CostePedidoCompra costePedidoCompra = convertirAEntidad(costesDTO);
-        CostePedidoCompra nuevoCoste = costePedidoRepository.save(costePedidoCompra);
-        return convertirADTO(nuevoCoste);
+        costePedidoRepository.save(costePedidoCompra);
+        costePedidoCompra.setTasa_sanitaria(calculoService.calcularTasaSanitaria(costePedidoCompra.getPedidoCompra().getIdPedidoCompra()).getBody());
+        costePedidoCompra.setGasto_total(calculoService.calcularGastoTotal(costePedidoCompra.getPedidoCompra().getIdPedidoCompra()).getBody());
+        System.out.println(costePedidoCompra.getTasa_sanitaria());
+        return convertirADTO(costePedidoCompra);
     }
 
     // Obtener un coste por ID
@@ -92,16 +101,43 @@ public class CostePedidoService {
     public CostesDTO actualizarCoste(Long id, CostesDTO costesDTO) {
         Optional<CostePedidoCompra> costePedidoExistente = costePedidoRepository.findById(id);
 
-        if (costePedidoExistente.isPresent()) {
-            CostePedidoCompra costePedidoActualizado = convertirAEntidad(costesDTO);
-            costePedidoActualizado.setIdCosteCompra(id);
-            return convertirADTO(costePedidoRepository.save(costePedidoActualizado));
-        }
-        return null;
+        CostePedidoCompra costePedidoCompra;
+
+       if (costePedidoExistente.isPresent()){
+           costePedidoCompra = costePedidoExistente.get();
+       }else costePedidoCompra = new CostePedidoCompra();
+
+       costePedidoCompra.setPedidoCompra(pedidoCompraRepository.findById(costesDTO.getIdPedidoCompra()).orElse(null));
+       costePedidoCompra.setNOperacion(costesDTO.getN_operacion());
+       costePedidoCompra.setNContenedor(costesDTO.getN_contenedor());
+       costePedidoCompra.setArancel(costesDTO.getArancel());
+       costePedidoCompra.setSanidad(costesDTO.getSanidad());
+       costePedidoCompra.setPlastico(costesDTO.getPlastico());
+       costePedidoCompra.setCarga(costesDTO.getCarga());
+       costePedidoCompra.setInland(costesDTO.getInland());
+       costePedidoCompra.setMuellaje(costesDTO.getMuellaje());
+       costePedidoCompra.setPif(costesDTO.getPif());
+       costePedidoCompra.setDespacho(costesDTO.getDespacho());
+       costePedidoCompra.setConexiones(costesDTO.getConexiones());
+       costePedidoCompra.setIva(costesDTO.getIva());
+       costePedidoCompra.setDec_iva(costesDTO.getDec_iva());
+       costePedidoCompra.setTasa_sanitaria(costesDTO.getTasa_sanitaria());
+       costePedidoCompra.setGasto_total(costesDTO.getGasto_total());
+       costePedidoRepository.save(costePedidoCompra);
+       //Calculamos los costes
+       calculoService.calcularSumaCostes(costesDTO.getIdPedidoCompra()).getBody();
+       calculoService.calcularTasaSanitaria(costesDTO.getIdPedidoCompra());
+       calculoService.calcularGastoTotal(costesDTO.getIdPedidoCompra());
+       return convertirADTO(costePedidoCompra);
     }
 
-    // Eliminar un coste
+    @Transactional
     public void eliminarCoste(Long id) {
         costePedidoRepository.deleteById(id);
+    }
+
+    public Optional<CostesDTO> obtenerCostePedidoCompra(Long idPedidoCompra) {
+        return costePedidoRepository.findById(idPedidoCompra)
+                .map(this::convertirADTO);
     }
 }

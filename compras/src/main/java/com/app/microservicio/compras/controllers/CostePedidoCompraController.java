@@ -8,26 +8,25 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/compras/costes_compra")
 @CrossOrigin(origins = "http://localhost:8708")
-public class CostePedidoController {
+public class CostePedidoCompraController {
     @Autowired
     private CostePedidoService costePedidoService;
 
     // Crear nuevo coste
     @PostMapping
     public ResponseEntity<CostesDTO> crearCoste(@RequestBody CostesDTO costesDTO) {
-        CostesDTO nuevoCoste = costePedidoService.crearCoste(costesDTO);
-        return ResponseEntity.ok(nuevoCoste);
+        return ResponseEntity.ok(costePedidoService.crearCoste(costesDTO));
     }
 
     // Obtener coste por ID
     @GetMapping("/{id}")
-    public ResponseEntity<CostesDTO> obtenerCostePorId(@PathVariable Long id) {
-        CostesDTO costeDTO = costePedidoService.obtenerCostePorId(id);
-        return ResponseEntity.ok(costeDTO);
+    public ResponseEntity<Optional<CostesDTO>> obtenerCoste(@PathVariable Long idPedidoCompra) {
+        return ResponseEntity.of(Optional.ofNullable(costePedidoService.obtenerCostePedidoCompra(idPedidoCompra)));
     }
 
     // Obtener todos los costes

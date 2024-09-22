@@ -25,5 +25,6 @@ public class CostesDTO {
     private BigDecimal iva;
     private String dec_iva;
     private BigDecimal tasa_sanitaria;
+    private BigDecimal suma_costes;
     private BigDecimal gasto_total;
 }

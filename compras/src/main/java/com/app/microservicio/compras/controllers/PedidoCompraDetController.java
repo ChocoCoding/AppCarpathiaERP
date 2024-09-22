@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/compras/pedidos_compra_det")
+@CrossOrigin(origins = "http://localhost:8708")
 public class PedidoCompraDetController {
 
     @Autowired
@@ -29,7 +30,6 @@ public class PedidoCompraDetController {
 
     @PostMapping()
     public ResponseEntity<PedidoCompraDetDTO> crearPedidoCompraDet(@RequestBody PedidoCompraDetDTO pedidoCompraDetDTO) {
-        System.out.println("Estoy llamando a crear pedido de compra");
         return ResponseEntity.ok(pedidoCompraDetService.crearPedidoCompraDet(pedidoCompraDetDTO));
     }
 
@@ -45,9 +45,5 @@ public class PedidoCompraDetController {
         pedidoCompraDetService.eliminarPedidoCompraDet(idPedidoCompraDet);
         return ResponseEntity.noContent().build();
     }
-
-
-
-
     }
 

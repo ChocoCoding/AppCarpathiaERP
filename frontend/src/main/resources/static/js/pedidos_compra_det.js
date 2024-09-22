@@ -93,7 +93,11 @@ cargarConfiguraciones().then(() => {
                                     location.reload();
                                 })
                                 .catch(error => {
-                                    PedidoCompraDetApp.mostrarAlerta('error', config.error, config.errorCrearDetalle);
+                                if(error.message.includes('El detalle ya existe.')){
+                                     PedidoCompraDetApp.mostrarAlerta('error',config.error, config.detalleYaExiste);
+                                }else{
+                                     PedidoCompraDetApp.mostrarAlerta('error', config.error, config.errorCrearDetalle);
+                                }
                                 });
                         } else {
                             const url = config.pedidoCompraDetIdEndpoint.replace('{id}', idPedidoCompraDet);
@@ -101,6 +105,7 @@ cargarConfiguraciones().then(() => {
                                 .then(() => {
                                     PedidoCompraDetApp.mostrarAlerta('success', config.guardadoExitoso, config.cambiosGuardadosExito, 2000);
                                     fila.classList.remove('modificado');
+                                    location.reload();
                                 })
                                 .catch(error => {
                                     PedidoCompraDetApp.mostrarAlerta('error', config.error, config.errorGuardarCambios);
@@ -111,6 +116,7 @@ cargarConfiguraciones().then(() => {
                         PedidoCompraDetApp.mostrarAlerta('error', config.error, config.errorIdPedidoInvalido);
                     });
             });
+
         },
 
         validarExistenciaPedidoCompra: (idPedidoCompra) => {

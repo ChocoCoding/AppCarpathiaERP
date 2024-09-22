@@ -69,11 +69,12 @@
             <th class="sortable" onclick="CosteCompraApp.sortTable(9)">Muellaje</th>
             <th class="sortable" onclick="CosteCompraApp.sortTable(10)">PIF</th>
             <th class="sortable" onclick="CosteCompraApp.sortTable(11)">Despacho</th>
-            <th class="sortable" onclick="CosteCompraApp.sortTable(12)">IVA</th>
-            <th class="sortable" onclick="CosteCompraApp.sortTable(13)">Dec.Iva</th>
-            <th class="sortable" onclick="CosteCompraApp.sortTable(14)">Tasa Sanitaria</th>
-            <th class="sortable" onclick="CosteCompraApp.sortTable(15)">Suma Costes</th>
-            <th class="sortable" onclick="CosteCompraApp.sortTable(16)">Gasto Total</th>
+            <th class="sortable" onclick="CosteCompraApp.sortTable(12)">Conexiones</th>
+            <th class="sortable" onclick="CosteCompraApp.sortTable(13)">IVA</th>
+            <th class="sortable" onclick="CosteCompraApp.sortTable(14)">Dec.Iva</th>
+            <th class="sortable" onclick="CosteCompraApp.sortTable(15)">Tasa Sanitaria</th>
+            <th class="sortable" onclick="CosteCompraApp.sortTable(16)">Suma Costes</th>
+            <th class="sortable" onclick="CosteCompraApp.sortTable(17)">Gasto Total</th>
 
         </tr>
         </thead>
@@ -93,10 +94,11 @@
             <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.muellaje}">Muellaje</td>
             <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.pif}">PIF</td>
             <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.despacho}">Despacho</td>
-            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.conexiones}">IVA</td>
-            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.iva}">Dec.Iva</td>
-            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.dec_iva}">Tasa Sanitaria</td>
-            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.tasa_sanitaria}">Suma Costes</td>
+            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.conexiones}">Conexiones</td>
+            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.iva}">IVA</td>
+            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.dec_iva}">Dec.Iva</td>
+            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.tasa_sanitaria}">Tasa Sanitaria</td>
+            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.suma_costes}">Suma Costes</td>
             <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.gasto_total}">Gasto Total</td>
         </tr>
         </tbody>
