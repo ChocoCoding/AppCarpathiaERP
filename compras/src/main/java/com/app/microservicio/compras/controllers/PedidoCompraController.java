@@ -32,7 +32,8 @@ public class PedidoCompraController {
 
     @PostMapping()
     public ResponseEntity<PedidoCompraDTO> crearPedidoCompra(@RequestBody PedidoCompraDTO pedidoCompraDTO) {
-        return ResponseEntity.ok(pedidoCompraService.guardarPedidoCompra(pedidoCompraDTO));
+        PedidoCompraDTO nuevoPedido = pedidoCompraService.guardarPedidoCompra(pedidoCompraDTO);
+        return ResponseEntity.ok(nuevoPedido);
     }
 
     @DeleteMapping("/{id}")

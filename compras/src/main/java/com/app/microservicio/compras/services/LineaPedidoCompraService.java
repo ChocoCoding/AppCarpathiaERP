@@ -41,6 +41,9 @@ public class LineaPedidoCompraService {
     }
 
     public LineaPedidoCompraDTO crearLineaPedido(LineaPedidoCompraDTO lineaPedidoCompraDTO) {
+        if (lineaPedidoCompraDTO.getIdPedidoCompra() == null) {
+            throw new IllegalArgumentException("El ID de Pedido de Compra no puede ser nulo.");
+        }
         return convertirADTO(lineaPedidoCompraRepository.save(convertirAEntidad(lineaPedidoCompraDTO)));
     }
 

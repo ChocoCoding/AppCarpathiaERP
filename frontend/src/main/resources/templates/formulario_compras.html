@@ -51,10 +51,6 @@
                 <h3 class="mb-3">Pedido de Compra</h3>
                 <div class="row g-3">
                     <div class="col-md-6">
-                        <label for="id" class="form-label">ID</label>
-                        <input type="text" class="form-control" id="id" placeholder="ID">
-                    </div>
-                    <div class="col-md-6">
                         <label for="operacion" class="form-label">Nº Operación</label>
                         <input type="text" class="form-control" id="operacion" placeholder="Nº Operación">
                     </div>
@@ -103,7 +99,7 @@
                 <div class="row g-3">
                     <div class="col-md-6">
                         <label for="idPedido" class="form-label">ID Pedido Compra</label>
-                        <input type="text" class="form-control" id="idPedido" placeholder="ID Pedido Compra">
+                        <input type="text" class="form-control" id="idPedido" placeholder="ID Pedido de Compra" readonly>
                     </div>
                     <div class="col-md-6">
                         <label for="operacionDetalle" class="form-label">Nº Operación</label>
@@ -137,22 +133,6 @@
                         <label for="bl" class="form-label">Nº BL</label>
                         <input type="text" class="form-control" id="bl" placeholder="Nº BL">
                     </div>
-                    <div class="col-md-6">
-                        <label for="pesoNeto" class="form-label">Peso Neto Total</label>
-                        <input type="number" class="form-control" id="pesoNeto" placeholder="Peso Neto Total">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="bultos" class="form-label">Total Bultos</label>
-                        <input type="number" class="form-control" id="bultos" placeholder="Total Bultos">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="promedio" class="form-label">Promedio</label>
-                        <input type="number" class="form-control" id="promedio" placeholder="Promedio">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="valorCompra" class="form-label">Valor Compra Total</label>
-                        <input type="number" class="form-control" id="valorCompra" placeholder="Valor Compra Total">
-                    </div>
                 </div>
                 <div class="mb-3">
                     <label for="observaciones" class="form-label">Observaciones</label>
@@ -166,7 +146,7 @@
                 <div class="row g-3">
                     <div class="col-md-6">
                         <label for="idPedidoBarco" class="form-label">ID Pedido Compra</label>
-                        <input type="text" class="form-control" id="idPedidoBarco" placeholder="ID Pedido Compra">
+                        <input type="text" class="form-control" id="idPedidoBarco" placeholder="ID Pedido Compra" readonly>
                     </div>
                     <div class="col-md-6">
                         <label for="operacionBarco" class="form-label">Nº Operación</label>
@@ -221,7 +201,7 @@
                 <div class="row g-3">
                     <div class="col-md-6">
                         <label for="idPedidoCostes" class="form-label">ID Pedido Compra</label>
-                        <input type="text" class="form-control" id="idPedidoCostes" placeholder="ID Pedido Compra">
+                        <input type="text" class="form-control" id="idPedidoCostes" placeholder="ID Pedido Compra" readonly>
                     </div>
                     <div class="col-md-6">
                         <label for="operacionCostes" class="form-label">Nº Operación</label>
@@ -275,18 +255,6 @@
                         <label for="decIva" class="form-label">Dec. IVA</label>
                         <input type="number" class="form-control" id="decIva" placeholder="Dec. IVA">
                     </div>
-                    <div class="col-md-6">
-                        <label for="tasaSanitaria" class="form-label">Tasa Sanitaria</label>
-                        <input type="number" class="form-control" id="tasaSanitaria" placeholder="Tasa Sanitaria">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="sumaCostes" class="form-label">Suma Costes</label>
-                        <input type="number" class="form-control" id="sumaCostes" placeholder="Suma Costes">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="gastoTotal" class="form-label">Gasto Total</label>
-                        <input type="number" class="form-control" id="gastoTotal" placeholder="Gasto Total">
-                    </div>
                 </div>
             </div>
 
@@ -298,133 +266,147 @@
         </div>
     </div>
 </div>
+<script type="module">import middleware from '/js/middleware.js';</script>
+<script type="module">
+    import PedidoCompraFormApp from './js/formulario/pedidoCompraForm.js';
+    import LineaPedidoFormApp from './js/formulario/lineasPedidoForm.js';
+    import DetallesPedidoFormApp from './js/formulario/detallePedidoForm.js';
+    import DatosBarcoFormApp from './js/formulario/datosBarcoForm.js';
+    import CostesPedidoFormApp from './js/formulario/costesPedidoForm.js';
+    import middleware from '/js/middleware.js';
 
-<script>
-  let currentStep = 1;
-  const totalSteps = 5;
+    let currentStep = 1;
+    const totalSteps = 5;
+    let pedidoCompraId = null; // Variable global para almacenar el id del Pedido de Compra
 
-  document.getElementById('nextBtn').addEventListener('click', () => {
-    if (currentStep < totalSteps) {
-      currentStep++;
-      updateStep();
-    }
-  });
+document.getElementById('nextBtn').addEventListener('click', () => {
+    if (currentStep === 1) {
+        // Enviar Pedido de Compra en el primer paso
+        const pedidoCompra = PedidoCompraFormApp.getPedidoCompraData();
+        middleware.post('http://localhost:8702/api/compras/pedidos_compra', pedidoCompra)
+            .then(response => {
+                pedidoCompraId = response.idPedidoCompra; // Asigna el ID del pedido de compra devuelto
 
-  document.getElementById('prevBtn').addEventListener('click', () => {
-    if (currentStep > 1) {
-      currentStep--;
-      updateStep();
-    }
-  });
+                // Asegúrate de que los campos existen antes de intentar asignarles un valor
+                if (document.getElementById('idPedidoLinea')) {
+                    document.getElementById('idPedidoLinea').value = pedidoCompraId;
+                }
+                if (document.getElementById('idPedidoDetalle')) {
+                    document.getElementById('idPedidoDetalle').value = pedidoCompraId;
+                }
+                if (document.getElementById('idPedidoBarco')) {
+                    document.getElementById('idPedidoBarco').value = pedidoCompraId;
+                }
+                if (document.getElementById('idPedidoCostes')) {
+                    document.getElementById('idPedidoCostes').value = pedidoCompraId;
+                }
 
-
-
-  function updateStep() {
-    document.querySelectorAll('.step-content').forEach((el, index) => {
-      el.classList.toggle('d-none', index !== currentStep - 1);
+                alert('Pedido de Compra creado con éxito.');
+                currentStep++;
+                updateStep();
+            })
+            .catch(error => {
+                alert('Error al crear el Pedido de Compra: ' + error.message);
+            });
+    } else // Enviar Líneas de Pedido (actualizado para enviar cada línea individualmente)
+if (currentStep === 2) {
+    const lineasPedido = LineaPedidoFormApp.getLineasPedidoData(pedidoCompraId); // Obtén las líneas de pedido con el ID asignado
+    console.log("ID del Pedido de Compra:", pedidoCompraId);
+    const promises = lineasPedido.map(linea => {
+        return middleware.post('http://localhost:8702/api/compras/lineas_pedidos_compra', linea)  // Envía cada línea individualmente
+            .then(() => {
+                console.log('Línea de Pedido guardada con éxito.');
+            })
+            .catch(error => {
+                console.error('Error al guardar la Línea de Pedido:', error.message);
+                throw error; // Detener el proceso si alguna línea falla
+            });
     });
 
-    document.getElementById('prevBtn').disabled = currentStep === 1;
-    document.getElementById('nextBtn').textContent = currentStep === totalSteps ? 'Enviar' : 'Siguiente';
-
-    document.getElementById('step1Indicator').classList.toggle('step-active', currentStep >= 1);
-    document.getElementById('step2Indicator').classList.toggle('step-active', currentStep >= 2);
-    document.getElementById('step3Indicator').classList.toggle('step-active', currentStep >= 3);
-    document.getElementById('step4Indicator').classList.toggle('step-active', currentStep >= 4);
-    document.getElementById('step5Indicator').classList.toggle('step-active', currentStep === 5);
-  }
-
-let lineCounter = 0;
-
-// Función para agregar una nueva línea de pedido
-document.getElementById('addLineBtn').addEventListener('click', () => {
-  lineCounter++;
-  const container = document.getElementById('orderLinesContainer');
-  const lineId = `line-${lineCounter}`;
-  const line = document.createElement('div');
-
-  line.id = lineId;
-  line.classList.add('position-relative', 'mb-3', 'card', 'p-3');  // Agrega clases para formato
-
-  line.innerHTML = `
-    <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2" onclick="removeLine(${lineCounter})">
-      <i class="fas fa-trash-alt"></i>
-    </button>
-    <div class="row g-3">
-      <div class="col-md-6">
-        <label for="lineaIdPedido" class="form-label">ID Pedido de Compra</label>
-        <input type="text" class="form-control" placeholder="ID Pedido de Compra">
-      </div>
-      <div class="col-md-6">
-        <label for="numLinea" class="form-label">Nº Línea</label>
-        <input type="text" class="form-control" placeholder="Nº Línea">
-      </div>
-      <div class="col-md-6">
-        <label for="numOperacion" class="form-label">Nº Operación</label>
-        <input type="text" class="form-control" placeholder="Nº Operación">
-      </div>
-      <div class="col-md-6">
-        <label for="proveedorLinea" class="form-label">Proveedor</label>
-        <input type="text" class="form-control" placeholder="Proveedor">
-      </div>
-      <div class="col-md-6">
-        <label for="clienteLinea" class="form-label">Cliente</label>
-        <input type="text" class="form-control" placeholder="Cliente">
-      </div>
-      <div class="col-md-6">
-        <label for="numContenedor" class="form-label">Nº Contenedor</label>
-        <input type="text" class="form-control" placeholder="Nº Contenedor">
-      </div>
-      <div class="col-md-6">
-        <label for="producto" class="form-label">Producto</label>
-        <input type="text" class="form-control" placeholder="Producto">
-      </div>
-      <div class="col-md-6">
-        <label for="talla" class="form-label">Talla</label>
-        <input type="text" class="form-control" placeholder="Talla">
-      </div>
-      <div class="col-md-6">
-        <label for="pesoNeto" class="form-label">Peso Neto</label>
-        <input type="number" class="form-control" placeholder="Peso Neto">
-      </div>
-      <div class="col-md-6">
-        <label for="unidad" class="form-label">Unidad</label>
-        <input type="text" class="form-control" placeholder="Unidad">
-      </div>
-      <div class="col-md-6">
-        <label for="bultos" class="form-label">Bultos</label>
-        <input type="number" class="form-control" placeholder="Bultos">
-      </div>
-      <div class="col-md-6">
-        <label for="precio" class="form-label">Precio</label>
-        <input type="number" class="form-control" placeholder="Precio">
-      </div>
-      <div class="col-md-6">
-        <label for="valorCompraLinea" class="form-label">Valor Compra Total</label>
-        <input type="number" class="form-control" placeholder="Valor Compra Total">
-      </div>
-      <div class="col-md-6">
-        <label for="moneda" class="form-label">Moneda</label>
-        <input type="text" class="form-control" placeholder="Moneda">
-      </div>
-      <div class="col-md-6">
-        <label for="paisOrigen" class="form-label">País de Origen</label>
-        <input type="text" class="form-control" placeholder="País de Origen">
-      </div>
-    </div>
-  `;
-  container.appendChild(line);
+    // Espera a que todas las líneas se hayan guardado
+    Promise.all(promises)
+        .then(() => {
+            alert('Todas las líneas de pedido se guardaron con éxito.');
+            currentStep++;
+            updateStep();
+        })
+        .catch(error => {
+            alert('Error al guardar las líneas de pedido: ' + error.message);
+        });
+} else if (currentStep === 3) {
+        // Enviar Detalles de Pedido
+        const detallesPedido = DetallesPedidoFormApp.getDetallesPedidoData(pedidoCompraId); // Pasa el ID de Pedido
+        middleware.post('http://localhost:8702/api/compras/detalles_pedido', detallesPedido)
+            .then(() => {
+                alert('Detalles de Pedido guardados con éxito.');
+                currentStep++;
+                updateStep();
+            })
+            .catch(error => {
+                alert('Error al crear Detalles de Pedido: ' + error.message);
+            });
+    } else if (currentStep === 4) {
+        // Enviar Datos del Barco
+        const datosBarco = DatosBarcoFormApp.getDatosBarcoData(pedidoCompraId); // Pasa el ID de Pedido
+        middleware.post('http://localhost:8702/api/compras/datos_barco', datosBarco)
+            .then(() => {
+                alert('Datos del Barco guardados con éxito.');
+                currentStep++;
+                updateStep();
+            })
+            .catch(error => {
+                alert('Error al crear Datos del Barco: ' + error.message);
+            });
+    } else if (currentStep === 5) {
+        // Enviar Costes
+        const costesPedido = CostesPedidoFormApp.getCostesPedidoData(pedidoCompraId); // Pasa el ID de Pedido
+        middleware.post('http://localhost:8702/api/compras/costes_pedido', costesPedido)
+            .then(() => {
+                alert('Costes guardados con éxito.');
+            })
+            .catch(error => {
+                alert('Error al crear Costes: ' + error.message);
+            });
+    }
 });
 
-// Función para eliminar una línea de pedido
-function removeLine(lineId) {
-  const lineElement = document.getElementById(`line-${lineId}`);
-  lineElement.remove();
+
+
+    document.getElementById('addLineBtn').addEventListener('click', () => {
+    LineaPedidoFormApp.agregarLineaPedido(); // Llama a la función para agregar línea
+});
+
+
+    document.getElementById('prevBtn').addEventListener('click', () => {
+        if (currentStep > 1) {
+            currentStep--;
+            updateStep();
+        }
+    });
+
+    function updateStep() {
+        document.querySelectorAll('.step-content').forEach((el, index) => {
+            el.classList.toggle('d-none', index !== currentStep - 1);
+        });
+
+        document.getElementById('prevBtn').disabled = currentStep === 1;
+        document.getElementById('nextBtn').textContent = currentStep === totalSteps ? 'Enviar' : 'Siguiente';
+
+        document.getElementById('step1Indicator').classList.toggle('step-active', currentStep >= 1);
+        document.getElementById('step2Indicator').classList.toggle('step-active', currentStep >= 2);
+        document.getElementById('step3Indicator').classList.toggle('step-active', currentStep >= 3);
+        document.getElementById('step4Indicator').classList.toggle('step-active', currentStep >= 4);
+        document.getElementById('step5Indicator').classList.toggle('step-active', currentStep === 5);
+    }
+
+    function setPedidoCompraIdInAllSteps() {
+    const fieldsToSet = document.querySelectorAll('#step2 input[placeholder="ID Pedido de Compra"], #step3 input[placeholder="ID Pedido de Compra"], #step4 input[placeholder="ID Pedido Compra"], #step5 input[placeholder="ID Pedido Compra"]');
+
+    fieldsToSet.forEach(field => {
+        field.value = pedidoCompraId; // Asigna el ID
+        field.disabled = true; // Deshabilita el campo para evitar que se modifique
+    });
 }
-
-  updateStep();
-
-
 </script>
 
 </body>

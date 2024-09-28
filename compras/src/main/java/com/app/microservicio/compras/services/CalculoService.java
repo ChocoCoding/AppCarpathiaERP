@@ -139,9 +139,11 @@ public class CalculoService{
         BigDecimal tasaSanitaria = new BigDecimal("0.0");
         if(costePedidoCompra.isPresent()){
             BigDecimal pesoNetoTotal = lineaPedidoCompraRepository.sumPesoNetoByPedidoCompraId(idPedidoCompra);
-            tasaSanitaria = pesoNetoTotal.multiply(BigDecimal.valueOf(0.005962));
-            costePedidoCompra.get().setTasa_sanitaria(tasaSanitaria);
-            costePedidoRepository.save(costePedidoCompra.get());
+            if(pesoNetoTotal != null){
+                tasaSanitaria = pesoNetoTotal.multiply(BigDecimal.valueOf(0.005962));
+                costePedidoCompra.get().setTasa_sanitaria(tasaSanitaria);
+                costePedidoRepository.save(costePedidoCompra.get());
+            }
         }
         return ResponseEntity.ok(tasaSanitaria);
     }
@@ -152,9 +154,11 @@ public class CalculoService{
         if(costePedidoCompra.isPresent()){
             BigDecimal valorCompraTotal = lineaPedidoCompraRepository.sumValorCompraByPedidoCompraId(idPedidoCompra);
             BigDecimal sumaCostes = costePedidoRepository.sumaCostes(idPedidoCompra);
-            gastoCompraTotal = valorCompraTotal.subtract(sumaCostes);
-            costePedidoCompra.get().setGasto_total(gastoCompraTotal);
-            costePedidoRepository.save(costePedidoCompra.get());
+            if (valorCompraTotal != null ){
+                gastoCompraTotal = valorCompraTotal.subtract(sumaCostes);
+                costePedidoCompra.get().setGasto_total(gastoCompraTotal);
+                costePedidoRepository.save(costePedidoCompra.get());
+            }
         }
         return ResponseEntity.ok(gastoCompraTotal);
     }
