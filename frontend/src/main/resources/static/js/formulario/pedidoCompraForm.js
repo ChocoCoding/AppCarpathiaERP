@@ -9,7 +9,7 @@ getPedidoCompraData: () => {
             proveedor: document.getElementById('proveedor').value.trim(),
             cliente: document.getElementById('cliente').value.trim(),
             incoterm: document.getElementById('incoterm').value.trim(),
-            referencia_proveedor: document.getElementById('referencia').value.trim(),
+            referenciaProveedor: document.getElementById('referencia').value.trim()
         };
     }
     };

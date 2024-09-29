@@ -35,6 +35,7 @@ public class LineaPedidoCompraController {
     @PostMapping
     public ResponseEntity<LineaPedidoCompraDTO> crearLineaPedido(@RequestBody LineaPedidoCompraDTO lineaPedidoCompraDTO) {
         LineaPedidoCompraDTO nuevaLinea = lineaPedidoCompraService.crearLineaPedido(lineaPedidoCompraDTO);
+        calculoService.calcularValorCompraTotalLinea(nuevaLinea.getIdNumeroLinea());
         calculoService.recalcularPesoNetoTotal(nuevaLinea.getIdPedidoCompra());
         calculoService.recalcularTotalBultos(nuevaLinea.getIdPedidoCompra());
         calculoService.recalcularValoresCompra(nuevaLinea.getIdPedidoCompra());

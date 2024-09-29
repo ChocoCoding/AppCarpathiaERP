@@ -1,9 +1,6 @@
-
-
 let lineCounter = 0;
-
 const LineaPedidoFormApp = {
-    agregarLineaPedido: () => {
+    agregarLineaPedido: (pedidoCompraId) => {
         lineCounter++;
         const container = document.getElementById('orderLinesContainer');
         const lineId = `line-${lineCounter}`;
@@ -13,17 +10,18 @@ const LineaPedidoFormApp = {
         line.classList.add('position-relative', 'mb-3', 'card', 'p-3');
 
         line.innerHTML = `
-            <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2" onclick="LineaPedidoFormApp.removeLine(${lineCounter})">
-                <i class="fas fa-trash-alt"></i>
+            <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2">
+                            <i class="fas fa-trash-alt"></i>
             </button>
             <div class="row g-3">
                 <div class="col-md-6">
-                    <label for="lineaIdPedido" class="form-label">ID Pedido de Compra</label>
-                    <input type="text" class="form-control" name="lineaIdPedido" placeholder="ID Pedido de Compra" readonly>
+                    <label for="idPedidoLinea" class="form-label">ID Pedido de Compra</label>
+                    <input type="text" class="form-control" id="idPedidoLinea-${lineCounter}" value="${pedidoCompraId}" placeholder="ID Pedido de Compra" readonly>
                 </div>
+
                 <div class="col-md-6">
                     <label for="numLinea" class="form-label">Nº Línea</label>
-                    <input type="text" class="form-control" name="numLinea" placeholder="Nº Línea">
+                    <input type="text" class="form-control" name="numLinea" value="${lineCounter}" readonly>
                 </div>
                 <div class="col-md-6">
                     <label for="numOperacion" class="form-label">Nº Operación</label>
@@ -76,32 +74,41 @@ const LineaPedidoFormApp = {
             </div>
         `;
         container.appendChild(line);
+
+        const deleteButton = line.querySelector('.btn-danger');
+                deleteButton.addEventListener('click', () => {
+                    LineaPedidoFormApp.removeLine(lineId);
+                });
     },
 
     removeLine: (lineId) => {
-        const lineElement = document.getElementById(`line-${lineId}`);
-        if (lineElement) {
-            lineElement.remove();
-        }
-    },
+            const lineElement = document.getElementById(lineId);
+            if (lineElement) {
+                lineElement.remove();
+                lineCounter--;
+            } else {
+                console.error(`No se encontró la línea con ID: ${lineId}`);
+            }
+        },
 
     getLineasPedidoData: (pedidoCompraId) => {
         const lineas = [];
         document.querySelectorAll('#orderLinesContainer .card').forEach(card => {
             const linea = {
                 idPedidoCompra: pedidoCompraId,
+                n_linea: card.querySelector('input[name="numLinea"]').value || '',
                 n_operacion: card.querySelector('input[name="numOperacion"]').value || '',
                 proveedor: card.querySelector('input[name="proveedorLinea"]').value || '',
                 cliente: card.querySelector('input[name="clienteLinea"]').value || '',
-                num_contenedor: card.querySelector('input[name="numContenedor"]').value || '',
+                n_contenedor: card.querySelector('input[name="numContenedor"]').value || '',
                 producto: card.querySelector('input[name="producto"]').value || '',
                 talla: card.querySelector('input[name="talla"]').value || '',
-                peso_neto: card.querySelector('input[name="pesoNeto"]').value || '',
+                p_neto: card.querySelector('input[name="pesoNeto"]').value || '',
                 unidad: card.querySelector('input[name="unidad"]').value || '',
                 bultos: card.querySelector('input[name="bultos"]').value || '',
                 precio: card.querySelector('input[name="precio"]').value || '',
                 moneda: card.querySelector('input[name="moneda"]').value || '',
-                pais_origen: card.querySelector('input[name="paisOrigen"]').value || ''
+                paisOrigen: card.querySelector('input[name="paisOrigen"]').value || ''
             };
 
             // Solo agregar la línea si todos los campos requeridos están completos (opcional)

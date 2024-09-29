@@ -20,7 +20,8 @@ public class CostePedidoCompraController {
     // Crear nuevo coste
     @PostMapping
     public ResponseEntity<CostesDTO> crearCoste(@RequestBody CostesDTO costesDTO) {
-        return ResponseEntity.ok(costePedidoService.crearCoste(costesDTO));
+        CostesDTO nuevoCoste = costePedidoService.crearCoste(costesDTO);
+        return ResponseEntity.ok(nuevoCoste);
     }
 
     // Obtener coste por ID

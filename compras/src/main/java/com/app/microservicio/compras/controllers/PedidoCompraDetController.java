@@ -30,7 +30,10 @@ public class PedidoCompraDetController {
 
     @PostMapping()
     public ResponseEntity<PedidoCompraDetDTO> crearPedidoCompraDet(@RequestBody PedidoCompraDetDTO pedidoCompraDetDTO) {
-        return ResponseEntity.ok(pedidoCompraDetService.crearPedidoCompraDet(pedidoCompraDetDTO));
+        System.out.println("id:" + pedidoCompraDetDTO.getIdPedidoCompra());
+        PedidoCompraDetDTO nuevoDetallePedido = pedidoCompraDetService.crearPedidoCompraDet(pedidoCompraDetDTO);
+
+        return ResponseEntity.ok(nuevoDetallePedido);
     }
 
         // Endpoint para actualizar PedidoCompraDet

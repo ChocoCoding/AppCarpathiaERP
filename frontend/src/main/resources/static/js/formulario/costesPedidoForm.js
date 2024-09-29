@@ -1,9 +1,7 @@
-
-
 const CostePedidoApp = {
    getCostesPedidoData: (pedidoCompraId) => {
         return {
-            id_pedido_compra: pedidoCompraId,
+            idPedidoCompra: pedidoCompraId,
             n_operacion: document.getElementById('operacionCostes').value,
             n_contenedor: document.getElementById('contenedorCostes').value,
             arancel: document.getElementById('arancel').value,

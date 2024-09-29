@@ -81,6 +81,7 @@ public class CostePedidoService {
         costePedidoRepository.save(costePedidoCompra);
         costePedidoCompra.setTasa_sanitaria(calculoService.calcularTasaSanitaria(costePedidoCompra.getPedidoCompra().getIdPedidoCompra()).getBody());
         costePedidoCompra.setGasto_total(calculoService.calcularGastoTotal(costePedidoCompra.getPedidoCompra().getIdPedidoCompra()).getBody());
+        costePedidoCompra.setSuma_costes(calculoService.calcularSumaCostes(costePedidoCompra.getPedidoCompra().getIdPedidoCompra()).getBody());
         System.out.println(costePedidoCompra.getTasa_sanitaria());
         return convertirADTO(costePedidoCompra);
     }

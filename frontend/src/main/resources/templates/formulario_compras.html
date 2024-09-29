@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario de Pedido de Compra</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
     .step-indicator {
       width: 30px;
@@ -72,12 +73,7 @@
                     </div>
                     <div class="col-md-6">
                         <label for="incoterm" class="form-label">Incoterm</label>
-                        <select class="form-select" id="incoterm">
-                            <option value="" selected>Seleccionar Incoterm</option>
-                            <option value="FOB">FOB</option>
-                            <option value="CIF">CIF</option>
-                            <option value="EXW">EXW</option>
-                        </select>
+                        <input type="text" class="form-control" id="incoterm" placeholder="Referencia Proveedor">
                     </div>
                     <div class="col-md-6">
                         <label for="referencia" class="form-label">Referencia Proveedor</label>
@@ -98,8 +94,8 @@
                 <h3 class="mb-3">Detalles del Pedido</h3>
                 <div class="row g-3">
                     <div class="col-md-6">
-                        <label for="idPedido" class="form-label">ID Pedido Compra</label>
-                        <input type="text" class="form-control" id="idPedido" placeholder="ID Pedido de Compra" readonly>
+                        <label for="idPedidoDetalle" class="form-label">ID Pedido Compra</label>
+                        <input type="text" class="form-control" id="idPedidoDetalle" placeholder="ID Pedido de Compra" readonly>
                     </div>
                     <div class="col-md-6">
                         <label for="operacionDetalle" class="form-label">Nº Operación</label>
@@ -308,8 +304,7 @@ document.getElementById('nextBtn').addEventListener('click', () => {
             .catch(error => {
                 alert('Error al crear el Pedido de Compra: ' + error.message);
             });
-    } else // Enviar Líneas de Pedido (actualizado para enviar cada línea individualmente)
-if (currentStep === 2) {
+    } else if (currentStep === 2) {
     const lineasPedido = LineaPedidoFormApp.getLineasPedidoData(pedidoCompraId); // Obtén las líneas de pedido con el ID asignado
     console.log("ID del Pedido de Compra:", pedidoCompraId);
     const promises = lineasPedido.map(linea => {
@@ -336,7 +331,7 @@ if (currentStep === 2) {
 } else if (currentStep === 3) {
         // Enviar Detalles de Pedido
         const detallesPedido = DetallesPedidoFormApp.getDetallesPedidoData(pedidoCompraId); // Pasa el ID de Pedido
-        middleware.post('http://localhost:8702/api/compras/detalles_pedido', detallesPedido)
+        middleware.post('http://localhost:8702/api/compras/pedidos_compra_det', detallesPedido)
             .then(() => {
                 alert('Detalles de Pedido guardados con éxito.');
                 currentStep++;
@@ -360,22 +355,19 @@ if (currentStep === 2) {
     } else if (currentStep === 5) {
         // Enviar Costes
         const costesPedido = CostesPedidoFormApp.getCostesPedidoData(pedidoCompraId); // Pasa el ID de Pedido
-        middleware.post('http://localhost:8702/api/compras/costes_pedido', costesPedido)
+        middleware.post('http://localhost:8702/api/compras/costes_compra', costesPedido)
             .then(() => {
-                alert('Costes guardados con éxito.');
+                alert('El pedido se ha guardado exitosamente');
+                window.location.href = 'http://localhost:8708/compras'
             })
             .catch(error => {
                 alert('Error al crear Costes: ' + error.message);
             });
     }
 });
-
-
-
     document.getElementById('addLineBtn').addEventListener('click', () => {
-    LineaPedidoFormApp.agregarLineaPedido(); // Llama a la función para agregar línea
+    LineaPedidoFormApp.agregarLineaPedido(pedidoCompraId); // Llama a la función para agregar línea
 });
-
 
     document.getElementById('prevBtn').addEventListener('click', () => {
         if (currentStep > 1) {
@@ -399,14 +391,7 @@ if (currentStep === 2) {
         document.getElementById('step5Indicator').classList.toggle('step-active', currentStep === 5);
     }
 
-    function setPedidoCompraIdInAllSteps() {
-    const fieldsToSet = document.querySelectorAll('#step2 input[placeholder="ID Pedido de Compra"], #step3 input[placeholder="ID Pedido de Compra"], #step4 input[placeholder="ID Pedido Compra"], #step5 input[placeholder="ID Pedido Compra"]');
 
-    fieldsToSet.forEach(field => {
-        field.value = pedidoCompraId; // Asigna el ID
-        field.disabled = true; // Deshabilita el campo para evitar que se modifique
-    });
-}
 </script>
 
 </body>

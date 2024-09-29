@@ -14,7 +14,9 @@ public interface CostePedidoRepository extends JpaRepository<CostePedidoCompra,L
     @Query("SELECT cpd FROM CostePedidoCompra cpd WHERE cpd.pedidoCompra.idPedidoCompra = :idPedidoCompra")
     Optional<CostePedidoCompra> findByIdPedidoCompra(@Param("idPedidoCompra") Long idPedidoCompra);
 
-    @Query("SELECT SUM(c.arancel + c.sanidad + c.plastico + c.carga + c.inland + c.muellaje + c.pif + c.despacho + c.conexiones) " +
+    @Query("SELECT SUM(COALESCE(c.arancel, 0) + COALESCE(c.sanidad, 0) + COALESCE(c.plastico, 0) + " +
+            "COALESCE(c.carga, 0) + COALESCE(c.inland, 0) + COALESCE(c.muellaje, 0) + " +
+            "COALESCE(c.pif, 0) + COALESCE(c.despacho, 0) + COALESCE(c.conexiones, 0)) " +
             "FROM CostePedidoCompra c WHERE c.pedidoCompra.idPedidoCompra = :idPedidoCompra")
     BigDecimal sumaCostes(@Param("idPedidoCompra") Long idPedidoCompra);
 
