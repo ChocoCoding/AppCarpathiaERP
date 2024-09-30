@@ -176,7 +176,7 @@ public class CalculoService{
             BigDecimal sumaCostes = Optional.ofNullable(costePedidoRepository.sumaCostes(idPedidoCompra))
                     .orElse(BigDecimal.ZERO);
 
-            gastoCompraTotal = valorCompraTotal.subtract(sumaCostes);
+            gastoCompraTotal = valorCompraTotal.add(sumaCostes);
             costePedidoCompra.get().setGasto_total(gastoCompraTotal);
             costePedidoRepository.save(costePedidoCompra.get());
 

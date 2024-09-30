@@ -1,7 +1,8 @@
 
-•	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¨ŞÄ”J$6b03e53a-812d-42d5-8ff7-7c2249c2926b
-–	java:S116"VRename this field "n_operacion" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¡úíóøÿÿÿÿJ$fb9e3217-ac23-42f3-b080-aba33bff0f31
-—	java:S116"WRename this field "n_contenedor" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(«îÏÒÿÿÿÿÿJ$0c2ed7fb-6a6a-48bc-bcd9-26951fdbe6fa
-	java:S116"RRename this field "dec_iva" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(£âıJ$9da3d906-335b-4a47-a665-d9b27583327b
-”	java:S116"YRename this field "tasa_sanitaria" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(±ŸÉ­J$a9fa0e4e-0adf-497d-95a6-e391afcb9793
-	java:S116"VRename this field "gasto_total" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(î°²úÿÿÿÿ8ú…“© 2J$5eacd54e-c812-40f4-b27c-d9f8f1423f3f
+•	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¨ŞÄ”J$b06d17e8-2615-46e8-8f31-b9a4e6b89519
+–	java:S116"VRename this field "n_operacion" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¡úíóøÿÿÿÿJ$3e992464-463f-49c0-afc3-2385c09d85b7
+—	java:S116"WRename this field "n_contenedor" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(«îÏÒÿÿÿÿÿJ$74cdcdaa-a264-409c-972e-5cde3330e3b7
+	java:S116"RRename this field "dec_iva" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(£âıJ$a6c76daf-23ad-4767-a1f5-2b7d0327c58e
+”	java:S116"YRename this field "tasa_sanitaria" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(±ŸÉ­J$90e0562c-c2fb-4ce7-a953-9019d7947ccc
+˜	java:S116"VRename this field "suma_costes" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(“¬Éà8À¬Ş £2J$5aa53620-b905-4a80-ac69-3da04fb20bc8
+	java:S116"VRename this field "gasto_total" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(î°²úÿÿÿÿ8ú…“© 2J$c13cf7a2-b5b4-4482-a7f8-1e37dc2da3e3
