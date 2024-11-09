@@ -3,6 +3,10 @@ package com.app.microservicio.compras.services;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import com.app.microservicio.compras.entities.PedidoCompra;
 import com.app.microservicio.compras.repository.PedidoCompraRepository;
@@ -21,11 +25,54 @@ public class PedidoCompraService {
     @Autowired
     EntityManager entityManager;
 
-    public List<PedidoCompraDTO> listarPedidosCompra() {
-        return pedidoCompraRepository.findAll().stream()
-                .map(this::convertirADTO)
-                .collect(Collectors.toList());
+    @Cacheable(
+            value = "pedidosCompra",
+            key = "#pageable.pageNumber + '-' + #pageable.pageSize + '-' + #pageable.sort.toString() + '-' + #proveedor + '-' + #cliente + '-' + #search + '-' + #searchFields"
+    )
+    public Page<PedidoCompraDTO> listarPedidosCompra(Pageable pageable, String proveedor, String cliente, String search, List<String> searchFields) {
+        Specification<PedidoCompra> spec = Specification.where(null);
+
+        // Filtro por proveedor
+        if (proveedor != null && !proveedor.isEmpty()) {
+            spec = spec.and((root, query, criteriaBuilder) ->
+                    criteriaBuilder.like(criteriaBuilder.lower(root.get("proveedor")), "%" + proveedor.toLowerCase() + "%")
+            );
+        }
+
+        // Filtro por cliente
+        if (cliente != null && !cliente.isEmpty()) {
+            spec = spec.and((root, query, criteriaBuilder) ->
+                    criteriaBuilder.like(criteriaBuilder.lower(root.get("cliente")), "%" + cliente.toLowerCase() + "%")
+            );
+        }
+
+        // Lógica de búsqueda
+        if (search != null && !search.isEmpty() && searchFields != null && !searchFields.isEmpty()) {
+            Specification<PedidoCompra> searchSpec = Specification.where(null);
+            for (String field : searchFields) {
+                if (field.equals("idPedidoCompra") || field.equals("nOperacion")) { // Campos numéricos
+                    try {
+                        Long value = Long.parseLong(search);
+                        searchSpec = searchSpec.or((root, query, criteriaBuilder) ->
+                                criteriaBuilder.equal(root.get(field), value)
+                        );
+                    } catch (NumberFormatException e) {
+                        // Manejar si el input no es numérico
+                        // Opcional: Puedes optar por ignorar este campo o lanzar una excepción
+                        System.err.println("Valor de búsqueda no es numérico para el campo: " + field);
+                    }
+                } else { // Campos de texto
+                    searchSpec = searchSpec.or((root, query, criteriaBuilder) ->
+                            criteriaBuilder.like(criteriaBuilder.lower(root.get(field)), "%" + search.toLowerCase() + "%")
+                    );
+                }
+            }
+            spec = spec.and(searchSpec);
+        }
+
+        return pedidoCompraRepository.findAll(spec, pageable).map(this::convertirADTO);
     }
+
 
     public Optional<PedidoCompraDTO> obtenerPedidoCompra(Long id) {
         return pedidoCompraRepository.findById(id)
@@ -42,26 +89,22 @@ public class PedidoCompraService {
     public boolean eliminarPedidoCompra(Long id) {
         try {
             if (pedidoCompraRepository.existsById(id)) {
-                // Eliminar las relaciones en la tabla lineas_pedidos_compra
+                // Eliminar las relaciones en las tablas relacionadas
                 entityManager.createNativeQuery("DELETE FROM lineas_pedidos_compra WHERE id_pedido_compra = :id")
                         .setParameter("id", id)
                         .executeUpdate();
 
-                // Eliminar las relaciones en la tabla pedidos_compra_det
                 entityManager.createNativeQuery("DELETE FROM pedidos_compra_det WHERE id_pedido_compra = :id")
                         .setParameter("id", id)
                         .executeUpdate();
 
-                // Eliminar las relaciones en la tabla pedidos_compra_det
                 entityManager.createNativeQuery("DELETE FROM costes_compra WHERE id_pedido_compra = :id")
                         .setParameter("id", id)
                         .executeUpdate();
 
-                // Eliminar las relaciones en la tabla pedidos_compra_det
                 entityManager.createNativeQuery("DELETE FROM datos_barco WHERE id_pedido_compra = :id")
                         .setParameter("id", id)
                         .executeUpdate();
-
 
                 // Eliminar el pedido en pedidos_compra
                 pedidoCompraRepository.deleteById(id);

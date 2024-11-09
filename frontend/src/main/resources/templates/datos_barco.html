@@ -25,18 +25,18 @@
                 <button class="filter-button" onclick="DatosBarcoApp.toggleFilter()">⚙️</button>
                 <input type="text" id="search-input" oninput="DatosBarcoApp.filtrarDetalles()" placeholder="Buscar..." style="display: none;">
                 <div class="filter-container">
-                    <label><input type="checkbox" name="columnFilter" value="1"> ID Pedido Compra</label>
-                    <label><input type="checkbox" name="columnFilter" value="2"> Nº Operación</label>
-                    <label><input type="checkbox" name="columnFilter" value="3"> Nombre Barco</label>
-                    <label><input type="checkbox" name="columnFilter" value="4"> Viaje</label>
-                    <label><input type="checkbox" name="columnFilter" value="5"> Naviera</label>
-                    <label><input type="checkbox" name="columnFilter" value="6"> Puerto Embarque</label>
-                    <label><input type="checkbox" name="columnFilter" value="7"> Puerto Llegada</label>
-                    <label><input type="checkbox" name="columnFilter" value="8"> Fecha Embarque</label>
-                    <label><input type="checkbox" name="columnFilter" value="9"> Fecha Llegada</label>
-                    <label><input type="checkbox" name="columnFilter" value="10"> Flete</label>
-                    <label><input type="checkbox" name="columnFilter" value="11"> Fecha Pago Flete</label>
-                    <label><input type="checkbox" name="columnFilter" value="12"> Factura Flete</label>
+                    <label><input type="checkbox" name="columnFilter" value="2"> ID Pedido Compra</label>
+                    <label><input type="checkbox" name="columnFilter" value="3"> Nº Operación</label>
+                    <label><input type="checkbox" name="columnFilter" value="4"> Nombre Barco</label>
+                    <label><input type="checkbox" name="columnFilter" value="5"> Viaje</label>
+                    <label><input type="checkbox" name="columnFilter" value="6"> Naviera</label>
+                    <label><input type="checkbox" name="columnFilter" value="7"> Puerto Embarque</label>
+                    <label><input type="checkbox" name="columnFilter" value="8"> Puerto Llegada</label>
+                    <label><input type="checkbox" name="columnFilter" value="9"> Fecha Embarque</label>
+                    <label><input type="checkbox" name="columnFilter" value="10"> Fecha Llegada</label>
+                    <label><input type="checkbox" name="columnFilter" value="11"> Flete</label>
+                    <label><input type="checkbox" name="columnFilter" value="12"> Fecha Pago Flete</label>
+                    <label><input type="checkbox" name="columnFilter" value="13"> Factura Flete</label>
                 </div>
             </div>
         </div>
@@ -53,41 +53,49 @@
         <thead>
         <tr>
             <th>Eliminar</th>
-            <th class="sortable" onclick="DatosBarcoApp.sortTable(1)">ID Pedido Compra</th>
-            <th class="sortable" onclick="DatosBarcoApp.sortTable(2)">Nº Operación</th>
-            <th class="sortable" onclick="DatosBarcoApp.sortTable(3)">Nombre Barco</th>
-            <th class="sortable" onclick="DatosBarcoApp.sortTable(4)">Viaje</th>
-            <th class="sortable" onclick="DatosBarcoApp.sortTable(5)">Naviera</th>
-            <th class="sortable" onclick="DatosBarcoApp.sortTable(6)">Puerto Embarque</th>
-            <th class="sortable" onclick="DatosBarcoApp.sortTable(7)">Puerto Llegada</th>
-            <th class="sortable" onclick="DatosBarcoApp.sortTable(8)">Fecha Embarque</th>
-            <th class="sortable" onclick="DatosBarcoApp.sortTable(9)">Fecha Llegada</th>
-            <th class="sortable" onclick="DatosBarcoApp.sortTable(10)">Flete</th>
-            <th class="sortable" onclick="DatosBarcoApp.sortTable(11)">Fecha Pago Flete</th>
-            <th class="sortable" onclick="DatosBarcoApp.sortTable(12)">Factura Flete</th>
+            <th class="sortable" onclick="DatosBarcoApp.sortTable('pedidoCompra.idPedidoCompra')">ID Pedido Compra</th>
+            <th class="sortable" onclick="DatosBarcoApp.sortTable('nOperacion')">Nº Operación</th>
+            <th class="sortable" onclick="DatosBarcoApp.sortTable('nombreBarco')">Nombre Barco</th>
+            <th class="sortable" onclick="DatosBarcoApp.sortTable('viaje')">Viaje</th>
+            <th class="sortable" onclick="DatosBarcoApp.sortTable('naviera')">Naviera</th>
+            <th class="sortable" onclick="DatosBarcoApp.sortTable('puertoEmbarque')">Puerto Embarque</th>
+            <th class="sortable" onclick="DatosBarcoApp.sortTable('puertoLlegada')">Puerto Llegada</th>
+            <th class="sortable" onclick="DatosBarcoApp.sortTable('fechaEmbarque')">Fecha Embarque</th>
+            <th class="sortable" onclick="DatosBarcoApp.sortTable('fechaLlegada')">Fecha Llegada</th>
+            <th class="sortable" onclick="DatosBarcoApp.sortTable('flete')">Flete</th>
+            <th class="sortable" onclick="DatosBarcoApp.sortTable('fechaPagoFlete')">Fecha Pago Flete</th>
+            <th class="sortable" onclick="DatosBarcoApp.sortTable('facturaFlete')">Factura Flete</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="dato : ${datosBarcoPedidoCompra}" th:data-id-datos-barco="${dato.idDatosBarco}">
-            <td>
-                <button class="delete-button" th:onclick="'DatosBarcoApp.eliminarDatosBarco(' + ${dato.idDatosBarco} + ')'">🗑️</button>
-            </td>
-            <td contenteditable="true" class="editable" oninput="DatosBarcoApp.marcarModificado(this)" th:text="${dato.idPedidoCompra}">ID Pedido Compra</td>
-            <td contenteditable="true" class="editable" oninput="DatosBarcoApp.marcarModificado(this)" th:text="${dato.n_operacion}">Nº Operación</td>
-            <td contenteditable="true" class="editable" oninput="DatosBarcoApp.marcarModificado(this)" th:text="${dato.nombreBarco}">Nombre Barco</td>
-            <td contenteditable="true" class="editable" oninput="DatosBarcoApp.marcarModificado(this)" th:text="${dato.viaje}">Viaje</td>
-            <td contenteditable="true" class="editable" oninput="DatosBarcoApp.marcarModificado(this)" th:text="${dato.naviera}">Naviera</td>
-            <td contenteditable="true" class="editable" oninput="DatosBarcoApp.marcarModificado(this)" th:text="${dato.puertoEmbarque}">Puerto Embarque</td>
-            <td contenteditable="true" class="editable" oninput="DatosBarcoApp.marcarModificado(this)" th:text="${dato.puertoLlegada}">Puerto Llegada</td>
-            <td contenteditable="true" class="editable" oninput="DatosBarcoApp.marcarModificado(this)" th:text="${dato.fechaEmbarqueFormatted}">Fecha Embarque</td>
-            <td contenteditable="true" class="editable" oninput="DatosBarcoApp.marcarModificado(this)" th:text="${dato.fechaLlegadaFormatted}">Fecha Llegada</td>
-            <td contenteditable="true" class="editable" oninput="DatosBarcoApp.marcarModificado(this)" th:text="${dato.flete}">Flete</td>
-            <td contenteditable="true" class="editable" oninput="DatosBarcoApp.marcarModificado(this)" th:text="${dato.fechaPagoFleteBarcoFormatted}">Fecha Pago Flete</td>
-            <td contenteditable="true" class="editable" oninput="DatosBarcoApp.marcarModificado(this)" th:text="${dato.facturaFlete}">Factura Flete</td>
-        </tr>
+        <!-- Las filas se renderizarán dinámicamente -->
         </tbody>
     </table>
 </div>
+
+<!-- Controles de Paginación -->
+<div class="pagination">
+    <!-- Botón Primera Página -->
+    <span id="primera-pagina-span">
+        <a id="primera-pagina" href="javascript:void(0);" onclick="DatosBarcoApp.irAPrimeraPagina()">Primera Página</a>
+    </span>
+
+    <!-- Botón Anterior -->
+    <span id="anterior-span">
+        <a id="anterior-pagina" href="javascript:void(0);" onclick="DatosBarcoApp.irAPaginaAnterior()">Anterior</a>
+    </span>
+
+    <!-- Botón Siguiente -->
+    <span id="siguiente-span">
+        <a id="siguiente-pagina" href="javascript:void(0);" onclick="DatosBarcoApp.irAPaginaSiguiente()">Siguiente</a>
+    </span>
+
+    <!-- Botón Última Página -->
+    <span id="ultima-pagina-span">
+        <a id="ultima-pagina" href="javascript:void(0);" onclick="DatosBarcoApp.irAUltimaPagina()">Última Página</a>
+    </span>
+</div>
+
 <script src="/js/sweet-alert2/dist/sweetalert2.all.min.js"></script>
 <script type="module" src="/js/datos_barco.js"></script>
 </body>

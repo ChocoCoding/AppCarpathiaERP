@@ -4,6 +4,10 @@ package com.app.microservicio.compras.controllers;
 import com.app.microservicio.compras.DTO.CostesDTO;
 import com.app.microservicio.compras.services.CostePedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,9 +36,20 @@ public class CostePedidoCompraController {
 
     // Obtener todos los costes
     @GetMapping
-    public ResponseEntity<List<CostesDTO>> obtenerTodosLosCostes() {
-        List<CostesDTO> costes = costePedidoService.obtenerTodosLosCostes();
-        return ResponseEntity.ok(costes);
+    public ResponseEntity<Page<CostesDTO>> listarCostesCompra(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "pedidoCompra.idPedidoCompra") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDir,
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) List<String> searchFields
+    ) {
+        Sort sort = sortDir.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        Page<CostesDTO> costesPage = costePedidoService.listarCostes(pageable, search, searchFields);
+        return ResponseEntity.ok(costesPage);
     }
 
     // Actualizar coste

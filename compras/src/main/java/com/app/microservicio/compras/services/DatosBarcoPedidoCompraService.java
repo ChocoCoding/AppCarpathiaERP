@@ -10,9 +10,14 @@ import com.app.microservicio.compras.repository.DatosBarcoRepository;
 import com.app.microservicio.compras.repository.PedidoCompraRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,10 +37,74 @@ public class DatosBarcoPedidoCompraService {
                 .map(this::convertirADTO);
     }
 
-    public List<DatosBarcoDTO> listarDatosBarco() {
-        return datosBarcoRepository.findAll().stream()
-                .map(this::convertirADTO)
-                .collect(Collectors.toList());
+    public Page<DatosBarcoDTO> listarDatosBarco(Pageable pageable, String search, List<String> searchFields) {
+        Specification<DatosBarcoPedidoCompra> spec = Specification.where(null);
+
+        // Lógica de búsqueda
+        if (search != null && !search.isEmpty() && searchFields != null && !searchFields.isEmpty()) {
+            Specification<DatosBarcoPedidoCompra> searchSpec = Specification.where(null);
+            for (String field : searchFields) {
+                if (field.contains(".")) {
+                    // Campo anidado (ej. pedidoCompra.idPedidoCompra)
+                    String[] parts = field.split("\\.");
+                    String parentField = parts[0];
+                    String childField = parts[1];
+
+                    searchSpec = searchSpec.or((root, query, criteriaBuilder) -> {
+                        if (isNumeric(search)) {
+                            return criteriaBuilder.equal(
+                                    root.get(parentField).get(childField),
+                                    Long.parseLong(search)
+                            );
+                        } else {
+                            return criteriaBuilder.like(
+                                    criteriaBuilder.lower(root.get(parentField).get(childField).as(String.class)),
+                                    "%" + search.toLowerCase() + "%"
+                            );
+                        }
+                    });
+                } else if (field.equals("idDatosBarco") || field.equals("nOperacion") || field.equals("flete")) {
+                    // Campos numéricos
+                    try {
+                        Long value = Long.parseLong(search);
+                        searchSpec = searchSpec.or((root, query, criteriaBuilder) ->
+                                criteriaBuilder.equal(root.get(field), value)
+                        );
+                    } catch (NumberFormatException e) {
+                        // Ignorar si no es numérico
+                    }
+                } else if (field.equals("fechaEmbarque") || field.equals("fechaLlegada") || field.equals("fechaPagoFlete")) {
+                    // Campos de fecha
+                    try {
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                        LocalDate dateValue = LocalDate.parse(search, formatter);
+                        searchSpec = searchSpec.or((root, query, criteriaBuilder) ->
+                                criteriaBuilder.equal(root.get(field), dateValue)
+                        );
+                    } catch (Exception e) {
+                        // Ignorar si no es una fecha válida
+                    }
+                } else {
+                    // Campos de texto
+                    searchSpec = searchSpec.or((root, query, criteriaBuilder) ->
+                            criteriaBuilder.like(criteriaBuilder.lower(root.get(field)), "%" + search.toLowerCase() + "%")
+                    );
+                }
+            }
+            spec = spec.and(searchSpec);
+        }
+
+        return datosBarcoRepository.findAll(spec, pageable).map(this::convertirADTO);
+    }
+
+    // Método helper para verificar si una cadena es numérica
+    private boolean isNumeric(String str) {
+        try {
+            Long.parseLong(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
     @Transactional

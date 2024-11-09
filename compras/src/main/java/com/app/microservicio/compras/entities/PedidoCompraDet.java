@@ -22,22 +22,22 @@ public class PedidoCompraDet {
     @Column(name = "n_operacion")
     private Long nOperacion;
 
-    @Column(name = "contrato_compra", length = 50)
+    @Column(name = "contrato_compra", length = 200)
     private String contratoCompra;
 
     @Column(name = "terminado", length = 1)
     private char terminado;
 
-    @Column(name = "fact_proveedor", length = 50)
+    @Column(name = "fact_proveedor", length = 200)
     private String factProveedor;
 
-    @Column(name = "n_fact_flete", length = 50)
+    @Column(name = "n_fact_flete", length = 200)
     private String nFactFlete;
 
     @Column(name = "fecha_pago_flete")
     private LocalDate fechaPagoFlete;
 
-    @Column(name = "n_bl", length = 20)
+    @Column(name = "n_bl", length = 200)
     private String nBl;
 
     @Column(name = "peso_neto_total", precision = 15, scale = 6)

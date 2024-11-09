@@ -24,22 +24,22 @@ public class PedidoCompra {
     @Column(name = "n_operacion")
     private Long nOperacion;
 
-    @Column(name = "n_contenedor", length = 20)
+    @Column(name = "n_contenedor", length = 200)
     private String nContenedor;
 
-    @Column(name = "proforma", length = 20)
+    @Column(name = "proforma", length = 200)
     private String proforma;
 
-    @Column(name = "proveedor", length = 50)
+    @Column(name = "proveedor", length = 200)
     private String proveedor;
 
-    @Column(name = "cliente", length = 50)
+    @Column(name = "cliente", length = 200)
     private String cliente;
 
-    @Column(name = "incoterm", length = 20)
+    @Column(name = "incoterm", length = 200)
     private String incoterm;
 
-    @Column(name = "referencia_proveedor", length = 50)
+    @Column(name = "referencia_proveedor", length = 200)
     private String referenciaProveedor;
 
     @OneToMany(mappedBy = "pedidoCompra")

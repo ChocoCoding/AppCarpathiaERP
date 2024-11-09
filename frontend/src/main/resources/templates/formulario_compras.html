@@ -283,7 +283,7 @@ document.getElementById('nextBtn').addEventListener('click', () => {
             .then(response => {
                 pedidoCompraId = response.idPedidoCompra; // Asigna el ID del pedido de compra devuelto
 
-                // Asegúrate de que los campos existen antes de intentar asignarles un valor
+                // Nos aseguramos de que los campos existen antes de intentar asignarles un valor
                 if (document.getElementById('idPedidoLinea')) {
                     document.getElementById('idPedidoLinea').value = pedidoCompraId;
                 }

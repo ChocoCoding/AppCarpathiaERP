@@ -48,34 +48,49 @@
         <thead>
         <tr>
             <th>Eliminar</th>
-            <th class="sortable" onclick="PedidoCompraApp.sortTable(1)">ID</th>
-            <th class="sortable" onclick="PedidoCompraApp.sortTable(2)">Nº Operación</th>
-            <th class="sortable" onclick="PedidoCompraApp.sortTable(3)">Nº Contenedor</th>
-            <th class="sortable" onclick="PedidoCompraApp.sortTable(4)">Proforma</th>
-            <th class="sortable" onclick="PedidoCompraApp.sortTable(5)">Proveedor</th>
-            <th class="sortable" onclick="PedidoCompraApp.sortTable(6)">Cliente</th>
-            <th class="sortable" onclick="PedidoCompraApp.sortTable(7)">Incoterm</th>
-            <th class="sortable" onclick="PedidoCompraApp.sortTable(8)">Referencia Proveedor</th>
+            <th class="sortable" onclick="PedidoCompraApp.sortTable('idPedidoCompra')">ID</th>
+            <th class="sortable" onclick="PedidoCompraApp.sortTable('nOperacion')">Nº Operación</th>
+            <th class="sortable" onclick="PedidoCompraApp.sortTable('nContenedor')">Nº Contenedor</th>
+            <th class="sortable" onclick="PedidoCompraApp.sortTable('proforma')">Proforma</th>
+            <th class="sortable" onclick="PedidoCompraApp.sortTable('proveedor')">Proveedor</th>
+            <th class="sortable" onclick="PedidoCompraApp.sortTable('cliente')">Cliente</th>
+            <th class="sortable" onclick="PedidoCompraApp.sortTable('incoterm')">Incoterm</th>
+            <th class="sortable" onclick="PedidoCompraApp.sortTable('referenciaProveedor')">Referencia Proveedor</th>
         </tr>
         </thead>
-        <tbody>
-        <tr th:each="pedido : ${pedidosCompra}" th:data-id-pedido-compra="${pedido.idPedidoCompra}">
-            <td>
-                <button class="delete-button" th:onclick="'PedidoCompraApp.eliminarPedido(' + ${pedido.idPedidoCompra} + ')'">🗑️</button>
-            </td>
-            <td th:text="${pedido.idPedidoCompra}">ID</td>
-            <td contenteditable="true" class="editable" oninput="PedidoCompraApp.marcarModificado(this)" th:text="${pedido.n_operacion}">Nº Operación</td>
-            <td contenteditable="true" class="editable" oninput="PedidoCompraApp.marcarModificado(this)" th:text="${pedido.n_contenedor}">Nº Contenedor</td>
-            <td contenteditable="true" class="editable" oninput="PedidoCompraApp.marcarModificado(this)" th:text="${pedido.proforma}">Proforma</td>
-            <td contenteditable="true" class="editable" oninput="PedidoCompraApp.marcarModificado(this)" th:text="${pedido.proveedor}">Proveedor</td>
-            <td contenteditable="true" class="editable" oninput="PedidoCompraApp.marcarModificado(this)" th:text="${pedido.cliente}">Cliente</td>
-            <td contenteditable="true" class="editable" oninput="PedidoCompraApp.marcarModificado(this)" th:text="${pedido.incoterm}">Incoterm</td>
-            <td contenteditable="true" class="editable" oninput="PedidoCompraApp.marcarModificado(this)" th:text="${pedido.referenciaProveedor}">Referencia Proveedor</td>
-        </tr>
+        <tbody id="pedidos-tbody">
+        <!-- Las filas se renderizarán dinámicamente -->
         </tbody>
     </table>
 </div>
+
+<!-- Controles de Paginación -->
+<div class="pagination">
+    <!-- Botón Primera Página -->
+    <span id="primera-pagina-span">
+        <a id="primera-pagina" href="javascript:void(0);" onclick="PedidoCompraApp.irAPrimeraPagina()">Primera Página</a>
+    </span>
+
+    <!-- Botón Anterior -->
+    <span id="anterior-span">
+        <a id="anterior-pagina" href="javascript:void(0);" onclick="PedidoCompraApp.irAPaginaAnterior()">Anterior</a>
+    </span>
+
+    <!-- Botón Siguiente -->
+    <span id="siguiente-span">
+        <a id="siguiente-pagina" href="javascript:void(0);" onclick="PedidoCompraApp.irAPaginaSiguiente()">Siguiente</a>
+    </span>
+
+    <!-- Botón Última Página -->
+    <span id="ultima-pagina-span">
+        <a id="ultima-pagina" href="javascript:void(0);" onclick="PedidoCompraApp.irAUltimaPagina()">Última Página</a>
+    </span>
+</div>
+
+<!-- Incluir SweetAlert2 -->
 <script src="/js/sweet-alert2/dist/sweetalert2.all.min.js"></script>
-<script type="module" src="/js/pedidos_compra.js"></script>
+
+<!-- Incluir el Script de Pedidos de Compra -->
+<script type="module" src="/js/pedidos_compra.js?v=1.0.2"></script> <!-- Agregado parámetro de versión para evitar caché -->
 </body>
 </html>

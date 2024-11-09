@@ -1,86 +1,73 @@
+// middleware.js
 const middleware = {
-    get: (url) => {
-        return fetch(url, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .catch(error => {
-            console.error(`Error en la solicitud GET a ${url}:`, error);
-            throw error;
-        });
-    },
-
-    post: (url, data) => {
-        return fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-        .then(response => {
+    get: async (url) => {
+        console.log(`Realizando GET a: ${url}`); // Depuración
+        try {
+            const response = await fetch(url);
             if (!response.ok) {
-                const contentType = response.headers.get("content-type");
-                if (contentType && contentType.includes("application/json")) {
-                    return response.json().then(json => { throw new Error(json.error || 'Error en la solicitud.'); });
-                } else {
-                    return response.text().then(text => { throw new Error(text); });
-                }
+                throw new Error(`Error en GET: ${response.status}`);
             }
-            return response.json();
-        })
-        .catch(error => {
-            console.error(`Error en la solicitud POST a ${url}:`, error);
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error('Error en middleware.get:', error);
             throw error;
-        });
+        }
     },
-
-    put: (url, data) => {
-        return fetch(url, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-        .then(response => {
-                    if (!response.ok) {
-                        const contentType = response.headers.get("content-type");
-                        if (contentType && contentType.includes("application/json")) {
-                            return response.json().then(json => { throw new Error(json.error || 'Error en la solicitud.'); });
-                        } else {
-                            return response.text().then(text => { throw new Error(text); });
-                        }
-                    }
-                    return response.json();
-                })
-                .catch(error => {
-                    console.error(`Error en la solicitud POST a ${url}:`, error);
-                    throw error;
-                });
-    },
-
-    delete: (url) => {
-        return fetch(url, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
+    post: async (url, data) => {
+        console.log(`Realizando POST a: ${url} con datos:`, data); // Depuración
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+            if (!response.ok) {
+                throw new Error(`Error en POST: ${response.status}`);
             }
-        })
-        .then(response => {
-            if (response.ok) {
-                return Promise.resolve();
-            } else {
-                return Promise.reject(new Error('Error en la solicitud DELETE.'));
-            }
-        })
-        .catch(error => {
-            console.error(`Error en la solicitud DELETE a ${url}:`, error);
+            const responseData = await response.json();
+            return responseData;
+        } catch (error) {
+            console.error('Error en middleware.post:', error);
             throw error;
-        });
+        }
+    },
+    put: async (url, data) => {
+        console.log(`Realizando PUT a: ${url} con datos:`, data); // Depuración
+        try {
+            const response = await fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+            if (!response.ok) {
+                throw new Error(`Error en PUT: ${response.status}`);
+            }
+            const responseData = await response.json();
+            return responseData;
+        } catch (error) {
+            console.error('Error en middleware.put:', error);
+            throw error;
+        }
+    },
+    delete: async (url) => {
+        console.log(`Realizando DELETE a: ${url}`); // Depuración
+        try {
+            const response = await fetch(url, {
+                method: 'DELETE'
+            });
+            if (!response.ok) {
+                throw new Error(`Error en DELETE: ${response.status}`);
+            }
+            return response;
+        } catch (error) {
+            console.error('Error en middleware.delete:', error);
+            throw error;
+        }
     }
 };
 

@@ -173,3 +173,33 @@
         .table-container.active {
             cursor: grabbing;
         }
+
+/* Estilos para la Paginación */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.pagination a,
+.pagination span {
+    color: #007BFF;
+    padding: 8px 16px;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    margin: 0 4px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.pagination a:hover {
+    background-color: #ddd;
+}
+
+.pagination .disabled {
+    color: #6c757d;
+    border-color: #6c757d;
+    cursor: not-allowed;
+    background-color: #f8f9fa;
+}

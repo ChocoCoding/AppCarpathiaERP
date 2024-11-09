@@ -37,11 +37,12 @@
                     <label><input type="checkbox" name="columnFilter" value="10"> Muellaje</label>
                     <label><input type="checkbox" name="columnFilter" value="11"> PIF</label>
                     <label><input type="checkbox" name="columnFilter" value="12"> Despacho</label>
-                    <label><input type="checkbox" name="columnFilter" value="13"> IVA</label>
-                    <label><input type="checkbox" name="columnFilter" value="14"> Dec.Iva</label>
-                    <label><input type="checkbox" name="columnFilter" value="15"> Tasa Sanitaria</label>
-                    <label><input type="checkbox" name="columnFilter" value="16"> Suma Costes</label>
-                    <label><input type="checkbox" name="columnFilter" value="17"> Gasto Total</label>
+                    <label><input type="checkbox" name="columnFilter" value="13"> Conexiones</label>
+                    <label><input type="checkbox" name="columnFilter" value="14"> IVA</label>
+                    <label><input type="checkbox" name="columnFilter" value="15"> Dec.Iva</label>
+                    <label><input type="checkbox" name="columnFilter" value="16"> Tasa Sanitaria</label>
+                    <label><input type="checkbox" name="columnFilter" value="17"> Suma Costes</label>
+                    <label><input type="checkbox" name="columnFilter" value="18"> Gasto Total</label>
                 </div>
             </div>
         </div>
@@ -58,52 +59,54 @@
         <thead>
         <tr>
             <th>Eliminar</th>
-            <th class="sortable" onclick="CosteCompraApp.sortTable(1)">ID Pedido Compra</th>
-            <th class="sortable" onclick="CosteCompraApp.sortTable(2)">Nº Operación</th>
-            <th class="sortable" onclick="CosteCompraApp.sortTable(3)">Nº Contenedor</th>
-            <th class="sortable" onclick="CosteCompraApp.sortTable(4)">Arancel</th>
-            <th class="sortable" onclick="CosteCompraApp.sortTable(5)">Sanidad</th>
-            <th class="sortable" onclick="CosteCompraApp.sortTable(6)">Plástico</th>
-            <th class="sortable" onclick="CosteCompraApp.sortTable(7)">Carga</th>
-            <th class="sortable" onclick="CosteCompraApp.sortTable(8)">Inland</th>
-            <th class="sortable" onclick="CosteCompraApp.sortTable(9)">Muellaje</th>
-            <th class="sortable" onclick="CosteCompraApp.sortTable(10)">PIF</th>
-            <th class="sortable" onclick="CosteCompraApp.sortTable(11)">Despacho</th>
-            <th class="sortable" onclick="CosteCompraApp.sortTable(12)">Conexiones</th>
-            <th class="sortable" onclick="CosteCompraApp.sortTable(13)">IVA</th>
-            <th class="sortable" onclick="CosteCompraApp.sortTable(14)">Dec.Iva</th>
-            <th class="sortable" onclick="CosteCompraApp.sortTable(15)">Tasa Sanitaria</th>
-            <th class="sortable" onclick="CosteCompraApp.sortTable(16)">Suma Costes</th>
-            <th class="sortable" onclick="CosteCompraApp.sortTable(17)">Gasto Total</th>
-
+            <th class="sortable" onclick="CosteCompraApp.sortTable('pedidoCompra.idPedidoCompra')">ID Pedido Compra</th>
+            <th class="sortable" onclick="CosteCompraApp.sortTable('nOperacion')">Nº Operación</th>
+            <th class="sortable" onclick="CosteCompraApp.sortTable('nContenedor')">Nº Contenedor</th>
+            <th class="sortable" onclick="CosteCompraApp.sortTable('arancel')">Arancel</th>
+            <th class="sortable" onclick="CosteCompraApp.sortTable('sanidad')">Sanidad</th>
+            <th class="sortable" onclick="CosteCompraApp.sortTable('plastico')">Plástico</th>
+            <th class="sortable" onclick="CosteCompraApp.sortTable('carga')">Carga</th>
+            <th class="sortable" onclick="CosteCompraApp.sortTable('inland')">Inland</th>
+            <th class="sortable" onclick="CosteCompraApp.sortTable('muellaje')">Muellaje</th>
+            <th class="sortable" onclick="CosteCompraApp.sortTable('pif')">PIF</th>
+            <th class="sortable" onclick="CosteCompraApp.sortTable('despacho')">Despacho</th>
+            <th class="sortable" onclick="CosteCompraApp.sortTable('conexiones')">Conexiones</th>
+            <th class="sortable" onclick="CosteCompraApp.sortTable('iva')">IVA</th>
+            <th class="sortable" onclick="CosteCompraApp.sortTable('dec_iva')">Dec.Iva</th>
+            <th class="sortable" onclick="CosteCompraApp.sortTable('tasa_sanitaria')">Tasa Sanitaria</th>
+            <th class="sortable" onclick="CosteCompraApp.sortTable('suma_costes')">Suma Costes</th>
+            <th class="sortable" onclick="CosteCompraApp.sortTable('gasto_total')">Gasto Total</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="coste : ${costesPedidoCompra}" th:data-id-coste-compra="${coste.idCosteCompra}">
-            <td>
-                <button class="delete-button" th:onclick="'CosteCompraApp.eliminarCosteCompra(' + ${coste.idCosteCompra} + ')'">🗑️</button>
-            </td>
-            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.idPedidoCompra}">ID Pedido Compra</td>
-            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.n_operacion}">Nº Operación</td>
-            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.n_contenedor}">Nº Contenedor</td>
-            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.arancel}">Arancel</td>
-            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.sanidad}">Sanidad</td>
-            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.plastico}">Plástico</td>
-            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.carga}">Carga</td>
-            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.inland}">Inland</td>
-            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.muellaje}">Muellaje</td>
-            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.pif}">PIF</td>
-            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.despacho}">Despacho</td>
-            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.conexiones}">Conexiones</td>
-            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.iva}">IVA</td>
-            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.dec_iva}">Dec.Iva</td>
-            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.tasa_sanitaria}">Tasa Sanitaria</td>
-            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.suma_costes}">Suma Costes</td>
-            <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)" th:text="${coste.gasto_total}">Gasto Total</td>
-        </tr>
+        <!-- Las filas se renderizarán dinámicamente -->
         </tbody>
     </table>
 </div>
+
+<!-- Controles de Paginación -->
+<div class="pagination">
+    <!-- Botón Primera Página -->
+    <span id="primera-pagina-span">
+        <a id="primera-pagina" href="javascript:void(0);" onclick="CosteCompraApp.irAPrimeraPagina()">Primera Página</a>
+    </span>
+
+    <!-- Botón Anterior -->
+    <span id="anterior-span">
+        <a id="anterior-pagina" href="javascript:void(0);" onclick="CosteCompraApp.irAPaginaAnterior()">Anterior</a>
+    </span>
+
+    <!-- Botón Siguiente -->
+    <span id="siguiente-span">
+        <a id="siguiente-pagina" href="javascript:void(0);" onclick="CosteCompraApp.irAPaginaSiguiente()">Siguiente</a>
+    </span>
+
+    <!-- Botón Última Página -->
+    <span id="ultima-pagina-span">
+        <a id="ultima-pagina" href="javascript:void(0);" onclick="CosteCompraApp.irAUltimaPagina()">Última Página</a>
+    </span>
+</div>
+
 <script src="/js/sweet-alert2/dist/sweetalert2.all.min.js"></script>
 <script type="module" src="/js/costes_compra.js"></script>
 </body>

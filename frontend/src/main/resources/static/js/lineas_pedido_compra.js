@@ -1,22 +1,73 @@
+// lineas_pedido_compra.js
 import middleware from '/js/middleware.js';
 
 let config = {};
+let currentPage = 1; // Página inicial
+let size = 10;        // Tamaño de página inicial
+let sortBy = 'pedidoCompra.idPedidoCompra'; // Campo de ordenamiento inicial
+let sortDir = 'desc'; // Dirección de ordenamiento inicial
+let proveedor = '';
+let cliente = '';
+let search = '';
+let searchFields = []; // Debes definir cómo se manejan los campos de búsqueda
+
+const columnasAtributos = {
+    2: 'pedidoCompra.idPedidoCompra',
+    3: 'nLinea',
+    4: 'nOperacion',
+    5: 'proveedor',
+    6: 'cliente',
+    7: 'nContenedor',
+    8: 'producto',
+    9: 'talla',
+    10: 'pNeto',
+    11: 'unidad',
+    12: 'bultos',
+    13: 'precio',
+    14: 'valorCompra',
+    15: 'moneda',
+    16: 'paisOrigen'
+};
 
 // Cargar configuraciones de endpoints y mensajes desde el backend
 function cargarConfiguraciones() {
-    return fetch('http://localhost:8702/api/config')
-        .then(response => response.json())
+    return fetch('http://localhost:8702/api/config')  // Asegúrate de que la URL sea correcta y accesible
+        .then(response => {
+        if (!response.ok) {
+            throw new Error('Error al cargar la configuración del backend');
+        }
+        return response.json();
+    })
         .then(data => {
-            config = data;
-            return config;
-        })
+        config = data;
+        currentPage = config.currentPage || 1;
+        size = config.size || 10;
+        sortBy = config.sortBy || 'pedidoCompra.idPedidoCompra';
+        sortDir = config.sortDir || 'asc';
+        proveedor = config.proveedor || '';
+        cliente = config.cliente || '';
+        return config;
+    })
         .catch(error => {
-            console.error('Error al cargar la configuración:', error);
+        console.error('Error al cargar la configuración:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'No se pudo cargar la configuración de la aplicación.',
+            toast: true,
+            position: 'top-end',
+            timer: 3000,
+            timerProgressBar: true,
+            showConfirmButton: false
         });
+    });
 }
 
 cargarConfiguraciones().then(() => {
+    console.log('Configuración cargada:', config);
+
     const LineasPedidoApp = {
+        // Navegación
         goBack: () => {
             window.history.back();
         },
@@ -25,11 +76,13 @@ cargarConfiguraciones().then(() => {
             window.location.href = "/logout";
         },
 
+        // Marcar fila como modificada
         marcarModificado: (elemento) => {
             const fila = elemento.closest('tr');
             fila.classList.add('modificado');
         },
 
+        // Mostrar alertas usando SweetAlert2
         mostrarAlerta: (tipo, titulo, texto, timer = 2000) => {
             Swal.fire({
                 icon: tipo,
@@ -43,6 +96,155 @@ cargarConfiguraciones().then(() => {
             });
         },
 
+        // Cargar y renderizar líneas de pedido de compra
+        cargarLineasPedidoCompra: () => {
+            const url = new URL(config.lineasPedidosCompraEndpoint);
+            url.searchParams.append('page', currentPage - 1); // Backend es zero-based
+            url.searchParams.append('size', size);
+            url.searchParams.append('proveedor', proveedor);
+            url.searchParams.append('cliente', cliente);
+            url.searchParams.append('sortBy', sortBy);
+            url.searchParams.append('sortDir', sortDir);
+
+            // Incluir parámetros de búsqueda si existen
+            if (search && searchFields.length > 0) {
+                url.searchParams.append('search', search);
+                searchFields.forEach(field => url.searchParams.append('searchFields', field));
+            }
+
+            console.log('Solicitando URL:', url.toString());
+
+            middleware.get(url.toString())
+                .then(data => {
+                console.log('Datos recibidos:', data);
+                LineasPedidoApp.renderTabla(data.content);
+                LineasPedidoApp.actualizarPaginacion(data.number + 1, data.totalPages);
+            })
+                .catch(error => {
+                LineasPedidoApp.mostrarAlerta('error', 'Error', 'Error al cargar las líneas de pedido de compra.');
+                console.error('Error al cargar las líneas de pedido de compra:', error);
+            });
+        },
+
+        // Renderizar la tabla con las líneas de pedido de compra
+        renderTabla: (lineas) => {
+            console.log('Renderizando tabla con líneas:', lineas); // Depuración
+
+            const tbody = document.querySelector('tbody');
+            if (!tbody) {
+                console.error('No se encontró el elemento <tbody> en el DOM.');
+                return;
+            }
+            tbody.innerHTML = ''; // Limpiar la tabla antes de renderizar
+
+            lineas.forEach(linea => {
+                LineasPedidoApp.renderFilaLineaPedido(linea);
+            });
+        },
+
+
+        // Renderizar una fila de línea de pedido de compra
+        renderFilaLineaPedido: (linea) => {
+            console.log('Renderizando fila para línea de pedido:', linea); // Depuración
+            const tbody = document.querySelector('tbody');
+            if (!tbody) {
+                console.error('No se encontró el elemento <tbody> en el DOM.');
+                return;
+            }
+            const fila = document.createElement('tr');
+            fila.setAttribute('data-id-linea-pedido', linea.idNumeroLinea);
+
+            fila.innerHTML = `
+                <td>
+                    <button class="delete-button" onclick="LineasPedidoApp.eliminarLineaPedido(${linea.idNumeroLinea})">🗑️</button>
+                </td>
+                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.idPedidoCompra || ''}</td>
+                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.n_linea || ''}</td>
+                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.n_operacion || ''}</td>
+                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.proveedor || ''}</td>
+                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.cliente || ''}</td>
+                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.n_contenedor || ''}</td>
+                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.producto || ''}</td>
+                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.talla || ''}</td>
+                <td contenteditable="true" class="editable peso-neto" oninput="LineasPedidoApp.calcularValorCompra(this)">${linea.p_neto || ''}</td>
+                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.unidad || ''}</td>
+                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.bultos || ''}</td>
+                <td contenteditable="true" class="editable precio" oninput="LineasPedidoApp.calcularValorCompra(this)">${linea.precio || ''}</td>
+                <td contenteditable="true" class="editable valor-compra-total">${linea.valor_compra || ''}</td>
+                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.moneda || ''}</td>
+                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.paisOrigen || ''}</td>
+            `;
+
+            tbody.appendChild(fila);
+        },
+
+        // Actualizar los controles de paginación
+        actualizarPaginacion: (currentPageFromBackend, totalPagesFromBackend) => {
+            currentPage = currentPageFromBackend;
+            config.totalPages = totalPagesFromBackend;
+
+            console.log(`Página actual: ${currentPage} / Total páginas: ${config.totalPages}`); // Depuración
+
+            // Obtener los elementos de paginación
+            const primeraPaginaSpan = document.getElementById('primera-pagina-span');
+            const anteriorPaginaSpan = document.getElementById('anterior-span');
+            const siguientePaginaSpan = document.getElementById('siguiente-span');
+            const ultimaPaginaSpan = document.getElementById('ultima-pagina-span');
+
+            if (!primeraPaginaSpan || !anteriorPaginaSpan || !siguientePaginaSpan || !ultimaPaginaSpan) {
+                console.error('No se encontraron los elementos de paginación en el DOM.');
+                return;
+            }
+
+            // Deshabilitar o habilitar "Primera Página" y "Anterior"
+            if (currentPage <= 1) {
+                primeraPaginaSpan.innerHTML = `<span class="disabled">Primera Página</span>`;
+                anteriorPaginaSpan.innerHTML = `<span class="disabled">Anterior</span>`;
+            } else {
+                primeraPaginaSpan.innerHTML = `<a id="primera-pagina" href="javascript:void(0);" onclick="LineasPedidoApp.irAPrimeraPagina()">Primera Página</a>`;
+                anteriorPaginaSpan.innerHTML = `<a id="anterior-pagina" href="javascript:void(0);" onclick="LineasPedidoApp.irAPaginaAnterior()">Anterior</a>`;
+            }
+
+            // Deshabilitar o habilitar "Siguiente Página" y "Última Página"
+            if (currentPage >= config.totalPages) {
+                siguientePaginaSpan.innerHTML = `<span class="disabled">Siguiente</span>`;
+                ultimaPaginaSpan.innerHTML = `<span class="disabled">Última Página</span>`;
+            } else {
+                siguientePaginaSpan.innerHTML = `<a id="siguiente-pagina" href="javascript:void(0);" onclick="LineasPedidoApp.irAPaginaSiguiente()">Siguiente</a>`;
+                ultimaPaginaSpan.innerHTML = `<a id="ultima-pagina" href="javascript:void(0);" onclick="LineasPedidoApp.irAUltimaPagina()">Última Página</a>`;
+            }
+        },
+
+        // Funciones de Navegación de Paginación
+        irAPrimeraPagina: () => {
+            if (currentPage > 1) {
+                currentPage = 1;
+                LineasPedidoApp.cargarLineasPedidoCompra();
+            }
+        },
+
+        irAPaginaAnterior: () => {
+            if (currentPage > 1) {
+                currentPage -= 1;
+                LineasPedidoApp.cargarLineasPedidoCompra();
+            }
+        },
+
+        irAPaginaSiguiente: () => {
+            if (currentPage < config.totalPages) {
+                currentPage += 1;
+                LineasPedidoApp.cargarLineasPedidoCompra();
+            }
+        },
+
+        irAUltimaPagina: () => {
+            if (currentPage < config.totalPages) {
+                currentPage = config.totalPages;
+                LineasPedidoApp.cargarLineasPedidoCompra();
+            }
+        },
+
+        // Función para guardar cambios (crear y actualizar)
         guardarCambios: () => {
             const filasModificadas = document.querySelectorAll('tbody tr.modificado');
 
@@ -52,97 +254,101 @@ cargarConfiguraciones().then(() => {
 
                 LineasPedidoApp.validarExistenciaPedidoCompra(idPedidoCompra)
                     .then(existe => {
-                        if (!existe) {
-                            LineasPedidoApp.mostrarAlerta('error', config.error, config.errorIdPedidoInvalido, 3000);
-                            return;
-                        }
+                    if (!existe) {
+                        LineasPedidoApp.mostrarAlerta('error', 'Error', 'ID de Pedido de Compra inválido.', 3000);
+                        return;
+                    }
 
-                        const datos = {
-                            idPedidoCompra: idPedidoCompra,
-                            n_linea: fila.children[2].innerText.trim(),
-                            n_operacion: fila.children[3].innerText.trim(),
-                            proveedor: fila.children[4].innerText.trim(),
-                            cliente: fila.children[5].innerText.trim(),
-                            n_contenedor: fila.children[6].innerText.trim(),
-                            producto: fila.children[7].innerText.trim(),
-                            talla: fila.children[8].innerText.trim(),
-                            p_neto: fila.children[9].innerText.trim(),
-                            unidad: fila.children[10].innerText.trim(),
-                            bultos: fila.children[11].innerText.trim(),
-                            precio: fila.children[12].innerText.trim(),
-                            valor_compra: fila.querySelector('.valor-compra-total').innerText.trim(),
-                            moneda: fila.children[14].innerText.trim(),
-                            paisOrigen: fila.children[15].innerText.trim()
-                        };
+                    const datos = {
+                        idPedidoCompra: parseLong(idPedidoCompra),
+                        n_linea: parseLong(fila.children[2].innerText.trim()),
+                        n_operacion: parseLong(fila.children[3].innerText.trim()),
+                        proveedor: fila.children[4].innerText.trim(),
+                        cliente: fila.children[5].innerText.trim(),
+                        n_contenedor: fila.children[6].innerText.trim(),
+                        producto: fila.children[7].innerText.trim(),
+                        talla: fila.children[8].innerText.trim(),
+                        p_neto: parseFloat(fila.children[9].innerText.trim()) || 0,
+                        unidad: fila.children[10].innerText.trim(),
+                        bultos: parseLong(fila.children[11].innerText.trim()),
+                        precio: parseFloat(fila.children[12].innerText.trim()) || 0,
+                        valor_compra: parseFloat(fila.querySelector('.valor-compra-total').innerText.trim()) || 0,
+                        moneda: fila.children[14].innerText.trim(),
+                        paisOrigen: fila.children[15].innerText.trim()
+                    };
 
-                        if (!idLineaPedido) {
-                            // Crear nueva línea
-                            middleware.post(config.lineasPedidosCompraEndpoint, datos)
-                                .then(() => {
-                                    LineasPedidoApp.mostrarAlerta('success', config.creacionExitosa, config.lineaCreadaExito, 500);
-                                    setTimeout(() => location.reload(), 500);
-                                })
-                                .catch(() => {
-                                    LineasPedidoApp.mostrarAlerta('error', config.error, config.errorCrearLinea);
-                                });
-                        } else {
-                            // Actualizar línea existente
-                            const endpoint = config.lineasPedidosCompraIdEndpoint.replace('{id}', idLineaPedido);
-                            middleware.put(endpoint, datos)
-                                .then(() => {
-                                    LineasPedidoApp.mostrarAlerta('success', config.guardadoExitoso, config.cambiosGuardadosExito, 500);
-                                    fila.classList.remove('modificado');
-                                })
-                                .catch(() => {
-                                    LineasPedidoApp.mostrarAlerta('error', config.error, config.errorGuardarCambios);
-                                });
-                        }
-                    })
+                    if (!idLineaPedido) {
+                        // Crear nueva línea
+                        middleware.post(config.lineasPedidosCompraEndpoint, datos)
+                            .then((nuevaLinea) => {
+                            LineasPedidoApp.mostrarAlerta('success', 'Éxito', 'Línea de pedido creada correctamente.', 500);
+                            LineasPedidoApp.cargarLineasPedidoCompra(); // Recargar datos
+                        })
+                            .catch(() => {
+                            LineasPedidoApp.mostrarAlerta('error', 'Error', 'No se pudo crear la línea de pedido.');
+                        });
+                    } else {
+                        // Actualizar línea existente
+                        const endpoint = config.lineasPedidosCompraIdEndpoint.replace('{id}', idLineaPedido);
+                        middleware.put(endpoint, datos)
+                            .then(() => {
+                            LineasPedidoApp.mostrarAlerta('success', 'Éxito', 'Cambios guardados correctamente.', 500);
+                            fila.classList.remove('modificado');
+                            // Opcionalmente, actualizar solo la fila modificada
+                        })
+                            .catch(() => {
+                            LineasPedidoApp.mostrarAlerta('error', 'Error', 'No se pudo guardar los cambios.');
+                        });
+                    }
+                })
                     .catch(() => {
-                        LineasPedidoApp.mostrarAlerta('error', config.error, config.errorIdPedidoInvalido);
-                    });
+                    LineasPedidoApp.mostrarAlerta('error', 'Error', 'Error al validar el ID de Pedido de Compra.');
+                });
             });
         },
 
+        // Función para validar la existencia de un Pedido de Compra
         validarExistenciaPedidoCompra: (idPedidoCompra) => {
             return middleware.get(`${config.pedidosCompraEndpoint}/${idPedidoCompra}/exists`)
                 .then(data => data.existe)
                 .catch(error => {
-                    console.error('Error en la validación del ID del Pedido de Compra:', error);
-                    return false;
-                });
+                console.error('Error en la validación del ID del Pedido de Compra:', error);
+                return false;
+            });
         },
 
+        // Función para eliminar una línea de pedido
         eliminarLineaPedido: (idLineaPedido) => {
             if (!idLineaPedido) {
-                LineasPedidoApp.mostrarAlerta('error', config.error, config.errorIdInvalido);
+                LineasPedidoApp.mostrarAlerta('error', 'Error', 'ID de Línea de Pedido inválido.');
                 return;
             }
 
             Swal.fire({
-                title: config.confirmarEliminarLinea,
-                text: config.confirmarEliminarLineaTexto,
+                title: '¿Estás seguro?',
+                text: "¿Deseas eliminar esta línea de pedido?",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: config.confirmarEliminar,
-                cancelButtonText: config.cancelar
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
             }).then((result) => {
                 if (result.isConfirmed) {
                     const url = config.lineasPedidosCompraIdEndpoint.replace('{id}', idLineaPedido);
                     middleware.delete(url)
                         .then(() => {
-                            LineasPedidoApp.mostrarAlerta('success', config.eliminado, config.lineaEliminadaExito, 300);
-                            setTimeout(() => location.reload(), 300);
-                        })
+                        LineasPedidoApp.mostrarAlerta('success', 'Éxito', 'Línea de pedido eliminada correctamente.', 300);
+                        LineasPedidoApp.cargarLineasPedidoCompra(); // Recargar datos
+                    })
                         .catch(() => {
-                            LineasPedidoApp.mostrarAlerta('error', config.error, config.errorEliminarLinea);
-                        });
+                        LineasPedidoApp.mostrarAlerta('error', 'Error', 'No se pudo eliminar la línea de pedido.');
+                    });
                 }
             });
         },
 
+        // Función para crear una nueva línea de pedido editable
         crearLineaPedido: () => {
             const tbody = document.querySelector('tbody');
             const nuevaFila = document.createElement('tr');
@@ -151,32 +357,34 @@ cargarConfiguraciones().then(() => {
                 <td>
                     <button class="delete-button" onclick="LineasPedidoApp.eliminarFila(this)">🗑️</button>
                 </td>
-                <td contenteditable="true" class="editable"></td>
-                <td contenteditable="true" class="editable"></td>
-                <td contenteditable="true" class="editable"></td>
-                <td contenteditable="true" class="editable"></td>
-                <td contenteditable="true" class="editable"></td>
-                <td contenteditable="true" class="editable"></td>
-                <td contenteditable="true" class="editable"></td>
-                <td contenteditable="true" class="editable"></td>
+                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
+                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
+                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
+                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
+                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
+                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
+                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
+                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
                 <td contenteditable="true" class="editable peso-neto" oninput="LineasPedidoApp.calcularValorCompra(this)"></td>
-                <td contenteditable="true" class="editable"></td>
-                <td contenteditable="true" class="editable"></td>
+                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
+                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
                 <td contenteditable="true" class="editable precio" oninput="LineasPedidoApp.calcularValorCompra(this)"></td>
                 <td contenteditable="true" class="editable valor-compra-total"></td>
-                <td contenteditable="true" class="editable"></td>
-                <td contenteditable="true" class="editable"></td>
+                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
+                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
             `;
 
             tbody.insertBefore(nuevaFila, tbody.firstChild);
             nuevaFila.classList.add('modificado', 'new-row');
         },
 
+        // Función para eliminar una fila antes de guardarla
         eliminarFila: (boton) => {
             const fila = boton.closest('tr');
             fila.remove();
         },
 
+        // Función para calcular el valor de compra total
         calcularValorCompra: (elemento) => {
             const fila = elemento.closest('tr');
             const pesoNetoField = fila.querySelector('.peso-neto');
@@ -217,52 +425,20 @@ cargarConfiguraciones().then(() => {
             fila.classList.add('modificado');
         },
 
-sortTable: (columnIndex) => {
-    const table = document.querySelector("tbody");
-    const rows = Array.from(table.querySelectorAll("tr"));
-    const isAscending = table.getAttribute("data-sort-direction") === "asc";
-    const newDirection = isAscending ? "desc" : "asc";
+        // Función para ordenar la tabla
+        sortTable: (campo) => {
+            if (sortBy === campo) {
+                sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+            } else {
+                sortBy = campo;
+                sortDir = 'asc';
+            }
 
-    // Función para verificar si un texto tiene el formato dd/MM/yyyy
-    const isDateFormat = (text) => {
-        return /^\d{2}\/\d{2}\/\d{4}$/.test(text);
-    };
+            console.log(`Ordenando por: ${sortBy} (${sortDir})`);
+            LineasPedidoApp.cargarLineasPedidoCompra();
+        },
 
-    // Función para convertir cadenas de fecha en formato dd/MM/yyyy a objetos Date
-    const parseDate = (dateStr) => {
-        const [day, month, year] = dateStr.split('/').map(Number);
-        return new Date(year, month - 1, day); // Meses en JavaScript van de 0 a 11
-    };
-
-    rows.sort((a, b) => {
-        const aText = a.children[columnIndex].innerText.trim();
-        const bText = b.children[columnIndex].innerText.trim();
-
-        // Si ambas son fechas, las ordenamos como fechas
-        if (isDateFormat(aText) && isDateFormat(bText)) {
-            const aDate = parseDate(aText);
-            const bDate = parseDate(bText);
-            return isAscending ? aDate - bDate : bDate - aDate;
-        }
-
-        // Si no son fechas, hacer comparación de texto/numérico
-        return isAscending
-            ? aText.localeCompare(bText, undefined, {numeric: true})
-            : bText.localeCompare(aText, undefined, {numeric: true});
-    });
-
-    // Reagregar las filas ordenadas al DOM
-    rows.forEach(row => table.appendChild(row));
-
-    // Actualizar la dirección de ordenamiento
-    table.setAttribute("data-sort-direction", newDirection);
-
-    // Ajustar los estilos visuales de los encabezados
-    document.querySelectorAll(".sortable").forEach(th => th.classList.remove("asc", "desc"));
-    document.querySelector(`.sortable:nth-child(${columnIndex + 1})`).classList.add(newDirection);
-},
-
-
+        // Funciones para mostrar y ocultar la búsqueda y filtros
         toggleSearch: () => {
             const searchInput = document.getElementById('search-input');
             if (searchInput.style.display === 'none' || searchInput.style.display === '') {
@@ -282,47 +458,25 @@ sortTable: (columnIndex) => {
             filterContainer.classList.toggle('expanded');
         },
 
-filtrarLineas: () => {
-    const searchInput = document.getElementById('search-input').value.toLowerCase();
-    const columnasSeleccionadas = Array.from(document.querySelectorAll('input[name="columnFilter"]:checked')).map(input => parseInt(input.value));
-    const filas = document.querySelectorAll('tbody tr');
+        // Función para filtrar líneas de pedido
+        filtrarLineas: () => {
+            search = document.getElementById('search-input').value.trim();
+            const columnasSeleccionadas = Array.from(document.querySelectorAll('input[name="columnFilter"]:checked'))
+                .map(input => parseInt(input.value));
 
-    // Verificar si la búsqueda es completamente numérica para aplicar comparación exacta
-    const esBusquedaExacta = /^\d+$/.test(searchInput);
+            searchFields = columnasSeleccionadas.map(index => columnasAtributos[index]).filter(field => field);
 
-    filas.forEach(fila => {
-        const columnas = fila.querySelectorAll('td');
-        let match = false;
-
-        columnas.forEach((columna, index) => {
-            const columnaTexto = columna.innerText.toLowerCase().trim();
-
-            if ((columnasSeleccionadas.length === 0 || columnasSeleccionadas.includes(index + 1))) {
-                if (esBusquedaExacta) {
-                    // Si la búsqueda es numérica, se hace comparación exacta
-                    if (columnaTexto === searchInput) {
-                        match = true;
-                    }
-                } else {
-                    // Si la búsqueda no es numérica, usar includes para coincidencias parciales
-                    if (columnaTexto.includes(searchInput)) {
-                        match = true;
-                    }
-                }
+            if (searchFields.length === 0) {
+                LineasPedidoApp.mostrarAlerta('warning', 'Advertencia', 'Debes seleccionar al menos una columna para la búsqueda.');
+                return;
             }
-        });
 
-        if (match) {
-            fila.style.display = '';
-        } else {
-            fila.style.display = 'none';
-        }
-    });
-},
+            currentPage = 1; // Reiniciar a la primera página
+            LineasPedidoApp.cargarLineasPedidoCompra();
+        },
 
-
-
-initTableScroll: () => {
+        // Función para inicializar el scroll en la tabla
+        initTableScroll: () => {
             const tableContainer = document.querySelector('.table-container');
             let isDown = false;
             let startX;
@@ -355,11 +509,29 @@ initTableScroll: () => {
         }
     };
 
-     // Inicializar la tabla con scroll
-         document.addEventListener('DOMContentLoaded', LineasPedidoApp.initTableScroll());
+    // Función para convertir cadenas a números de manera segura
+    function parseLong(value) {
+        const parsed = parseInt(value, 10);
+        return isNaN(parsed) ? null : parsed;
+    }
 
-    // Exponer globalmente
+    function parseFloatSafe(value) {
+        const parsed = parseFloat(value);
+        return isNaN(parsed) ? null : parsed;
+    }
+
+    // Exponer globalmente para que las funciones sean accesibles desde el HTML
     window.LineasPedidoApp = LineasPedidoApp;
 
-
+    // Inicializar la tabla y cargar los datos después de que el DOM esté listo
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            LineasPedidoApp.initTableScroll();
+            LineasPedidoApp.cargarLineasPedidoCompra();
+        });
+    } else {
+        // DOM ya está cargado
+        LineasPedidoApp.initTableScroll();
+        LineasPedidoApp.cargarLineasPedidoCompra();
+    }
 });

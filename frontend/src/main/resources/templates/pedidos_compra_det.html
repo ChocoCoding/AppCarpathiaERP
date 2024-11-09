@@ -55,19 +55,19 @@
         <thead>
         <tr>
             <th>Eliminar</th>
-            <th class="sortable" onclick="PedidoCompraDetApp.sortTable(1)">ID Pedido Compra</th>
-            <th class="sortable" onclick="PedidoCompraDetApp.sortTable(2)">Nº Operación</th>
-            <th class="sortable" onclick="PedidoCompraDetApp.sortTable(3)">Contrato Compra</th>
-            <th class="sortable" onclick="PedidoCompraDetApp.sortTable(4)">Terminado(S/N)</th>
-            <th class="sortable" onclick="PedidoCompraDetApp.sortTable(5)">Fact. Proveedor</th>
-            <th class="sortable" onclick="PedidoCompraDetApp.sortTable(6)">Nº Fact. Flete</th>
-            <th class="sortable" onclick="PedidoCompraDetApp.sortTable(7)">Fecha Pago Flete</th>
-            <th class="sortable" onclick="PedidoCompraDetApp.sortTable(8)">Nº BL</th>
-            <th class="sortable" onclick="PedidoCompraDetApp.sortTable(9)">Peso Neto Total</th>
-            <th class="sortable" onclick="PedidoCompraDetApp.sortTable(10)">Total Bultos</th>
-            <th class="sortable" onclick="PedidoCompraDetApp.sortTable(11)">Promedio</th>
-            <th class="sortable" onclick="PedidoCompraDetApp.sortTable(12)">Valor Compra Total</th>
-            <th class="sortable" onclick="PedidoCompraDetApp.sortTable(13)">Observaciones</th>
+            <th class="sortable" onclick="PedidoCompraDetApp.sortTable('pedidoCompra.idPedidoCompra')">ID Pedido Compra</th>
+            <th class="sortable" onclick="PedidoCompraDetApp.sortTable('nOperacion')">Nº Operación</th>
+            <th class="sortable" onclick="PedidoCompraDetApp.sortTable('contratoCompra')">Contrato Compra</th>
+            <th class="sortable" onclick="PedidoCompraDetApp.sortTable('terminado')">Terminado(S/N)</th>
+            <th class="sortable" onclick="PedidoCompraDetApp.sortTable('factProveedor')">Fact. Proveedor</th>
+            <th class="sortable" onclick="PedidoCompraDetApp.sortTable('nFactFlete')">Nº Fact. Flete</th>
+            <th class="sortable" onclick="PedidoCompraDetApp.sortTable('fechaPagoFlete')">Fecha Pago Flete</th>
+            <th class="sortable" onclick="PedidoCompraDetApp.sortTable('nBl')">Nº BL</th>
+            <th class="sortable" onclick="PedidoCompraDetApp.sortTable('pesoNetoTotal')">Peso Neto Total</th>
+            <th class="sortable" onclick="PedidoCompraDetApp.sortTable('totalBultos')">Total Bultos</th>
+            <th class="sortable" onclick="PedidoCompraDetApp.sortTable('promedio')">Promedio</th>
+            <th class="sortable" onclick="PedidoCompraDetApp.sortTable('valorCompraTotal')">Valor Compra Total</th>
+            <th class="sortable" onclick="PedidoCompraDetApp.sortTable('observaciones')">Observaciones</th>
         </tr>
         </thead>
         <tbody>
@@ -91,6 +91,28 @@
         </tr>
         </tbody>
     </table>
+</div>
+<!-- Controles de Paginación -->
+<div class="pagination">
+    <!-- Botón Primera Página -->
+    <span id="primera-pagina-span">
+        <a id="primera-pagina" href="javascript:void(0);" onclick="LineasPedidoApp.irAPrimeraPagina()">Primera Página</a>
+    </span>
+
+    <!-- Botón Anterior -->
+    <span id="anterior-span">
+        <a id="anterior-pagina" href="javascript:void(0);" onclick="LineasPedidoApp.irAPaginaAnterior()">Anterior</a>
+    </span>
+
+    <!-- Botón Siguiente -->
+    <span id="siguiente-span">
+        <a id="siguiente-pagina" href="javascript:void(0);" onclick="LineasPedidoApp.irAPaginaSiguiente()">Siguiente</a>
+    </span>
+
+    <!-- Botón Última Página -->
+    <span id="ultima-pagina-span">
+        <a id="ultima-pagina" href="javascript:void(0);" onclick="LineasPedidoApp.irAUltimaPagina()">Última Página</a>
+    </span>
 </div>
 <script src="/js/sweet-alert2/dist/sweetalert2.all.min.js"></script>
 <script type="module" src="/js/pedidos_compra_det.js"></script>

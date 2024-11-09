@@ -24,25 +24,25 @@ public class LineaPedidoCompra {
     @Column(name = "n_operacion")
     private Long nOperacion;
 
-    @Column(name = "proveedor", length = 50)
+    @Column(name = "proveedor", length = 200)
     private String proveedor;
 
-    @Column(name = "cliente", length = 50)
+    @Column(name = "cliente", length = 200)
     private String cliente;
 
-    @Column(name = "n_contenedor", length = 20)
+    @Column(name = "n_contenedor", length = 200)
     private String nContenedor;
 
-    @Column(name = "producto", length = 50)
+    @Column(name = "producto", length = 200)
     private String producto;
 
-    @Column(name = "talla", length = 20)
+    @Column(name = "talla", length = 200)
     private String talla;
 
     @Column(name = "p_neto", precision = 15, scale = 6)
     private BigDecimal pNeto;
 
-    @Column(name = "unidad", length = 10)
+    @Column(name = "unidad", length = 200)
     private String unidad;
 
     @Column(name = "bultos")
@@ -54,10 +54,10 @@ public class LineaPedidoCompra {
     @Column(name = "valor_compra", precision = 15, scale = 6)
     private BigDecimal valorCompra;
 
-    @Column(name = "moneda", length = 10)
+    @Column(name = "moneda", length = 200)
     private String moneda;
 
-    @Column(name = "pais_origen", length = 50)
+    @Column(name = "pais_origen", length = 200)
     private String paisOrigen;
 
     @ManyToOne(fetch = FetchType.LAZY)

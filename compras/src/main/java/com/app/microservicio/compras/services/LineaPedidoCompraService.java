@@ -1,13 +1,14 @@
 package com.app.microservicio.compras.services;
-
-import com.app.microservicio.compras.DTO.EliminarPorLineaDTO;
-import com.app.microservicio.compras.entities.PedidoCompraDet;
 import com.app.microservicio.compras.repository.PedidoCompraDetRepository;
 import com.app.microservicio.compras.repository.PedidoCompraRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import com.app.microservicio.compras.entities.LineaPedidoCompra;
 import com.app.microservicio.compras.repository.LineaPedidoCompraRepository;
@@ -33,13 +34,64 @@ public class LineaPedidoCompraService {
     @Autowired
     private CalculoService calculoService;
 
-    public List<LineaPedidoCompraDTO> obtenerTodasLasLineasPedidoCompra() {
-        // Supongamos que tienes un repositorio que devuelve la lista de LineaPedidoCompraDTO
-        return lineaPedidoCompraRepository.findAll().stream()
-                .map(this::convertirADTO)
-                .collect(Collectors.toList());
+    @Cacheable(
+            value = "lineasPedidoCompra",
+            key = "#pageable.pageNumber + '-' + #pageable.pageSize + '-' + #pageable.sort.toString() + '-' + #proveedor + '-' + #cliente + '-' + #search + '-' + #searchFields"
+    )
+    public Page<LineaPedidoCompraDTO> listarLineasPedidoCompra(Pageable pageable, String proveedor, String cliente, String search, List<String> searchFields) {
+        Specification<LineaPedidoCompra> spec = Specification.where(null);
+
+        // Filtro por proveedor
+        if (proveedor != null && !proveedor.isEmpty()) {
+            spec = spec.and((root, query, criteriaBuilder) ->
+                    criteriaBuilder.like(criteriaBuilder.lower(root.get("proveedor")), "%" + proveedor.toLowerCase() + "%")
+            );
+        }
+
+        // Filtro por cliente
+        if (cliente != null && !cliente.isEmpty()) {
+            spec = spec.and((root, query, criteriaBuilder) ->
+                    criteriaBuilder.like(criteriaBuilder.lower(root.get("cliente")), "%" + cliente.toLowerCase() + "%")
+            );
+        }
+
+        // Lógica de búsqueda
+        if (search != null && !search.isEmpty() && searchFields != null && !searchFields.isEmpty()) {
+            Specification<LineaPedidoCompra> searchSpec = Specification.where(null);
+            for (String field : searchFields) {
+                if (field.contains(".")) {
+                    // Campo anidado (ej. pedidoCompra.idPedidoCompra)
+                    String[] parts = field.split("\\.");
+                    searchSpec = searchSpec.or((root, query, criteriaBuilder) ->
+                            criteriaBuilder.like(
+                                    criteriaBuilder.lower(root.get(parts[0]).get(parts[1]).as(String.class)),
+                                    "%" + search.toLowerCase() + "%"
+                            )
+                    );
+                } else if (field.equals("nOperacion") || field.equals("nLinea") || field.equals("bultos")) {
+                    // Campos numéricos
+                    try {
+                        Long value = Long.parseLong(search);
+                        searchSpec = searchSpec.or((root, query, criteriaBuilder) ->
+                                criteriaBuilder.equal(root.get(field), value)
+                        );
+                    } catch (NumberFormatException e) {
+                        // Ignorar si no es numérico
+                    }
+                } else {
+                    // Campos de texto
+                    searchSpec = searchSpec.or((root, query, criteriaBuilder) ->
+                            criteriaBuilder.like(criteriaBuilder.lower(root.get(field)), "%" + search.toLowerCase() + "%")
+                    );
+                }
+            }
+            spec = spec.and(searchSpec);
+        }
+
+        return lineaPedidoCompraRepository.findAll(spec, pageable).map(this::convertirADTO);
     }
 
+    @CacheEvict(value = "lineasPedidoCompra", allEntries = true)
     public LineaPedidoCompraDTO crearLineaPedido(LineaPedidoCompraDTO lineaPedidoCompraDTO) {
         if (lineaPedidoCompraDTO.getIdPedidoCompra() == null) {
             throw new IllegalArgumentException("El ID de Pedido de Compra no puede ser nulo.");
@@ -48,6 +100,7 @@ public class LineaPedidoCompraService {
     }
 
     @Transactional
+    @CacheEvict(value = "lineasPedidoCompra", allEntries = true)
     public void eliminarLineaPedido(Long idNumeroLinea) {
         LineaPedidoCompra lineaExistente = lineaPedidoCompraRepository.findById(idNumeroLinea)
                 .orElseThrow(() -> new RuntimeException("Línea de pedido no encontrada"));
@@ -67,6 +120,7 @@ public class LineaPedidoCompraService {
     }
 
     @Transactional
+    @CacheEvict(value = "lineasPedidoCompra", allEntries = true)
     public LineaPedidoCompraDTO actualizarLineaPedido(Long idNumeroLinea, LineaPedidoCompraDTO lineaPedidoCompraDTO) {
         Optional<LineaPedidoCompra> optionalLinea = lineaPedidoCompraRepository.findById(idNumeroLinea);
 
@@ -101,7 +155,7 @@ public class LineaPedidoCompraService {
         }
     }
 
-
+    @CacheEvict(value = "lineasPedidoCompra", allEntries = true)
     public List<LineaPedidoCompraDTO> getLineasByPedidoCompra(Long idPedidoCompra) {
         return lineaPedidoCompraRepository.findByIdPedidoCompra(idPedidoCompra)
                 .stream()

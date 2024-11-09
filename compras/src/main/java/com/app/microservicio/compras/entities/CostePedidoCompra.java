@@ -21,7 +21,7 @@ public class CostePedidoCompra {
     @Column(name = "n_operacion")
     private Long nOperacion;
 
-    @Column(name = "n_contenedor", length = 20)
+    @Column(name = "n_contenedor", length = 200)
     private String nContenedor;
 
     @Column(name = "arancel", precision = 15, scale = 6)
@@ -54,7 +54,7 @@ public class CostePedidoCompra {
     @Column(name = "iva", precision = 15, scale = 6)
     private BigDecimal iva;
 
-    @Column(name = "dec_iva", length = 50)
+    @Column(name = "dec_iva", length = 200)
     private String dec_iva;
 
     @Column(name = "tasa_sanitaria", precision = 15, scale = 6)

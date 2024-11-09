@@ -3,6 +3,11 @@ import com.app.microservicio.compras.repository.LineaPedidoCompraRepository;
 import com.app.microservicio.compras.repository.PedidoCompraRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.app.microservicio.compras.entities.PedidoCompraDet;
@@ -11,6 +16,8 @@ import com.app.microservicio.compras.DTO.PedidoCompraDetDTO;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -30,11 +37,13 @@ public class PedidoCompraDetService {
     @Autowired
     private CalculoService calculoService;
 
+    @CacheEvict(value = "pedidosCompraDet", allEntries = true)
     public Optional<PedidoCompraDetDTO> obtenerPedidoCompraDet(Long idPedidoCompra) {
         return pedidoCompraDetRepository.findById(idPedidoCompra)
                 .map(this::convertirADTO);
     }
 
+    @CacheEvict(value = "pedidosCompraDet", allEntries = true)
     public PedidoCompraDetDTO actualizarPedidoCompraDet(Long id, PedidoCompraDetDTO pedidoCompraDetDTO) {
         // Verificar si ya existe un registro con el mismo ID
         Optional<PedidoCompraDet> existente = pedidoCompraDetRepository.findById(id);
@@ -109,17 +118,90 @@ public class PedidoCompraDetService {
         return pedidoCompraDet;
     }
 
-    public List<PedidoCompraDetDTO> listarPedidosCompraDet() {
-        return pedidoCompraDetRepository.findAll().stream()
-                .map(this::convertirADTO)
-                .collect(Collectors.toList());
+
+    public Page<PedidoCompraDetDTO> listarPedidosCompraDet(Pageable pageable, String search, List<String> searchFields) {
+        Specification<PedidoCompraDet> spec = Specification.where(null);
+
+        // Lógica de búsqueda
+        if (search != null && !search.isEmpty() && searchFields != null && !searchFields.isEmpty()) {
+            Specification<PedidoCompraDet> searchSpec = Specification.where(null);
+            for (String field : searchFields) {
+                if (field.contains(".")) {
+                    // Handle nested fields
+                    String[] parts = field.split("\\.");
+                    String parentField = parts[0];
+                    String childField = parts[1];
+
+                    searchSpec = searchSpec.or((root, query, criteriaBuilder) -> {
+                        if (isNumeric(search)) {
+                            return criteriaBuilder.equal(
+                                    root.get(parentField).get(childField),
+                                    Long.parseLong(search)
+                            );
+                        } else {
+                            return criteriaBuilder.like(
+                                    criteriaBuilder.lower(root.get(parentField).get(childField).as(String.class)),
+                                    "%" + search.toLowerCase() + "%"
+                            );
+                        }
+                    });
+                } else if (field.equals("idPedidoCompraDet") || field.equals("nOperacion") || field.equals("totalBultos") ) {
+                    // Campos numéricos
+                    try {
+                        Long value = Long.parseLong(search);
+                        searchSpec = searchSpec.or((root, query, criteriaBuilder) ->
+                                criteriaBuilder.equal(root.get(field), value)
+                        );
+                    } catch (NumberFormatException e) {
+                        // Ignorar si no es numérico
+                    }
+                }else if (field.equals("pesoNetoTotal") || field.equals("promedio") || field.equals("valorCompraTotal")){
+                    try {
+                        Double value = Double.parseDouble(search);
+                        searchSpec = searchSpec.or(((root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(field),value)));
+                    }catch (NumberFormatException e) {
+                        // Ignorar si no es numérico
+                    }
+                }else if (field.equals("fechaPagoFlete")) {
+                    // Campo de fecha
+                    try {
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                        LocalDate dateValue = LocalDate.parse(search, formatter);
+                        searchSpec = searchSpec.or((root, query, criteriaBuilder) ->
+                                criteriaBuilder.equal(root.get(field), dateValue)
+                        );
+                    } catch (Exception e) {
+                        // Ignorar si no es una fecha válida
+                    }
+                } else {
+                    // Campos de texto
+                    searchSpec = searchSpec.or((root, query, criteriaBuilder) ->
+                            criteriaBuilder.like(criteriaBuilder.lower(root.get(field)), "%" + search.toLowerCase() + "%")
+                    );
+                }
+            }
+            spec = spec.and(searchSpec);
+        }
+
+        return pedidoCompraDetRepository.findAll(spec, pageable).map(this::convertirADTO);
+    }
+
+    private boolean isNumeric(String str) {
+        try {
+            Long.parseLong(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
     @Transactional
+    @CacheEvict(value = "pedidosCompraDet", allEntries = true)
     public void eliminarPedidoCompraDet(Long idPedidoCompraDet) {
         pedidoCompraDetRepository.deleteById(idPedidoCompraDet);
     }
 
+    @CacheEvict(value = "pedidosCompraDet", allEntries = true)
     public PedidoCompraDetDTO crearPedidoCompraDet(PedidoCompraDetDTO pedidoCompraDetDTO) {
          Long idPedidoCompra = pedidoCompraDetDTO.getIdPedidoCompra();
          BigDecimal pesoNetoTotal = lineaPedidoCompraRepository.sumPesoNetoByPedidoCompraId(idPedidoCompra);

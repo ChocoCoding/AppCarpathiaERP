@@ -1,9 +1,14 @@
 package com.app.microservicio.compras.controllers;
 
 import com.app.microservicio.compras.DTO.LineaPedidoCompraDTO;
+import com.app.microservicio.compras.DTO.PedidoCompraDTO;
 import com.app.microservicio.compras.services.CalculoService;
 import com.app.microservicio.compras.services.LineaPedidoCompraService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,10 +25,22 @@ public class LineaPedidoCompraController {
     @Autowired
     private CalculoService calculoService;
 
-    @GetMapping()
-    public ResponseEntity<List<LineaPedidoCompraDTO>> obtenerTodasLasLineasPedidoCompra() {
-        List<LineaPedidoCompraDTO> lineasPedido = lineaPedidoCompraService.obtenerTodasLasLineasPedidoCompra();
-        return ResponseEntity.ok(lineasPedido);
+    @GetMapping
+    public ResponseEntity<Page<LineaPedidoCompraDTO>> listarLineasPedidoCompra(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String proveedor,
+            @RequestParam(required = false) String cliente,
+            @RequestParam(defaultValue = "pedidoCompra.idPedidoCompra") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDir,
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) List<String> searchFields
+    ) {
+        Sort sort = sortDir.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+        Page<LineaPedidoCompraDTO> lineasPedidosPage = lineaPedidoCompraService.listarLineasPedidoCompra(pageable, proveedor, cliente, search, searchFields);
+        return ResponseEntity.ok(lineasPedidosPage);
     }
 
     @GetMapping("/{idPedidoCompra}")

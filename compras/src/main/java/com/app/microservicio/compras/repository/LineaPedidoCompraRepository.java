@@ -1,8 +1,12 @@
 package com.app.microservicio.compras.repository;
 
 
+import com.app.microservicio.compras.entities.PedidoCompra;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,7 +18,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface LineaPedidoCompraRepository extends JpaRepository<LineaPedidoCompra, Long> {
+public interface LineaPedidoCompraRepository extends JpaRepository<LineaPedidoCompra, Long>, JpaSpecificationExecutor<LineaPedidoCompra> {
+
+    Page<LineaPedidoCompra> findAll(Pageable pageable);
 
     @Query("SELECT l FROM LineaPedidoCompra l WHERE l.pedidoCompra.idPedidoCompra =: idPedidoCOmpra")
     List<LineaPedidoCompra> findByIdPedidoCompra(@Param("idPedidoCompra") Long idPedidoCompra);

@@ -3,6 +3,10 @@ package com.app.microservicio.compras.controllers;
 import com.app.microservicio.compras.entities.PedidoCompraDet;
 import com.app.microservicio.compras.services.PedidoCompraDetService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.app.microservicio.compras.DTO.PedidoCompraDetDTO;
@@ -18,9 +22,22 @@ public class PedidoCompraDetController {
     @Autowired
     private PedidoCompraDetService pedidoCompraDetService;
 
-    @GetMapping()
-    public ResponseEntity<List<PedidoCompraDetDTO>> listarPedidosCompraDet(){
-        return ResponseEntity.ok(pedidoCompraDetService.listarPedidosCompraDet());
+    // Listar detalles de pedido de compra con paginación, ordenamiento y búsqueda
+    @GetMapping
+    public ResponseEntity<Page<PedidoCompraDetDTO>> listarPedidosCompraDet(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "pedidoCompra.idPedidoCompra") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDir,
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) List<String> searchFields
+    ) {
+        Sort sort = sortDir.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        Page<PedidoCompraDetDTO> pedidosCompraDetPage = pedidoCompraDetService.listarPedidosCompraDet(pageable, search, searchFields);
+        return ResponseEntity.ok(pedidosCompraDetPage);
     }
 
     @GetMapping("/{idPedidoCompra}")

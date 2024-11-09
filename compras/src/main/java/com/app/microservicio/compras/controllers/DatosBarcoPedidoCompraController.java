@@ -4,6 +4,10 @@ import com.app.microservicio.compras.DTO.DatosBarcoDTO;
 import com.app.microservicio.compras.DTO.PedidoCompraDetDTO;
 import com.app.microservicio.compras.services.DatosBarcoPedidoCompraService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,9 +22,21 @@ public class DatosBarcoPedidoCompraController {
     @Autowired
     private DatosBarcoPedidoCompraService datosBarcoPedidoCompraService;
 
-    @GetMapping()
-    public ResponseEntity<List<DatosBarcoDTO>> listarDatosBarco(){
-        return ResponseEntity.ok(datosBarcoPedidoCompraService.listarDatosBarco());
+    @GetMapping
+    public ResponseEntity<Page<DatosBarcoDTO>> listarDatosBarco(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "pedidoCompra.idPedidoCompra") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDir,
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) List<String> searchFields
+    ) {
+        Sort sort = sortDir.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        Page<DatosBarcoDTO> datosBarcoPage = datosBarcoPedidoCompraService.listarDatosBarco(pageable, search, searchFields);
+        return ResponseEntity.ok(datosBarcoPage);
     }
 
     @GetMapping("/{idPedidoCompra}")

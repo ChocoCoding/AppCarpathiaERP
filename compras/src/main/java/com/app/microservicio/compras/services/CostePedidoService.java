@@ -6,9 +6,14 @@ import com.app.microservicio.compras.repository.CostePedidoRepository;
 import com.app.microservicio.compras.repository.PedidoCompraRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -92,10 +97,74 @@ public class CostePedidoService {
         return costePedidoCompra.map(this::convertirADTO).orElse(null);
     }
 
-    // Obtener todos los costes
-    public List<CostesDTO> obtenerTodosLosCostes() {
-        List<CostePedidoCompra> listaCostes = costePedidoRepository.findAll();
-        return listaCostes.stream().map(this::convertirADTO).collect(Collectors.toList());
+    public Page<CostesDTO> listarCostes(Pageable pageable, String search, List<String> searchFields) {
+        Specification<CostePedidoCompra> spec = Specification.where(null);
+
+        // Lógica de búsqueda
+        if (search != null && !search.isEmpty() && searchFields != null && !searchFields.isEmpty()) {
+            Specification<CostePedidoCompra> searchSpec = Specification.where(null);
+            for (String field : searchFields) {
+                if (field.contains(".")) {
+                    // Campo anidado (ej. pedidoCompra.idPedidoCompra)
+                    String[] parts = field.split("\\.");
+                    String parentField = parts[0];
+                    String childField = parts[1];
+
+                    searchSpec = searchSpec.or((root, query, criteriaBuilder) -> {
+                        if (isNumeric(search)) {
+                            return criteriaBuilder.equal(
+                                    root.get(parentField).get(childField),
+                                    Long.parseLong(search)
+                            );
+                        } else {
+                            return criteriaBuilder.like(
+                                    criteriaBuilder.lower(root.get(parentField).get(childField).as(String.class)),
+                                    "%" + search.toLowerCase() + "%"
+                            );
+                        }
+                    });
+                } else if (isNumericField(field)) {
+                    // Campos numéricos
+                    try {
+                        BigDecimal value = new BigDecimal(search);
+                        searchSpec = searchSpec.or((root, query, criteriaBuilder) ->
+                                criteriaBuilder.equal(root.get(field), value)
+                        );
+                    } catch (NumberFormatException e) {
+                        // Ignorar si no es numérico
+                    }
+                } else {
+                    // Campos de texto
+                    searchSpec = searchSpec.or((root, query, criteriaBuilder) ->
+                            criteriaBuilder.like(criteriaBuilder.lower(root.get(field)), "%" + search.toLowerCase() + "%")
+                    );
+                }
+            }
+            spec = spec.and(searchSpec);
+        }
+
+        return costePedidoRepository.findAll(spec, pageable).map(this::convertirADTO);
+    }
+
+    // Método helper para verificar si una cadena es numérica
+    private boolean isNumeric(String str) {
+        try {
+            Long.parseLong(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    // Método helper para determinar si un campo es numérico
+    private boolean isNumericField(String fieldName) {
+        // Lista de campos numéricos en CostePedidoCompra
+        List<String> numericFields = Arrays.asList(
+                "idCosteCompra", "nOperacion", "arancel", "sanidad", "plastico",
+                "carga", "inland", "muellaje", "pif", "despacho", "conexiones",
+                "iva", "tasa_sanitaria", "suma_costes", "gasto_total"
+        );
+        return numericFields.contains(fieldName);
     }
 
     // Actualizar un coste

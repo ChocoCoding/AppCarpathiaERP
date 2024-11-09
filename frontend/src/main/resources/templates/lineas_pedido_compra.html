@@ -6,7 +6,7 @@
 </head>
 <body>
 <header>
-    <h3>Lineas pedidos de compra</h3>
+    <h3>Líneas de Pedidos de Compra</h3>
     <div class="actions">
         <div class="left-actions">
             <button class="icon-button" onclick="LineasPedidoApp.goBack()">
@@ -37,7 +37,7 @@
                     <label><input type="checkbox" name="columnFilter" value="11"> Unidad</label>
                     <label><input type="checkbox" name="columnFilter" value="12"> Bultos</label>
                     <label><input type="checkbox" name="columnFilter" value="13"> Precio</label>
-                    <label><input type="checkbox" name="columnFilter" value="14"> Valor Compra</label>
+                    <label><input type="checkbox" name="columnFilter" value="14"> Valor Compra Total</label>
                     <label><input type="checkbox" name="columnFilter" value="15"> Moneda</label>
                     <label><input type="checkbox" name="columnFilter" value="16"> País de Origen</label>
                 </div>
@@ -56,48 +56,57 @@
         <thead>
         <tr>
             <th>Eliminar</th>
-            <th class="sortable" onclick="LineasPedidoApp.sortTable(1)">ID Pedido Compra</th>
-            <th class="sortable" onclick="LineasPedidoApp.sortTable(2)">Nº Línea</th>
-            <th class="sortable" onclick="LineasPedidoApp.sortTable(3)">Nº Operación</th>
-            <th class="sortable" onclick="LineasPedidoApp.sortTable(4)">Proveedor</th>
-            <th class="sortable" onclick="LineasPedidoApp.sortTable(5)">Cliente</th>
-            <th class="sortable" onclick="LineasPedidoApp.sortTable(6)">Nº Contenedor</th>
-            <th class="sortable" onclick="LineasPedidoApp.sortTable(7)">Producto</th>
-            <th class="sortable" onclick="LineasPedidoApp.sortTable(8)">Talla</th>
-            <th class="sortable" onclick="LineasPedidoApp.sortTable(9)">Peso Neto</th>
-            <th class="sortable" onclick="LineasPedidoApp.sortTable(10)">Unidad</th>
-            <th class="sortable" onclick="LineasPedidoApp.sortTable(11)">Bultos</th>
-            <th class="sortable" onclick="LineasPedidoApp.sortTable(12)">Precio</th>
-            <th class="sortable" onclick="LineasPedidoApp.sortTable(13)">Valor Compra Total</th>
-            <th class="sortable" onclick="LineasPedidoApp.sortTable(14)">Moneda</th>
-            <th class="sortable" onclick="LineasPedidoApp.sortTable(15)">País de Origen</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable('pedidoCompra.idPedidoCompra')">ID Pedido Compra</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable('nLinea')">Nº Línea</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable('nOperacion')">Nº Operación</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable('proveedor')">Proveedor</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable('cliente')">Cliente</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable('nContenedor')">Nº Contenedor</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable('producto')">Producto</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable('talla')">Talla</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable('pNeto')">Peso Neto</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable('unidad')">Unidad</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable('bultos')">Bultos</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable('precio')">Precio</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable('valorCompra')">Valor Compra Total</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable('moneda')">Moneda</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable('paisOrigen')">País de Origen</th>
         </tr>
         </thead>
-        <tbody>
-        <tr th:each="linea : ${lineasPedidoCompra}" th:data-id-linea-pedido="${linea.idNumeroLinea}">
-            <td>
-                <button class="delete-button" th:onclick="'LineasPedidoApp.eliminarLineaPedido(' + ${linea.idNumeroLinea} + ')'">🗑️</button>
-            </td>
-            <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)" th:text="${linea.idPedidoCompra}">ID Pedido Compra</td>
-            <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)" th:text="${linea.n_linea}">Nº Línea</td>
-            <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)" th:text="${linea.n_operacion}">Nº Operación</td>
-            <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)" th:text="${linea.proveedor}">Proveedor</td>
-            <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)" th:text="${linea.cliente}">Cliente</td>
-            <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)" th:text="${linea.n_contenedor}">Nº Contenedor</td>
-            <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)" th:text="${linea.producto}">Producto</td>
-            <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)" th:text="${linea.talla}">Talla</td>
-            <td contenteditable="true" class="editable peso-neto" oninput="LineasPedidoApp.calcularValorCompra(this)" th:text="${linea.p_neto}">Peso Neto</td>
-            <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)" th:text="${linea.unidad}">Unidad</td>
-            <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)" th:text="${linea.bultos}">Bultos</td>
-            <td contenteditable="true" class="editable precio" oninput="LineasPedidoApp.calcularValorCompra(this)" th:text="${linea.precio}">Precio</td>
-            <td contenteditable="true" class="editable valor-compra-total" th:text="${linea.valor_compra}">Valor Compra Total</td>
-            <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)" th:text="${linea.moneda}">Moneda</td>
-            <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)" th:text="${linea.paisOrigen}">País de Origen</td>
-        </tr>
+        <tbody id="lineas-pedido-tbody">
+        <!-- Las filas se renderizarán dinámicamente -->
+
         </tbody>
     </table>
 </div>
+
+<!-- Controles de Paginación -->
+<div class="pagination">
+    <!-- Botón Primera Página -->
+    <span id="primera-pagina-span">
+        <a id="primera-pagina" href="javascript:void(0);" onclick="LineasPedidoApp.irAPrimeraPagina()">Primera Página</a>
+    </span>
+
+    <!-- Botón Anterior -->
+    <span id="anterior-span">
+        <a id="anterior-pagina" href="javascript:void(0);" onclick="LineasPedidoApp.irAPaginaAnterior()">Anterior</a>
+    </span>
+
+    <!-- Botón Siguiente -->
+    <span id="siguiente-span">
+        <a id="siguiente-pagina" href="javascript:void(0);" onclick="LineasPedidoApp.irAPaginaSiguiente()">Siguiente</a>
+    </span>
+
+    <!-- Botón Última Página -->
+    <span id="ultima-pagina-span">
+        <a id="ultima-pagina" href="javascript:void(0);" onclick="LineasPedidoApp.irAUltimaPagina()">Última Página</a>
+    </span>
+</div>
+
+<!-- Incluir SweetAlert2 -->
 <script src="/js/sweet-alert2/dist/sweetalert2.all.min.js"></script>
-<script type="module" src="/js/lineas_pedido_compra.js"></script>
+
+<!-- Incluir el Script de Líneas de Pedido de Compra -->
+<script type="module" src="/js/lineas_pedido_compra.js?v=1.0.2"></script> <!-- Agregado parámetro de versión para evitar caché -->
 </body>
 </html>
