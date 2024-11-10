@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Líneas de Pedido de Venta</title>
+    <link rel="stylesheet" href="/css/estilos_lineas_pedido_compra.css">
+</head>
+<body>
+<header>
+    <h3>Líneas de Pedidos de Venta</h3>
+    <div class="actions">
+        <div class="left-actions">
+            <button class="icon-button" onclick="LineasPedidoApp.goBack()">
+                <span class="icon">🔙</span> <!-- Icono de Volver Atrás -->
+            </button>
+        </div>
+        <div class="center-actions">
+            <button class="icon-button" onclick="LineasPedidoApp.guardarCambios()">
+                <span class="icon">💾</span> <!-- Icono de Guardar -->
+            </button>
+            <button class="icon-button" onclick="LineasPedidoApp.crearLineaPedido()">
+                <span class="icon">➕</span> <!-- Icono de Crear Línea -->
+            </button>
+            <div class="search-container">
+                <button class="search-button" onclick="LineasPedidoApp.toggleSearch()">🔍</button>
+                <button class="filter-button" onclick="LineasPedidoApp.toggleFilter()">⚙️</button>
+                <input type="text" id="search-input" oninput="LineasPedidoApp.filtrarLineas()" placeholder="Buscar..." style="display: none;">
+                <div class="filter-container">
+                    <label><input type="checkbox" name="columnFilter" value="2"> ID Pedido Venta</label>
+                    <label><input type="checkbox" name="columnFilter" value="3"> Nº Línea</label>
+                    <label><input type="checkbox" name="columnFilter" value="4"> Nº Operación</label>
+                    <label><input type="checkbox" name="columnFilter" value="5"> Proveedor</label>
+                    <label><input type="checkbox" name="columnFilter" value="6"> Cliente</label>
+                    <label><input type="checkbox" name="columnFilter" value="7"> Contrato Venta</label>
+                    <label><input type="checkbox" name="columnFilter" value="8"> Factura Venta</label>
+                    <label><input type="checkbox" name="columnFilter" value="9"> Nº Contenedor</label>
+                    <label><input type="checkbox" name="columnFilter" value="10"> Producto</label>
+                    <label><input type="checkbox" name="columnFilter" value="11"> Talla</label>
+                    <label><input type="checkbox" name="columnFilter" value="12"> País de Origen</label>
+                    <label><input type="checkbox" name="columnFilter" value="13"> Peso Neto</label>
+                    <label><input type="checkbox" name="columnFilter" value="14"> Unidad</label>
+                    <label><input type="checkbox" name="columnFilter" value="15"> Bultos</label>
+                    <label><input type="checkbox" name="columnFilter" value="16"> Precio</label>
+                    <label><input type="checkbox" name="columnFilter" value="17"> Valor Venta Total</label>
+                    <label><input type="checkbox" name="columnFilter" value="18"> Incoterm</label>
+                    <label><input type="checkbox" name="columnFilter" value="19"> Moneda</label>
+                    <label><input type="checkbox" name="columnFilter" value="20"> Comerciales</label>
+                    <label><input type="checkbox" name="columnFilter" value="21"> Transporte</label>
+
+                </div>
+            </div>
+        </div>
+        <div class="right-actions">
+            <button class="icon-button" onclick="LineasPedidoApp.logout()">
+                <span class="icon">🔒</span> <!-- Icono de Cerrar Sesión -->
+            </button>
+        </div>
+    </div>
+</header>
+
+<div class="table-container"> <!-- Este contenedor permite el desplazamiento horizontal -->
+    <table>
+        <thead>
+        <tr>
+            <th>Eliminar</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable('pedidoVenta.idPedidoVenta')">ID Pedido Venta</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable('nLinea')">Nº Línea</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable('nOperacion')">Nº Operación</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable('proveedor')">Proveedor</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable('cliente')">Cliente</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable('contratoVenta')">Contrato Venta</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable('facturaVenta')">Factura Venta</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable('nContenedor')">Nº Contenedor</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable('producto')">Producto</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable('talla')">Talla</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable('paisOrigen')">País de Origen</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable('pNeto')">Peso Neto</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable('unidad')">Unidad</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable('bultos')">Bultos</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable('precio')">Precio</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable('valorVenta')">Valor Venta Total</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable('incoterm')">Incoterm</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable('moneda')">Moneda</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable('comerciales')">Comerciales</th>
+            <th class="sortable" onclick="LineasPedidoApp.sortTable('transporte')">Transporte</th>
+        </tr>
+        </thead>
+        <tbody id="lineas-pedido-tbody">
+        <!-- Las filas se renderizarán dinámicamente -->
+
+        </tbody>
+    </table>
+</div>
+
+<!-- Controles de Paginación -->
+<div class="pagination">
+    <!-- Botón Primera Página -->
+    <span id="primera-pagina-span">
+        <a id="primera-pagina" href="javascript:void(0);" onclick="LineasPedidoApp.irAPrimeraPagina()">Primera Página</a>
+    </span>
+
+    <!-- Botón Anterior -->
+    <span id="anterior-span">
+        <a id="anterior-pagina" href="javascript:void(0);" onclick="LineasPedidoApp.irAPaginaAnterior()">Anterior</a>
+    </span>
+
+    <!-- Botón Siguiente -->
+    <span id="siguiente-span">
+        <a id="siguiente-pagina" href="javascript:void(0);" onclick="LineasPedidoApp.irAPaginaSiguiente()">Siguiente</a>
+    </span>
+
+    <!-- Botón Última Página -->
+    <span id="ultima-pagina-span">
+        <a id="ultima-pagina" href="javascript:void(0);" onclick="LineasPedidoApp.irAUltimaPagina()">Última Página</a>
+    </span>
+</div>
+
+<!-- Incluir SweetAlert2 -->
+<script src="/js/sweet-alert2/dist/sweetalert2.all.min.js"></script>
+
+<!-- Incluir el Script de Líneas de Pedido de Venta -->
+<script type="module" src="/js/lineas_pedido_venta.js?v=1.0.2"></script> <!-- Agregado parámetro de versión para evitar caché -->
+</body>
+</html>

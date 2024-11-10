@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Pedidos de Venta</title>
+    <link rel="stylesheet" href="/css/estilos_pedidos_compra.css">
+</head>
+<body>
+<header>
+    <h3>Pedidos de Venta</h3>
+    <div class="actions">
+        <div class="left-actions">
+            <button class="icon-button" onclick="PedidoVentaApp.goBack()">
+                <span class="icon">🔙</span> <!-- Icono de Volver Atrás -->
+            </button>
+        </div>
+        <div class="center-actions">
+            <button class="icon-button" onclick="PedidoVentaApp.guardarCambios()">
+                <span class="icon">💾</span> <!-- Icono de Guardar -->
+            </button>
+            <button class="icon-button" onclick="PedidoVentaApp.crearPedidoVenta()">
+                <span class="icon">➕</span> <!-- Icono de Crear Línea -->
+            </button>
+            <div class="search-container">
+                <button class="icon-button search-button" onclick="PedidoVentaApp.toggleSearch()">🔍</button>
+                <button class="icon-button filter-button" onclick="PedidoVentaApp.toggleFilter()">⚙️</button>
+                <input type="text" id="search-input" oninput="PedidoVentaApp.filtrarPedidos()" placeholder="Buscar..." style="display: none;">
+                <div class="filter-container">
+                    <label><input type="checkbox" name="columnFilter" value="2"> ID</label>
+                    <label><input type="checkbox" name="columnFilter" value="3"> Nº Operación</label>
+                    <label><input type="checkbox" name="columnFilter" value="4"> Proforma</label>
+                    <label><input type="checkbox" name="columnFilter" value="5"> Proveedor</label>
+                    <label><input type="checkbox" name="columnFilter" value="6"> Incoterm</label>
+                    <label><input type="checkbox" name="columnFilter" value="7"> Referencia Proveedor</label>
+                </div>
+            </div>
+        </div>
+        <div class="right-actions">
+            <button class="icon-button" onclick="PedidoVentaApp.logout()">
+                <span class="icon">🔒</span> <!-- Icono de Cerrar Sesión -->
+            </button>
+        </div>
+    </div>
+</header>
+<div class="table-container">
+    <table>
+        <thead>
+        <tr>
+            <th>Eliminar</th>
+            <th class="sortable" onclick="PedidoVentaApp.sortTable('idPedidoVenta')">ID</th>
+            <th class="sortable" onclick="PedidoVentaApp.sortTable('nOperacion')">Nº Operación</th>
+            <th class="sortable" onclick="PedidoVentaApp.sortTable('proforma')">Proforma</th>
+            <th class="sortable" onclick="PedidoVentaApp.sortTable('proveedor')">Proveedor</th>
+            <th class="sortable" onclick="PedidoVentaApp.sortTable('incoterm')">Incoterm</th>
+            <th class="sortable" onclick="PedidoVentaApp.sortTable('referenciaProveedor')">Referencia Proveedor</th>
+        </tr>
+        </thead>
+        <tbody id="pedidos-tbody">
+        <!-- Las filas se renderizarán dinámicamente -->
+        </tbody>
+    </table>
+</div>
+
+<!-- Controles de Paginación -->
+<div class="pagination">
+    <!-- Botón Primera Página -->
+    <span id="primera-pagina-span">
+        <a id="primera-pagina" href="javascript:void(0);" onclick="PedidoVentaApp.irAPrimeraPagina()">Primera Página</a>
+    </span>
+
+    <!-- Botón Anterior -->
+    <span id="anterior-span">
+        <a id="anterior-pagina" href="javascript:void(0);" onclick="PedidoVentaApp.irAPaginaAnterior()">Anterior</a>
+    </span>
+
+    <!-- Botón Siguiente -->
+    <span id="siguiente-span">
+        <a id="siguiente-pagina" href="javascript:void(0);" onclick="PedidoVentaApp.irAPaginaSiguiente()">Siguiente</a>
+    </span>
+
+    <!-- Botón Última Página -->
+    <span id="ultima-pagina-span">
+        <a id="ultima-pagina" href="javascript:void(0);" onclick="PedidoVentaApp.irAUltimaPagina()">Última Página</a>
+    </span>
+</div>
+
+<!-- Incluir SweetAlert2 -->
+<script src="/js/sweet-alert2/dist/sweetalert2.all.min.js"></script>
+
+<!-- Incluir el Script de Pedidos de Venta -->
+<script type="module" src="/js/pedidos_venta.js?v=1.0.2"></script> <!-- Agregado parámetro de versión para evitar caché -->
+</body>
+</html>

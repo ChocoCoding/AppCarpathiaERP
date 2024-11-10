@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Detalles de Pedido de Venta</title>
+    <link rel="stylesheet" href="/css/estilos_pedidos_compra_det.css">
+
+</head>
+<body>
+<header>
+    <h3>Detalles pedido de venta</h3>
+    <div class="actions">
+        <div class="left-actions">
+            <button class="icon-button" onclick="PedidoVentaDetApp.goBack()">
+                <span class="icon">🔙</span> <!-- Icono de Volver Atrás -->
+            </button>
+        </div>
+        <div class="center-actions">
+            <button class="icon-button" onclick="PedidoVentaDetApp.guardarCambios()">
+                <span class="icon">💾</span> <!-- Icono de Guardar -->
+            </button>
+            <button class="icon-button" onclick="PedidoVentaDetApp.crearPedidoVentaDet()">
+                <span class="icon">➕</span> <!-- Icono de Crear Línea -->
+            </button>
+            <div class="search-container">
+                <button class="search-button" onclick="PedidoVentaDetApp.toggleSearch()">🔍</button>
+                <button class="filter-button" onclick="PedidoVentaDetApp.toggleFilter()">⚙️</button>
+                <input type="text" id="search-input" oninput="PedidoVentaDetApp.filtrarDetalles()" placeholder="Buscar..." style="display: none;">
+                <div class="filter-container">
+                    <label><input type="checkbox" name="columnFilter" value="2"> ID Pedido Venta</label>
+                    <label><input type="checkbox" name="columnFilter" value="3"> Peso Neto Total</label>
+                    <label><input type="checkbox" name="columnFilter" value="4"> Total Bultos</label>
+                    <label><input type="checkbox" name="columnFilter" value="5"> Precio Total</label>
+                    <label><input type="checkbox" name="columnFilter" value="6"> Promedio</label>
+                    <label><input type="checkbox" name="columnFilter" value="7"> Valor Venta Total</label>
+                    <label><input type="checkbox" name="columnFilter" value="8"> Importador</label>
+                </div>
+            </div>
+        </div>
+        <div class="right-actions">
+            <button class="icon-button" onclick="PedidoVentaDetApp.logout()">
+                <span class="icon">🔒</span> <!-- Icono de Cerrar Sesión -->
+            </button>
+        </div>
+    </div>
+</header>
+
+<div class="table-container">
+    <table>
+        <thead>
+        <tr>
+            <th>Eliminar</th>
+            <th class="sortable" onclick="PedidoVentaDetApp.sortTable('pedidoVenta.idPedidoVenta')">ID Pedido Venta</th>
+            <th class="sortable" onclick="PedidoVentaDetApp.sortTable('pesoNetoTotal')">Peso Neto Total</th>
+            <th class="sortable" onclick="PedidoVentaDetApp.sortTable('totalBultos')">Total Bultos</th>
+            <th class="sortable" onclick="PedidoVentaDetApp.sortTable('precioTotal')">Precio Total</th>
+            <th class="sortable" onclick="PedidoVentaDetApp.sortTable('promedio')">Promedio</th>
+            <th class="sortable" onclick="PedidoVentaDetApp.sortTable('valorVentaTotal')">Valor Venta Total</th>
+            <th class="sortable" onclick="PedidoVentaDetApp.sortTable('importador')">Importador</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="detalle : ${detallesPedidoVenta}" th:data-id-pedido-venta-det="${detalle.idPedidoVentaDet}">
+            <td>
+                <button class="delete-button" th:onclick="'PedidoVentaDetApp.eliminarPedidoVentaDet(' + ${detalle.idPedidoVentaDet} + ')'">🗑️</button>
+            </td>
+            <td contenteditable="true" class="editable" oninput="PedidoVentaDetApp.marcarModificado(this)" th:text="${detalle.idPedidoVenta}">ID Pedido Venta</td>
+            <td contenteditable="true" class="editable" oninput="PedidoVentaDetApp.marcarModificado(this)" th:text="${detalle.pesoNetoTotal}">Peso Neto Total</td>
+            <td contenteditable="true" class="editable" oninput="PedidoVentaDetApp.marcarModificado(this)" th:text="${detalle.totalBultos}">Total Bultos</td>
+            <td contenteditable="true" class="editable" oninput="PedidoVentaDetApp.marcarModificado(this)" th:text="${detalle.precioTotal}">Precio Total</td>
+            <td contenteditable="true" class="editable" oninput="PedidoVentaDetApp.marcarModificado(this)" th:text="${detalle.promedio}">Promedio</td>
+            <td contenteditable="true" class="editable" oninput="PedidoVentaDetApp.marcarModificado(this)" th:text="${detalle.valorVentaTotal}">Valor Venta Total</td>
+            <td contenteditable="true" class="editable" oninput="PedidoVentaDetApp.marcarModificado(this)" th:text="${detalle.importador}">Importador</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<!-- Controles de Paginación -->
+<div class="pagination">
+    <!-- Botón Primera Página -->
+    <span id="primera-pagina-span">
+    <a id="primera-pagina" href="javascript:void(0);" onclick="PedidoVentaDetApp.irAPrimeraPagina()">Primera Página</a>
+</span>
+
+    <!-- Botón Anterior -->
+    <span id="anterior-span">
+        <a id="anterior-pagina" href="javascript:void(0);" onclick="PedidoVentaDetApp.irAPaginaAnterior()">Anterior</a>
+    </span>
+
+    <!-- Botón Siguiente -->
+    <span id="siguiente-span">
+        <a id="siguiente-pagina" href="javascript:void(0);" onclick="PedidoVentaDetApp.irAPaginaSiguiente()">Siguiente</a>
+    </span>
+
+    <!-- Botón Última Página -->
+    <span id="ultima-pagina-span">
+        <a id="ultima-pagina" href="javascript:void(0);" onclick="LineasPedidoApp.irAUltimaPagina()">Última Página</a>
+    </span>
+</div>
+<script src="/js/sweet-alert2/dist/sweetalert2.all.min.js"></script>
+<script type="module" src="/js/pedidos_venta_det.js"></script>
+</body>
+</html>

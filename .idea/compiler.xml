@@ -7,8 +7,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="usuarios" />
+        <module name="ventas" />
         <module name="compras" />
+        <module name="usuarios" />
         <module name="frontend" />
       </profile>
     </annotationProcessing>
@@ -18,6 +19,7 @@
       <module name="compras" options="-parameters" />
       <module name="frontend" options="-parameters" />
       <module name="usuarios" options="-parameters" />
+      <module name="ventas" options="-parameters" />
     </option>
   </component>
 </project>

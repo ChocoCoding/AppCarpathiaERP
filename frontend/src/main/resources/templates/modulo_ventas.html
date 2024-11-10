@@ -1,29 +1,32 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Gestionar Ventas</title>
+    <title>Módulo Ventas</title>
     <link rel="stylesheet" type="text/css" href="/css/estilosmodulo.css">
 </head>
 <body>
 <header>
-    <h1>Gestión de Ventas</h1>
-    <button onclick="goBack()">Volver Atrás</button>
-    <button onclick="logout()">Cerrar Sesión</button>
-
+    <button class="back-button" onclick="goBack()">Volver Atrás</button>
+    <h1>Módulo de Ventas</h1>
+    <button class="logout-button" onclick="logout()">Cerrar Sesión</button>
 </header>
 <div class="content-container">
-    <p>Bienvenido al módulo de gestión de ventas.</p>
-    <!-- Aquí puedes agregar más contenido relacionado con la gestión de ventas -->
+    <div class="button-container">
+        <button onclick="window.location.href='/pedidos-venta'">Pedidos de Venta</button>
+        <button onclick="window.location.href='/lineas-pedido-venta'">Líneas Pedido de Venta</button>
+        <button onclick="window.location.href='/detalles-pedido-venta'">Detalles Pedidos de Venta</button>
+    </div>
 </div>
-<script>
-    function logout() {
-        window.location.href = "/logout";
-    }
-</script>
+
 <script>
     function goBack() {
         window.history.back(); // Volver a la página anterior
     }
+
+    function logout() {
+        window.location.href = "/logout"; // Redirigir a la ruta de logout
+    }
 </script>
 </body>
 </html>
+
