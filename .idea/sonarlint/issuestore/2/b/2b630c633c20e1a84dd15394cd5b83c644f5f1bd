@@ -1,7 +1,11 @@
 
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8¬²ØÒ™2J$a394f689-5239-4106-9e55-9f0b4b03b4cd
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8¬²ØÒ™2J$5dd8842b-cb7c-4955-8130-ad1856555da1
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8ß³¤Ô™2J$6eb0c390-409e-47e5-89f8-48ab23549309
-•
-java:S6204"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8ôÛ°Ó™2J$7624cd23-145b-465a-af7a-51ceed057926
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8ß³¤Ô™2J$3a065b85-f104-4d04-9c5a-3e2b40221633
+š
+java:S3776 "RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(Ç«Ô¾ùÿÿÿÿ8Šœ§Š³2J$da4b0b0d-4862-4219-a638-e1259005df7f
+m	java:S106>"+Replace this use of System.err by a logger.(ô¤ü²8Ÿœ§Š³2J$67574e1d-41fb-4fda-bb6f-01181a23be1e
+r	java:S106z"+Replace this use of System.err by a logger.(’€žšûÿÿÿÿ8®œ§Š³2J$f191377b-3948-44d6-80a3-730a33509286
+€
+java:S1128"8Remove this unused import 'java.util.stream.Collectors'.(Óóº´úÿÿÿÿ8Ñœ§Š³2J$503cd308-c297-41aa-8453-61049c1e09b5

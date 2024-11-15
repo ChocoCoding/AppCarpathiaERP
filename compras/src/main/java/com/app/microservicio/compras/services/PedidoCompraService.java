@@ -106,6 +106,10 @@ public class PedidoCompraService {
                         .setParameter("id", id)
                         .executeUpdate();
 
+                entityManager.createNativeQuery("DELETE FROM compras_ventas WHERE id_pedido_compra = :id")
+                        .setParameter("id", id)
+                        .executeUpdate();
+
                 // Eliminar el pedido en pedidos_compra
                 pedidoCompraRepository.deleteById(id);
 
