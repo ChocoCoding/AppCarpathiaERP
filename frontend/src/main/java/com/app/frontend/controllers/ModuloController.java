@@ -39,11 +39,12 @@ public class ModuloController {
     public String gestionarVentas() {
         return moduloVentasView;
     }
-    /*
-    @GetMapping("${modulo.url.usuarios}")
-    public String gestionarUsuarios() {
-        return moduloUsuariosView;
-    }
-    */
 
-}
+    @GetMapping("/compras_ventas")
+    public String gestionarComprasVentas() {
+        return "modulo_compras_ventas";
+    }
+
+    }
+
+

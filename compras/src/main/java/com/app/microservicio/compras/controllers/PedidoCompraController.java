@@ -53,6 +53,7 @@ public class PedidoCompraController {
 
     @PostMapping()
     public ResponseEntity<PedidoCompraDTO> crearPedidoCompra(@RequestBody PedidoCompraDTO pedidoCompraDTO) {
+
         PedidoCompraDTO nuevoPedido = pedidoCompraService.guardarPedidoCompra(pedidoCompraDTO);
         return ResponseEntity.ok(nuevoPedido);
     }
@@ -84,5 +85,12 @@ public class PedidoCompraController {
         boolean existe = pedidoCompraService.existePedidoCompra(idPedidoCompra);
         return ResponseEntity.ok(Collections.singletonMap("existe", existe));
     }
+
+    @GetMapping("/nOperacion/{nOperacion}")
+    public ResponseEntity<Optional<PedidoCompraDTO>> obtenerPedidoCompraPorOperacion(@PathVariable Long nOperacion){
+            return ResponseEntity.of(Optional.ofNullable(pedidoCompraService.obtenerPedidoCompraPorOperacion(nOperacion)));
+
+    }
+
 }
 

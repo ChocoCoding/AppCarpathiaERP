@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Consultar Compras y Ventas</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/estilos_costes_compra.css">
+</head>
+<body>
+<header>
+    <div class="actions">
+        <div class="left-actions">
+            <button class="icon-button" onclick="">
+                <span class="icon">🔙</span> <!-- Icono de Volver Atrás -->
+            </button>
+        </div>
+        <div class="actions">
+            <div class="center-actions">
+            </div>
+
+        </div>
+        <div class="right-actions">
+            <button class="icon-button" onclick="">
+                <span class="icon">🔒</span> <!-- Icono de Cerrar Sesión -->
+            </button>
+        </div>
+    </div>
+</header>
+<h1>Consultar Compras y Ventas</h1>
+<form th:action="@{/procesar-compras-ventas}" method="get">
+    <label for="nOperacion">Número de Operación:</label>
+    <input type="number" id="nOperacion" name="nOperacion" required min="1"/>
+    <button type="submit">Consultar</button>
+</form>
+<br/>
+<a href="/">Volver al Inicio</a>
+</body>
+</html>

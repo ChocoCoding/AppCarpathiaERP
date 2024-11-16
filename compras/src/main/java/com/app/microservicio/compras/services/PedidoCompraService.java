@@ -13,6 +13,7 @@ import com.app.microservicio.compras.repository.PedidoCompraRepository;
 import com.app.microservicio.compras.DTO.PedidoCompraDTO;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -79,7 +80,16 @@ public class PedidoCompraService {
                 .map(this::convertirADTO);
     }
 
+    public Optional<PedidoCompraDTO> obtenerPedidoCompraPorOperacion(Long nOperacion){
+        return pedidoCompraRepository.findPedidoCompraByNoperacion(nOperacion)
+                .map(this::convertirADTO);
+    }
+
     public PedidoCompraDTO guardarPedidoCompra(PedidoCompraDTO pedidoCompraDTO) {
+        Optional<PedidoCompra> pedidoCompraOperacion = pedidoCompraRepository.findPedidoCompraByNoperacion(pedidoCompraDTO.getN_operacion());
+        if (pedidoCompraOperacion.isPresent() && !Objects.equals(pedidoCompraOperacion.get().getIdPedidoCompra(), pedidoCompraDTO.getIdPedidoCompra())){
+            return null;
+        }
         PedidoCompra pedidoCompra = convertirAEntidad(pedidoCompraDTO);
         PedidoCompra nuevoPedidoCompra = pedidoCompraRepository.save(pedidoCompra);
         return convertirADTO(nuevoPedidoCompra);
@@ -106,6 +116,10 @@ public class PedidoCompraService {
                         .setParameter("id", id)
                         .executeUpdate();
 
+                entityManager.createNativeQuery("DELETE FROM compras_ventas WHERE id_pedido_compra = :id")
+                        .setParameter("id", id)
+                        .executeUpdate();
+
                 // Eliminar el pedido en pedidos_compra
                 pedidoCompraRepository.deleteById(id);
 
@@ -125,6 +139,10 @@ public class PedidoCompraService {
         Optional<PedidoCompra> pedidoCompraOpt = pedidoCompraRepository.findById(id);
 
         if (pedidoCompraOpt.isPresent()) {
+            Optional<PedidoCompra> pedidoCompraOperacion = pedidoCompraRepository.findPedidoCompraByNoperacion(pedidoCompraDTO.getN_operacion());
+            if (pedidoCompraOperacion.isPresent() && !Objects.equals(pedidoCompraOperacion.get().getIdPedidoCompra(), pedidoCompraOpt.get().getIdPedidoCompra())){
+                return null;
+            }
             PedidoCompra pedidoCompra = pedidoCompraOpt.get();
             // Actualizar los campos
             pedidoCompra.setNOperacion(pedidoCompraDTO.getN_operacion());

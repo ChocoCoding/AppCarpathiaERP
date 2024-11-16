@@ -83,4 +83,14 @@ public class PedidoVentaController {
         boolean existe = pedidoVentaService.existePedidoVenta(idPedidoVenta);
         return ResponseEntity.ok(Collections.singletonMap("existe", existe));
     }
+
+    @GetMapping("/nOperacion/{nOperacion}")
+    public ResponseEntity<List<PedidoVentaDTO>> obtenerPedidosVentaPorOperacion(@PathVariable Long nOperacion) {
+        List<PedidoVentaDTO> pedidosVenta = pedidoVentaService.obtenerPedidosVentaPorOperacion(nOperacion);
+        if (pedidosVenta.isEmpty()) {
+            return ResponseEntity.noContent().build(); // 204 No Content
+        }
+        return ResponseEntity.ok(pedidosVenta); // 200 OK
+    }
+
 }

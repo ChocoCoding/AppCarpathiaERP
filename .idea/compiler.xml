@@ -11,12 +11,14 @@
         <module name="compras" />
         <module name="usuarios" />
         <module name="frontend" />
+        <module name="compras_ventas" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="compras" options="-parameters" />
+      <module name="compras_ventas" options="-parameters" />
       <module name="frontend" options="-parameters" />
       <module name="usuarios" options="-parameters" />
       <module name="ventas" options="-parameters" />

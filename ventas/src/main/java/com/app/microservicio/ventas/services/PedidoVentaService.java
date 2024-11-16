@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PedidoVentaService {
@@ -89,6 +90,10 @@ public class PedidoVentaService {
                         .setParameter("id", id)
                         .executeUpdate();
 
+                entityManager.createNativeQuery("DELETE FROM compras_ventas WHERE id_pedido_venta = :id")
+                        .setParameter("id", id)
+                        .executeUpdate();
+
                 // Eliminar el pedido en pedidos_venta
                 pedidoVentaRepository.deleteById(id);
 
@@ -101,6 +106,13 @@ public class PedidoVentaService {
             System.err.println("Error al eliminar el pedido con id " + id + ": " + e.getMessage());
             return false; // Error durante la eliminación
         }
+    }
+
+    public List<PedidoVentaDTO> obtenerPedidosVentaPorOperacion(Long nOperacion) {
+        List<PedidoVenta> pedidosVenta = pedidoVentaRepository.findPedidoVentaByNoperacion(nOperacion);
+        return pedidosVenta.stream()
+                .map(this::convertirADTO)
+                .collect(Collectors.toList());
     }
 
     @Transactional

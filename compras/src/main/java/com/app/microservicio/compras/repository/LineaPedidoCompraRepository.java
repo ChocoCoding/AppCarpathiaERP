@@ -22,7 +22,7 @@ public interface LineaPedidoCompraRepository extends JpaRepository<LineaPedidoCo
 
     Page<LineaPedidoCompra> findAll(Pageable pageable);
 
-    @Query("SELECT l FROM LineaPedidoCompra l WHERE l.pedidoCompra.idPedidoCompra =: idPedidoCOmpra")
+    @Query("SELECT l FROM LineaPedidoCompra l WHERE l.pedidoCompra.idPedidoCompra = :idPedidoCompra")
     List<LineaPedidoCompra> findByIdPedidoCompra(@Param("idPedidoCompra") Long idPedidoCompra);
 
     @Query("SELECT SUM(l.pNeto) FROM LineaPedidoCompra l WHERE l.pedidoCompra.idPedidoCompra = :pedidoCompraId")

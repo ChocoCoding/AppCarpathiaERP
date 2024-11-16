@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Módulo Ventas</title>
+    <link rel="stylesheet" type="text/css" href="/css/estilosmodulo.css">
+</head>
+<body>
+<header>
+    <button class="back-button" onclick="goBack()">Volver Atrás</button>
+    <h1>Módulo de Ventas</h1>
+    <button class="logout-button" onclick="logout()">Cerrar Sesión</button>
+</header>
+<div class="content-container">
+    <div class="button-container">
+        <button onclick="window.location.href='/compras-ventas'">Visualizar Compras y Ventas</button>
+    </div>
+</div>
+
+<script>
+    function goBack() {
+        window.history.back(); // Volver a la página anterior
+    }
+
+    function logout() {
+        window.location.href = "/logout"; // Redirigir a la ruta de logout
+    }
+</script>
+</body>
+</html>
+
