@@ -115,3 +115,9 @@ j
 Nfrontend/src/main/java/com/app/frontend/service/CostesPedidoCompraService.java,d\1\d1e135e4c45f1b67d20ff72a3ac1e667cc0da832
 ‚
 Rfrontend/src/main/java/com/app/frontend/service/DatosBarcoPedidoCompraService.java,a\c\acf11cd1b33ca993b66cf676906fddb915e51c45
+‹
+[compras/src/main/java/com/app/microservicio/compras/controllers/GlobalExceptionHandler.java,4\e\4e89bc90bfc6db6fa0d0a5fc21342a760efaae56
+x
+Hventas/src/main/java/com/app/microservicio/ventas/VentasApplication.java,f\8\f84ee0dac6746180e046ada9c99cb361d7312dbe
+‚
+Rventas/src/main/java/com/app/microservicio/ventas/services/PedidoVentaService.java,c\a\ca3516501c9ecbab045299a37cbc5758230c099b
