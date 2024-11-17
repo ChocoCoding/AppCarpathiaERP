@@ -3,33 +3,29 @@
 <head>
   <title>Pedidos de la operacion: </title>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="/css/estilos_costes_compra.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/estilos_compra_venta.css">
 </head>
 <body>
-<header>
-  <div class="actions">
-    <div class="left-actions">
-      <button class="icon-button" onclick="CosteCompraApp.goBack()">
-        <span class="icon">🔙</span> <!-- Icono de Volver Atrás -->
-      </button>
-    </div>
-    <div class="center-actions">
-      <button class="icon-button" onclick="CosteCompraApp.guardarCambios()">
-        <span class="icon">💾</span> <!-- Icono de Guardar -->
-      </button>
-      <button class="icon-button" onclick="CosteCompraApp.crearCosteCompra()">
-        <span class="icon">➕</span> <!-- Icono de Crear Línea -->
-      </button>
-      <div class="search-container">
-        <button class="search-button" onclick="CosteCompraApp.toggleSearch()">🔍</button>
-        <button class="filter-button" onclick="CosteCompraApp.toggleFilter()">⚙️</button>
-        <input type="text" id="search-input" oninput="CosteCompraApp.filtrarCostes()" placeholder="Buscar..." style="display: none;">
+<header class="bg-secondary bg-gradient border-bottom custom-header">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center py-3">
+      <div>
+        <button class="btn btn-link p-0" title="Go back" onclick="goBack()">
+          <i class="bi bi-arrow-left header-icon fs-2"></i>
+          <span class="visually-hidden">Go back</span>
+        </button>
       </div>
-    </div>
-    <div class="right-actions">
-      <button class="icon-button" onclick="CosteCompraApp.logout()">
-        <span class="icon">🔒</span> <!-- Icono de Cerrar Sesión -->
-      </button>
+      <div class="flex-grow-1 text-center">
+        <h2>Resultados del Nº de Operacion</h2>
+      </div>
+      <div>
+        <button class="btn btn-link p-0" title="Logout" onclick="logout()">
+          <i class="bi bi-box-arrow-right header-icon fs-2"></i>
+          <span class="visually-hidden">Logout</span>
+        </button>
+      </div>
     </div>
   </div>
 </header>
@@ -43,8 +39,7 @@
 <!-- Mostrar Datos si existen -->
 <div th:if="${comprasVentas != null}">
   <h3>Pedidos del Numero de operacion:  <span th:text="${comprasVentas.pedidoCompra.n_operacion}"></span></h3>
-  <!-- Información de Compras -->
-  <h2>Información de Compra</h2>
+
   <div th:if="${comprasVentas.pedidoCompra != null}">
     <p><strong>ID Pedido Compra:</strong> <span th:text="${comprasVentas.pedidoCompra.idPedidoCompra}"></span></p>
     <p><strong>Número de Operación:</strong> <span th:text="${comprasVentas.pedidoCompra.n_operacion}"></span></p>
@@ -94,6 +89,15 @@
 <br/>
 <a href="/compras-ventas">Consultar Otro Número de Operación</a>
 <br/>
-<a href="/compras_ventas">Volver al Inicio</a>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  function goBack() {
+    window.history.back();
+  }
+
+  function logout() {
+    window.location.href = "/logout";
+  }
+</script>
 </body>
 </html>

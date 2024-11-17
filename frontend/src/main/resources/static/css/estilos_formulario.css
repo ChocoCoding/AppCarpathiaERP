@@ -1,0 +1,39 @@
+.step-indicator {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ccc;
+}
+.step-active {
+    background-color: #0d6efd;
+    color: white;
+}
+.line-active {
+    background-color: #0d6efd;
+}
+
+.btn-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-link:hover .header-icon {
+    transform: scale(1.2);
+}
+
+.header-icon {
+    color:white;
+    transition: transform 0.3s ease;
+}
+h2{
+    color:white;
+}
+
+.custom-header {
+    padding: 20px 0;
+    height: auto;
+}

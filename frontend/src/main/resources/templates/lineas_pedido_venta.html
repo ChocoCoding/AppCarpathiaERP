@@ -2,57 +2,83 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Líneas de Pedido de Venta</title>
-    <link rel="stylesheet" href="/css/estilos_lineas_pedido_compra.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/estilos_pedidos_compra_det.css">
 </head>
 <body>
-<header>
-    <h3>Líneas de Pedidos de Venta</h3>
-    <div class="actions">
-        <div class="left-actions">
-            <button class="icon-button" onclick="LineasPedidoApp.goBack()">
-                <span class="icon">🔙</span> <!-- Icono de Volver Atrás -->
-            </button>
-        </div>
-        <div class="center-actions">
-            <button class="icon-button" onclick="LineasPedidoApp.guardarCambios()">
-                <span class="icon">💾</span> <!-- Icono de Guardar -->
-            </button>
-            <button class="icon-button" onclick="LineasPedidoApp.crearLineaPedido()">
-                <span class="icon">➕</span> <!-- Icono de Crear Línea -->
-            </button>
-            <div class="search-container">
-                <button class="search-button" onclick="LineasPedidoApp.toggleSearch()">🔍</button>
-                <button class="filter-button" onclick="LineasPedidoApp.toggleFilter()">⚙️</button>
-                <input type="text" id="search-input" oninput="LineasPedidoApp.filtrarLineas()" placeholder="Buscar..." style="display: none;">
-                <div class="filter-container">
-                    <label><input type="checkbox" name="columnFilter" value="2"> ID Pedido Venta</label>
-                    <label><input type="checkbox" name="columnFilter" value="3"> Nº Línea</label>
-                    <label><input type="checkbox" name="columnFilter" value="4"> Nº Operación</label>
-                    <label><input type="checkbox" name="columnFilter" value="5"> Proveedor</label>
-                    <label><input type="checkbox" name="columnFilter" value="6"> Cliente</label>
-                    <label><input type="checkbox" name="columnFilter" value="7"> Contrato Venta</label>
-                    <label><input type="checkbox" name="columnFilter" value="8"> Factura Venta</label>
-                    <label><input type="checkbox" name="columnFilter" value="9"> Nº Contenedor</label>
-                    <label><input type="checkbox" name="columnFilter" value="10"> Producto</label>
-                    <label><input type="checkbox" name="columnFilter" value="11"> Talla</label>
-                    <label><input type="checkbox" name="columnFilter" value="12"> País de Origen</label>
-                    <label><input type="checkbox" name="columnFilter" value="13"> Peso Neto</label>
-                    <label><input type="checkbox" name="columnFilter" value="14"> Unidad</label>
-                    <label><input type="checkbox" name="columnFilter" value="15"> Bultos</label>
-                    <label><input type="checkbox" name="columnFilter" value="16"> Precio</label>
-                    <label><input type="checkbox" name="columnFilter" value="17"> Valor Venta Total</label>
-                    <label><input type="checkbox" name="columnFilter" value="18"> Incoterm</label>
-                    <label><input type="checkbox" name="columnFilter" value="19"> Moneda</label>
-                    <label><input type="checkbox" name="columnFilter" value="20"> Comerciales</label>
-                    <label><input type="checkbox" name="columnFilter" value="21"> Transporte</label>
+<header class="bg-secondary bg-gradient border-bottom custom-header">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center py-3">
+            <!-- Left side - Back arrow -->
+            <div>
+                <button class="btn btn-link p-0" title="Go back" onclick="LineasPedidoApp.goBack()">
+                    <i class="bi bi-arrow-left header-icon fs-2"></i>
+                    <span class="visually-hidden">Go back</span>
+                </button>
+            </div>
+
+            <!-- Center - Home, Add, Search, Configuration -->
+            <div class="d-flex align-items-center gap-3">
+                <button class="btn btn-link p-0" title="Home" onclick="LineasPedidoApp.goHome()">
+                    <i class="bi bi-house header-icon fs-2"></i>
+                    <span class="visually-hidden">Home</span>
+                </button>
+
+                <div class="position-relative ">
+                    <input type="text" id="search-input" class="form-control pe-5" placeholder="Search..." oninput="LineasPedidoApp.filtrarLineas()">
+                    <button class="search-button" title="Search" onclick="LineasPedidoApp.toggleSearch()">
+                        <i class="bi bi-search"></i>
+                        <span class="visually-hidden">Search</span>
+                    </button>
+                </div>
+
+                <button class="btn btn-link p-0 filter-button" title="Configuration" onclick="LineasPedidoApp.toggleFilter()">
+                    <i class="bi bi-gear header-icon fs-2"></i>
+                    <span class="visually-hidden">Configuration</span>
+                </button>
+                <div class="search-container">
+                    <div class="filter-container">
+                        <label><input type="checkbox" name="columnFilter" value="2"> ID Pedido Venta</label>
+                        <label><input type="checkbox" name="columnFilter" value="3"> Nº Línea</label>
+                        <label><input type="checkbox" name="columnFilter" value="4"> Nº Operación</label>
+                        <label><input type="checkbox" name="columnFilter" value="5"> Proveedor</label>
+                        <label><input type="checkbox" name="columnFilter" value="6"> Cliente</label>
+                        <label><input type="checkbox" name="columnFilter" value="7"> Contrato Venta</label>
+                        <label><input type="checkbox" name="columnFilter" value="8"> Factura Venta</label>
+                        <label><input type="checkbox" name="columnFilter" value="9"> Nº Contenedor</label>
+                        <label><input type="checkbox" name="columnFilter" value="10"> Producto</label>
+                        <label><input type="checkbox" name="columnFilter" value="11"> Talla</label>
+                        <label><input type="checkbox" name="columnFilter" value="12"> País de Origen</label>
+                        <label><input type="checkbox" name="columnFilter" value="13"> Peso Neto</label>
+                        <label><input type="checkbox" name="columnFilter" value="14"> Unidad</label>
+                        <label><input type="checkbox" name="columnFilter" value="15"> Bultos</label>
+                        <label><input type="checkbox" name="columnFilter" value="16"> Precio</label>
+                        <label><input type="checkbox" name="columnFilter" value="17"> Valor Venta Total</label>
+                        <label><input type="checkbox" name="columnFilter" value="18"> Incoterm</label>
+                        <label><input type="checkbox" name="columnFilter" value="19"> Moneda</label>
+                        <label><input type="checkbox" name="columnFilter" value="20"> Comerciales</label>
+                        <label><input type="checkbox" name="columnFilter" value="21"> Transporte</label>
+                    </div>
 
                 </div>
+                <button class="btn btn-link p-0" title="Add new" onclick="LineasPedidoApp.crearLineaPedido()">
+                    <i class="bi bi-plus-lg header-icon fs-2"></i>
+                    <span class="visually-hidden">Add new</span>
+                </button>
+                <button class="btn btn-link p-0" title="Save" onclick="LineasPedidoApp.guardarCambios()">
+                    <i class="bi bi-save header-icon fs-2"></i>
+                    <span class="visually-hidden">Save</span>
+                </button>
             </div>
-        </div>
-        <div class="right-actions">
-            <button class="icon-button" onclick="LineasPedidoApp.logout()">
-                <span class="icon">🔒</span> <!-- Icono de Cerrar Sesión -->
-            </button>
+
+            <!-- Right side - Logout -->
+            <div>
+                <button class="btn btn-link p-0" title="Logout" onclick="LineasPedidoApp.logout()">
+                    <i class="bi bi-box-arrow-right header-icon fs-2"></i>
+                    <span class="visually-hidden">Logout</span>
+                </button>
+            </div>
         </div>
     </div>
 </header>
@@ -119,5 +145,6 @@
 
 <!-- Incluir el Script de Líneas de Pedido de Venta -->
 <script type="module" src="/js/lineas_pedido_venta.js?v=1.0.2"></script> <!-- Agregado parámetro de versión para evitar caché -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

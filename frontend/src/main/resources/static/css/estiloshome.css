@@ -1,6 +1,5 @@
 :root {
     --background-color: #f0f4f8;
-    --header-color: #2c3e50;
     --button-color: #3498db;
     --button-hover: #2980b9;
     --text-color: #333333;
@@ -19,41 +18,27 @@ body {
     color: var(--text-color);
 }
 
-header {
-    background-color: var(--header-color);
-    padding: 10px 20px;
-    color: white;
-    display: flex;
+.btn-link {
+    display: inline-flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 }
 
-header h1 {
-    margin: 0;
-    font-size: 20px;
-    flex-grow: 1;
-    text-align: center;
+.btn-link:hover .header-icon {
+    transform: scale(1.2);
 }
 
-.header-content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 100%;
+.header-icon {
+    color:white;
+    transition: transform 0.3s ease;
+}
+h2{
+    color:white;
 }
 
-.logout-btn {
-    padding: 8px 16px;
-    background-color: var(--logout-btn-color);
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-    font-size: 14px;
-    margin-left: auto;
+.custom-header {
+    padding: 20px 0;
+    height: auto;
 }
 
 .logo-container {
@@ -63,13 +48,6 @@ header h1 {
 .logo {
     max-height: 80px;
     width: auto;
-}
-
-header h1 {
-    margin: 0;
-    font-size: 20px;
-    flex-grow: 1;
-    text-align: center;
 }
 
 

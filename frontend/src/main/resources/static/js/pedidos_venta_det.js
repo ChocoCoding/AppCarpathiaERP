@@ -62,6 +62,9 @@ cargarConfiguraciones().then(() => {
         goBack: () => {
             window.history.back();
         },
+        goHome: () => {
+            window.location.href='/home';
+        },
 
         logout: () => {
             window.location.href = "/logout";
@@ -369,19 +372,12 @@ cargarConfiguraciones().then(() => {
         // Funciones para mostrar y ocultar la búsqueda y filtros
         toggleSearch: () => {
             const searchInput = document.getElementById('search-input');
-            if (searchInput.style.display === 'none' || searchInput.style.display === '') {
-                searchInput.style.display = 'block';
-                searchInput.classList.add('expanded');
-                searchInput.focus();
-            } else {
-                searchInput.style.display = 'none';
-                searchInput.classList.remove('expanded');
                 searchInput.value = '';
                 search = '';
                 searchFields = [];
                 currentPage = 1;
                 PedidoVentaDetApp.cargarDetallesPedidoVenta();
-            }
+
         },
 
         toggleFilter: () => {

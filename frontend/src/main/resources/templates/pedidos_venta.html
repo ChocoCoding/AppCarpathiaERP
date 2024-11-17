@@ -3,41 +3,67 @@
 <head>
     <title>Pedidos de Venta</title>
     <link rel="stylesheet" href="/css/estilos_pedidos_compra.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body>
-<header>
-    <h3>Pedidos de Venta</h3>
-    <div class="actions">
-        <div class="left-actions">
-            <button class="icon-button" onclick="PedidoVentaApp.goBack()">
-                <span class="icon">🔙</span> <!-- Icono de Volver Atrás -->
-            </button>
-        </div>
-        <div class="center-actions">
-            <button class="icon-button" onclick="PedidoVentaApp.guardarCambios()">
-                <span class="icon">💾</span> <!-- Icono de Guardar -->
-            </button>
-            <button class="icon-button" onclick="PedidoVentaApp.crearPedidoVenta()">
-                <span class="icon">➕</span> <!-- Icono de Crear Línea -->
-            </button>
-            <div class="search-container">
-                <button class="icon-button search-button" onclick="PedidoVentaApp.toggleSearch()">🔍</button>
-                <button class="icon-button filter-button" onclick="PedidoVentaApp.toggleFilter()">⚙️</button>
-                <input type="text" id="search-input" oninput="PedidoVentaApp.filtrarPedidos()" placeholder="Buscar..." style="display: none;">
-                <div class="filter-container">
-                    <label><input type="checkbox" name="columnFilter" value="2"> ID</label>
-                    <label><input type="checkbox" name="columnFilter" value="3"> Nº Operación</label>
-                    <label><input type="checkbox" name="columnFilter" value="4"> Proforma</label>
-                    <label><input type="checkbox" name="columnFilter" value="5"> Proveedor</label>
-                    <label><input type="checkbox" name="columnFilter" value="6"> Incoterm</label>
-                    <label><input type="checkbox" name="columnFilter" value="7"> Referencia Proveedor</label>
-                </div>
+<header class="bg-secondary bg-gradient border-bottom custom-header">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center py-3">
+            <!-- Left side - Back arrow -->
+            <div>
+                <button class="btn btn-link p-0" title="Go back" onclick="PedidoVentaApp.goBack()">
+                    <i class="bi bi-arrow-left header-icon fs-2"></i>
+                    <span class="visually-hidden">Go back</span>
+                </button>
             </div>
-        </div>
-        <div class="right-actions">
-            <button class="icon-button" onclick="PedidoVentaApp.logout()">
-                <span class="icon">🔒</span> <!-- Icono de Cerrar Sesión -->
-            </button>
+
+            <!-- Center - Home, Add, Search, Configuration -->
+            <div class="d-flex align-items-center gap-3">
+                <button class="btn btn-link p-0" title="Home" onclick="PedidoVentaApp.goHome()">
+                    <i class="bi bi-house header-icon fs-2"></i>
+                    <span class="visually-hidden">Home</span>
+                </button>
+
+                <div class="position-relative ">
+                    <input type="text" id="search-input" class="form-control pe-5" placeholder="Search..." oninput="PedidoVentaApp.filtrarPedidos()">
+                    <button class="search-button" title="Search" onclick="PedidoVentaApp.toggleSearch()">
+                        <i class="bi bi-search"></i>
+                        <span class="visually-hidden">Search</span>
+                    </button>
+                </div>
+
+                <button class="btn btn-link p-0 filter-button" title="Configuration" onclick="PedidoVentaApp.toggleFilter()">
+                    <i class="bi bi-gear header-icon fs-2"></i>
+                    <span class="visually-hidden">Configuration</span>
+                </button>
+                <div class="search-container">
+                    <div class="filter-container">
+                        <label><input type="checkbox" name="columnFilter" value="2"> ID</label>
+                        <label><input type="checkbox" name="columnFilter" value="3"> Nº Operación</label>
+                        <label><input type="checkbox" name="columnFilter" value="4"> Proforma</label>
+                        <label><input type="checkbox" name="columnFilter" value="5"> Proveedor</label>
+                        <label><input type="checkbox" name="columnFilter" value="6"> Incoterm</label>
+                        <label><input type="checkbox" name="columnFilter" value="7"> Referencia Proveedor</label>
+                    </div>
+                </div>
+                <button class="btn btn-link p-0" title="Add new" onclick="PedidoVentaApp.crearPedidoVenta()">
+                    <i class="bi bi-plus-lg header-icon fs-2"></i>
+                    <span class="visually-hidden">Add new</span>
+                </button>
+                <button class="btn btn-link p-0" title="Save" onclick="PedidoVentaApp.guardarCambios()">
+                    <i class="bi bi-save header-icon fs-2"></i>
+                    <span class="visually-hidden">Save</span>
+                </button>
+            </div>
+
+            <!-- Right side - Logout -->
+            <div>
+                <button class="btn btn-link p-0" title="Logout" onclick="PedidoVentaApp.logout()">
+                    <i class="bi bi-box-arrow-right header-icon fs-2"></i>
+                    <span class="visually-hidden">Logout</span>
+                </button>
+            </div>
         </div>
     </div>
 </header>
@@ -88,5 +114,6 @@
 
 <!-- Incluir el Script de Pedidos de Venta -->
 <script type="module" src="/js/pedidos_venta.js?v=1.0.2"></script> <!-- Agregado parámetro de versión para evitar caché -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

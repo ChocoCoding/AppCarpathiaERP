@@ -66,6 +66,10 @@ cargarConfiguraciones().then(() => {
             window.history.back();
         },
 
+        goHome: () => {
+            window.location.href = "/home";
+        },
+
         logout: () => {
             window.location.href = "/logout";
         },

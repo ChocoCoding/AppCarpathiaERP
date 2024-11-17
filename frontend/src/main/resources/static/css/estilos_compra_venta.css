@@ -1,0 +1,33 @@
+html, body {
+    font-family: 'Arial', sans-serif;
+    height: 100%;
+}
+
+.main-container {
+    height: calc(100% - 70px); /* Ajusta según la altura del header */
+}
+
+
+.custom-header {
+    padding: 30px 0;
+    height: auto;
+}
+
+.custom-header h2{
+    color:white;
+}
+
+.btn-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-link:hover .header-icon {
+    transform: scale(1.2);
+}
+
+.header-icon {
+    color:white;
+    transition: transform 0.3s ease;
+}
