@@ -71,6 +71,7 @@ public class PedidoCompraService {
             spec = spec.and(searchSpec);
         }
 
+
         return pedidoCompraRepository.findAll(spec, pageable).map(this::convertirADTO);
     }
 

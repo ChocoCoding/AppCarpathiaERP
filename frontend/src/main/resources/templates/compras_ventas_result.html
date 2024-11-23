@@ -39,25 +39,40 @@
 <!-- Mostrar Datos si existen -->
 <div th:if="${comprasVentas != null}">
   <h3>Pedidos del Numero de operacion:  <span th:text="${comprasVentas.pedidoCompra.n_operacion}"></span></h3>
+  <h3>Información de Compras</h3>
+  <table>
+    <thead>
+    <tr>
+      <th>ID Pedido Compra:</th>
+      <th>Número de Operación</th>
+      <th>Número de Contenedor:</th>
+      <th>Proforma</th>
+      <th>Proveedor</th>
+      <th>Cliente</th>
+      <th>Incoterm</th>
+      <th>Referencia Proveedor</th>
 
-  <div th:if="${comprasVentas.pedidoCompra != null}">
-    <p><strong>ID Pedido Compra:</strong> <span th:text="${comprasVentas.pedidoCompra.idPedidoCompra}"></span></p>
-    <p><strong>Número de Operación:</strong> <span th:text="${comprasVentas.pedidoCompra.n_operacion}"></span></p>
-    <p><strong>Número de Contenedor:</strong> <span th:text="${comprasVentas.pedidoCompra.n_contenedor}"></span></p>
-    <p><strong>Proforma:</strong> <span th:text="${comprasVentas.pedidoCompra.proforma}"></span></p>
-    <p><strong>Proveedor:</strong> <span th:text="${comprasVentas.pedidoCompra.proveedor}"></span></p>
-    <p><strong>Cliente:</strong> <span th:text="${comprasVentas.pedidoCompra.cliente}"></span></p>
-    <p><strong>Incoterm:</strong> <span th:text="${comprasVentas.pedidoCompra.incoterm}"></span></p>
-    <p><strong>Referencia Proveedor:</strong> <span th:text="${comprasVentas.pedidoCompra.referenciaProveedor}"></span></p>
-  </div>
-  <div th:if="${comprasVentas.pedidoCompra == null}">
-    <p>No hay información de compra asociada al número de operación.</p>
-  </div>
-
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="pedidoCompra : ${comprasVentas.pedidoCompra}">
+      <td th:text="${pedidoCompra.idPedidoCompra}"></td>
+      <td th:text="${pedidoCompra.n_operacion}"></td>
+      <td th:text="${pedidoCompra.n_contenedor}"></td>
+      <td th:text="${pedidoCompra.proforma}"></td>
+      <td th:text="${pedidoCompra.proveedor}"></td>
+      <td th:text="${pedidoCompra.cliente}"></td>
+      <td th:text="${pedidoCompra.incoterm}"></td>
+      <td th:text="${pedidoCompra.referenciaProveedor}"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<br>
   <!-- Información de Ventas -->
   <h2>Información de Ventas</h2>
   <div th:if="${comprasVentas.pedidosVenta != null and !comprasVentas.pedidosVenta.isEmpty()}">
-    <table border="1">
+    <table>
       <thead>
       <tr>
         <th>ID Pedido Venta</th>

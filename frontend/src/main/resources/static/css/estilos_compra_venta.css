@@ -31,3 +31,34 @@ html, body {
     color:white;
     transition: transform 0.3s ease;
 }
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed; /* Asegura que las celdas tengan un ancho fijo */
+    min-width: 1500px; /* Ancho mínimo de la tabla */
+}
+
+th, td {
+    font-family: 'Arial', sans-serif;
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ccc;
+    white-space: nowrap; /* Evita que el texto se envuelva */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 150px; /* Ancho fijo para las celdas */
+}
+
+th {
+    background-color: #007BFF;
+    color: white;
+    font-weight: bold;
+    border-bottom: 2px solid #004a99;
+}
+
+td:focus {
+    outline: none;
+}
+

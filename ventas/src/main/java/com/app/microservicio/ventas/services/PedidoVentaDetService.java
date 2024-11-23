@@ -56,6 +56,7 @@ public class PedidoVentaDetService {
         // Actualizar campos
         pedidoVentaDet.setPesoNetoTotal(pedidoVentaDetDTO.getPesoNetoTotal());
         pedidoVentaDet.setTotalBultos(pedidoVentaDetDTO.getTotalBultos());
+
         pedidoVentaDet.setPrecioTotal(pedidoVentaDetDTO.getPrecioTotal());
         pedidoVentaDet.setPromedio(pedidoVentaDetDTO.getPromedio());
         pedidoVentaDet.setValorVentaTotal(pedidoVentaDetDTO.getValorVentaTotal());
@@ -63,7 +64,9 @@ public class PedidoVentaDetService {
         pedidoVentaDet.setPedidoVenta(pedidoVentaRepository.findById(pedidoVentaDetDTO.getIdPedidoVenta()).orElse(null));
 
         //Calculamos el promedio
+        calculoService.recalcularPrecioTotalVenta(pedidoVentaDet.getIdPedidoVentaDet());
         calculoService.recalcularPromedio(pedidoVentaDet.getIdPedidoVentaDet());
+
         return convertirADTO(pedidoVentaDetRepository.save(pedidoVentaDet));
     }
 
@@ -75,7 +78,7 @@ public class PedidoVentaDetService {
         pedidoVentaDetDTO.setIdPedidoVenta(pedidoVentaDet.getPedidoVenta().getIdPedidoVenta());
         pedidoVentaDetDTO.setPesoNetoTotal(pedidoVentaDet.getPesoNetoTotal());
         pedidoVentaDetDTO.setTotalBultos(pedidoVentaDet.getTotalBultos());
-        pedidoVentaDetDTO.setPrecioTotal(pedidoVentaDetDTO.getPrecioTotal());
+        pedidoVentaDetDTO.setPrecioTotal(pedidoVentaDet.getPrecioTotal());
         pedidoVentaDetDTO.setPromedio(pedidoVentaDet.getPromedio());
         pedidoVentaDetDTO.setValorVentaTotal(pedidoVentaDet.getValorVentaTotal());
         pedidoVentaDetDTO.setImportador(pedidoVentaDet.getImportador());

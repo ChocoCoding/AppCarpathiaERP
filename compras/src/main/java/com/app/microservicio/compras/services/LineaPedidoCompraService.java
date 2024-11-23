@@ -68,13 +68,21 @@ public class LineaPedidoCompraService {
                                     "%" + search.toLowerCase() + "%"
                             )
                     );
-                } else if (field.equals("nOperacion") || field.equals("nLinea") || field.equals("bultos")) {
-                    // Campos numéricos
+                } else if (field.equals("n_operacion") || field.equals("n_linea") || field.equals("bultos") ||
+                        field.equals("p_neto") || field.equals("precio") || field.equals("valor_compra")) {
+                    // Campos numéricos (Long y BigDecimal)
                     try {
-                        Long value = Long.parseLong(search);
-                        searchSpec = searchSpec.or((root, query, criteriaBuilder) ->
-                                criteriaBuilder.equal(root.get(field), value)
-                        );
+                        if (field.equals("p_neto") || field.equals("precio") || field.equals("valor_compra")) {
+                            BigDecimal value = new BigDecimal(search);
+                            searchSpec = searchSpec.or((root, query, criteriaBuilder) ->
+                                    criteriaBuilder.equal(root.get(field), value)
+                            );
+                        } else {
+                            Long value = Long.parseLong(search);
+                            searchSpec = searchSpec.or((root, query, criteriaBuilder) ->
+                                    criteriaBuilder.equal(root.get(field), value)
+                            );
+                        }
                     } catch (NumberFormatException e) {
                         // Ignorar si no es numérico
                     }

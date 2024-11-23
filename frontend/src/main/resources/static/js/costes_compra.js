@@ -160,20 +160,20 @@ cargarConfiguraciones().then(() => {
                 <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)">${coste.idPedidoCompra || ''}</td>
                 <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)">${coste.n_operacion || ''}</td>
                 <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)">${coste.n_contenedor || ''}</td>
-                <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)">${coste.arancel || ''}</td>
-                <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)">${coste.sanidad || ''}</td>
-                <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)">${coste.plastico || ''}</td>
-                <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)">${coste.carga || ''}</td>
-                <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)">${coste.inland || ''}</td>
-                <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)">${coste.muellaje || ''}</td>
-                <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)">${coste.pif || ''}</td>
-                <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)">${coste.despacho || ''}</td>
-                <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)">${coste.conexiones || ''}</td>
-                <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)">${coste.iva || ''}</td>
+                <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)">${coste.arancel ? Number(coste.arancel).toFixed(4) : ''}</td>
+                <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)">${coste.sanidad ? Number(coste.sanidad).toFixed(4) : ''}</td>
+                <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)">${coste.plastico ? Number(coste.plastico).toFixed(4) : ''}</td>
+                <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)">${coste.carga ? Number(coste.carga).toFixed(4) : ''}</td>
+                <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)">${coste.inland ? Number(coste.inland).toFixed(4) : ''}</td>
+                <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)">${coste.muellaje ? Number(coste.muellaje).toFixed(4) : ''}</td>
+                <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)">${coste.pif ? Number(coste.pif).toFixed(4) : ''}</td>
+                <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)">${coste.despacho ? Number(coste.despacho).toFixed(4) : ''}</td>
+                <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)">${coste.conexiones ? Number(coste.conexiones).toFixed(4) : ''}</td>
+                <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)">${coste.iva ? Number(coste.iva).toFixed(4) : ''}</td>
                 <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)">${coste.dec_iva || ''}</td>
-                <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)">${coste.tasa_sanitaria || ''}</td>
-                <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)">${coste.suma_costes || ''}</td>
-                <td contenteditable="true" class="editable" oninput="CosteCompraApp.marcarModificado(this)">${coste.gasto_total || ''}</td>
+                <td contenteditable="false" class="editable" oninput="CosteCompraApp.marcarModificado(this)">${coste.tasa_sanitaria ? Number(coste.tasa_sanitaria).toFixed(4) : ''}</td>
+                <td contenteditable="false" class="editable" oninput="CosteCompraApp.marcarModificado(this)">${coste.suma_costes ? Number(coste.suma_costes).toFixed(4) : ''}</td>
+                <td contenteditable="false" class="editable" oninput="CosteCompraApp.marcarModificado(this)">${coste.gasto_total ? Number(coste.gasto_total).toFixed(4) : ''}</td>
             `;
 
             tbody.appendChild(fila);

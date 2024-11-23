@@ -86,17 +86,7 @@
         </thead>
         <tbody>
         <tr th:each="detalle : ${detallesPedidoVenta}" th:data-id-pedido-venta-det="${detalle.idPedidoVentaDet}">
-            <td>
-                <button class="delete-button" th:onclick="'PedidoVentaDetApp.eliminarPedidoVentaDet(' + ${detalle.idPedidoVentaDet} + ')'">🗑️</button>
-            </td>
-            <td contenteditable="true" class="editable" oninput="PedidoVentaDetApp.marcarModificado(this)" th:text="${detalle.idPedidoVenta}">ID Pedido Venta</td>
-            <td contenteditable="true" class="editable" oninput="PedidoVentaDetApp.marcarModificado(this)" th:text="${detalle.pesoNetoTotal}">Peso Neto Total</td>
-            <td contenteditable="true" class="editable" oninput="PedidoVentaDetApp.marcarModificado(this)" th:text="${detalle.totalBultos}">Total Bultos</td>
-            <td contenteditable="true" class="editable" oninput="PedidoVentaDetApp.marcarModificado(this)" th:text="${detalle.precioTotal}">Precio Total</td>
-            <td contenteditable="true" class="editable" oninput="PedidoVentaDetApp.marcarModificado(this)" th:text="${detalle.promedio}">Promedio</td>
-            <td contenteditable="true" class="editable" oninput="PedidoVentaDetApp.marcarModificado(this)" th:text="${detalle.valorVentaTotal}">Valor Venta Total</td>
-            <td contenteditable="true" class="editable" oninput="PedidoVentaDetApp.marcarModificado(this)" th:text="${detalle.importador}">Importador</td>
-        </tr>
+
         </tbody>
     </table>
 </div>

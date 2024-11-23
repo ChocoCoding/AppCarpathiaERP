@@ -159,25 +159,25 @@ cargarConfiguraciones().then(() => {
             fila.setAttribute('data-id-linea-pedido', linea.idNumeroLinea);
 
             fila.innerHTML = `
-                <td>
-                    <button class="delete-button" onclick="LineasPedidoApp.eliminarLineaPedido(${linea.idNumeroLinea})">🗑️</button>
-                </td>
-                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.idPedidoCompra || ''}</td>
-                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.n_linea || ''}</td>
-                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.n_operacion || ''}</td>
-                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.proveedor || ''}</td>
-                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.cliente || ''}</td>
-                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.n_contenedor || ''}</td>
-                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.producto || ''}</td>
-                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.talla || ''}</td>
-                <td contenteditable="true" class="editable peso-neto" oninput="LineasPedidoApp.calcularValorCompra(this)">${linea.p_neto || ''}</td>
-                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.unidad || ''}</td>
-                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.bultos || ''}</td>
-                <td contenteditable="true" class="editable precio" oninput="LineasPedidoApp.calcularValorCompra(this)">${linea.precio || ''}</td>
-                <td contenteditable="true" class="editable valor-compra-total">${linea.valor_compra || ''}</td>
-                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.moneda || ''}</td>
-                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.paisOrigen || ''}</td>
-            `;
+        <td>
+            <button class="delete-button" onclick="LineasPedidoApp.eliminarLineaPedido(${linea.idNumeroLinea})">🗑️</button>
+        </td>
+        <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.idPedidoCompra || ''}</td>
+        <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.n_linea || ''}</td>
+        <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.n_operacion || ''}</td>
+        <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.proveedor || ''}</td>
+        <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.cliente || ''}</td>
+        <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.n_contenedor || ''}</td>
+        <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.producto || ''}</td>
+        <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.talla || ''}</td>
+        <td contenteditable="false" class="editable peso-neto" oninput="LineasPedidoApp.calcularValorCompra(this)">${linea.p_neto ? Number(linea.p_neto).toFixed(4) : ''}</td>
+        <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.unidad || ''}</td>
+        <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.bultos || ''}</td>
+        <td contenteditable="true" class="editable precio" oninput="LineasPedidoApp.calcularValorCompra(this)">${linea.precio ? Number(linea.precio).toFixed(4) : ''}</td>
+        <td contenteditable="false" class="editable valor-compra-total">${linea.valor_compra ? Number(linea.valor_compra).toFixed(4) : ''}</td>
+        <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.moneda || ''}</td>
+        <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.paisOrigen || ''}</td>
+    `;
 
             tbody.appendChild(fila);
         },
@@ -389,6 +389,7 @@ cargarConfiguraciones().then(() => {
         },
 
         // Función para calcular el valor de compra total
+        // Función para calcular el valor de compra total
         calcularValorCompra: (elemento) => {
             const fila = elemento.closest('tr');
             const pesoNetoField = fila.querySelector('.peso-neto');
@@ -422,7 +423,7 @@ cargarConfiguraciones().then(() => {
             const pesoNeto = parseFloat(pesoNetoField.innerText.trim()) || 0;
             const precio = parseFloat(precioField.innerText.trim()) || 0;
 
-            const valorCompraTotal = (pesoNeto * precio).toFixed(6);
+            const valorCompraTotal = (pesoNeto * precio).toFixed(4); // Cambiado a 2 decimales
 
             fila.querySelector('.valor-compra-total').innerText = valorCompraTotal;
 

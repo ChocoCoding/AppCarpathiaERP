@@ -179,15 +179,15 @@ cargarConfiguraciones().then(() => {
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.producto || ''}</td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.talla || ''}</td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.paisOrigen || ''}</td>
-                <td contenteditable="true" class="editable peso-neto" oninput="LineasPedidoApp.calcularValorVenta(this)">${linea.p_neto || ''}</td>
+                <td contenteditable="true" class="editable peso-neto" oninput="LineasPedidoApp.calcularValorVenta(this)">${linea.p_neto ? Number(linea.p_neto).toFixed(4) : ''}</td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.unidad || ''}</td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.bultos || ''}</td>
-                <td contenteditable="true" class="editable precio" oninput="LineasPedidoApp.calcularValorVenta(this)">${linea.precio || ''}</td>
-                <td contenteditable="true" class="editable valor-venta-total">${linea.valor_venta || ''}</td>
+                <td contenteditable="true" class="editable precio" oninput="LineasPedidoApp.calcularValorVenta(this)">${linea.precio ? Number(linea.precio).toFixed(4) : ''}</td>
+                <td contenteditable="false" class="editable valor-venta-total">${linea.valor_venta ? Number(linea.valor_venta).toFixed(4) : ''}</td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.incoterm || ''}</td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.moneda || ''}</td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.comerciales || ''}</td>
-                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.transporte || ''}</td>
+                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.transporte ? Number(linea.transporte).toFixed(4) : ''}</td>
             `;
 
             tbody.appendChild(fila);

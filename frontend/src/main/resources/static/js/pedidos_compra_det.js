@@ -161,10 +161,11 @@ cargarConfiguraciones().then(() => {
                 <td contenteditable="true" class="editable" oninput="PedidoCompraDetApp.marcarModificado(this)">${detalle.n_fact_flete || ''}</td>
                 <td contenteditable="true" class="editable" oninput="PedidoCompraDetApp.marcarModificado(this)">${detalle.fechaPagoFleteFormatted || ''}</td>
                 <td contenteditable="true" class="editable" oninput="PedidoCompraDetApp.marcarModificado(this)">${detalle.n_bl || ''}</td>
-                <td contenteditable="true" class="editable" oninput="PedidoCompraDetApp.marcarModificado(this)">${detalle.pesoNetoTotal || ''}</td>
-                <td contenteditable="true" class="editable" oninput="PedidoCompraDetApp.marcarModificado(this)">${detalle.totalBultos || ''}</td>
-                <td contenteditable="true" class="editable" oninput="PedidoCompraDetApp.marcarModificado(this)">${detalle.promedio || ''}</td>
-                <td contenteditable="true" class="editable" oninput="PedidoCompraDetApp.marcarModificado(this)">${detalle.valorCompraTotal || ''}</td>
+
+                <td contenteditable="false" class="editable" oninput="PedidoCompraDetApp.marcarModificado(this)">${detalle.pesoNetoTotal ? Number(detalle.pesoNetoTotal).toFixed(4) : ''}</td>
+                <td contenteditable="false" class="editable" oninput="PedidoCompraDetApp.marcarModificado(this)">${detalle.totalBultos || ''}</td>
+                <td contenteditable="false" class="editable" oninput="PedidoCompraDetApp.marcarModificado(this)">${detalle.promedio ? Number(detalle.promedio).toFixed(4) : ''}</td>
+                <td contenteditable="false" class="editable" oninput="PedidoCompraDetApp.marcarModificado(this)">${detalle.valorCompraTotal ? Number(detalle.valorCompraTotal).toFixed(4) : ''}</td>
                 <td contenteditable="true" class="editable" oninput="PedidoCompraDetApp.marcarModificado(this)">${detalle.observaciones || ''}</td>
             `;
 

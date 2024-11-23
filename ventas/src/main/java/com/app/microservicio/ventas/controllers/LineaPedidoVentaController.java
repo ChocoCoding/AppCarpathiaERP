@@ -57,6 +57,7 @@ public class LineaPedidoVentaController {
         calculoService.recalcularTotalBultos(nuevaLinea.getIdPedidoVenta());
         calculoService.recalcularValoresVenta(nuevaLinea.getIdPedidoVenta());
         calculoService.recalcularPromedio(nuevaLinea.getIdPedidoVenta());
+        calculoService.recalcularPrecioTotalVenta(nuevaLinea.getIdPedidoVenta());
         return ResponseEntity.ok(nuevaLinea);
     }
 

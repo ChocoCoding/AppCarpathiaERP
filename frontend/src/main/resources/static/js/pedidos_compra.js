@@ -10,7 +10,7 @@ let sortDir = 'asc';
 let proveedor = '';
 let cliente = '';
 
-// Mapeo de índices de columnas a nombres de campos
+// Mapeo de índices de columnas a nombres de campos (actualizado)
 const columnasAtributos = {
     2: 'idPedidoCompra',
     3: 'nOperacion',
@@ -115,7 +115,8 @@ cargarConfiguraciones().then(() => {
             middleware.get(url.toString())
                 .then(data => {
                 console.log('Datos recibidos:', data);
-                PedidoCompraApp.renderTabla(data.content);
+                // Usar la nueva función para procesar y renderizar
+                PedidoCompraApp.processAndRenderPedidos(data.content);
                 PedidoCompraApp.actualizarPaginacion(data.number + 1, data.totalPages);
             })
                 .catch(error => {
@@ -242,7 +243,7 @@ cargarConfiguraciones().then(() => {
             filasModificadas.forEach(fila => {
                 const idPedidoCompra = fila.getAttribute('data-id-pedido-compra');
                 const datos = {
-                    n_operacion: fila.children[2].innerText.trim(),
+                    n_operacion: parseLong(fila.children[2].innerText.trim()),
                     n_contenedor: fila.children[3].innerText.trim(),
                     proforma: fila.children[4].innerText.trim(),
                     proveedor: fila.children[5].innerText.trim(),
@@ -354,11 +355,11 @@ cargarConfiguraciones().then(() => {
         // Funciones para mostrar y ocultar la búsqueda y filtros
         toggleSearch: () => {
             const searchInput = document.getElementById('search-input');
-                searchInput.value = '';
-                config.search = '';
-                config.searchFields = [];
-                currentPage = 1;
-                PedidoCompraApp.cargarPedidosCompra();
+            searchInput.value = '';
+            config.search = '';
+            config.searchFields = [];
+            currentPage = 1;
+            PedidoCompraApp.cargarPedidosCompra();
         },
 
         toggleFilter: () => {
@@ -387,7 +388,6 @@ cargarConfiguraciones().then(() => {
             // Cargar los pedidos con los nuevos parámetros de búsqueda
             PedidoCompraApp.cargarPedidosCompra();
         },
-
 
         // Función para inicializar el scroll en la tabla
         initTableScroll: () => {
@@ -420,7 +420,50 @@ cargarConfiguraciones().then(() => {
                 const walk = (x - startX) * 2;
                 tableContainer.scrollLeft = scrollLeft - walk;
             });
-        }
+        },
+
+        // Nueva función para procesar y renderizar pedidos de compra según la lógica de búsqueda avanzada
+        processAndRenderPedidos: (pedidos) => {
+            const searchQuery = config.search ? config.search.trim() : '';
+            const searchFields = config.searchFields || [];
+
+            if (searchQuery && searchFields.length > 0) {
+                // Buscar coincidencias exactas en cualquiera de los campos filtrados
+                const exactMatches = pedidos.filter(pedido => {
+                    return searchFields.some(field => {
+                        const valorCampo = pedido[field];
+                        // Manejar valores numéricos y de texto
+                        if (typeof valorCampo === 'number') {
+                            return valorCampo === Number(searchQuery);
+                        } else if (typeof valorCampo === 'string') {
+                            return valorCampo.toLowerCase() === searchQuery.toLowerCase();
+                        }
+                        return false;
+                    });
+                });
+
+                if (exactMatches.length > 0) {
+                    // Si hay coincidencias exactas, mostrar solo la primera
+                    PedidoCompraApp.renderTabla([exactMatches[0]]);
+                    PedidoCompraApp.mostrarAlerta('info', 'Información', 'Se encontró una coincidencia exacta. Mostrando solo el primer resultado.');
+                } else {
+                    // Si no hay coincidencias exactas, mostrar todas las coincidencias parciales
+                    const partialMatches = pedidos.filter(pedido => {
+                        return searchFields.some(field => {
+                            const valorCampo = pedido[field];
+                            if (valorCampo === null || valorCampo === undefined) return false;
+                            // Convertir ambos valores a string para la comparación parcial
+                            return valorCampo.toString().toLowerCase().includes(searchQuery.toLowerCase());
+                        });
+                    });
+                    PedidoCompraApp.renderTabla(partialMatches);
+                    PedidoCompraApp.mostrarAlerta('info', 'Información', `Mostrando ${partialMatches.length} resultados que contienen "${searchQuery}".`);
+                }
+            } else {
+                // Si no hay búsqueda, mostrar todos los pedidos
+                PedidoCompraApp.renderTabla(pedidos);
+            }
+        },
     };
 
     // Exponer globalmente para que las funciones sean accesibles desde el HTML
