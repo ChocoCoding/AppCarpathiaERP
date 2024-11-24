@@ -69,7 +69,7 @@ cargarConfiguraciones().then(() => {
     const CosteCompraApp = {
         // Navegación
         goBack: () => {
-            window.history.back();
+            window.location.href = "/compras";
         },
         goHome: () => {
             window.location.href = "/home";

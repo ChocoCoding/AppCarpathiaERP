@@ -1,3 +1,16 @@
+:root {
+--header-bg-color: #2c3e50;
+    --header-text-color: #ecf0f1;
+    --table-header-bg-color: #3498db;
+    --table-header-text-color: #ffffff;
+    --background-color: #f0f4f8;
+    --text-color: #34495e;
+    --hover-color: #e8f1f8;
+    --border-color: #bdc3c7;
+    --accent-color: #1abc9c;
+    --new-row-color: #d6eaf8;
+}
+
 .step-indicator {
     width: 30px;
     height: 30px;
@@ -25,15 +38,17 @@
     transform: scale(1.2);
 }
 
+h2{
+    color:white;
+}
+
 .header-icon {
     color:white;
     transition: transform 0.3s ease;
-}
-h2{
-    color:white;
 }
 
 .custom-header {
     padding: 20px 0;
     height: auto;
+    background-color: var(--header-bg-color) !important;
 }

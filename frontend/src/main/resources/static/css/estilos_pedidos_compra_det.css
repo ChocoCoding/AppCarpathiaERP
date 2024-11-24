@@ -1,15 +1,23 @@
 :root {
+--header-bg-color: #2c3e50;
+    --header-text-color: #ecf0f1;
+    --table-header-bg-color: #3498db;
+    --table-header-text-color: #ffffff;
     --background-color: #f0f4f8;
-    --text-color: #333333;
+    --text-color: #34495e;
+    --hover-color: #e8f1f8;
+    --border-color: #bdc3c7;
+    --accent-color: #1abc9c;
+    --new-row-color: #d6eaf8;
 }
 
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f7f6;
-            margin: 0;
-            padding: 20px;
-            color: #333;
-        }
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f7f6;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+    }
 
 .btn-link {
     display: inline-flex;
@@ -22,7 +30,7 @@
 }
 
 .header-icon {
-    color:white;
+    color: var(--header-text-color);
     transition: transform 0.3s ease;
 }
 
@@ -30,6 +38,7 @@
 .custom-header {
     padding: 30px 0;
     height: auto;
+    background-color: var(--header-bg-color) !important;
 }
 
 /* Otros estilos existentes */
@@ -65,13 +74,13 @@
     position: absolute;
     top: 100%;
     left: 0;
-    background-color: #007BFF;
+    background-color: var(--header-bg-color);
     border: 1px solid #004a99;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 10;
     padding: 10px;
     width: 220px;
-    color: white;
+    color: var(--header-text-color);
     margin-left: 10px;
     text-align: left;
 }
@@ -88,28 +97,23 @@
 
 h3 {
     text-align: center;
-    color: #007BFF;
+    color: var(--header-bg-color);
     padding-top: 20px;
 }
 
-        h3 {
-            text-align: center;
-            color: #007BFF;
-            padding-top: 20px;
-        }
 
-        .table-container {
-            overflow-x: auto; /* Hace que la tabla sea desplazable horizontalmente */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            cursor: grab;
-        }
+.table-container {
+    overflow-x: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: grab;
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            table-layout: fixed; /* Asegura que las celdas tengan un ancho fijo */
-            min-width: 1500px; /* Ancho mínimo de la tabla */
-        }
+table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed; /* Asegura que las celdas tengan un ancho fijo */
+    min-width: 1500px; /* Ancho mínimo de la tabla */
+}
 
         th, td {
             font-family: 'Arial', sans-serif;
@@ -123,10 +127,10 @@ h3 {
         }
 
         th {
-            background-color: #007BFF;
-            color: white;
-            font-weight: bold;
-            border-bottom: 2px solid #004a99;
+    background-color: var(--table-header-bg-color);
+    color: var(--table-header-text-color);
+    font-weight: bold;
+    border-bottom: 2px solid #004a99;
         }
 
         td:focus {
@@ -168,31 +172,34 @@ h3 {
         }
 
 /* Estilos para la Paginación */
-.pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-}
+ .pagination {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     margin-top: 20px;
+ }
 
-.pagination a,
-.pagination span {
-    color: #007BFF;
-    padding: 8px 16px;
-    text-decoration: none;
-    border: 1px solid #ddd;
-    margin: 0 4px;
-    border-radius: 4px;
-    cursor: pointer;
-}
+ .pagination a,
+ .pagination span {
+     color: var(--header-bg-color);
+     border: 1px solid var(--border-color);
+     background-color: #ffffff;
+     padding: 8px 16px;
+     text-decoration: none;
+     margin: 0 4px;
+     border-radius: 4px;
+     cursor: pointer;
+ }
 
-.pagination a:hover {
-    background-color: #ddd;
-}
+ .pagination a:hover {
+    background-color: var(--table-header-bg-color);
+    color: #ffffff;
+    border-color: var(--table-header-bg-color);
+ }
 
-.pagination .disabled {
-    color: #6c757d;
-    border-color: #6c757d;
-    cursor: not-allowed;
-    background-color: #f8f9fa;
-}
+ .pagination .disabled {
+     color: #6c757d;
+     border-color: #e0e0e0;
+     background-color: #f8f9fa;
+     cursor: not-allowed;
+ }

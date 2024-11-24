@@ -1,3 +1,5 @@
 
+|
+java:S1128"ZRemove this unused import 'com.app.microservicio.compras.entities.DatosBarcoPedidoCompra'.(ò°Ì¿ùÿÿÿÿ8ŽÃÄ§µ2
 ›
-java:S1128"SRemove this unused import 'com.app.microservicio.compras.entities.PedidoCompraDet'.(®ž…ªüÿÿÿÿ8¼Ÿ„« 2J$3a2d8442-d072-4d20-b384-965dafe10875
+java:S1128"SRemove this unused import 'com.app.microservicio.compras.entities.PedidoCompraDet'.(®ž…ªüÿÿÿÿ8¼Ÿ„« 2J$3a2d8442-d072-4d20-b384-965dafe10875

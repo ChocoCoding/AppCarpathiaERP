@@ -65,7 +65,7 @@ cargarConfiguraciones().then(() => {
     const PedidoCompraDetApp = {
         // Navegación
         goBack: () => {
-            window.history.back();
+            window.location.href = "/compras";
         },
         goHome: () => {
             window.location.href = "/home";

@@ -1,20 +1,13 @@
 
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8«Ó³ñ›2J$655c7854-ea8d-44c4-9eee-4ef789249925
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8«Ó³ñ›2J$18942899-72df-4937-a862-6ba79346eca9
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8«Ó³ñ›2J$fdcb44a0-2757-45f7-b45a-8ac13786690c
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8«Ó³ñ›2J$1fa5c132-0783-4677-95a8-138bb48e5edd
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8«Ó³ñ›2J$79f6bbe8-f306-4726-8d78-2ffb28713ecd
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8«Ó³ñ›2J$96a919fe-a6b5-47e2-a23a-799ef601b930
 …
-java:S6813!"BRemove this field injection and use constructor injection instead.(êæÄŞ8—°şó›2J$d49c0dde-62b3-4851-bba7-b8051c6dec13
+java:S6813""BRemove this field injection and use constructor injection instead.(êæÄŞ8—°şó›2J$14f1570e-891c-4da2-b6dd-c7d36afdbc78
 •
-java:S6204("RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8®Ó³ñ›2J$2ace29b6-e453-4c78-b954-7bb4b460a912
-•
-java:S6204j"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8Ë®Úå2J$fc780bc1-be85-4dbc-bacb-b4c87badbe8a
-š
-java:S1128"RRemove this unused import 'com.app.microservicio.compras.DTO.EliminarPorLineaDTO'.(ÒØ¡¸øÿÿÿÿ8ÏÅ¬ô›2J$f17536a9-e971-42b3-aec0-9eda4d1dae58
-›
-java:S1128"SRemove this unused import 'com.app.microservicio.compras.entities.PedidoCompraDet'.(®…ªüÿÿÿÿ8ßĞå2J$2aff3c0e-e32a-460c-8c9f-1f386e150370
-Œ
-java:S1128
-"DRemove this unused import 'org.springframework.http.ResponseEntity'.(¶¯ø¦úÿÿÿÿ8ÏÅ¬ô›2J$ce1b3f6d-c032-4b07-8d34-2c6f31e4dcf1
+java:S3776)"RRefactor this method to reduce its Cognitive Complexity from 24 to the 15 allowed.(¬•§’8¶Ø¸§µ2J$b25b7c81-5c36-40a4-bae6-79149bf8693b
+–
+java:S6204«"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8®Ó³ñ›2J$390e2641-6b93-4245-9f82-c5b938ccf7eb

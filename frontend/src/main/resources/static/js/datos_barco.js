@@ -64,7 +64,7 @@ cargarConfiguraciones().then(() => {
     const DatosBarcoApp = {
         // Navegación
         goBack: () => {
-            window.history.back();
+            window.location.href = "/compras";
         },
         goHome: () => {
             window.location.href = "/home";

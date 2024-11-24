@@ -6,6 +6,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
   <link rel="stylesheet" href="/css/estilos_compra_venta.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 <header class="bg-secondary bg-gradient border-bottom custom-header">
@@ -33,8 +34,24 @@
 
 <!-- Mostrar Mensaje de Error si no hay datos -->
 <div th:if="${mensaje}">
-  <p th:text="${mensaje}"></p>
+  <!-- Remover el párrafo existente para evitar duplicados -->
+  <!-- <p th:text="${mensaje}"></p> -->
+  <!-- Añadir script para mostrar SweetAlert2 -->
+  <script th:inline="javascript">
+                /*<![CDATA[*/
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: /*[[${mensaje}]]*/,
+                    confirmButtonText: 'Aceptar'
+                }).then(() => {
+                    // Opcional: Redirigir a la página del formulario después de cerrar la alerta
+                    window.location.href = "/compras-ventas";
+                });
+                /*]]>*/
+            </script>
 </div>
+
 
 <!-- Mostrar Datos si existen -->
 <div th:if="${comprasVentas != null}">
@@ -45,7 +62,7 @@
     <tr>
       <th>ID Pedido Compra:</th>
       <th>Número de Operación</th>
-      <th>Número de Contenedor:</th>
+      <th>Número de Contenedor</th>
       <th>Proforma</th>
       <th>Proveedor</th>
       <th>Cliente</th>
@@ -114,5 +131,6 @@
     window.location.href = "/logout";
   }
 </script>
+
 </body>
 </html>

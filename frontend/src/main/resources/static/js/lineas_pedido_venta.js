@@ -76,7 +76,7 @@ cargarConfiguraciones().then(() => {
     const LineasPedidoApp = {
         // Navegación
         goBack: () => {
-            window.history.back();
+            window.location.href = "/ventas";
         },
         goHome: () => {
             window.location.href='/home';

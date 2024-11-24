@@ -1,0 +1,6 @@
+
+–	java:S116"VRename this field "n_operacion" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¡úíóøÿÿÿÿJ$96e7523e-0a5b-4198-a400-d255f324bd3c
+”	java:S116)"YRename this field "fecha_embarque" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ç½ƒŸJ$17c53fe9-342b-40a5-9e27-8906cfd00fb4
+“	java:S116,"XRename this field "fecha_llegada" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÛJ$5747e9dc-4e81-4105-bdcf-cb35efe3543f
+›	java:S1162"[Rename this field "fecha_pago_flete" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¸õ‚ÛùÿÿÿÿJ$4361b37a-ea9e-4733-8e8c-b27dbb9e4e74
+˜	java:S1165"XRename this field "factura_flete" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(üÄ¨ÿÿÿÿÿJ$e340da85-98fa-4288-8a16-fab0506199f7

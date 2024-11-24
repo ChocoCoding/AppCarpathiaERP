@@ -1,13 +1,16 @@
 :root {
-    --background-color: #f0f4f8;
-    --header-color: #2c3e50;
-    --button-color: #3498db;
-    --button-hover: #2980b9;
-    --text-color: #333333;
-    --back-btn-color: #95a5a6;
-    --back-btn-hover: #7f8c8d;
-    --logout-btn-color: #e74c3c;
-    --logout-btn-hover: #c0392b;
+        --header-bg-color: #2c3e50;
+            --header-text-color: #ecf0f1;
+            --table-header-bg-color: #3498db;
+            --table-header-text-color: #ffffff;
+            --background-color: #f0f4f8;
+            --text-color: #34495e;
+            --hover-color: #e8f1f8;
+            --border-color: #bdc3c7;
+            --accent-color: #1abc9c;
+            --new-row-color: #d6eaf8;
+            --button-color: #3498db;
+            --button-hover: #2980b9;
 }
 
 body {
@@ -28,6 +31,7 @@ h2{
 .custom-header {
     padding: 30px 0;
     height: auto;
+    background-color: var(--header-bg-color) !important;
 }
 
 .btn-link {
@@ -41,11 +45,9 @@ h2{
 }
 
 .header-icon {
-    color:white;
+    color: var(--header-text-color);
     transition: transform 0.3s ease;
 }
-
-
 
 .content-container {
     flex-grow: 1;

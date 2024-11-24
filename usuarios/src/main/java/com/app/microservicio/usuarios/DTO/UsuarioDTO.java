@@ -13,5 +13,4 @@ public class UsuarioDTO {
     private String nombreCompleto;
     private boolean enabled;
     private Set<String> roles;
-
 }

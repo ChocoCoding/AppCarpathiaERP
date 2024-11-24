@@ -63,7 +63,7 @@ cargarConfiguraciones().then(() => {
     const PedidoCompraApp = {
         // Navegación
         goBack: () => {
-            window.history.back();
+            window.location.href = "/compras";
         },
 
         goHome: () => {
@@ -465,6 +465,12 @@ cargarConfiguraciones().then(() => {
             }
         },
     };
+
+        // Función para convertir cadenas a números de manera segura
+        function parseLong(value) {
+            const parsed = parseInt(value, 10);
+            return isNaN(parsed) ? null : parsed;
+        }
 
     // Exponer globalmente para que las funciones sean accesibles desde el HTML
     window.PedidoCompraApp = PedidoCompraApp;

@@ -3,8 +3,15 @@
     --button-color: #3498db;
     --button-hover: #2980b9;
     --text-color: #333333;
-    --logout-btn-color: #e74c3c;
-    --logout-btn-hover: #c0392b;
+    --header-bg-color: #2c3e50;
+        --header-text-color: #ecf0f1;
+        --table-header-bg-color: #3498db;
+        --table-header-text-color: #ffffff;
+        --background-color: #f0f4f8;
+        --hover-color: #e8f1f8;
+        --border-color: #bdc3c7;
+        --accent-color: #1abc9c;
+        --new-row-color: #d6eaf8;
 }
 
 body {
@@ -29,7 +36,7 @@ body {
 }
 
 .header-icon {
-    color:white;
+    color: var(--header-text-color);
     transition: transform 0.3s ease;
 }
 h2{
@@ -39,6 +46,7 @@ h2{
 .custom-header {
     padding: 20px 0;
     height: auto;
+    background-color: var(--header-bg-color) !important;
 }
 
 .logo-container {

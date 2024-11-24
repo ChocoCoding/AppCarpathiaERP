@@ -1,3 +1,5 @@
 
-’
-java:S1128"JRemove this unused import 'org.springframework.data.jpa.repository.Query'.(Äºöïşÿÿÿÿ8ÌùÓ™2J$28922495-816b-4cb3-8de1-56d0c9543aab
+™
+java:S1128"QRemove this unused import 'org.springframework.web.bind.annotation.PathVariable'.(¹ûñÅşÿÿÿÿ8ç‘Ş¦µ2J$ef8853d0-3bfa-485b-97cb-6d257396ff95
+s
+java:S1128"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8è‘Ş¦µ2J$e54ea7d2-2922-46ea-9ec3-69463c78d822

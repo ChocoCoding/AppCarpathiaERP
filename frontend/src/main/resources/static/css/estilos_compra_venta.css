@@ -1,16 +1,35 @@
-html, body {
+:root {
+--header-bg-color: #2c3e50;
+    --header-text-color: #ecf0f1;
+    --table-header-bg-color: #3498db;
+    --table-header-text-color: #ffffff;
+    --background-color: #f0f4f8;
+    --text-color: #34495e;
+    --hover-color: #e8f1f8;
+    --border-color: #bdc3c7;
+    --accent-color: #1abc9c;
+    --new-row-color: #d6eaf8;
+}
+
+
+body {
     font-family: 'Arial', sans-serif;
     height: 100%;
 }
 
 .main-container {
-    height: calc(100% - 70px); /* Ajusta según la altura del header */
+    height: calc(100% - 70px);
 }
 
+.header-icon {
+    color: var(--header-text-color);
+    transition: transform 0.3s ease;
+}
 
 .custom-header {
     padding: 30px 0;
     height: auto;
+    background-color: var(--header-bg-color) !important;
 }
 
 .custom-header h2{
@@ -27,28 +46,21 @@ html, body {
     transform: scale(1.2);
 }
 
-.header-icon {
-    color:white;
-    transition: transform 0.3s ease;
-}
-
-
 table {
     width: 100%;
     border-collapse: collapse;
-    table-layout: fixed; /* Asegura que las celdas tengan un ancho fijo */
-    min-width: 1500px; /* Ancho mínimo de la tabla */
+    table-layout: fixed;
+    min-width: 1500px;
 }
 
 th, td {
     font-family: 'Arial', sans-serif;
     padding: 12px;
     text-align: left;
-    border: 1px solid #ccc;
-    white-space: nowrap; /* Evita que el texto se envuelva */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 150px; /* Ancho fijo para las celdas */
+    border: 1px solid var(--border-color);
+    white-space: nowrap;
+    width: auto;
+    overflow-x: hidden;
 }
 
 th {

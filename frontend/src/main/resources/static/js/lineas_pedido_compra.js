@@ -69,7 +69,7 @@ cargarConfiguraciones().then(() => {
     const LineasPedidoApp = {
         // Navegación
         goBack: () => {
-            window.history.back();
+            window.location.href = "/compras";
         },
 
         goHome: () => {
