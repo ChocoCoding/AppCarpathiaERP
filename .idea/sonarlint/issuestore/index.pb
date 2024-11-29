@@ -149,3 +149,17 @@ Nventas/src/main/java/com/app/microservicio/ventas/entities/PedidoVentaDet.java
 Vfrontend/src/main/java/com/app/frontend/controllers/ModuloComprasVentasController.java,b\f\bf68dee9791ab68021d34f1373c5df87cac36693
 y
 Ifrontend/src/main/java/com/app/frontend/service/ComprasVentasService.java,0\4\0412e352079b15544d08f65a6817bcae9f6fbf14
+B
+compras/Dockerfile,8\5\85d3e16d76f2bf36a677709e0944133a9a95ce55
+I
+compras_ventas/Dockerfile,0\6\06fe63738a9e7bc8a39326b157439b6ec315afcd
+C
+frontend/Dockerfile,8\c\8cbab8791f5ce92942fd63428b3f656f0615a299
+C
+usuarios/Dockerfile,c\6\c63ac278445657c6a2f8373001af05d64861d95b
+A
+ventas/Dockerfile,a\8\a8f90133ce4d95e34187ff53ed027d129ea2d1b5
+F
+compras_ventas/pom.xml,4\f\4f93288940c30c4c4282b50266372e941eec3b51
+>
+ventas/pom.xml,d\3\d3abb8fc588b2be081772a53494798ad30d60da4
