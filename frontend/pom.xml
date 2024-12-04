@@ -68,14 +68,7 @@
 			<resource>
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
-				<excludes>
-					<exclude>application.properties</exclude>
-					<exclude>endpoints.properties</exclude>
-					<exclude>strings.properties</exclude>
-					<exclude>views.properties</exclude>
-					<exclude>static/js/public/stringsjs.properties</exclude>
-					<exclude>static/js/public/endpointsjs.properties</exclude>
-				</excludes>
+
 			</resource>
 		</resources>
 		<plugins>

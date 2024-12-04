@@ -164,13 +164,13 @@ cargarConfiguraciones().then(() => {
         </td>
         <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.idPedidoCompra || ''}</td>
         <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.n_linea || ''}</td>
-        <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.n_operacion || ''}</td>
+        <td contenteditable="false" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.n_operacion || ''}</td>
         <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.proveedor || ''}</td>
         <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.cliente || ''}</td>
-        <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.n_contenedor || ''}</td>
+        <td contenteditable="false" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.n_contenedor || ''}</td>
         <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.producto || ''}</td>
         <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.talla || ''}</td>
-        <td contenteditable="false" class="editable peso-neto" oninput="LineasPedidoApp.calcularValorCompra(this)">${linea.p_neto ? Number(linea.p_neto).toFixed(4) : ''}</td>
+        <td contenteditable="true" class="editable peso-neto" oninput="LineasPedidoApp.calcularValorCompra(this)">${linea.p_neto ? Number(linea.p_neto).toFixed(4) : ''}</td>
         <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.unidad || ''}</td>
         <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.bultos || ''}</td>
         <td contenteditable="true" class="editable precio" oninput="LineasPedidoApp.calcularValorCompra(this)">${linea.precio ? Number(linea.precio).toFixed(4) : ''}</td>
@@ -363,17 +363,17 @@ cargarConfiguraciones().then(() => {
                 </td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
+                <td contenteditable="false" oninput="LineasPedidoApp.marcarModificado(this)"></td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
-                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
-                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
+                <td contenteditable="false" oninput="LineasPedidoApp.marcarModificado(this)"></td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
                 <td contenteditable="true" class="editable peso-neto" oninput="LineasPedidoApp.calcularValorCompra(this)"></td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
                 <td contenteditable="true" class="editable precio" oninput="LineasPedidoApp.calcularValorCompra(this)"></td>
-                <td contenteditable="true" class="editable valor-compra-total"></td>
+                <td contenteditable="false" class="valor-compra-total"></td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
             `;

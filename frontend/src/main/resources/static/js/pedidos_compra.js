@@ -258,25 +258,25 @@ cargarConfiguraciones().then(() => {
                     // Crear nuevo pedido
                     middleware.post(config.pedidosCompraEndpoint, datos)
                         .then((nuevoPedido) => {
-                        PedidoCompraApp.mostrarAlerta('success', config.creacionExitosa, config.pedidoCreadoExito);
-                        PedidoCompraApp.cargarPedidosCompra(); // Recargar la tabla
-                    })
+                            PedidoCompraApp.mostrarAlerta('success', config.creacionExitosa, config.pedidoCreadoExito);
+                            PedidoCompraApp.cargarPedidosCompra(); // Recargar la tabla
+                        })
                         .catch((error) => {
-                        PedidoCompraApp.mostrarAlerta('error', 'Error', error.message || config.errorCrearPedido);
-                        console.error('Error al crear pedido:', error);
-                    });
+                            PedidoCompraApp.mostrarAlerta('error', 'Error', error.message || config.errorCrearPedido);
+                            console.error('Error al crear pedido:', error);
+                        });
                 } else {
                     // Actualizar pedido existente
                     const url = config.pedidoCompraIdEndpoint.replace('{id}', idPedidoCompra);
                     middleware.put(url, datos)
                         .then(() => {
-                        PedidoCompraApp.mostrarAlerta('success', config.guardadoExitoso, config.cambiosGuardadosExito);
-                        PedidoCompraApp.cargarPedidosCompra(); // Recargar la tabla
-                    })
+                            PedidoCompraApp.mostrarAlerta('success', config.guardadoExitoso, config.cambiosGuardadosExito);
+                            PedidoCompraApp.cargarPedidosCompra(); // Recargar la tabla
+                        })
                         .catch((error) => {
-                        PedidoCompraApp.mostrarAlerta('error', 'Error', error.message || config.errorGuardarCambios);
-                        console.error('Error al actualizar pedido:', error);
-                    });
+                            PedidoCompraApp.mostrarAlerta('error', 'Error', error.message || config.errorGuardarCambios);
+                            console.error('Error al actualizar pedido:', error);
+                        });
                 }
             });
         },

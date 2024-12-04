@@ -4,6 +4,7 @@ const DatosBarcoFormApp = {
        return {
             idPedidoCompra: pedidoCompraId,
             n_operacion: document.getElementById('operacionBarco').value,
+            n_contenedor:document.getElementById('contenedorBarco').value,
             nombreBarco: document.getElementById('nombreBarco').value,
             viaje: document.getElementById('viaje').value,
             naviera: document.getElementById('naviera').value,

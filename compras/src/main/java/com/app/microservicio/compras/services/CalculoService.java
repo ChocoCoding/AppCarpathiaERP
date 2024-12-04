@@ -1,9 +1,6 @@
 package com.app.microservicio.compras.services;
 
-import com.app.microservicio.compras.entities.CostePedidoCompra;
-import com.app.microservicio.compras.entities.DatosBarcoPedidoCompra;
-import com.app.microservicio.compras.entities.LineaPedidoCompra;
-import com.app.microservicio.compras.entities.PedidoCompraDet;
+import com.app.microservicio.compras.entities.*;
 import com.app.microservicio.compras.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -200,6 +198,48 @@ public class CalculoService{
         }
 
         return ResponseEntity.ok(valorPedidoCompra);
+    }
+
+    public void actualizarCamposLineaPedido(Long id){
+        List<LineaPedidoCompra> lineaPedidoCompras = lineaPedidoCompraRepository.findByIdPedidoCompra(id);
+        if (!lineaPedidoCompras.isEmpty()){
+            Optional<PedidoCompra> pedidoCompra = pedidoCompraRepository.findById(id);
+            for(LineaPedidoCompra l: lineaPedidoCompras){
+                l.setNContenedor(pedidoCompra.get().getNContenedor());
+                l.setNOperacion(pedidoCompra.get().getNOperacion());
+                lineaPedidoCompraRepository.save(l);
+            }
+        }
+    }
+    public void actualizarCamposPedidoCompraDet(Long id) {
+        Optional<PedidoCompraDet> pedidoCompraDet = pedidoCompraDetRepository.findByIdPedidoCompra(id);
+        Optional<PedidoCompra> pedidoCompra = pedidoCompraRepository.findById(id);
+        if (pedidoCompraDet.isPresent()){
+            pedidoCompraDet.get().setNOperacion(pedidoCompra.get().getNOperacion());
+            pedidoCompraDetRepository.save(pedidoCompraDet.get());
+        }
+    }
+
+    public DatosBarcoPedidoCompra actualizarCamposDatosBarco(Long id) {
+        Optional<DatosBarcoPedidoCompra> datosBarcoPedidoCompra = datosBarcoRepository.findByIdPedidoCompra(id);
+        Optional<PedidoCompra> pedidoCompra = pedidoCompraRepository.findById(id);
+        if (datosBarcoPedidoCompra.isPresent()){
+            datosBarcoPedidoCompra.get().setN_operacion(pedidoCompra.get().getNOperacion());
+            datosBarcoPedidoCompra.get().setN_contenedor(pedidoCompra.get().getNContenedor());
+           return datosBarcoRepository.save(datosBarcoPedidoCompra.get());
+        }
+        return null;
+    }
+
+    public CostePedidoCompra actualizarCostePedidoCompra(Long id) {
+        Optional<CostePedidoCompra> costePedidoCompra = costePedidoRepository.findByIdPedidoCompra(id);
+        Optional<PedidoCompra> pedidoCompra = pedidoCompraRepository.findById(id);
+        if (costePedidoCompra.isPresent()){
+            costePedidoCompra.get().setNOperacion(pedidoCompra.get().getNOperacion());
+            costePedidoCompra.get().setNContenedor(pedidoCompra.get().getNContenedor());
+            return costePedidoRepository.save(costePedidoCompra.get());
+        }
+        return null;
     }
 
 }

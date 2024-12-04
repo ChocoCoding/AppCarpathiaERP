@@ -32,6 +32,9 @@ public class DatosBarcoPedidoCompraService {
     @Autowired
     private DatosBarcoRepository datosBarcoRepository;
 
+    @Autowired
+    private CalculoService calculoService;
+
     public Optional<DatosBarcoDTO> obtenerDatoBarco(Long idPedidoCompra) {
         return datosBarcoRepository.findById(idPedidoCompra)
                 .map(this::convertirADTO);
@@ -63,7 +66,7 @@ public class DatosBarcoPedidoCompraService {
                             );
                         }
                     });
-                } else if (field.equals("idDatosBarco") || field.equals("nOperacion") || field.equals("flete")) {
+                } else if (field.equals("idDatosBarco") || field.equals("nOperacion") || field.equals("nCOntenedor") || field.equals("flete")) {
                     // Campos numéricos
                     try {
                         Long value = Long.parseLong(search);
@@ -113,7 +116,10 @@ public class DatosBarcoPedidoCompraService {
     }
 
     public DatosBarcoDTO crearDatosBarco(DatosBarcoDTO datosBarcoDTO) {
-        return convertirADTO(datosBarcoRepository.save(convertirAEntidad(datosBarcoDTO)));
+        DatosBarcoPedidoCompra datosBarcoPedidoCompra = convertirAEntidad(datosBarcoDTO);
+        datosBarcoRepository.save(datosBarcoPedidoCompra);
+        DatosBarcoPedidoCompra datosBarcoNuevo = calculoService.actualizarCamposDatosBarco(datosBarcoPedidoCompra.getPedidoCompra().getIdPedidoCompra());
+        return convertirADTO(datosBarcoNuevo);
     }
 
 
@@ -123,16 +129,15 @@ public class DatosBarcoPedidoCompraService {
 
         DatosBarcoPedidoCompra datosBarcoPedidoCompra;
         if (existente.isPresent()) {
-            // Si el registro existe, actualizarlo
             datosBarcoPedidoCompra = existente.get();
         } else {
-            // Si no existe, crear uno nuevo
             datosBarcoPedidoCompra = new DatosBarcoPedidoCompra();
         }
 
         // Actualizar campos
         datosBarcoPedidoCompra.setPedidoCompra(pedidoCompraRepository.findById(datosBarcoDTO.getIdPedidoCompra()).orElse(null));
         datosBarcoPedidoCompra.setN_operacion(datosBarcoDTO.getN_operacion());
+        datosBarcoPedidoCompra.setN_contenedor(datosBarcoDTO.getN_contenedor());
         datosBarcoPedidoCompra.setNombreBarco(datosBarcoDTO.getNombreBarco());
         datosBarcoPedidoCompra.setViaje(datosBarcoDTO.getViaje());
         datosBarcoPedidoCompra.setNaviera(datosBarcoDTO.getNaviera());
@@ -155,6 +160,7 @@ public class DatosBarcoPedidoCompraService {
         datosBarcoDTO.setIdDatosBarco(datosBarcoPedidoCompra.getIdDatosBarco());
         datosBarcoDTO.setIdPedidoCompra(datosBarcoPedidoCompra.getPedidoCompra().getIdPedidoCompra());
         datosBarcoDTO.setN_operacion(datosBarcoPedidoCompra.getN_operacion());
+        datosBarcoDTO.setN_contenedor(datosBarcoPedidoCompra.getN_contenedor());
         datosBarcoDTO.setNombreBarco(datosBarcoPedidoCompra.getNombreBarco());
         datosBarcoDTO.setViaje(datosBarcoPedidoCompra.getViaje());
         datosBarcoDTO.setNaviera(datosBarcoPedidoCompra.getNaviera());
@@ -176,6 +182,7 @@ public class DatosBarcoPedidoCompraService {
         datosBarcoPedidoCompra.setIdDatosBarco(datosBarcoDTO.getIdDatosBarco());
         datosBarcoPedidoCompra.setPedidoCompra(pedidoCompraRepository.findById(datosBarcoDTO.getIdPedidoCompra()).orElse(null));
         datosBarcoPedidoCompra.setN_operacion(datosBarcoDTO.getN_operacion());
+        datosBarcoPedidoCompra.setN_contenedor(datosBarcoDTO.getN_contenedor());
         datosBarcoPedidoCompra.setNombreBarco(datosBarcoDTO.getNombreBarco());
         datosBarcoPedidoCompra.setViaje(datosBarcoDTO.getViaje());
         datosBarcoPedidoCompra.setNaviera(datosBarcoDTO.getNaviera());

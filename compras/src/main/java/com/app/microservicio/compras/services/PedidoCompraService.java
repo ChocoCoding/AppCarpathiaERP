@@ -1,5 +1,6 @@
 package com.app.microservicio.compras.services;
 
+import com.app.microservicio.compras.exceptions.OperacionExistenteException;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class PedidoCompraService {
 
     @Autowired
     private PedidoCompraRepository pedidoCompraRepository;
+
+    @Autowired
+    private CalculoService calculoService;
 
     @Autowired
     EntityManager entityManager;
@@ -89,10 +93,14 @@ public class PedidoCompraService {
     public PedidoCompraDTO guardarPedidoCompra(PedidoCompraDTO pedidoCompraDTO) {
         Optional<PedidoCompra> pedidoCompraOperacion = pedidoCompraRepository.findPedidoCompraByNoperacion(pedidoCompraDTO.getN_operacion());
         if (pedidoCompraOperacion.isPresent() && !Objects.equals(pedidoCompraOperacion.get().getIdPedidoCompra(), pedidoCompraDTO.getIdPedidoCompra())){
-            return null;
+            throw new OperacionExistenteException("El número de operación introducido ya está asignado a un pedido de compra.");
         }
         PedidoCompra pedidoCompra = convertirAEntidad(pedidoCompraDTO);
         PedidoCompra nuevoPedidoCompra = pedidoCompraRepository.save(pedidoCompra);
+        calculoService.actualizarCamposLineaPedido(pedidoCompra.getIdPedidoCompra());
+        calculoService.actualizarCamposPedidoCompraDet(pedidoCompra.getIdPedidoCompra());
+        calculoService.actualizarCamposDatosBarco(pedidoCompra.getIdPedidoCompra());
+        calculoService.actualizarCostePedidoCompra(pedidoCompra.getIdPedidoCompra());
         return convertirADTO(nuevoPedidoCompra);
     }
 
@@ -117,10 +125,11 @@ public class PedidoCompraService {
                         .setParameter("id", id)
                         .executeUpdate();
 
+                /*
                 entityManager.createNativeQuery("DELETE FROM compras_ventas WHERE id_pedido_compra = :id")
                         .setParameter("id", id)
                         .executeUpdate();
-
+                */
                 // Eliminar el pedido en pedidos_compra
                 pedidoCompraRepository.deleteById(id);
 
@@ -142,7 +151,7 @@ public class PedidoCompraService {
         if (pedidoCompraOpt.isPresent()) {
             Optional<PedidoCompra> pedidoCompraOperacion = pedidoCompraRepository.findPedidoCompraByNoperacion(pedidoCompraDTO.getN_operacion());
             if (pedidoCompraOperacion.isPresent() && !Objects.equals(pedidoCompraOperacion.get().getIdPedidoCompra(), pedidoCompraOpt.get().getIdPedidoCompra())){
-                return null;
+                throw new OperacionExistenteException("El número de operación introducido ya está asignado a un pedido de compra.");
             }
             PedidoCompra pedidoCompra = pedidoCompraOpt.get();
             // Actualizar los campos
@@ -155,6 +164,10 @@ public class PedidoCompraService {
             pedidoCompra.setReferenciaProveedor(pedidoCompraDTO.getReferenciaProveedor());
 
             PedidoCompra actualizado = pedidoCompraRepository.save(pedidoCompra);
+            calculoService.actualizarCamposLineaPedido(actualizado.getIdPedidoCompra());
+            calculoService.actualizarCamposPedidoCompraDet(actualizado.getIdPedidoCompra());
+            calculoService.actualizarCamposDatosBarco(actualizado.getIdPedidoCompra());
+            calculoService.actualizarCostePedidoCompra(actualizado.getIdPedidoCompra());
             return convertirADTO(actualizado);
         } else {
             return null;
