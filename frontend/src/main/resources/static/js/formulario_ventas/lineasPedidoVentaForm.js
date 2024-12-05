@@ -24,10 +24,6 @@ const LineaPedidoFormApp = {
                     <input type="text" class="form-control" name="numLinea" value="${lineCounter}" readonly>
                 </div>
                 <div class="col-md-6">
-                    <label for="numOperacion" class="form-label">Nº Operación</label>
-                    <input type="text" class="form-control" name="numOperacion" placeholder="Nº Operación">
-                </div>
-                <div class="col-md-6">
                     <label for="proveedorLinea" class="form-label">Proveedor</label>
                     <input type="text" class="form-control" name="proveedorLinea" placeholder="Proveedor">
                 </div>
@@ -42,10 +38,6 @@ const LineaPedidoFormApp = {
                 <div class="col-md-6">
                     <label for="facturaVenta" class="form-label">Factura Venta</label>
                     <input type="text" class="form-control" name="facturaVenta" placeholder="Factura Venta">
-                </div>
-                <div class="col-md-6">
-                    <label for="numContenedor" class="form-label">Nº Contenedor</label>
-                    <input type="text" class="form-control" name="numContenedor" placeholder="Nº Contenedor">
                 </div>
                 <div class="col-md-6">
                     <label for="producto" class="form-label">Producto</label>
@@ -117,12 +109,10 @@ const LineaPedidoFormApp = {
             const linea = {
                 idPedidoVenta: pedidoVentaId,
                 n_linea: card.querySelector('input[name="numLinea"]').value || '',
-                n_operacion: card.querySelector('input[name="numOperacion"]').value || '',
                 proveedor: card.querySelector('input[name="proveedorLinea"]').value || '',
                 cliente: card.querySelector('input[name="clienteLinea"]').value || '',
                 contratoVenta: card.querySelector('input[name="contratoVenta"]').value || '',
                 facturaVenta: card.querySelector('input[name="facturaVenta"]').value || '',
-                n_contenedor: card.querySelector('input[name="numContenedor"]').value || '',
                 producto: card.querySelector('input[name="producto"]').value || '',
                 talla: card.querySelector('input[name="talla"]').value || '',
                 paisOrigen: card.querySelector('input[name="paisOrigen"]').value || '',

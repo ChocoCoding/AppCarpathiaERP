@@ -151,7 +151,11 @@ public class LineaPedidoVentaService {
         if (lineaPedidoVentaDTO.getIdPedidoVenta() == null) {
             throw new IllegalArgumentException("El ID de Pedido de Venta no puede ser nulo.");
         }
-        return convertirADTO(lineaPedidoVentaRepository.save(convertirAEntidad(lineaPedidoVentaDTO)));
+        LineaPedidoVenta lineaPedidoVenta = convertirAEntidad(lineaPedidoVentaDTO);
+        lineaPedidoVentaRepository.save(lineaPedidoVenta);
+        calculoService.actualizarCamposLineaPedido(lineaPedidoVenta.getPedidoVenta().getIdPedidoVenta());
+        LineaPedidoVenta lineaActualizada = lineaPedidoVentaRepository.findById(lineaPedidoVenta.getIdLineaPedidoVenta()).get();
+        return convertirADTO(lineaActualizada);
     }
 
     @Transactional

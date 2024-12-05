@@ -47,6 +47,9 @@ body {
     max-width: 300px;
 }
 
+h2{
+    color: white;
+}
 .search-button {
     position: absolute;
     right: 0;
@@ -199,3 +202,19 @@ td[contenteditable="true"]:hover {
     background-color: #f8f9fa;
     cursor: not-allowed;
 }
+
+/* estilos_formulario.css */
+
+input:invalid, select:invalid, textarea:invalid {
+    border-color: red;
+}
+
+input:valid, select:valid, textarea:valid {
+    border-color: green;
+}
+
+/* Opcional: Resaltar campos modificados */
+.modified {
+    background-color: #fff3cd; /* Amarillo claro */
+}
+

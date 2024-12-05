@@ -21,6 +21,9 @@ public class PedidoVenta {
     @Column(name = "n_operacion")
     private Long nOperacion;
 
+    @Column(name = "n_contenedor", length = 200)
+    private String nContenedor;
+
     @Column(name = "proforma", length = 200)
     private String proforma;
 

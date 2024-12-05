@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 public class PedidoVentaDTO {
     private Long idPedidoVenta;
     private Long n_operacion;
+    private String n_contenedor;
     private String proforma;
     private String proveedor;
     private String incoterm;

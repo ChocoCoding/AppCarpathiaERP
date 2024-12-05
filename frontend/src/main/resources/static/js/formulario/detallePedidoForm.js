@@ -3,7 +3,6 @@ const DetallePedidoFormApp = {
     getDetallesPedidoData: (pedidoCompraId) => {
         return {
             idPedidoCompra: pedidoCompraId,
-            n_operacion: document.getElementById('operacionDetalle').value,
             contratoCompra: document.getElementById('contrato').value,
             terminado: document.getElementById('terminado').value,
             factProveedor: document.getElementById('factProveedor').value,

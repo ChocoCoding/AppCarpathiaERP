@@ -26,35 +26,35 @@ const columnasAtributos = {
 function cargarConfiguraciones() {
     return fetch('http://localhost:8702/api/config')  // Asegúrate de que la URL sea correcta y accesible
         .then(response => {
-        if (!response.ok) {
-            throw new Error('Error al cargar la configuración del backend');
-        }
-        return response.json();
-    })
+            if (!response.ok) {
+                throw new Error('Error al cargar la configuración del backend');
+            }
+            return response.json();
+        })
         .then(data => {
-        config = data;
-        // Inicializar variables de estado si están presentes en config
-        currentPage = config.currentPage || 1;
-        size = config.size || 10;
-        sortBy = config.sortBy || 'idPedidoCompra';
-        sortDir = config.sortDir || 'asc';
-        proveedor = config.proveedor || '';
-        cliente = config.cliente || '';
-        return config;
-    })
+            config = data;
+            // Inicializar variables de estado si están presentes en config
+            currentPage = config.currentPage || 1;
+            size = config.size || 10;
+            sortBy = config.sortBy || 'idPedidoCompra';
+            sortDir = config.sortDir || 'asc';
+            proveedor = config.proveedor || '';
+            cliente = config.cliente || '';
+            return config;
+        })
         .catch(error => {
-        console.error('Error al cargar la configuración:', error);
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'No se pudo cargar la configuración de la aplicación.',
-            toast: true,
-            position: 'top-end',
-            timer: 3000,
-            timerProgressBar: true,
-            showConfirmButton: false
+            console.error('Error al cargar la configuración:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'No se pudo cargar la configuración de la aplicación.',
+                toast: true,
+                position: 'top-end',
+                timer: 3000,
+                timerProgressBar: true,
+                showConfirmButton: false
+            });
         });
-    });
 }
 
 cargarConfiguraciones().then(() => {
@@ -63,10 +63,35 @@ cargarConfiguraciones().then(() => {
     const PedidoCompraApp = {
         // Navegación
         goBack: () => {
-            window.location.href = "/compras";
+            // Verificar si hay cambios sin guardar
+            const filasModificadas = document.querySelectorAll('tbody tr.modificado');
+            if (filasModificadas.length > 0) {
+                // Mostrar alerta de confirmación usando SweetAlert2
+                Swal.fire({
+                    title: 'Hay cambios sin guardar',
+                    text: '¿Estás seguro de que quieres salir?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, salir',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Si el usuario confirma, navegar atrás
+                        window.location.href = "/compras";
+                    }
+                    // Si el usuario cancela, no hacer nada
+                });
+            } else {
+                // Si no hay cambios sin guardar, navegar directamente
+                window.location.href = "/compras";
+            }
         },
 
         goHome: () => {
+            // Similar implementación para otras funciones de navegación si es necesario
+            // Puedes aplicar la misma lógica si deseas verificar cambios antes de navegar a Home
             window.location.href = "/home";
         },
 
@@ -114,15 +139,15 @@ cargarConfiguraciones().then(() => {
 
             middleware.get(url.toString())
                 .then(data => {
-                console.log('Datos recibidos:', data);
-                // Usar la nueva función para procesar y renderizar
-                PedidoCompraApp.processAndRenderPedidos(data.content);
-                PedidoCompraApp.actualizarPaginacion(data.number + 1, data.totalPages);
-            })
+                    console.log('Datos recibidos:', data);
+                    // Usar la nueva función para procesar y renderizar
+                    PedidoCompraApp.processAndRenderPedidos(data.content);
+                    PedidoCompraApp.actualizarPaginacion(data.number + 1, data.totalPages);
+                })
                 .catch(error => {
-                PedidoCompraApp.mostrarAlerta('error', config.error, config.errorCargarPedidos);
-                console.error('Error al cargar los pedidos de compra:', error);
-            });
+                    PedidoCompraApp.mostrarAlerta('error', config.error, config.errorCargarPedidos);
+                    console.error('Error al cargar los pedidos de compra:', error);
+                });
         },
 
         // Renderizar la tabla con los pedidos de compra
@@ -298,12 +323,12 @@ cargarConfiguraciones().then(() => {
                     const url = config.pedidoCompraIdEndpoint.replace('{id}', idPedidoCompra);
                     middleware.delete(url)
                         .then(() => {
-                        PedidoCompraApp.mostrarAlerta('success', config.pedidoEliminadoExito, config.pedidoEliminadoExito);
-                        PedidoCompraApp.cargarPedidosCompra(); // Recargar la tabla
-                    })
+                            PedidoCompraApp.mostrarAlerta('success', config.pedidoEliminadoExito, config.pedidoEliminadoExito);
+                            PedidoCompraApp.cargarPedidosCompra(); // Recargar la tabla
+                        })
                         .catch(() => {
-                        PedidoCompraApp.mostrarAlerta('error', config.error, config.errorEliminarPedido);
-                    });
+                            PedidoCompraApp.mostrarAlerta('error', config.error, config.errorEliminarPedido);
+                        });
                 }
             });
         },
@@ -466,11 +491,11 @@ cargarConfiguraciones().then(() => {
         },
     };
 
-        // Función para convertir cadenas a números de manera segura
-        function parseLong(value) {
-            const parsed = parseInt(value, 10);
-            return isNaN(parsed) ? null : parsed;
-        }
+    // Función para convertir cadenas a números de manera segura
+    function parseLong(value) {
+        const parsed = parseInt(value, 10);
+        return isNaN(parsed) ? null : parsed;
+    }
 
     // Exponer globalmente para que las funciones sean accesibles desde el HTML
     window.PedidoCompraApp = PedidoCompraApp;

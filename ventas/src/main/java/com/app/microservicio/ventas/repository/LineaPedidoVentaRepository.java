@@ -16,7 +16,7 @@ import java.util.List;
 public interface LineaPedidoVentaRepository extends JpaRepository<LineaPedidoVenta,Long>, JpaSpecificationExecutor<LineaPedidoVenta> {
     Page<LineaPedidoVenta> findAll(Pageable pageable);
 
-    @Query("SELECT l FROM LineaPedidoVenta l WHERE l.pedidoVenta.idPedidoVenta =: idPedidoVenta")
+    @Query("SELECT l FROM LineaPedidoVenta l WHERE l.pedidoVenta.idPedidoVenta = :idPedidoVenta")
     List<LineaPedidoVenta> findByIdPedidoVenta(@Param("idPedidoVenta") Long idPedidoVenta);
 
     @Query("SELECT SUM(l.pNeto) FROM LineaPedidoVenta l WHERE l.pedidoVenta.idPedidoVenta = :pedidoVentaId")
