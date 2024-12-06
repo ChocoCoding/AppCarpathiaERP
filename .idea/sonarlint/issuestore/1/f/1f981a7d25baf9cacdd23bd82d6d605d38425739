@@ -1,0 +1,9 @@
+
+a
+java:S1192,"KDefine a constant instead of duplicating this literal "dd/MM/yyyy" 3 times.(ıø•
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÁŠ¨ ùÿÿÿÿ
+p	java:S116"VRename this field "n_operacion" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¡úíóøÿÿÿÿ
+q	java:S116"WRename this field "n_contenedor" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(«îÏÒÿÿÿÿÿ
+n	java:S116"YRename this field "fecha_embarque" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ç½ƒŸ
+m	java:S116 "XRename this field "fecha_llegada" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Û
+u	java:S116&"[Rename this field "fecha_pago_flete" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¸õ‚Ûùÿÿÿÿ

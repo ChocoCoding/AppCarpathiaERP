@@ -7,53 +7,51 @@ let currentPage = 1; // Página inicial
 let size = 10;        // Tamaño de página inicial
 let sortBy = 'idPedidoVenta'; // Campo de ordenamiento inicial
 let sortDir = 'asc';
-let proveedor = '';
-let cliente = '';
+let search = '';
+let searchFields = [];
 
 // Mapeo de índices de columnas a nombres de campos
 const columnasAtributos = {
-    2: 'idPedidoVenta',
-    3: 'nOperacion',
-    4: 'nContenedor',
-    5: 'proforma',
-    6: 'proveedor',
-    7: 'incoterm',
-    8: 'referenciaProveedor'
+    1: 'idPedidoVenta',
+    2: 'nOperacion',
+    3: 'nContenedor',
+    4: 'proforma',
+    5: 'proveedor',
+    6: 'incoterm',
+    7: 'referenciaProveedor'
 };
 
 // Cargar configuraciones de endpoints y mensajes desde el backend
 function cargarConfiguraciones() {
     return fetch('http://localhost:8703/api/ventas/config')  // Asegúrate de que la URL sea correcta y accesible
         .then(response => {
-        if (!response.ok) {
-            throw new Error('Error al cargar la configuración del backend');
-        }
-        return response.json();
-    })
+            if (!response.ok) {
+                throw new Error('Error al cargar la configuración del backend');
+            }
+            return response.json();
+        })
         .then(data => {
-        config = data;
-        // Inicializar variables de estado si están presentes en config
-        currentPage = config.currentPage || 1;
-        size = config.size || 10;
-        sortBy = config.sortBy || 'idPedidoVenta';
-        sortDir = config.sortDir || 'asc';
-        proveedor = config.proveedor || '';
-        cliente = config.cliente || '';
-        return config;
-    })
+            config = data;
+            // Inicializar variables de estado si están presentes en config
+            currentPage = config.currentPage || 1;
+            size = config.size || 10;
+            sortBy = config.sortBy || 'idPedidoVenta';
+            sortDir = config.sortDir || 'asc';
+            return config;
+        })
         .catch(error => {
-        console.error('Error al cargar la configuración:', error);
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'No se pudo cargar la configuración de la aplicación.',
-            toast: true,
-            position: 'top-end',
-            timer: 3000,
-            timerProgressBar: true,
-            showConfirmButton: false
+            console.error('Error al cargar la configuración:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'No se pudo cargar la configuración de la aplicación.',
+                toast: true,
+                position: 'top-end',
+                timer: 3000,
+                timerProgressBar: true,
+                showConfirmButton: false
+            });
         });
-    });
 }
 
 cargarConfiguraciones().then(() => {
@@ -62,57 +60,47 @@ cargarConfiguraciones().then(() => {
     const PedidoVentaApp = {
         // Navegación
         goBack: () => {
-                    // Verificar si hay cambios sin guardar
-                    const filasModificadas = document.querySelectorAll('tbody tr.modificado');
-                    if (filasModificadas.length > 0) {
-                        // Mostrar alerta de confirmación usando SweetAlert2
-                        Swal.fire({
-                            title: 'Hay cambios sin guardar',
-                            text: '¿Estás seguro de que quieres salir?',
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'Sí, salir',
-                            cancelButtonText: 'Cancelar'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                // Si el usuario confirma, navegar atrás
-                                window.location.href = "/ventas";
-                            }
-                            // Si el usuario cancela, no hacer nada
-                        });
-                    } else {
-                        // Si no hay cambios sin guardar, navegar directamente
+            const filasModificadas = document.querySelectorAll('tbody tr.modificado');
+            if (filasModificadas.length > 0) {
+                Swal.fire({
+                    title: 'Hay cambios sin guardar',
+                    text: '¿Estás seguro de que quieres salir?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, salir',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
                         window.location.href = "/ventas";
                     }
-                },
+                });
+            } else {
+                window.location.href = "/ventas";
+            }
+        },
         goHome: () => {
-                    // Verificar si hay cambios sin guardar
-                    const filasModificadas = document.querySelectorAll('tbody tr.modificado');
-                    if (filasModificadas.length > 0) {
-                        // Mostrar alerta de confirmación usando SweetAlert2
-                        Swal.fire({
-                            title: 'Hay cambios sin guardar',
-                            text: '¿Estás seguro de que quieres salir?',
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'Sí, salir',
-                            cancelButtonText: 'Cancelar'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                // Si el usuario confirma, navegar atrás
-                                window.location.href = "/ventas";
-                            }
-                            // Si el usuario cancela, no hacer nada
-                        });
-                    } else {
-                        // Si no hay cambios sin guardar, navegar directamente
-                        window.location.href = "/ventas";
+            const filasModificadas = document.querySelectorAll('tbody tr.modificado');
+            if (filasModificadas.length > 0) {
+                Swal.fire({
+                    title: 'Hay cambios sin guardar',
+                    text: '¿Estás seguro de que quieres salir?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, salir',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "/home";
                     }
-                },
+                });
+            } else {
+                window.location.href = "/home";
+            }
+        },
 
         logout: () => {
             window.location.href = "/logout";
@@ -143,28 +131,27 @@ cargarConfiguraciones().then(() => {
             const url = new URL(config.pedidosVentaEndpoint);
             url.searchParams.append('page', currentPage - 1); // Backend es zero-based
             url.searchParams.append('size', size);
-            url.searchParams.append('proveedor', proveedor);
             url.searchParams.append('sortBy', sortBy);
             url.searchParams.append('sortDir', sortDir);
 
             // Incluir parámetros de búsqueda si existen
-            if (config.search && config.searchFields && config.searchFields.length > 0) {
-                url.searchParams.append('search', config.search);
-                config.searchFields.forEach(field => url.searchParams.append('searchFields', field));
+            if (search && searchFields.length > 0) {
+                url.searchParams.append('search', search);
+                searchFields.forEach(field => url.searchParams.append('searchFields', field));
             }
 
             console.log('Solicitando URL:', url.toString());
 
             middleware.get(url.toString())
                 .then(data => {
-                console.log('Datos recibidos:', data);
-                PedidoVentaApp.renderTabla(data.content);
-                PedidoVentaApp.actualizarPaginacion(data.number + 1, data.totalPages);
-            })
+                    console.log('Datos recibidos:', data);
+                    PedidoVentaApp.renderTabla(data.content);
+                    PedidoVentaApp.actualizarPaginacion(data.number + 1, data.totalPages);
+                })
                 .catch(error => {
-                PedidoVentaApp.mostrarAlerta('error', config.error, config.errorCargarPedidos);
-                console.error('Error al cargar los pedidos de venta:', error);
-            });
+                    PedidoVentaApp.mostrarAlerta('error', config.error, config.errorCargarPedidos);
+                    console.error('Error al cargar los pedidos de venta:', error);
+                });
         },
 
         // Renderizar la tabla con los pedidos de venta
@@ -278,9 +265,45 @@ cargarConfiguraciones().then(() => {
         // Función para guardar cambios (crear y actualizar)
         guardarCambios: () => {
             const filasModificadas = document.querySelectorAll('tbody tr.modificado');
+            const formatoFecha = /^\d{2}\/\d{2}\/\d{4}$/; // No se usan fechas en PedidoVentaDTO, pero se deja por si se requiere
 
-            console.log(`Filas modificadas encontradas: ${filasModificadas.length}`); // Depuración
+            // Función auxiliar para validar un campo numérico
+            function validarCampoNumerico(fila, index, nombreCampo, esEntero = true) {
+                const valor = fila.children[index].innerText.trim();
+                if (valor !== '') {
+                    const numero = esEntero ? parseInt(valor, 10) : parseFloat(valor);
+                    if (isNaN(numero)) {
+                        const idPedidoVenta = fila.getAttribute('data-id-pedido-venta');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error de datos',
+                            text: `La celda "${nombreCampo}" en la fila ${
+                                idPedidoVenta
+                                    ? 'con ID ' + idPedidoVenta
+                                    : 'nueva'
+                            } requiere un valor numérico.`,
+                            toast: true,
+                            position: 'top-end',
+                            timer: 3000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        });
+                        return false;
+                    }
+                }
+                return true;
+            }
 
+            // Validar campos numéricos antes de guardar
+            for (const fila of filasModificadas) {
+                // idPedidoVenta (col 1, entero)
+                if (!validarCampoNumerico(fila, 1, 'ID Pedido Venta')) return;
+                // n_operacion (col 2, entero)
+                if (!validarCampoNumerico(fila, 2, 'Nº Operación')) return;
+                // No hay más campos numéricos en PedidoVentaDTO
+            }
+
+            // Si todas las validaciones pasan, proceder con el guardado
             filasModificadas.forEach(fila => {
                 const idPedidoVenta = fila.getAttribute('data-id-pedido-venta');
                 const datos = {
@@ -294,31 +317,55 @@ cargarConfiguraciones().then(() => {
 
                 console.log(`Guardando pedido: ${idPedidoVenta ? 'Actualización' : 'Creación'}`, datos); // Depuración
 
-                if (!idPedidoVenta) {
-                    // Crear nuevo pedido
+                // Validación de existencia de Pedido de Venta en caso de actualización
+                if (idPedidoVenta) {
+                    // Para actualizaciones, verificar que el Pedido de Venta exista
+                    PedidoVentaApp.validarExistenciaPedidoVenta(idPedidoVenta)
+                        .then(existe => {
+                            if (!existe) {
+                                PedidoVentaApp.mostrarAlerta('error', 'Error', 'ID de Pedido de Venta inválido.', 3000);
+                                return;
+                            }
+
+                            const url = config.pedidoVentaIdEndpoint.replace('{id}', idPedidoVenta);
+                            middleware.put(url, datos)
+                                .then(() => {
+                                    PedidoVentaApp.mostrarAlerta('success', config.guardadoExitoso, config.cambiosGuardadosExito);
+                                    fila.classList.remove('modificado');
+                                    PedidoVentaApp.cargarPedidosVenta(); // Recargar la tabla
+                                })
+                                .catch((error) => {
+                                    PedidoVentaApp.mostrarAlerta('error', 'Error', config.errorGuardarCambios);
+                                    console.error('Error al actualizar pedido:', error);
+                                });
+                        })
+                        .catch(error => {
+                            PedidoVentaApp.mostrarAlerta('error', 'Error', 'Error al validar el ID de Pedido de Venta.');
+                            console.error('Error en la validación del ID del Pedido de Venta:', error);
+                        });
+                } else {
+                    // Para nuevas creaciones, simplemente crear el nuevo pedido
                     middleware.post(config.pedidosVentaEndpoint, datos)
                         .then((nuevoPedido) => {
-                        PedidoVentaApp.mostrarAlerta('success', config.creacionExitosa, config.pedidoCreadoExito);
-                        PedidoVentaApp.cargarPedidosVenta(); // Recargar la tabla
-                    })
+                            PedidoVentaApp.mostrarAlerta('success', config.creacionExitosa, config.pedidoCreadoExito);
+                            PedidoVentaApp.cargarPedidosVenta(); // Recargar la tabla
+                        })
                         .catch((error) => {
-                        PedidoVentaApp.mostrarAlerta('error', 'Error', error.message || config.errorCrearPedido);
-                        console.error('Error al crear pedido:', error);
-                    });
-                } else {
-                    // Actualizar pedido existente
-                    const url = config.pedidoVentaIdEndpoint.replace('{id}', idPedidoVenta);
-                    middleware.put(url, datos)
-                        .then(() => {
-                        PedidoVentaApp.mostrarAlerta('success', config.guardadoExitoso, config.cambiosGuardadosExito);
-                        PedidoVentaApp.cargarPedidosVenta(); // Recargar la tabla
-                    })
-                        .catch((error) => {
-                        PedidoVentaApp.mostrarAlerta('error', 'Error', error.message || config.errorGuardarCambios);
-                        console.error('Error al actualizar pedido:', error);
-                    });
+                            PedidoVentaApp.mostrarAlerta('error', 'Error', error.message || config.errorCrearPedido);
+                            console.error('Error al crear pedido:', error);
+                        });
                 }
             });
+        },
+
+        // Función para validar la existencia de un Pedido de Venta
+        validarExistenciaPedidoVenta: (idPedidoVenta) => {
+            return middleware.get(`${config.pedidosVentaEndpoint}/${idPedidoVenta}/exists`)
+                .then(data => data.existe)
+                .catch(error => {
+                    console.error('Error en la validación del ID del Pedido de Venta:', error);
+                    return false;
+                });
         },
 
         // Función para eliminar un pedido
@@ -338,12 +385,12 @@ cargarConfiguraciones().then(() => {
                     const url = config.pedidoVentaIdEndpoint.replace('{id}', idPedidoVenta);
                     middleware.delete(url)
                         .then(() => {
-                        PedidoVentaApp.mostrarAlerta('success', config.pedidoEliminadoExito, config.pedidoEliminadoExito);
-                        PedidoVentaApp.cargarPedidosVenta(); // Recargar la tabla
-                    })
+                            PedidoVentaApp.mostrarAlerta('success', config.pedidoEliminadoExito, config.pedidoEliminadoExito);
+                            PedidoVentaApp.cargarPedidosVenta(); // Recargar la tabla
+                        })
                         .catch(() => {
-                        PedidoVentaApp.mostrarAlerta('error', config.error, config.errorEliminarPedido);
-                    });
+                            PedidoVentaApp.mostrarAlerta('error', config.error, config.errorEliminarPedido);
+                        });
                 }
             });
         },
@@ -358,12 +405,12 @@ cargarConfiguraciones().then(() => {
                     <button class="delete-button" onclick="PedidoVentaApp.eliminarFila(this)">🗑️</button>
                 </td>
                 <td></td>
-                <td contenteditable="true" class="editable"></td>
-                <td contenteditable="false" class="editable"></td>
-                <td contenteditable="false" class="editable"></td>
-                <td contenteditable="true" class="editable"></td>
-                <td contenteditable="true" class="editable"></td>
-                <td contenteditable="true" class="editable"></td>
+                <td contenteditable="true" class="editable" oninput="PedidoVentaApp.marcarModificado(this)"></td>
+                <td contenteditable="true" class="editable" oninput="PedidoVentaApp.marcarModificado(this)"></td>
+                <td contenteditable="true" class="editable" oninput="PedidoVentaApp.marcarModificado(this)"></td>
+                <td contenteditable="true" class="editable" oninput="PedidoVentaApp.marcarModificado(this)"></td>
+                <td contenteditable="true" class="editable" oninput="PedidoVentaApp.marcarModificado(this)"></td>
+                <td contenteditable="true" class="editable" oninput="PedidoVentaApp.marcarModificado(this)"></td>
             `;
 
             tbody.insertBefore(nuevaFila, tbody.firstChild);
@@ -394,12 +441,11 @@ cargarConfiguraciones().then(() => {
         // Funciones para mostrar y ocultar la búsqueda y filtros
         toggleSearch: () => {
             const searchInput = document.getElementById('search-input');
-                searchInput.value = '';
-                config.search = '';
-                config.searchFields = [];
-                currentPage = 1;
-                PedidoVentaApp.cargarPedidosVenta();
-
+            searchInput.value = '';
+            search = '';
+            searchFields = [];
+            currentPage = 1;
+            PedidoVentaApp.cargarPedidosVenta();
         },
 
         toggleFilter: () => {
@@ -411,7 +457,7 @@ cargarConfiguraciones().then(() => {
         filtrarPedidos: () => {
             const searchInput = document.getElementById('search-input').value.trim();
             const columnasSeleccionadas = Array.from(document.querySelectorAll('input[name="columnFilter"]:checked')).map(input => parseInt(input.value));
-            const searchFields = columnasSeleccionadas.map(index => columnasAtributos[index]).filter(field => field); // Obtener nombres de campos
+            searchFields = columnasSeleccionadas.map(index => columnasAtributos[index]).filter(field => field); // Obtener nombres de campos
 
             if (searchFields.length === 0) {
                 PedidoVentaApp.mostrarAlerta('warning', 'Advertencia', 'Debes seleccionar al menos una columna para la búsqueda.');
@@ -419,8 +465,7 @@ cargarConfiguraciones().then(() => {
             }
 
             // Actualizar variables de estado
-            config.search = searchInput;
-            config.searchFields = searchFields;
+            search = searchInput;
 
             // Resetear la paginación a la primera página
             currentPage = 1;

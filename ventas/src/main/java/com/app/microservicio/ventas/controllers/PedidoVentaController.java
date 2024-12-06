@@ -29,7 +29,6 @@ public class PedidoVentaController {
     public ResponseEntity<Page<PedidoVentaDTO>> listarPedidosVenta(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(required = false) String proveedor,
             @RequestParam(defaultValue = "idPedidoVenta") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDir,
             @RequestParam(required = false) String search,
@@ -39,7 +38,7 @@ public class PedidoVentaController {
         Sort sort = sortDir.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending()
                 : Sort.by(sortBy).descending();
         Pageable pageable = PageRequest.of(page, size, sort);
-        Page<PedidoVentaDTO> pedidosPage = pedidoVentaService.listarPedidosVenta(pageable, proveedor, search, searchFields);
+        Page<PedidoVentaDTO> pedidosPage = pedidoVentaService.listarPedidosVenta(pageable, search, searchFields);
         return ResponseEntity.ok(pedidosPage);
     }
 

@@ -298,64 +298,112 @@ cargarConfiguraciones().then(() => {
         guardarCambios: () => {
             const filasModificadas = document.querySelectorAll('tbody tr.modificado');
 
+            // Función auxiliar para validar un campo numérico
+            function validarCampoNumerico(fila, index, nombreCampo, esEntero = true) {
+                const valor = fila.children[index].innerText.trim();
+                if (valor !== '') {
+                    // Convertimos según sea entero o decimal
+                    const numero = esEntero ? parseLong(valor) : parseFloat(valor);
+                    if (numero === null || isNaN(numero)) {
+                        const idLineaPedido = fila.getAttribute('data-id-linea-pedido');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error de datos',
+                            text: `La celda "${nombreCampo}" en la fila ${
+                                idLineaPedido
+                                    ? 'con ID ' + idLineaPedido
+                                    : 'nueva'
+                            } requiere un valor numérico.`,
+                            toast: true,
+                            position: 'top-end',
+                            timer: 3000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        });
+                        return false; // Indica que falló la validación
+                    }
+                }
+                return true; // Validación OK
+            }
+
+            for (const fila of filasModificadas) {
+                const idLineaPedido = fila.getAttribute('data-id-linea-pedido');
+
+                // Validar campos numéricos
+                // idPedidoCompra (columna 1, entero)
+                if (!validarCampoNumerico(fila, 1, 'ID Pedido Compra')) return;
+                // n_linea (columna 2, entero)
+                if (!validarCampoNumerico(fila, 2, 'Nº Línea')) return;
+                // n_operacion (columna 3, entero)
+                if (!validarCampoNumerico(fila, 3, 'Nº Operación')) return;
+                // p_neto (columna 9, decimal)
+                if (!validarCampoNumerico(fila, 9, 'Peso Neto', false)) return;
+                // bultos (columna 11, entero)
+                if (!validarCampoNumerico(fila, 11, 'Bultos')) return;
+                // precio (columna 12, decimal)
+                if (!validarCampoNumerico(fila, 12, 'Precio', false)) return;
+            }
+
+            // Si llegamos hasta aquí, todos los datos numéricos están OK.
+            // Ahora procedemos a guardar (crear o actualizar)
             filasModificadas.forEach(fila => {
                 const idLineaPedido = fila.getAttribute('data-id-linea-pedido');
                 const idPedidoCompra = fila.children[1].innerText.trim();
 
                 LineasPedidoApp.validarExistenciaPedidoCompra(idPedidoCompra)
                     .then(existe => {
-                    if (!existe) {
-                        LineasPedidoApp.mostrarAlerta('error', 'Error', 'ID de Pedido de Compra inválido.', 3000);
-                        return;
-                    }
+                        if (!existe) {
+                            LineasPedidoApp.mostrarAlerta('error', 'Error', 'ID de Pedido de Compra inválido.', 3000);
+                            return;
+                        }
 
-                    const datos = {
-                        idPedidoCompra: parseLong(idPedidoCompra),
-                        n_linea: parseLong(fila.children[2].innerText.trim()),
-                        n_operacion: parseLong(fila.children[3].innerText.trim()),
-                        proveedor: fila.children[4].innerText.trim(),
-                        cliente: fila.children[5].innerText.trim(),
-                        n_contenedor: fila.children[6].innerText.trim(),
-                        producto: fila.children[7].innerText.trim(),
-                        talla: fila.children[8].innerText.trim(),
-                        p_neto: parseFloat(fila.children[9].innerText.trim()) || 0,
-                        unidad: fila.children[10].innerText.trim(),
-                        bultos: parseLong(fila.children[11].innerText.trim()),
-                        precio: parseFloat(fila.children[12].innerText.trim()) || 0,
-                        valor_compra: parseFloat(fila.querySelector('.valor-compra-total').innerText.trim()) || 0,
-                        moneda: fila.children[14].innerText.trim(),
-                        paisOrigen: fila.children[15].innerText.trim()
-                    };
+                        const datos = {
+                            idPedidoCompra: parseLong(idPedidoCompra),
+                            n_linea: parseLong(fila.children[2].innerText.trim()),
+                            n_operacion: parseLong(fila.children[3].innerText.trim()),
+                            proveedor: fila.children[4].innerText.trim(),
+                            cliente: fila.children[5].innerText.trim(),
+                            n_contenedor: fila.children[6].innerText.trim(),
+                            producto: fila.children[7].innerText.trim(),
+                            talla: fila.children[8].innerText.trim(),
+                            p_neto: parseFloat(fila.children[9].innerText.trim()) || 0,
+                            unidad: fila.children[10].innerText.trim(),
+                            bultos: parseLong(fila.children[11].innerText.trim()),
+                            precio: parseFloat(fila.children[12].innerText.trim()) || 0,
+                            valor_compra: parseFloat(fila.querySelector('.valor-compra-total').innerText.trim()) || 0,
+                            moneda: fila.children[14].innerText.trim(),
+                            paisOrigen: fila.children[15].innerText.trim()
+                        };
 
-                    if (!idLineaPedido) {
-                        // Crear nueva línea
-                        middleware.post(config.lineasPedidosCompraEndpoint, datos)
-                            .then((nuevaLinea) => {
-                            LineasPedidoApp.mostrarAlerta('success', 'Éxito', 'Línea de pedido creada correctamente.', 500);
-                            LineasPedidoApp.cargarLineasPedidoCompra(); // Recargar datos
-                        })
-                            .catch(() => {
-                            LineasPedidoApp.mostrarAlerta('error', 'Error', 'No se pudo crear la línea de pedido.');
-                        });
-                    } else {
-                        // Actualizar línea existente
-                        const endpoint = config.lineasPedidosCompraIdEndpoint.replace('{id}', idLineaPedido);
-                        middleware.put(endpoint, datos)
-                            .then(() => {
-                            LineasPedidoApp.mostrarAlerta('success', 'Éxito', 'Cambios guardados correctamente.', 500);
-                            fila.classList.remove('modificado');
-                            // Opcionalmente, actualizar solo la fila modificada
-                        })
-                            .catch(() => {
-                            LineasPedidoApp.mostrarAlerta('error', 'Error', 'No se pudo guardar los cambios.');
-                        });
-                    }
-                })
+                        if (!idLineaPedido) {
+                            // Crear nueva línea
+                            middleware.post(config.lineasPedidosCompraEndpoint, datos)
+                                .then((nuevaLinea) => {
+                                    LineasPedidoApp.mostrarAlerta('success', 'Éxito', 'Línea de pedido creada correctamente.', 500);
+                                    LineasPedidoApp.cargarLineasPedidoCompra();
+                                })
+                                .catch(() => {
+                                    LineasPedidoApp.mostrarAlerta('error', 'Error', 'No se pudo crear la línea de pedido.');
+                                });
+                        } else {
+                            // Actualizar línea existente
+                            const endpoint = config.lineasPedidosCompraIdEndpoint.replace('{id}', idLineaPedido);
+                            middleware.put(endpoint, datos)
+                                .then(() => {
+                                    LineasPedidoApp.mostrarAlerta('success', 'Éxito', 'Cambios guardados correctamente.', 500);
+                                    fila.classList.remove('modificado');
+                                })
+                                .catch(() => {
+                                    LineasPedidoApp.mostrarAlerta('error', 'Error', 'No se pudo guardar los cambios.');
+                                });
+                        }
+                    })
                     .catch(() => {
-                    LineasPedidoApp.mostrarAlerta('error', 'Error', 'Error al validar el ID de Pedido de Compra.');
-                });
+                        LineasPedidoApp.mostrarAlerta('error', 'Error', 'Error al validar el ID de Pedido de Compra.');
+                    });
             });
         },
+
 
         // Función para validar la existencia de un Pedido de Compra
         validarExistenciaPedidoCompra: (idPedidoCompra) => {

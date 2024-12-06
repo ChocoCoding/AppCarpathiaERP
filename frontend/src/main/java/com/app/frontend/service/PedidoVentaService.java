@@ -23,9 +23,8 @@ public class PedidoVentaService {
     @Value("${api.url.getPedidosVenta}")
     private String getPedidosVenta;
 
-    public PagedResponseDTO<PedidoVentaDTO> obtenerPedidosVenta(int page, int size, String proveedor,  String sortBy, String sortDir) {
+    public PagedResponseDTO<PedidoVentaDTO> obtenerPedidosVenta(int page, int size,  String sortBy, String sortDir) {
         String url = getPedidosVenta + "?page=" + page + "&size=" + size +
-                (proveedor != null ? "&proveedor=" + proveedor : "") +
                 "&sortBy=" + sortBy + "&sortDir=" + sortDir;
 
         ResponseEntity<PagedResponseDTO<PedidoVentaDTO>> response = restTemplate.exchange(

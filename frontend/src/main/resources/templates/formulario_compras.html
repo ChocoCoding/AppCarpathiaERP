@@ -252,9 +252,6 @@
 </div>
 <script>
     function goHome() {
-        // Verificar si hay cambios sin guardar
-        const filasModificadas = document.querySelectorAll('tbody tr.modificado');
-
         Swal.fire({
             title: 'Formulario Compras',
             text: '¿Estás seguro de que quieres salir?',
@@ -266,10 +263,8 @@
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                // Si el usuario confirma, navegar atrás
                 window.location.href = "/home";
             }
-            // Si el usuario cancela, no hacer nada
         });
     }
 
@@ -277,11 +272,9 @@
         window.location.href = "/logout";
     }
 
-    // Asignar las funciones al objeto global para que sean accesibles desde el HTML
     window.goHome = goHome;
     window.logout = logout;
 </script>
-<!-- Incluir SweetAlert2 antes de tus scripts personalizados -->
 <script src="/js/sweet-alert2/dist/sweetalert2.all.min.js"></script>
 <script type="module">import middleware from '/js/middleware.js';</script>
 <script type="module">
@@ -294,9 +287,8 @@
 
     let currentStep = 1;
     const totalSteps = 5;
-    let pedidoCompraId = null; // Variable global para almacenar el ID del Pedido de Compra
+    let pedidoCompraId = null;
 
-    // Almacenar los datos de los pasos en variables globales
     const formData = {
         pedidoCompra: {},
         lineasPedido: [],
@@ -305,17 +297,20 @@
         costesPedido: {}
     };
 
-    document.getElementById('nextBtn').addEventListener('click', () => {
+    const nextBtn = document.getElementById('nextBtn');
+
+    nextBtn.addEventListener('click', () => {
         if (currentStep === 1) {
-            // Paso 1: Crear Pedido de Compra y enviar al backend
             const pedidoCompra = PedidoCompraFormApp.getPedidoCompraData();
-            formData.pedidoCompra = pedidoCompra; // Almacenar localmente
+            if (pedidoCompra === null) {
+                // Si es null, hubo error en validación y se mostró alerta
+                return;
+            }
+            formData.pedidoCompra = pedidoCompra;
 
             middleware.post('http://localhost:8702/api/compras/pedidos_compra', pedidoCompra)
                 .then(response => {
-                    pedidoCompraId = response.idPedidoCompra; // Asigna el ID del pedido de compra devuelto
-
-                    // Almacenar el ID en los campos correspondientes si existen
+                    pedidoCompraId = response.idPedidoCompra;
                     if (document.getElementById('idPedidoLinea')) {
                         document.getElementById('idPedidoLinea').value = pedidoCompraId;
                     }
@@ -329,7 +324,6 @@
                         document.getElementById('idPedidoCostes').value = pedidoCompraId;
                     }
 
-                    // Reemplazar alert() con Swal.fire
                     Swal.fire({
                         icon: 'success',
                         title: 'Éxito',
@@ -345,7 +339,6 @@
                     updateStep();
                 })
                 .catch(error => {
-                    // Reemplazar alert() con Swal.fire
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
@@ -358,47 +351,54 @@
                     });
                 });
         } else if (currentStep >= 2 && currentStep < 5) {
-            // Pasos 2 a 4: Avanzar sin enviar datos
-            // Podrías agregar validaciones aquí si es necesario
             currentStep++;
             updateStep();
         } else if (currentStep === 5) {
-            // Paso 5: Enviar todos los datos recopilados al backend
+            // Paso 5: Enviar todos los datos
 
-            // Recopilar los datos de todos los pasos
+            // Obtener todos los datos con validación
             formData.lineasPedido = LineaPedidoFormApp.getLineasPedidoData(pedidoCompraId);
-            formData.detallesPedido = DetallesPedidoFormApp.getDetallesPedidoData(pedidoCompraId);
-            formData.datosBarco = DatosBarcoFormApp.getDatosBarcoData(pedidoCompraId);
-            formData.costesPedido = CostesPedidoFormApp.getCostesPedidoData(pedidoCompraId);
+            if (formData.lineasPedido === null) {
+                reenableButton();
+                return;
+            }
 
-            // Deshabilitar el botón para evitar múltiples clics
-            const nextBtn = document.getElementById('nextBtn');
+            formData.detallesPedido = DetallesPedidoFormApp.getDetallesPedidoData(pedidoCompraId);
+            if (formData.detallesPedido === null) {
+                reenableButton();
+                return;
+            }
+
+            formData.datosBarco = DatosBarcoFormApp.getDatosBarcoData(pedidoCompraId);
+            if (formData.datosBarco === null) {
+                reenableButton();
+                return;
+            }
+
+            formData.costesPedido = CostesPedidoFormApp.getCostesPedidoData(pedidoCompraId);
+            if (formData.costesPedido === null) {
+                reenableButton();
+                return;
+            }
+
             nextBtn.disabled = true;
             nextBtn.textContent = 'Enviando...';
 
-            // Enviar las líneas de pedido
             const lineasPromises = formData.lineasPedido.map(linea =>
                 middleware.post('http://localhost:8702/api/compras/lineas_pedidos_compra', linea)
             );
 
             Promise.all(lineasPromises)
                 .then(() => {
-                    console.log('Todas las líneas de pedido se guardaron con éxito.');
-                    // Enviar Detalles de Pedido
                     return middleware.post('http://localhost:8702/api/compras/pedidos_compra_det', formData.detallesPedido);
                 })
                 .then(() => {
-                    console.log('Detalles de Pedido guardados con éxito.');
-                    // Enviar Datos del Barco
                     return middleware.post('http://localhost:8702/api/compras/datos_barco', formData.datosBarco);
                 })
                 .then(() => {
-                    console.log('Datos del Barco guardados con éxito.');
-                    // Enviar Costes
                     return middleware.post('http://localhost:8702/api/compras/costes_compra', formData.costesPedido);
                 })
                 .then(() => {
-                    // Reemplazar alert() con Swal.fire
                     Swal.fire({
                         icon: 'success',
                         title: 'Éxito',
@@ -413,7 +413,6 @@
                     });
                 })
                 .catch(error => {
-                    // Reemplazar alert() con Swal.fire
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
@@ -427,15 +426,13 @@
                     console.error('Error al guardar el pedido:', error);
                 })
                 .finally(() => {
-                    // Rehabilitar el botón y restaurar el texto original
-                    nextBtn.disabled = false;
-                    nextBtn.textContent = currentStep === totalSteps ? 'Enviar' : 'Siguiente';
+                    reenableButton();
                 });
         }
     });
 
     document.getElementById('addLineBtn').addEventListener('click', () => {
-        LineaPedidoFormApp.agregarLineaPedido(pedidoCompraId); // Llama a la función para agregar línea
+        LineaPedidoFormApp.agregarLineaPedido(pedidoCompraId);
     });
 
     document.getElementById('prevBtn').addEventListener('click', () => {
@@ -446,23 +443,23 @@
     });
 
     function updateStep() {
-        // Mostrar u ocultar los contenidos de los pasos
         document.querySelectorAll('.step-content').forEach((el, index) => {
             el.classList.toggle('d-none', index !== currentStep - 1);
         });
 
-        // Habilitar o deshabilitar el botón "Anterior"
         document.getElementById('prevBtn').disabled = currentStep === 1 || currentStep === 2;
-
-        // Cambiar el texto del botón "Siguiente" a "Enviar" en el Paso 5
         document.getElementById('nextBtn').textContent = currentStep === totalSteps ? 'Enviar' : 'Siguiente';
 
-        // Actualizar los indicadores de pasos
         document.getElementById('step1Indicator').classList.toggle('step-active', currentStep >= 1);
         document.getElementById('step2Indicator').classList.toggle('step-active', currentStep >= 2);
         document.getElementById('step3Indicator').classList.toggle('step-active', currentStep >= 3);
         document.getElementById('step4Indicator').classList.toggle('step-active', currentStep >= 4);
         document.getElementById('step5Indicator').classList.toggle('step-active', currentStep === 5);
+    }
+
+    function reenableButton() {
+        nextBtn.disabled = false;
+        nextBtn.textContent = currentStep === totalSteps ? 'Enviar' : 'Siguiente';
     }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

@@ -25,7 +25,7 @@
                     <span class="visually-hidden">Home</span>
                 </button>
 
-                <div class="position-relative ">
+                <div class="position-relative">
                     <input type="text" id="search-input" class="form-control pe-5" placeholder="Search..." oninput="LineasPedidoApp.filtrarLineas()">
                     <button class="search-button" title="Search" onclick="LineasPedidoApp.toggleSearch()">
                         <i class="bi bi-search"></i>
@@ -39,28 +39,28 @@
                 </button>
                 <div class="search-container">
                     <div class="filter-container">
-                        <label><input type="checkbox" name="columnFilter" value="2"> ID Pedido Venta</label>
-                        <label><input type="checkbox" name="columnFilter" value="3"> Nº Línea</label>
-                        <label><input type="checkbox" name="columnFilter" value="4"> Nº Operación</label>
-                        <label><input type="checkbox" name="columnFilter" value="5"> Proveedor</label>
-                        <label><input type="checkbox" name="columnFilter" value="6"> Cliente</label>
-                        <label><input type="checkbox" name="columnFilter" value="7"> Contrato Venta</label>
-                        <label><input type="checkbox" name="columnFilter" value="8"> Factura Venta</label>
-                        <label><input type="checkbox" name="columnFilter" value="9"> Nº Contenedor</label>
-                        <label><input type="checkbox" name="columnFilter" value="10"> Producto</label>
-                        <label><input type="checkbox" name="columnFilter" value="11"> Talla</label>
-                        <label><input type="checkbox" name="columnFilter" value="12"> País de Origen</label>
-                        <label><input type="checkbox" name="columnFilter" value="13"> Peso Neto</label>
-                        <label><input type="checkbox" name="columnFilter" value="14"> Unidad</label>
-                        <label><input type="checkbox" name="columnFilter" value="15"> Bultos</label>
-                        <label><input type="checkbox" name="columnFilter" value="16"> Precio</label>
-                        <label><input type="checkbox" name="columnFilter" value="17"> Valor Venta Total</label>
-                        <label><input type="checkbox" name="columnFilter" value="18"> Incoterm</label>
-                        <label><input type="checkbox" name="columnFilter" value="19"> Moneda</label>
-                        <label><input type="checkbox" name="columnFilter" value="20"> Comerciales</label>
-                        <label><input type="checkbox" name="columnFilter" value="21"> Transporte</label>
+                        <!-- Ajuste de valores de las casillas de filtro según los índices correctos -->
+                        <label><input type="checkbox" name="columnFilter" value="1"> ID Pedido Venta</label>
+                        <label><input type="checkbox" name="columnFilter" value="2"> Nº Línea</label>
+                        <label><input type="checkbox" name="columnFilter" value="3"> Nº Operación</label>
+                        <label><input type="checkbox" name="columnFilter" value="4"> Proveedor</label>
+                        <label><input type="checkbox" name="columnFilter" value="5"> Cliente</label>
+                        <label><input type="checkbox" name="columnFilter" value="6"> Contrato Venta</label>
+                        <label><input type="checkbox" name="columnFilter" value="7"> Factura Venta</label>
+                        <label><input type="checkbox" name="columnFilter" value="8"> Nº Contenedor</label>
+                        <label><input type="checkbox" name="columnFilter" value="9"> Producto</label>
+                        <label><input type="checkbox" name="columnFilter" value="10"> Talla</label>
+                        <label><input type="checkbox" name="columnFilter" value="11"> País de Origen</label>
+                        <label><input type="checkbox" name="columnFilter" value="12"> Peso Neto</label>
+                        <label><input type="checkbox" name="columnFilter" value="13"> Unidad</label>
+                        <label><input type="checkbox" name="columnFilter" value="14"> Bultos</label>
+                        <label><input type="checkbox" name="columnFilter" value="15"> Precio</label>
+                        <label><input type="checkbox" name="columnFilter" value="16"> Valor Venta Total</label>
+                        <label><input type="checkbox" name="columnFilter" value="17"> Incoterm</label>
+                        <label><input type="checkbox" name="columnFilter" value="18"> Moneda</label>
+                        <label><input type="checkbox" name="columnFilter" value="19"> Comerciales</label>
+                        <label><input type="checkbox" name="columnFilter" value="20"> Transporte</label>
                     </div>
-
                 </div>
                 <button class="btn btn-link p-0" title="Add new" onclick="LineasPedidoApp.crearLineaPedido()">
                     <i class="bi bi-plus-lg header-icon fs-2"></i>
@@ -112,7 +112,6 @@
         </thead>
         <tbody id="lineas-pedido-tbody">
         <!-- Las filas se renderizarán dinámicamente -->
-
         </tbody>
     </table>
 </div>

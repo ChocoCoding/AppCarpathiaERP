@@ -24,7 +24,7 @@
                     <span class="visually-hidden">Home</span>
                 </button>
 
-                <div class="position-relative ">
+                <div class="position-relative">
                     <input type="text" id="search-input" class="form-control pe-5" placeholder="Search..." oninput="PedidoVentaApp.filtrarPedidos()">
                     <button class="search-button" title="Search" onclick="PedidoVentaApp.toggleSearch()">
                         <i class="bi bi-search"></i>
@@ -38,13 +38,14 @@
                 </button>
                 <div class="search-container">
                     <div class="filter-container">
-                        <label><input type="checkbox" name="columnFilter" value="2"> ID</label>
-                        <label><input type="checkbox" name="columnFilter" value="3"> Nº Operación</label>
-                        <label><input type="checkbox" name="columnFilter" value="4"> Nº Contenedor</label>
-                        <label><input type="checkbox" name="columnFilter" value="5"> Proforma</label>
-                        <label><input type="checkbox" name="columnFilter" value="6"> Proveedor</label>
-                        <label><input type="checkbox" name="columnFilter" value="7"> Incoterm</label>
-                        <label><input type="checkbox" name="columnFilter" value="8"> Referencia Proveedor</label>
+                        <!-- Ajuste de valores de las casillas de filtro según los índices correctos -->
+                        <label><input type="checkbox" name="columnFilter" value="1"> ID Pedido Venta</label>
+                        <label><input type="checkbox" name="columnFilter" value="2"> Nº Operación</label>
+                        <label><input type="checkbox" name="columnFilter" value="3"> Nº Contenedor</label>
+                        <label><input type="checkbox" name="columnFilter" value="4"> Proforma</label>
+                        <label><input type="checkbox" name="columnFilter" value="5"> Proveedor</label>
+                        <label><input type="checkbox" name="columnFilter" value="6"> Incoterm</label>
+                        <label><input type="checkbox" name="columnFilter" value="7"> Referencia Proveedor</label>
                     </div>
                 </div>
                 <button class="btn btn-link p-0" title="Add new" onclick="PedidoVentaApp.crearPedidoVenta()">

@@ -1,4 +1,4 @@
 
-Х	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(и▐─ФJ$5b178e76-1457-4926-a1e8-a8453f7a3a3c
-Ц	java:S116"VRename this field "n_operacion" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(б·эє°    J$921faad6-e076-4370-aee0-c256e082b06c
-Ч	java:S116"WRename this field "n_contenedor" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(лю╧╥     J$45b6cdf8-0ec4-4183-a690-8f5de7bb89db
+Х	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(и▐─ФJ$43c20766-5147-41bf-b78f-0bee53ca3469
+Ц	java:S116"VRename this field "n_operacion" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(б·эє°    J$cf9cc38a-cf1c-4163-95b5-53c8a77ca680
+Ч	java:S116"WRename this field "n_contenedor" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(лю╧╥     J$49343226-5d9b-4b1c-b491-53a5751e772b

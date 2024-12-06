@@ -24,34 +24,34 @@ const columnasAtributos = {
 function cargarConfiguraciones() {
     return fetch('http://localhost:8703/api/ventas/config')
         .then(response => {
-        if (!response.ok) {
-            throw new Error('Error al cargar la configuración del backend');
-        }
-        return response.json();
-    })
+            if (!response.ok) {
+                throw new Error('Error al cargar la configuración del backend');
+            }
+            return response.json();
+        })
         .then(data => {
-        config = data;
-        console.log('Configuracion cargada ',config)
-        // Inicializar variables de estado si están presentes en config
-        currentPage = config.currentPage || 1;
-        size = config.size || 10;
-        sortBy = config.sortBy || 'pedidoVenta.idPedidoVenta';
-        sortDir = config.sortDir || 'asc';
-        return config;
-    })
+            config = data;
+            console.log('Configuración cargada:', config);
+            // Inicializar variables de estado si están presentes en config
+            currentPage = config.currentPage || 1;
+            size = config.size || 10;
+            sortBy = config.sortBy || 'pedidoVenta.idPedidoVenta';
+            sortDir = config.sortDir || 'asc';
+            return config;
+        })
         .catch(error => {
-        console.error('Error al cargar la configuración:', error);
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'No se pudo cargar la configuración de la aplicación.',
-            toast: true,
-            position: 'top-end',
-            timer: 3000,
-            timerProgressBar: true,
-            showConfirmButton: false
+            console.error('Error al cargar la configuración:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'No se pudo cargar la configuración de la aplicación.',
+                toast: true,
+                position: 'top-end',
+                timer: 3000,
+                timerProgressBar: true,
+                showConfirmButton: false
+            });
         });
-    });
 }
 
 cargarConfiguraciones().then(() => {
@@ -60,57 +60,57 @@ cargarConfiguraciones().then(() => {
     const PedidoVentaDetApp = {
         // Navegación
         goBack: () => {
-                    // Verificar si hay cambios sin guardar
-                    const filasModificadas = document.querySelectorAll('tbody tr.modificado');
-                    if (filasModificadas.length > 0) {
-                        // Mostrar alerta de confirmación usando SweetAlert2
-                        Swal.fire({
-                            title: 'Hay cambios sin guardar',
-                            text: '¿Estás seguro de que quieres salir?',
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'Sí, salir',
-                            cancelButtonText: 'Cancelar'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                // Si el usuario confirma, navegar atrás
-                                window.location.href = "/ventas";
-                            }
-                            // Si el usuario cancela, no hacer nada
-                        });
-                    } else {
-                        // Si no hay cambios sin guardar, navegar directamente
+            // Verificar si hay cambios sin guardar
+            const filasModificadas = document.querySelectorAll('tbody tr.modificado');
+            if (filasModificadas.length > 0) {
+                // Mostrar alerta de confirmación usando SweetAlert2
+                Swal.fire({
+                    title: 'Hay cambios sin guardar',
+                    text: '¿Estás seguro de que quieres salir?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, salir',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Si el usuario confirma, navegar atrás
                         window.location.href = "/ventas";
                     }
-                },
+                    // Si el usuario cancela, no hacer nada
+                });
+            } else {
+                // Si no hay cambios sin guardar, navegar directamente
+                window.location.href = "/ventas";
+            }
+        },
         goHome: () => {
-                    // Verificar si hay cambios sin guardar
-                    const filasModificadas = document.querySelectorAll('tbody tr.modificado');
-                    if (filasModificadas.length > 0) {
-                        // Mostrar alerta de confirmación usando SweetAlert2
-                        Swal.fire({
-                            title: 'Hay cambios sin guardar',
-                            text: '¿Estás seguro de que quieres salir?',
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'Sí, salir',
-                            cancelButtonText: 'Cancelar'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                // Si el usuario confirma, navegar atrás
-                                window.location.href = "/ventas";
-                            }
-                            // Si el usuario cancela, no hacer nada
-                        });
-                    } else {
-                        // Si no hay cambios sin guardar, navegar directamente
-                        window.location.href = "/ventas";
+            // Verificar si hay cambios sin guardar
+            const filasModificadas = document.querySelectorAll('tbody tr.modificado');
+            if (filasModificadas.length > 0) {
+                // Mostrar alerta de confirmación usando SweetAlert2
+                Swal.fire({
+                    title: 'Hay cambios sin guardar',
+                    text: '¿Estás seguro de que quieres salir?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, salir',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Si el usuario confirma, navegar a Home
+                        window.location.href = "/home";
                     }
-                },
+                    // Si el usuario cancela, no hacer nada
+                });
+            } else {
+                // Si no hay cambios sin guardar, navegar directamente
+                window.location.href = "/home";
+            }
+        },
 
         logout: () => {
             window.location.href = "/logout";
@@ -154,14 +154,14 @@ cargarConfiguraciones().then(() => {
 
             middleware.get(url.toString())
                 .then(data => {
-                console.log('Datos recibidos:', data);
-                PedidoVentaDetApp.renderTabla(data.content);
-                PedidoVentaDetApp.actualizarPaginacion(data.number + 1, data.totalPages);
-            })
+                    console.log('Datos recibidos:', data);
+                    PedidoVentaDetApp.renderTabla(data.content);
+                    PedidoVentaDetApp.actualizarPaginacion(data.number + 1, data.totalPages);
+                })
                 .catch(error => {
-                PedidoVentaDetApp.mostrarAlerta('error', 'Error', 'Error al cargar los detalles de pedido de venta.');
-                console.error('Error al cargar los detalles de pedido de venta:', error);
-            });
+                    PedidoVentaDetApp.mostrarAlerta('error', 'Error', 'Error al cargar los detalles de pedido de venta.');
+                    console.error('Error al cargar los detalles de pedido de venta:', error);
+                });
         },
 
         // Renderizar la tabla con los detalles de pedido de venta
@@ -275,62 +275,110 @@ cargarConfiguraciones().then(() => {
         // Función para guardar cambios (crear y actualizar)
         guardarCambios: () => {
             const filasModificadas = document.querySelectorAll('tbody tr.modificado');
-            const formatoFecha = /^\d{2}\/\d{2}\/\d{4}$/;
+
+            if (filasModificadas.length === 0) {
+                PedidoVentaDetApp.mostrarAlerta('info', 'Información', 'No hay cambios para guardar.');
+                return;
+            }
+
+            let hayErrores = false;
 
             filasModificadas.forEach(fila => {
                 const idPedidoVentaDet = fila.getAttribute('data-id-pedido-venta-det');
                 const idPedidoVenta = fila.children[1].innerText.trim();
+                const pesoNetoTotal = fila.children[2].innerText.trim();
+                const totalBultos = fila.children[3].innerText.trim();
+                const precioTotal = fila.children[4].innerText.trim();
+                const promedio = fila.children[5].innerText.trim();
+                const valorVentaTotal = fila.children[6].innerText.trim();
+                const importador = fila.children[7].innerText.trim();
 
+                // Validaciones
+                if (!validarCampoNumerico(idPedidoVenta, 'ID Pedido Venta', true)) {
+                    PedidoVentaDetApp.mostrarAlerta('error', 'Error de datos', 'El campo "ID Pedido Venta" debe ser un número entero.');
+                    hayErrores = true;
+                    return;
+                }
 
+                if (!validarCampoNumerico(pesoNetoTotal, 'Peso Neto Total', false)) {
+                    PedidoVentaDetApp.mostrarAlerta('error', 'Error de datos', 'El campo "Peso Neto Total" debe ser un número decimal.');
+                    hayErrores = true;
+                    return;
+                }
 
-                PedidoVentaDetApp.validarExistenciaPedidoVenta(idPedidoVenta)
-                    .then(existe => {
-                    if (!existe) {
-                        PedidoVentaDetApp.mostrarAlerta('error', 'Error', 'ID de Pedido de Venta inválido.', 3000);
-                        return;
-                    }
+                if (!validarCampoNumerico(totalBultos, 'Total Bultos', true)) {
+                    PedidoVentaDetApp.mostrarAlerta('error', 'Error de datos', 'El campo "Total Bultos" debe ser un número entero.');
+                    hayErrores = true;
+                    return;
+                }
 
-                    const datos = {
-                        idPedidoVenta: idPedidoVenta,
-                        pesoNetoTotal: parseFloatSafe(fila.children[2].innerText.trim()),
-                        totalBultos: parseLong(fila.children[3].innerText.trim()),
-                        precioTotal: parseFloatSafe(fila.children[4].innerText.trim()),
-                        promedio: parseFloatSafe(fila.children[5].innerText.trim()),
-                        valorVentaTotal: parseFloatSafe(fila.children[6].innerText.trim()),
-                        importador: fila.children[7].innerText.trim()
-                    };
+                if (!validarCampoNumerico(precioTotal, 'Precio Total', false)) {
+                    PedidoVentaDetApp.mostrarAlerta('error', 'Error de datos', 'El campo "Precio Total" debe ser un número decimal.');
+                    hayErrores = true;
+                    return;
+                }
 
-                    if (!idPedidoVentaDet) {
-                        middleware.post(config.pedidosVentaDetEndpoint, datos)
-                            .then(() => {
+                if (!validarCampoNumerico(promedio, 'Promedio', false)) {
+                    PedidoVentaDetApp.mostrarAlerta('error', 'Error de datos', 'El campo "Promedio" debe ser un número decimal.');
+                    hayErrores = true;
+                    return;
+                }
+
+                if (!validarCampoNumerico(valorVentaTotal, 'Valor Venta Total', false)) {
+                    PedidoVentaDetApp.mostrarAlerta('error', 'Error de datos', 'El campo "Valor Venta Total" debe ser un número decimal.');
+                    hayErrores = true;
+                    return;
+                }
+
+                // Si hay errores, detener el proceso
+                if (hayErrores) {
+                    return;
+                }
+
+                // Crear objeto de datos
+                const datos = {
+                    idPedidoVenta: parseLong(idPedidoVenta),
+                    pesoNetoTotal: parseFloatSafe(pesoNetoTotal),
+                    totalBultos: parseLong(totalBultos),
+                    precioTotal: parseFloatSafe(precioTotal),
+                    promedio: parseFloatSafe(promedio),
+                    valorVentaTotal: parseFloatSafe(valorVentaTotal),
+                    importador: importador
+                };
+
+                if (!idPedidoVentaDet) {
+                    // Crear nueva línea
+                    middleware.post(config.pedidosVentaDetEndpoint, datos)
+                        .then(() => {
                             PedidoVentaDetApp.mostrarAlerta('success', 'Éxito', 'Detalle creado correctamente.', 2000);
                             PedidoVentaDetApp.cargarDetallesPedidoVenta(); // Recargar la tabla
                         })
-                            .catch(error => {
-                            if (error.message.includes('El detalle ya existe.')) {
+                        .catch(error => {
+                            if (error.message && error.message.includes('El detalle ya existe.')) {
                                 PedidoVentaDetApp.mostrarAlerta('error', 'Error', 'El detalle ya existe.');
                             } else {
                                 PedidoVentaDetApp.mostrarAlerta('error', 'Error', 'No se pudo crear el detalle.');
                             }
                         });
-                    } else {
-                        const url = config.pedidoVentaDetIdEndpoint.replace('{id}', idPedidoVentaDet);
-                        middleware.put(url, datos)
-                            .then(() => {
+                } else {
+                    // Actualizar línea existente
+                    const url = config.pedidosVentaDetIdEndpoint.replace('{id}', idPedidoVentaDet);
+                    middleware.put(url, datos)
+                        .then(() => {
                             PedidoVentaDetApp.mostrarAlerta('success', 'Éxito', 'Cambios guardados correctamente.', 2000);
                             fila.classList.remove('modificado');
                             PedidoVentaDetApp.cargarDetallesPedidoVenta(); // Recargar la tabla
                         })
-                            .catch(error => {
+                        .catch(error => {
                             PedidoVentaDetApp.mostrarAlerta('error', 'Error', 'No se pudo guardar los cambios.');
                         });
-                    }
-                })
-                    .catch(error => {
-                    PedidoVentaDetApp.mostrarAlerta('error', 'Error', 'Error al validar el ID de Pedido de Venta.');
-                });
+                }
             });
 
+            if (hayErrores) {
+                // Si hubo errores, detener el guardado
+                return;
+            }
         },
 
         // Función para validar la existencia de un Pedido de Venta
@@ -338,9 +386,9 @@ cargarConfiguraciones().then(() => {
             return middleware.get(`${config.pedidosVentaEndpoint}/${idPedidoVenta}/exists`)
                 .then(data => data.existe)
                 .catch(error => {
-                console.error('Error en la validación del ID del Pedido de Venta:', error);
-                return false;
-            });
+                    console.error('Error en la validación del ID del Pedido de Venta:', error);
+                    return false;
+                });
         },
 
         // Función para eliminar un detalle de pedido de venta
@@ -361,15 +409,15 @@ cargarConfiguraciones().then(() => {
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    const url = config.pedidoVentaDetIdEndpoint.replace('{id}', idPedidoVentaDet);
+                    const url = config.pedidosVentaDetIdEndpoint.replace('{id}', idPedidoVentaDet);
                     middleware.delete(url)
                         .then(() => {
-                        PedidoVentaDetApp.mostrarAlerta('success', 'Éxito', 'Detalle eliminado correctamente.', 2000);
-                        PedidoVentaDetApp.cargarDetallesPedidoVenta(); // Recargar la tabla
-                    })
+                            PedidoVentaDetApp.mostrarAlerta('success', 'Éxito', 'Detalle eliminado correctamente.', 2000);
+                            PedidoVentaDetApp.cargarDetallesPedidoVenta(); // Recargar la tabla
+                        })
                         .catch(error => {
-                        PedidoVentaDetApp.mostrarAlerta('error', 'Error', 'No se pudo eliminar el detalle.');
-                    });
+                            PedidoVentaDetApp.mostrarAlerta('error', 'Error', 'No se pudo eliminar el detalle.');
+                        });
                 }
             });
         },
@@ -383,13 +431,13 @@ cargarConfiguraciones().then(() => {
                 <td>
                     <button class="delete-button" onclick="PedidoVentaDetApp.eliminarFila(this)">🗑️</button>
                 </td>
-                <td contenteditable="true" class="editable"></td>
-                <td contenteditable="true" class="editable"></td>
-                <td contenteditable="true" class="editable"></td>
-                <td contenteditable="true" class="editable"></td>
-                <td contenteditable="true" class="editable"></td>
-                <td contenteditable="true" class="editable"></td>
-                <td contenteditable="true" class="editable"></td>
+                <td contenteditable="true" class="editable" oninput="PedidoVentaDetApp.marcarModificado(this)"></td>
+                <td contenteditable="true" class="editable" oninput="PedidoVentaDetApp.marcarModificado(this)"></td>
+                <td contenteditable="true" class="editable" oninput="PedidoVentaDetApp.marcarModificado(this)"></td>
+                <td contenteditable="true" class="editable" oninput="PedidoVentaDetApp.marcarModificado(this)"></td>
+                <td contenteditable="true" class="editable" oninput="PedidoVentaDetApp.marcarModificado(this)"></td>
+                <td contenteditable="true" class="editable" oninput="PedidoVentaDetApp.marcarModificado(this)"></td>
+                <td contenteditable="true" class="editable" oninput="PedidoVentaDetApp.marcarModificado(this)"></td>
             `;
 
             tbody.insertBefore(nuevaFila, tbody.firstChild);
@@ -418,12 +466,11 @@ cargarConfiguraciones().then(() => {
         // Funciones para mostrar y ocultar la búsqueda y filtros
         toggleSearch: () => {
             const searchInput = document.getElementById('search-input');
-                searchInput.value = '';
-                search = '';
-                searchFields = [];
-                currentPage = 1;
-                PedidoVentaDetApp.cargarDetallesPedidoVenta();
-
+            searchInput.value = '';
+            search = '';
+            searchFields = [];
+            currentPage = 1;
+            PedidoVentaDetApp.cargarDetallesPedidoVenta();
         },
 
         toggleFilter: () => {
@@ -438,7 +485,7 @@ cargarConfiguraciones().then(() => {
                 .map(input => parseInt(input.value));
             searchFields = columnasSeleccionadas.map(index => columnasAtributos[index]).filter(field => field); // Obtener nombres de campos
 
-            if (searchFields.length === 0) {
+            if (searchFields.length === 0 && searchInput !== '') {
                 PedidoVentaDetApp.mostrarAlerta('warning', 'Advertencia', 'Debes seleccionar al menos una columna para la búsqueda.');
                 return;
             }
@@ -452,6 +499,7 @@ cargarConfiguraciones().then(() => {
             // Cargar los detalles con los nuevos parámetros de búsqueda
             PedidoVentaDetApp.cargarDetallesPedidoVenta();
         },
+
 
         // Función para inicializar el scroll en la tabla
         initTableScroll: () => {
@@ -496,6 +544,27 @@ cargarConfiguraciones().then(() => {
     function parseFloatSafe(value) {
         const parsed = parseFloat(value);
         return isNaN(parsed) ? null : parsed;
+    }
+
+    // Función auxiliar para validar un campo numérico
+    function validarCampoNumerico(valor, nombreCampo, esEntero = true) {
+        if (valor === '') {
+            // Campo vacío, podrías permitirlo si es opcional
+            return true;
+        }
+
+        if (esEntero) {
+            const numero = parseInt(valor, 10);
+            if (isNaN(numero)) {
+                return false;
+            }
+        } else {
+            const numero = parseFloat(valor);
+            if (isNaN(numero)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     // Exponer globalmente para que las funciones sean accesibles desde el HTML

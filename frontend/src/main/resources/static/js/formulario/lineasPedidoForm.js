@@ -84,30 +84,73 @@ const LineaPedidoFormApp = {
         },
 
     getLineasPedidoData: (pedidoCompraId) => {
-        const lineas = [];
-        document.querySelectorAll('#orderLinesContainer .card').forEach(card => {
-            const linea = {
-                idPedidoCompra: pedidoCompraId,
-                n_linea: card.querySelector('input[name="numLinea"]').value || '',
-                proveedor: card.querySelector('input[name="proveedorLinea"]').value || '',
-                cliente: card.querySelector('input[name="clienteLinea"]').value || '',
-                producto: card.querySelector('input[name="producto"]').value || '',
-                talla: card.querySelector('input[name="talla"]').value || '',
-                p_neto: card.querySelector('input[name="pesoNeto"]').value || '',
-                unidad: card.querySelector('input[name="unidad"]').value || '',
-                bultos: card.querySelector('input[name="bultos"]').value || '',
-                precio: card.querySelector('input[name="precio"]').value || '',
-                moneda: card.querySelector('input[name="moneda"]').value || '',
-                paisOrigen: card.querySelector('input[name="paisOrigen"]').value || ''
-            };
+            function validarCampoNumerico(valor, nombreCampo, esEntero = true) {
+                if (valor === '') return true;
+                if (esEntero) {
+                    const numero = parseInt(valor, 10);
+                    if (isNaN(numero)) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error de datos',
+                            text: `El campo "${nombreCampo}" debe ser un número entero.`,
+                            toast: true,
+                            position: 'top-end',
+                            timer: 3000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        });
+                        return false;
+                    }
+                } else {
+                    const numero = parseFloat(valor);
+                    if (isNaN(numero)) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error de datos',
+                            text: `El campo "${nombreCampo}" debe ser un número decimal.`,
+                            toast: true,
+                            position: 'top-end',
+                            timer: 3000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        });
+                        return false;
+                    }
+                }
+                return true;
+            }
 
-            // Solo agregar la línea si todos los campos requeridos están completos (opcional)
+            const lineas = [];
+            document.querySelectorAll('#orderLinesContainer .card').forEach(card => {
+                const nLineaVal = card.querySelector('input[name="numLinea"]').value || '';
+                const pNetoVal = card.querySelector('input[name="pesoNeto"]').value || '';
+                const bultosVal = card.querySelector('input[name="bultos"]').value || '';
+                const precioVal = card.querySelector('input[name="precio"]').value || '';
+
+                if (!validarCampoNumerico(nLineaVal, 'Nº Línea', true)) return null;
+                if (!validarCampoNumerico(pNetoVal, 'Peso Neto', false)) return null;
+                if (!validarCampoNumerico(bultosVal, 'Bultos', true)) return null;
+                if (!validarCampoNumerico(precioVal, 'Precio', false)) return null;
+
+                const linea = {
+                    idPedidoCompra: pedidoCompraId,
+                    n_linea: nLineaVal,
+                    proveedor: card.querySelector('input[name="proveedorLinea"]').value || '',
+                    cliente: card.querySelector('input[name="clienteLinea"]').value || '',
+                    producto: card.querySelector('input[name="producto"]').value || '',
+                    talla: card.querySelector('input[name="talla"]').value || '',
+                    p_neto: pNetoVal,
+                    unidad: card.querySelector('input[name="unidad"]').value || '',
+                    bultos: bultosVal,
+                    precio: precioVal,
+                    moneda: card.querySelector('input[name="moneda"]').value || '',
+                    paisOrigen: card.querySelector('input[name="paisOrigen"]').value || ''
+                };
                 lineas.push(linea);
-
-        });
-        return lineas;
-    }
-};
+            });
+            return lineas;
+        }
+    };
 
 export default LineaPedidoFormApp;
 

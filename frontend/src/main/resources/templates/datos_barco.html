@@ -25,7 +25,7 @@
                 </button>
 
                 <div class="position-relative ">
-                    <input type="text" id="search-input" class="form-control pe-5" placeholder="Search..." oninput="PedidoCompraApp.filtrarDetalles()">
+                    <input type="text" id="search-input" class="form-control pe-5" placeholder="Search..." oninput="DatosBarcoApp.filtrarDetalles()">
                     <button class="search-button" title="Search" onclick="DatosBarcoApp.toggleSearch()">
                         <i class="bi bi-search"></i>
                         <span class="visually-hidden">Search</span>
@@ -52,7 +52,6 @@
                         <label><input type="checkbox" name="columnFilter" value="13"> Fecha Pago Flete</label>
                         <label><input type="checkbox" name="columnFilter" value="14"> Factura Flete</label>
                     </div>
-
                 </div>
                 <button class="btn btn-link p-0" title="Add new" onclick="DatosBarcoApp.crearDatosBarco()">
                     <i class="bi bi-plus-lg header-icon fs-2"></i>
@@ -103,22 +102,15 @@
 
 <!-- Controles de Paginación -->
 <div class="pagination">
-    <!-- Botón Primera Página -->
     <span id="primera-pagina-span">
         <a id="primera-pagina" href="javascript:void(0);" onclick="DatosBarcoApp.irAPrimeraPagina()">Primera Página</a>
     </span>
-
-    <!-- Botón Anterior -->
     <span id="anterior-span">
         <a id="anterior-pagina" href="javascript:void(0);" onclick="DatosBarcoApp.irAPaginaAnterior()">Anterior</a>
     </span>
-
-    <!-- Botón Siguiente -->
     <span id="siguiente-span">
         <a id="siguiente-pagina" href="javascript:void(0);" onclick="DatosBarcoApp.irAPaginaSiguiente()">Siguiente</a>
     </span>
-
-    <!-- Botón Última Página -->
     <span id="ultima-pagina-span">
         <a id="ultima-pagina" href="javascript:void(0);" onclick="DatosBarcoApp.irAUltimaPagina()">Última Página</a>
     </span>

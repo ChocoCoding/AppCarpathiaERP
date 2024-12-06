@@ -104,35 +104,81 @@ const LineaPedidoFormApp = {
         },
 
     getLineasPedidoData: (pedidoVentaId) => {
-        const lineas = [];
-        document.querySelectorAll('#orderLinesContainer .card').forEach(card => {
-            const linea = {
-                idPedidoVenta: pedidoVentaId,
-                n_linea: card.querySelector('input[name="numLinea"]').value || '',
-                proveedor: card.querySelector('input[name="proveedorLinea"]').value || '',
-                cliente: card.querySelector('input[name="clienteLinea"]').value || '',
-                contratoVenta: card.querySelector('input[name="contratoVenta"]').value || '',
-                facturaVenta: card.querySelector('input[name="facturaVenta"]').value || '',
-                producto: card.querySelector('input[name="producto"]').value || '',
-                talla: card.querySelector('input[name="talla"]').value || '',
-                paisOrigen: card.querySelector('input[name="paisOrigen"]').value || '',
-                p_neto: card.querySelector('input[name="pesoNeto"]').value || '',
-                unidad: card.querySelector('input[name="unidad"]').value || '',
-                bultos: card.querySelector('input[name="bultos"]').value || '',
-                precio: card.querySelector('input[name="precio"]').value || '',
-                incoterm: card.querySelector('input[name="incoterm"]').value || '',
-                moneda: card.querySelector('input[name="moneda"]').value || '',
-                comerciales: card.querySelector('input[name="comerciales"]').value || '',
-                transporte: card.querySelector('input[name="transporte"]').value || '',
+            function validarCampoNumerico(valor, nombreCampo, esEntero = true) {
+                if (valor === '') return true;
+                if (esEntero) {
+                    const numero = parseInt(valor, 10);
+                    if (isNaN(numero)) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error de datos',
+                            text: `El campo "${nombreCampo}" debe ser un número entero.`,
+                            toast: true,
+                            position: 'top-end',
+                            timer: 3000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        });
+                        return false;
+                    }
+                } else {
+                    const numero = parseFloat(valor);
+                    if (isNaN(numero)) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error de datos',
+                            text: `El campo "${nombreCampo}" debe ser un número decimal.`,
+                            toast: true,
+                            position: 'top-end',
+                            timer: 3000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        });
+                        return false;
+                    }
+                }
+                return true;
+            }
 
-            };
+            const lineas = [];
+            document.querySelectorAll('#orderLinesContainer .card').forEach(card => {
+                const nLineaVal = card.querySelector('input[name="numLinea"]').value || '';
+                const pesoNetoVal = card.querySelector('input[name="pesoNeto"]').value || '';
+                const bultosVal = card.querySelector('input[name="bultos"]').value || '';
+                const precioVal = card.querySelector('input[name="precio"]').value || '';
+                const transporteVal = card.querySelector('input[name="transporte"]').value || '';
+
+                if (!validarCampoNumerico(nLineaVal, 'Nº Línea', true)) return null;
+                if (!validarCampoNumerico(pesoNetoVal, 'Peso Neto', false)) return null;
+                if (!validarCampoNumerico(bultosVal, 'Bultos', true)) return null;
+                if (!validarCampoNumerico(precioVal, 'Precio', false)) return null;
+                if (!validarCampoNumerico(transporteVal, 'Transporte', false)) return null;
+
+                const linea = {
+                    idPedidoVenta: pedidoVentaId,
+                    n_linea: nLineaVal,
+                    proveedor: card.querySelector('input[name="proveedorLinea"]').value || '',
+                    cliente: card.querySelector('input[name="clienteLinea"]').value || '',
+                    contratoVenta: card.querySelector('input[name="contratoVenta"]').value || '',
+                    facturaVenta: card.querySelector('input[name="facturaVenta"]').value || '',
+                    producto: card.querySelector('input[name="producto"]').value || '',
+                    talla: card.querySelector('input[name="talla"]').value || '',
+                    paisOrigen: card.querySelector('input[name="paisOrigen"]').value || '',
+                    p_neto: pesoNetoVal,
+                    unidad: card.querySelector('input[name="unidad"]').value || '',
+                    bultos: bultosVal,
+                    precio: precioVal,
+                    incoterm: card.querySelector('input[name="incoterm"]').value || '',
+                    moneda: card.querySelector('input[name="moneda"]').value || '',
+                    comerciales: card.querySelector('input[name="comerciales"]').value || '',
+                    transporte: transporteVal,
+                };
 
                 lineas.push(linea);
-
-        });
-        return lineas;
-    }
-};
+            });
+            return lineas;
+        }
+    };
 
 export default LineaPedidoFormApp;
 

@@ -33,15 +33,10 @@ public class PedidoVentaService {
             value = "pedidosVenta",
             key = "#pageable.pageNumber + '-' + #pageable.pageSize + '-' + #pageable.sort.toString() + '-' + #proveedor + '-' + #search + '-' + #searchFields"
     )
-    public Page<PedidoVentaDTO> listarPedidosVenta(Pageable pageable, String proveedor, String search, List<String> searchFields) {
+    public Page<PedidoVentaDTO> listarPedidosVenta(Pageable pageable, String search, List<String> searchFields) {
         Specification<PedidoVenta> spec = Specification.where(null);
 
-        // Filtro por proveedor
-        if (proveedor != null && !proveedor.isEmpty()) {
-            spec = spec.and((root, query, criteriaBuilder) ->
-                    criteriaBuilder.like(criteriaBuilder.lower(root.get("proveedor")), "%" + proveedor.toLowerCase() + "%")
-            );
-        }
+
 
         // Lógica de búsqueda
         if (search != null && !search.isEmpty() && searchFields != null && !searchFields.isEmpty()) {

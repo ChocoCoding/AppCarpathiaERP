@@ -30,7 +30,7 @@ public class ConfigController {
     private String pedidosVentaDetEndpoint;
 
     @Value("${endpoint.api.pedido_venta_det_id}")
-    private String pedidoVentaDetIdEndpoint;
+    private String pedidosVentaDetIdEndpoint;
 
 
     // Mensajes
@@ -146,7 +146,7 @@ public class ConfigController {
         config.put("lineasPedidosVentaEndpoint", lineasPedidosVentaEndpoint);
         config.put("lineasPedidosVentaIdEndpoint", lineasPedidosVentaIdEndpoint);
         config.put("pedidosVentaDetEndpoint", pedidosVentaDetEndpoint);
-        config.put("pedidoVentaDetIdEndpoint", pedidoVentaDetIdEndpoint);
+        config.put("pedidosVentaDetIdEndpoint", pedidosVentaDetIdEndpoint);
 
 
         // Mensajes genericos

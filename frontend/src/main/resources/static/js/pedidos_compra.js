@@ -265,6 +265,33 @@ cargarConfiguraciones().then(() => {
 
             console.log(`Filas modificadas encontradas: ${filasModificadas.length}`); // Depuración
 
+            // Antes de enviar cambios, validamos que los campos numéricos sean valores numéricos
+            for (const fila of filasModificadas) {
+                const idPedidoCompra = fila.getAttribute('data-id-pedido-compra');
+                const valorOperacion = fila.children[2].innerText.trim(); // valor de n_operacion
+
+                // Verificar si n_operacion es numérico si no está vacío
+                if (valorOperacion !== '' && parseLong(valorOperacion) === null) {
+                    // Mostrar alerta de error
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error de datos',
+                        text: `La celda "Nº Operación" ${
+                            idPedidoCompra
+                                ? 'en la fila con ID ' + idPedidoCompra
+                                : 'en la nueva fila creada'
+                        } requiere un valor numérico.`,
+                        toast: true,
+                        position: 'top-end',
+                        timer: 3000,
+                        timerProgressBar: true,
+                        showConfirmButton: false
+                    });
+                    return; // Detener el guardado, el usuario debe corregir el error
+                }
+            }
+
+            // Si pasa la validación, proceder con el guardado:
             filasModificadas.forEach(fila => {
                 const idPedidoCompra = fila.getAttribute('data-id-pedido-compra');
                 const datos = {

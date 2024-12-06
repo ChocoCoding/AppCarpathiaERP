@@ -1,4 +1,3 @@
-// costes_compra.js
 import middleware from '/js/middleware.js';
 
 let config = {};
@@ -11,56 +10,56 @@ let searchFields = [];
 
 // Mapeo de índices de columnas a nombres de campos
 const columnasAtributos = {
-    2: 'pedidoCompra.idPedidoCompra',
-    3: 'nOperacion',
-    4: 'nContenedor',
-    5: 'arancel',
-    6: 'sanidad',
-    7: 'plastico',
-    8: 'carga',
-    9: 'inland',
-    10: 'muellaje',
-    11: 'pif',
-    12: 'despacho',
-    13: 'conexiones',
-    14: 'iva',
-    15: 'dec_iva',
-    16: 'tasa_sanitaria',
-    17: 'suma_costes',
-    18: 'gasto_total'
+    1: 'pedidoCompra.idPedidoCompra',
+    2: 'nOperacion',
+    3: 'nContenedor',
+    4: 'arancel',
+    5: 'sanidad',
+    6: 'plastico',
+    7: 'carga',
+    8: 'inland',
+    9: 'muellaje',
+    10: 'pif',
+    11: 'despacho',
+    12: 'conexiones',
+    13: 'iva',
+    14: 'dec_iva',
+    15: 'tasa_sanitaria',
+    16: 'suma_costes',
+    17: 'gasto_total'
 };
 
 // Cargar configuraciones de endpoints y mensajes desde el backend
 function cargarConfiguraciones() {
     return fetch('http://localhost:8702/api/config')
         .then(response => {
-        if (!response.ok) {
-            throw new Error('Error al cargar la configuración del backend');
-        }
-        return response.json();
-    })
+            if (!response.ok) {
+                throw new Error('Error al cargar la configuración del backend');
+            }
+            return response.json();
+        })
         .then(data => {
-        config = data;
-        // Inicializar variables de estado si están presentes en config
-        currentPage = config.currentPage || 1;
-        size = config.size || 10;
-        sortBy = config.sortBy || 'pedidoCompra.idPedidoCompra';
-        sortDir = config.sortDir || 'asc';
-        return config;
-    })
+            config = data;
+            // Inicializar variables de estado si están presentes en config
+            currentPage = config.currentPage || 1;
+            size = config.size || 10;
+            sortBy = config.sortBy || 'pedidoCompra.idPedidoCompra';
+            sortDir = config.sortDir || 'asc';
+            return config;
+        })
         .catch(error => {
-        console.error('Error al cargar la configuración:', error);
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'No se pudo cargar la configuración de la aplicación.',
-            toast: true,
-            position: 'top-end',
-            timer: 3000,
-            timerProgressBar: true,
-            showConfirmButton: false
+            console.error('Error al cargar la configuración:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'No se pudo cargar la configuración de la aplicación.',
+                toast: true,
+                position: 'top-end',
+                timer: 3000,
+                timerProgressBar: true,
+                showConfirmButton: false
+            });
         });
-    });
 }
 
 cargarConfiguraciones().then(() => {
@@ -69,57 +68,47 @@ cargarConfiguraciones().then(() => {
     const CosteCompraApp = {
         // Navegación
         goBack: () => {
-                    // Verificar si hay cambios sin guardar
-                    const filasModificadas = document.querySelectorAll('tbody tr.modificado');
-                    if (filasModificadas.length > 0) {
-                        // Mostrar alerta de confirmación usando SweetAlert2
-                        Swal.fire({
-                            title: 'Hay cambios sin guardar',
-                            text: '¿Estás seguro de que quieres salir?',
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'Sí, salir',
-                            cancelButtonText: 'Cancelar'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                // Si el usuario confirma, navegar atrás
-                                window.location.href = "/compras";
-                            }
-                            // Si el usuario cancela, no hacer nada
-                        });
-                    } else {
-                        // Si no hay cambios sin guardar, navegar directamente
+            const filasModificadas = document.querySelectorAll('tbody tr.modificado');
+            if (filasModificadas.length > 0) {
+                Swal.fire({
+                    title: 'Hay cambios sin guardar',
+                    text: '¿Estás seguro de que quieres salir?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, salir',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
                         window.location.href = "/compras";
                     }
-                },
+                });
+            } else {
+                window.location.href = "/compras";
+            }
+        },
         goHome: () => {
-                    // Verificar si hay cambios sin guardar
-                    const filasModificadas = document.querySelectorAll('tbody tr.modificado');
-                    if (filasModificadas.length > 0) {
-                        // Mostrar alerta de confirmación usando SweetAlert2
-                        Swal.fire({
-                            title: 'Hay cambios sin guardar',
-                            text: '¿Estás seguro de que quieres salir?',
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'Sí, salir',
-                            cancelButtonText: 'Cancelar'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                // Si el usuario confirma, navegar atrás
-                                window.location.href = "/home";
-                            }
-                            // Si el usuario cancela, no hacer nada
-                        });
-                    } else {
-                        // Si no hay cambios sin guardar, navegar directamente
+            const filasModificadas = document.querySelectorAll('tbody tr.modificado');
+            if (filasModificadas.length > 0) {
+                Swal.fire({
+                    title: 'Hay cambios sin guardar',
+                    text: '¿Estás seguro de que quieres salir?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, salir',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
                         window.location.href = "/home";
                     }
-                },
+                });
+            } else {
+                window.location.href = "/home";
+            }
+        },
 
         logout: () => {
             window.location.href = "/logout";
@@ -163,14 +152,14 @@ cargarConfiguraciones().then(() => {
 
             middleware.get(url.toString())
                 .then(data => {
-                console.log('Datos recibidos:', data);
-                CosteCompraApp.renderTabla(data.content);
-                CosteCompraApp.actualizarPaginacion(data.number + 1, data.totalPages);
-            })
+                    console.log('Datos recibidos:', data);
+                    CosteCompraApp.renderTabla(data.content);
+                    CosteCompraApp.actualizarPaginacion(data.number + 1, data.totalPages);
+                })
                 .catch(error => {
-                CosteCompraApp.mostrarAlerta('error', 'Error', 'Error al cargar los costes de compra.');
-                console.error('Error al cargar los costes de compra:', error);
-            });
+                    CosteCompraApp.mostrarAlerta('error', 'Error', 'Error al cargar los costes de compra.');
+                    console.error('Error al cargar los costes de compra:', error);
+                });
         },
 
         // Renderizar la tabla con los costes de compra
@@ -294,67 +283,133 @@ cargarConfiguraciones().then(() => {
         // Función para guardar cambios (crear y actualizar)
         guardarCambios: () => {
             const filasModificadas = document.querySelectorAll('tbody tr.modificado');
+            const formatoFecha = /^\d{2}\/\d{2}\/\d{4}$/;
 
+            // Función auxiliar para validar un campo numérico
+            function validarCampoNumerico(fila, index, nombreCampo, esEntero = true) {
+                const valor = fila.children[index].innerText.trim();
+                if (valor !== '') {
+                    const numero = esEntero ? parseInt(valor, 10) : parseFloat(valor);
+                    if (isNaN(numero)) {
+                        const idCosteCompra = fila.getAttribute('data-id-coste-compra');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error de datos',
+                            text: `La celda "${nombreCampo}" en la fila ${
+                                idCosteCompra
+                                    ? 'con ID ' + idCosteCompra
+                                    : 'nueva'
+                            } requiere un valor numérico.`,
+                            toast: true,
+                            position: 'top-end',
+                            timer: 3000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        });
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            // Validar todos los campos numéricos de todas las filas modificadas
+            for (const fila of filasModificadas) {
+                // idPedidoCompra (col 1, entero)
+                if (!validarCampoNumerico(fila, 1, 'ID Pedido Compra')) return;
+                // n_operacion (col 2, entero)
+                if (!validarCampoNumerico(fila, 2, 'Nº Operación')) return;
+                // arancel (col 4, decimal)
+                if (!validarCampoNumerico(fila, 4, 'Arancel', false)) return;
+                // sanidad (col 5, decimal)
+                if (!validarCampoNumerico(fila, 5, 'Sanidad', false)) return;
+                // plastico (col 6, decimal)
+                if (!validarCampoNumerico(fila, 6, 'Plástico', false)) return;
+                // carga (col 7, decimal)
+                if (!validarCampoNumerico(fila, 7, 'Carga', false)) return;
+                // inland (col 8, decimal)
+                if (!validarCampoNumerico(fila, 8, 'Inland', false)) return;
+                // muellaje (col 9, decimal)
+                if (!validarCampoNumerico(fila, 9, 'Muellaje', false)) return;
+                // pif (col 10, decimal)
+                if (!validarCampoNumerico(fila, 10, 'PIF', false)) return;
+                // despacho (col 11, decimal)
+                if (!validarCampoNumerico(fila, 11, 'Despacho', false)) return;
+                // conexiones (col 12, decimal)
+                if (!validarCampoNumerico(fila, 12, 'Conexiones', false)) return;
+                // iva (col 13, decimal)
+                if (!validarCampoNumerico(fila, 13, 'IVA', false)) return;
+                // tasa_sanitaria (col 15, decimal)
+                if (!validarCampoNumerico(fila, 15, 'Tasa Sanitaria', false)) return;
+                // suma_costes (col 16, decimal)
+                if (!validarCampoNumerico(fila, 16, 'Suma Costes', false)) return;
+                // gasto_total (col 17, decimal)
+                if (!validarCampoNumerico(fila, 17, 'Gasto Total', false)) return;
+            }
+
+            // Si todas las validaciones pasan, proceder con el guardado
             filasModificadas.forEach(fila => {
                 const idCosteCompra = fila.getAttribute('data-id-coste-compra');
                 const idPedidoCompra = fila.children[1].innerText.trim();
+                // No se utilizan fechas en CostesDTO, por lo que omitimos la validación de fechas
 
                 CosteCompraApp.validarExistenciaPedidoCompra(idPedidoCompra)
                     .then(existe => {
-                    if (!existe) {
-                        CosteCompraApp.mostrarAlerta('error', 'Error', 'ID de Pedido de Compra inválido.', 3000);
-                        return;
-                    }
+                        if (!existe) {
+                            CosteCompraApp.mostrarAlerta('error', 'Error', 'ID de Pedido de Compra inválido.', 3000);
+                            return;
+                        }
 
-                    const datos = {
-                        idPedidoCompra,
-                        n_operacion: fila.children[2].innerText.trim(),
-                        n_contenedor: fila.children[3].innerText.trim(),
-                        arancel: fila.children[4].innerText.trim(),
-                        sanidad: fila.children[5].innerText.trim(),
-                        plastico: fila.children[6].innerText.trim(),
-                        carga: fila.children[7].innerText.trim(),
-                        inland: fila.children[8].innerText.trim(),
-                        muellaje: fila.children[9].innerText.trim(),
-                        pif: fila.children[10].innerText.trim(),
-                        despacho: fila.children[11].innerText.trim(),
-                        conexiones: fila.children[12].innerText.trim(),
-                        iva: fila.children[13].innerText.trim(),
-                        dec_iva: fila.children[14].innerText.trim(),
-                        tasa_sanitaria: fila.children[15].innerText.trim(),
-                        suma_costes: fila.children[16].innerText.trim(),
-                        gasto_total: fila.children[17].innerText.trim()
-                    };
+                        const datos = {
+                            idPedidoCompra,
+                            n_operacion: fila.children[2].innerText.trim(),
+                            n_contenedor: fila.children[3].innerText.trim(),
+                            arancel: fila.children[4].innerText.trim(),
+                            sanidad: fila.children[5].innerText.trim(),
+                            plastico: fila.children[6].innerText.trim(),
+                            carga: fila.children[7].innerText.trim(),
+                            inland: fila.children[8].innerText.trim(),
+                            muellaje: fila.children[9].innerText.trim(),
+                            pif: fila.children[10].innerText.trim(),
+                            despacho: fila.children[11].innerText.trim(),
+                            conexiones: fila.children[12].innerText.trim(),
+                            iva: fila.children[13].innerText.trim(),
+                            dec_iva: fila.children[14].innerText.trim(),
+                            tasa_sanitaria: fila.children[15].innerText.trim(),
+                            suma_costes: fila.children[16].innerText.trim(),
+                            gasto_total: fila.children[17].innerText.trim()
+                        };
 
-                    if (!idCosteCompra) {
-                        middleware.post(config.costesPedidosCompraEndpoint, datos)
-                            .then(() => {
-                            CosteCompraApp.mostrarAlerta('success', 'Éxito', 'Coste creado correctamente.', 2000);
-                            CosteCompraApp.cargarCostesCompra(); // Recargar la tabla
-                        })
-                            .catch(error => {
-                            if (error.message.includes('El coste ya existe.')) {
-                                CosteCompraApp.mostrarAlerta('error', 'Error', 'El coste ya existe.');
-                            } else {
-                                CosteCompraApp.mostrarAlerta('error', 'Error', 'No se pudo crear el coste.');
-                            }
-                        });
-                    } else {
-                        const url = config.costesPedidosCompraIdEndpoint.replace('{id}', idCosteCompra);
-                        middleware.put(url, datos)
-                            .then(() => {
-                            CosteCompraApp.mostrarAlerta('success', 'Éxito', 'Cambios guardados correctamente.', 2000);
-                            fila.classList.remove('modificado');
-                            CosteCompraApp.cargarCostesCompra(); // Recargar la tabla
-                        })
-                            .catch(error => {
-                            CosteCompraApp.mostrarAlerta('error', 'Error', 'No se pudo guardar los cambios.');
-                        });
-                    }
-                })
+                        if (!idCosteCompra) {
+                            // Crear nuevo registro
+                            middleware.post(config.costesPedidosCompraEndpoint, datos)
+                                .then(() => {
+                                    CosteCompraApp.mostrarAlerta('success', 'Éxito', 'Coste creado correctamente.', 2000);
+                                    CosteCompraApp.cargarCostesCompra(); // Recargar la tabla
+                                })
+                                .catch(error => {
+                                    if (error.message && error.message.includes('El coste ya existe.')) {
+                                        CosteCompraApp.mostrarAlerta('error', 'Error', 'El coste ya existe.');
+                                    } else {
+                                        CosteCompraApp.mostrarAlerta('error', 'Error', 'No se pudo crear el coste.');
+                                    }
+                                });
+                        } else {
+                            // Actualizar registro existente
+                            const url = config.costesPedidosCompraIdEndpoint.replace('{id}', idCosteCompra);
+                            middleware.put(url, datos)
+                                .then(() => {
+                                    CosteCompraApp.mostrarAlerta('success', 'Éxito', 'Cambios guardados correctamente.', 2000);
+                                    fila.classList.remove('modificado');
+                                    CosteCompraApp.cargarCostesCompra(); // Recargar la tabla
+                                })
+                                .catch(error => {
+                                    CosteCompraApp.mostrarAlerta('error', 'Error', 'No se pudo guardar los cambios.');
+                                });
+                        }
+                    })
                     .catch(error => {
-                    CosteCompraApp.mostrarAlerta('error', 'Error', 'Error al validar el ID de Pedido de Compra.');
-                });
+                        CosteCompraApp.mostrarAlerta('error', 'Error', 'Error al validar el ID de Pedido de Compra.');
+                    });
             });
         },
 
@@ -363,9 +418,9 @@ cargarConfiguraciones().then(() => {
             return middleware.get(`${config.pedidosCompraEndpoint}/${idPedidoCompra}/exists`)
                 .then(data => data.existe)
                 .catch(error => {
-                console.error('Error en la validación del ID del Pedido de Compra:', error);
-                return false;
-            });
+                    console.error('Error en la validación del ID del Pedido de Compra:', error);
+                    return false;
+                });
         },
 
         // Función para eliminar un coste de compra
@@ -389,12 +444,12 @@ cargarConfiguraciones().then(() => {
                     const url = config.costesPedidosCompraIdEndpoint.replace('{id}', idCosteCompra);
                     middleware.delete(url)
                         .then(() => {
-                        CosteCompraApp.mostrarAlerta('success', 'Éxito', 'Coste eliminado correctamente.', 2000);
-                        CosteCompraApp.cargarCostesCompra(); // Recargar la tabla
-                    })
+                            CosteCompraApp.mostrarAlerta('success', 'Éxito', 'Coste eliminado correctamente.', 2000);
+                            CosteCompraApp.cargarCostesCompra(); // Recargar la tabla
+                        })
                         .catch(error => {
-                        CosteCompraApp.mostrarAlerta('error', 'Error', 'No se pudo eliminar el coste.');
-                    });
+                            CosteCompraApp.mostrarAlerta('error', 'Error', 'No se pudo eliminar el coste.');
+                        });
                 }
             });
         },
@@ -408,23 +463,23 @@ cargarConfiguraciones().then(() => {
                 <td>
                     <button class="delete-button" onclick="CosteCompraApp.eliminarFila(this)">🗑️</button>
                 </td>
-                <td contenteditable="true" class="editable"></td>
-                <td contenteditable="false" class="editable"></td>
-                <td contenteditable="false" class="editable"></td>
-                <td contenteditable="true" class="editable"></td>
-                <td contenteditable="true" class="editable"></td>
-                <td contenteditable="true" class="editable"></td>
-                <td contenteditable="true" class="editable"></td>
-                <td contenteditable="true" class="editable"></td>
-                <td contenteditable="true" class="editable"></td>
-                <td contenteditable="true" class="editable"></td>
-                <td contenteditable="true" class="editable"></td>
-                <td contenteditable="true" class="editable"></td>
-                <td contenteditable="true" class="editable"></td>
-                <td contenteditable="true" class="editable"></td>
-                <td contenteditable="false" class="editable"></td>
-                <td contenteditable="false" class="editable"></td>
-                <td contenteditable="false" class="editable"></td>
+                <td contenteditable="true" class="editable"></td> <!-- ID Pedido Compra -->
+                <td contenteditable="false" class="editable"></td> <!-- Nº Operación -->
+                <td contenteditable="false" class="editable"></td> <!-- Nº Contenedor -->
+                <td contenteditable="true" class="editable"></td> <!-- Arancel -->
+                <td contenteditable="true" class="editable"></td> <!-- Sanidad -->
+                <td contenteditable="true" class="editable"></td> <!-- Plástico -->
+                <td contenteditable="true" class="editable"></td> <!-- Carga -->
+                <td contenteditable="true" class="editable"></td> <!-- Inland -->
+                <td contenteditable="true" class="editable"></td> <!-- Muellaje -->
+                <td contenteditable="true" class="editable"></td> <!-- PIF -->
+                <td contenteditable="true" class="editable"></td> <!-- Despacho -->
+                <td contenteditable="true" class="editable"></td> <!-- Conexiones -->
+                <td contenteditable="true" class="editable"></td> <!-- IVA -->
+                <td contenteditable="true" class="editable"></td> <!-- Dec.Iva -->
+                <td contenteditable="true" class="editable"></td> <!-- Tasa Sanitaria -->
+                <td contenteditable="false" class="editable"></td> <!-- Suma Costes -->
+                <td contenteditable="false" class="editable"></td> <!-- Gasto Total -->
             `;
 
             tbody.insertBefore(nuevaFila, tbody.firstChild);
@@ -453,12 +508,11 @@ cargarConfiguraciones().then(() => {
         // Funciones para mostrar y ocultar la búsqueda y filtros
         toggleSearch: () => {
             const searchInput = document.getElementById('search-input');
-                searchInput.value = '';
-                config.search = '';
-                config.searchFields = [];
-                currentPage = 1;
-                CosteCompraApp.cargarCostesCompra();
-
+            searchInput.value = '';
+            search = '';
+            searchFields = [];
+            currentPage = 1;
+            CosteCompraApp.cargarCostesCompra();
         },
 
         toggleFilter: () => {

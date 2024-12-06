@@ -1,4 +1,3 @@
-// datos_barco.js
 import middleware from '/js/middleware.js';
 
 let config = {};
@@ -30,33 +29,33 @@ const columnasAtributos = {
 function cargarConfiguraciones() {
     return fetch('http://localhost:8702/api/config')
         .then(response => {
-        if (!response.ok) {
-            throw new Error('Error al cargar la configuración del backend');
-        }
-        return response.json();
-    })
+            if (!response.ok) {
+                throw new Error('Error al cargar la configuración del backend');
+            }
+            return response.json();
+        })
         .then(data => {
-        config = data;
-        // Inicializar variables de estado si están presentes en config
-        currentPage = config.currentPage || 1;
-        size = config.size || 10;
-        sortBy = config.sortBy || 'pedidoCompra.idPedidoCompra';
-        sortDir = config.sortDir || 'asc';
-        return config;
-    })
+            config = data;
+            // Inicializar variables de estado si están presentes en config
+            currentPage = config.currentPage || 1;
+            size = config.size || 10;
+            sortBy = config.sortBy || 'pedidoCompra.idPedidoCompra';
+            sortDir = config.sortDir || 'asc';
+            return config;
+        })
         .catch(error => {
-        console.error('Error al cargar la configuración:', error);
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'No se pudo cargar la configuración de la aplicación.',
-            toast: true,
-            position: 'top-end',
-            timer: 3000,
-            timerProgressBar: true,
-            showConfirmButton: false
+            console.error('Error al cargar la configuración:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'No se pudo cargar la configuración de la aplicación.',
+                toast: true,
+                position: 'top-end',
+                timer: 3000,
+                timerProgressBar: true,
+                showConfirmButton: false
+            });
         });
-    });
 }
 
 cargarConfiguraciones().then(() => {
@@ -65,57 +64,47 @@ cargarConfiguraciones().then(() => {
     const DatosBarcoApp = {
         // Navegación
         goBack: () => {
-                    // Verificar si hay cambios sin guardar
-                    const filasModificadas = document.querySelectorAll('tbody tr.modificado');
-                    if (filasModificadas.length > 0) {
-                        // Mostrar alerta de confirmación usando SweetAlert2
-                        Swal.fire({
-                            title: 'Hay cambios sin guardar',
-                            text: '¿Estás seguro de que quieres salir?',
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'Sí, salir',
-                            cancelButtonText: 'Cancelar'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                // Si el usuario confirma, navegar atrás
-                                window.location.href = "/compras";
-                            }
-                            // Si el usuario cancela, no hacer nada
-                        });
-                    } else {
-                        // Si no hay cambios sin guardar, navegar directamente
+            const filasModificadas = document.querySelectorAll('tbody tr.modificado');
+            if (filasModificadas.length > 0) {
+                Swal.fire({
+                    title: 'Hay cambios sin guardar',
+                    text: '¿Estás seguro de que quieres salir?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, salir',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
                         window.location.href = "/compras";
                     }
-                },
+                });
+            } else {
+                window.location.href = "/compras";
+            }
+        },
         goHome: () => {
-                    // Verificar si hay cambios sin guardar
-                    const filasModificadas = document.querySelectorAll('tbody tr.modificado');
-                    if (filasModificadas.length > 0) {
-                        // Mostrar alerta de confirmación usando SweetAlert2
-                        Swal.fire({
-                            title: 'Hay cambios sin guardar',
-                            text: '¿Estás seguro de que quieres salir?',
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'Sí, salir',
-                            cancelButtonText: 'Cancelar'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                // Si el usuario confirma, navegar atrás
-                                window.location.href = "/home";
-                            }
-                            // Si el usuario cancela, no hacer nada
-                        });
-                    } else {
-                        // Si no hay cambios sin guardar, navegar directamente
+            const filasModificadas = document.querySelectorAll('tbody tr.modificado');
+            if (filasModificadas.length > 0) {
+                Swal.fire({
+                    title: 'Hay cambios sin guardar',
+                    text: '¿Estás seguro de que quieres salir?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, salir',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
                         window.location.href = "/home";
                     }
-                },
+                });
+            } else {
+                window.location.href = "/home";
+            }
+        },
 
         logout: () => {
             window.location.href = "/logout";
@@ -159,25 +148,25 @@ cargarConfiguraciones().then(() => {
 
             middleware.get(url.toString())
                 .then(data => {
-                console.log('Datos recibidos:', data);
-                DatosBarcoApp.renderTabla(data.content);
-                DatosBarcoApp.actualizarPaginacion(data.number + 1, data.totalPages);
-            })
+                    console.log('Datos recibidos:', data);
+                    DatosBarcoApp.renderTabla(data.content);
+                    DatosBarcoApp.actualizarPaginacion(data.number + 1, data.totalPages);
+                })
                 .catch(error => {
-                DatosBarcoApp.mostrarAlerta('error', 'Error', 'Error al cargar los datos del barco.');
-                console.error('Error al cargar los datos del barco:', error);
-            });
+                    DatosBarcoApp.mostrarAlerta('error', 'Error', 'Error al cargar los datos del barco.');
+                    console.error('Error al cargar los datos del barco:', error);
+                });
         },
 
         // Renderizar la tabla con los datos del barco
         renderTabla: (datosBarco) => {
-            console.log('Renderizando tabla con datos del barco:', datosBarco); // Depuración
+            console.log('Renderizando tabla con datos del barco:', datosBarco);
             const tbody = document.querySelector('tbody');
             if (!tbody) {
                 console.error('No se encontró el elemento <tbody> en el DOM.');
                 return;
             }
-            tbody.innerHTML = ''; // Limpiar la tabla antes de renderizar
+            tbody.innerHTML = '';
 
             datosBarco.forEach(dato => {
                 DatosBarcoApp.renderFilaDato(dato);
@@ -222,9 +211,8 @@ cargarConfiguraciones().then(() => {
             currentPage = currentPageFromBackend;
             config.totalPages = totalPagesFromBackend;
 
-            console.log(`Página actual: ${currentPage} / Total páginas: ${config.totalPages}`); // Depuración
+            console.log(`Página actual: ${currentPage} / Total páginas: ${config.totalPages}`);
 
-            // Obtener los elementos de paginación
             const primeraPaginaSpan = document.getElementById('primera-pagina-span');
             const anteriorPaginaSpan = document.getElementById('anterior-span');
             const siguientePaginaSpan = document.getElementById('siguiente-span');
@@ -235,7 +223,6 @@ cargarConfiguraciones().then(() => {
                 return;
             }
 
-            // Deshabilitar o habilitar "Primera Página" y "Anterior"
             if (currentPage <= 1) {
                 primeraPaginaSpan.innerHTML = `<span class="disabled">Primera Página</span>`;
                 anteriorPaginaSpan.innerHTML = `<span class="disabled">Anterior</span>`;
@@ -244,7 +231,6 @@ cargarConfiguraciones().then(() => {
                 anteriorPaginaSpan.innerHTML = `<a id="anterior-pagina" href="javascript:void(0);" onclick="DatosBarcoApp.irAPaginaAnterior()">Anterior</a>`;
             }
 
-            // Deshabilitar o habilitar "Siguiente Página" y "Última Página"
             if (currentPage >= config.totalPages) {
                 siguientePaginaSpan.innerHTML = `<span class="disabled">Siguiente</span>`;
                 ultimaPaginaSpan.innerHTML = `<span class="disabled">Última Página</span>`;
@@ -254,7 +240,6 @@ cargarConfiguraciones().then(() => {
             }
         },
 
-        // Funciones de Navegación de Paginación
         irAPrimeraPagina: () => {
             if (currentPage > 1) {
                 currentPage = 1;
@@ -283,11 +268,48 @@ cargarConfiguraciones().then(() => {
             }
         },
 
-        // Función para guardar cambios (crear y actualizar)
         guardarCambios: () => {
             const filasModificadas = document.querySelectorAll('tbody tr.modificado');
             const formatoFecha = /^\d{2}\/\d{2}\/\d{4}$/;
 
+            // Función auxiliar para validar un campo numérico
+            function validarCampoNumerico(fila, index, nombreCampo, esEntero = true) {
+                const valor = fila.children[index].innerText.trim();
+                if (valor !== '') {
+                    const numero = esEntero ? parseInt(valor, 10) : parseFloat(valor);
+                    if (isNaN(numero)) {
+                        const idDatosBarco = fila.getAttribute('data-id-datos-barco');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error de datos',
+                            text: `La celda "${nombreCampo}" en la fila ${
+                                idDatosBarco
+                                    ? 'con ID ' + idDatosBarco
+                                    : 'nueva'
+                            } requiere un valor numérico.`,
+                            toast: true,
+                            position: 'top-end',
+                            timer: 3000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        });
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            // Validar campos numéricos antes de guardar
+            for (const fila of filasModificadas) {
+                // idPedidoCompra (col 1, entero)
+                if (!validarCampoNumerico(fila, 1, 'ID Pedido Compra')) return;
+                // n_operacion (col 2, entero)
+                if (!validarCampoNumerico(fila, 2, 'Nº Operación')) return;
+                // flete (col 11, decimal)
+                if (!validarCampoNumerico(fila, 11, 'Flete', false)) return;
+            }
+
+            // Si se supera la validación, proceder con el guardado
             filasModificadas.forEach(fila => {
                 const idDatosBarco = fila.getAttribute('data-id-datos-barco');
                 const idPedidoCompra = fila.children[1].innerText.trim();
@@ -297,75 +319,74 @@ cargarConfiguraciones().then(() => {
 
                 // Validación de fechas
                 if ((fechaPagoFlete && !formatoFecha.test(fechaPagoFlete)) ||
-                (fechaEmbarque && !formatoFecha.test(fechaEmbarque)) ||
-                (fechaLlegada && !formatoFecha.test(fechaLlegada))) {
+                    (fechaEmbarque && !formatoFecha.test(fechaEmbarque)) ||
+                    (fechaLlegada && !formatoFecha.test(fechaLlegada))) {
                     DatosBarcoApp.mostrarAlerta('error', 'Error', 'Formato de fecha incorrecto. Debe ser dd/MM/yyyy', 3000);
                     return;
                 }
 
                 DatosBarcoApp.validarExistenciaPedidoCompra(idPedidoCompra)
                     .then(existe => {
-                    if (!existe) {
-                        DatosBarcoApp.mostrarAlerta('error', 'Error', 'ID de Pedido de Compra inválido.', 3000);
-                        return;
-                    }
+                        if (!existe) {
+                            DatosBarcoApp.mostrarAlerta('error', 'Error', 'ID de Pedido de Compra inválido.', 3000);
+                            return;
+                        }
 
-                    const datos = {
-                        idPedidoCompra,
-                        n_operacion: fila.children[2].innerText.trim(),
-                        n_contenedor: fila.children[3].innerText.trim(),
-                        nombreBarco: fila.children[4].innerText.trim(),
-                        viaje: fila.children[5].innerText.trim(),
-                        naviera: fila.children[6].innerText.trim(),
-                        puertoEmbarque: fila.children[7].innerText.trim(),
-                        puertoLlegada: fila.children[8].innerText.trim(),
-                        fecha_embarque: fechaEmbarque,
-                        fecha_llegada: fechaLlegada,
-                        flete: fila.children[11].innerText.trim(),
-                        fecha_pago_flete: fechaPagoFlete,
-                        facturaFlete: fila.children[13].innerText.trim()
-                    };
+                        const datos = {
+                            idPedidoCompra,
+                            n_operacion: fila.children[2].innerText.trim(),
+                            n_contenedor: fila.children[3].innerText.trim(),
+                            nombreBarco: fila.children[4].innerText.trim(),
+                            viaje: fila.children[5].innerText.trim(),
+                            naviera: fila.children[6].innerText.trim(),
+                            puertoEmbarque: fila.children[7].innerText.trim(),
+                            puertoLlegada: fila.children[8].innerText.trim(),
+                            fecha_embarque: fechaEmbarque,
+                            fecha_llegada: fechaLlegada,
+                            flete: fila.children[11].innerText.trim(),
+                            fecha_pago_flete: fechaPagoFlete,
+                            facturaFlete: fila.children[13].innerText.trim()
+                        };
 
-                    if (!idDatosBarco) {
-                        middleware.post(config.datosBarcoEndpoint, datos)
-                            .then(() => {
-                            DatosBarcoApp.mostrarAlerta('success', 'Éxito', 'Datos del barco creados correctamente.', 2000);
-                            DatosBarcoApp.cargarDatosBarco(); // Recargar la tabla
-                        })
-                            .catch(error => {
-                            DatosBarcoApp.mostrarAlerta('error', 'Error', 'No se pudo crear los datos del barco.');
-                        });
-                    } else {
-                        const url = config.datosBarcoIdEndpoint.replace('{id}', idDatosBarco);
-                        middleware.put(url, datos)
-                            .then(() => {
-                            DatosBarcoApp.mostrarAlerta('success', 'Éxito', 'Cambios guardados correctamente.', 2000);
-                            fila.classList.remove('modificado');
-                            DatosBarcoApp.cargarDatosBarco(); // Recargar la tabla
-                        })
-                            .catch(error => {
-                            DatosBarcoApp.mostrarAlerta('error', 'Error', 'No se pudo guardar los cambios.');
-                        });
-                    }
-                })
+                        if (!idDatosBarco) {
+                            // Crear nuevo registro
+                            middleware.post(config.datosBarcoEndpoint, datos)
+                                .then(() => {
+                                    DatosBarcoApp.mostrarAlerta('success', 'Éxito', 'Datos del barco creados correctamente.', 2000);
+                                    DatosBarcoApp.cargarDatosBarco();
+                                })
+                                .catch(error => {
+                                    DatosBarcoApp.mostrarAlerta('error', 'Error', 'No se pudo crear los datos del barco.');
+                                });
+                        } else {
+                            // Actualizar registro existente
+                            const url = config.datosBarcoIdEndpoint.replace('{id}', idDatosBarco);
+                            middleware.put(url, datos)
+                                .then(() => {
+                                    DatosBarcoApp.mostrarAlerta('success', 'Éxito', 'Cambios guardados correctamente.', 2000);
+                                    fila.classList.remove('modificado');
+                                    DatosBarcoApp.cargarDatosBarco();
+                                })
+                                .catch(error => {
+                                    DatosBarcoApp.mostrarAlerta('error', 'Error', 'No se pudo guardar los cambios.');
+                                });
+                        }
+                    })
                     .catch(error => {
-                    DatosBarcoApp.mostrarAlerta('error', 'Error', 'Error al validar el ID de Pedido de Compra.');
-                });
+                        DatosBarcoApp.mostrarAlerta('error', 'Error', 'Error al validar el ID de Pedido de Compra.');
+                    });
             });
-
         },
 
-        // Función para validar la existencia de un Pedido de Compra
         validarExistenciaPedidoCompra: (idPedidoCompra) => {
             return middleware.get(`${config.pedidosCompraEndpoint}/${idPedidoCompra}/exists`)
                 .then(data => data.existe)
                 .catch(error => {
-                console.error('Error en la validación del ID del Pedido de Compra:', error);
-                return false;
-            });
+                    console.error('Error en la validación del ID del Pedido de Compra:', error);
+                    return false;
+                });
         },
 
-        // Función para eliminar datos del barco
         eliminarDatosBarco: (idDatosBarco) => {
             if (!idDatosBarco) {
                 DatosBarcoApp.mostrarAlerta('error', 'Error', 'ID de Datos del Barco inválido.');
@@ -386,17 +407,16 @@ cargarConfiguraciones().then(() => {
                     const url = config.datosBarcoIdEndpoint.replace('{id}', idDatosBarco);
                     middleware.delete(url)
                         .then(() => {
-                        DatosBarcoApp.mostrarAlerta('success', 'Éxito', 'Datos del barco eliminados correctamente.', 2000);
-                        DatosBarcoApp.cargarDatosBarco(); // Recargar la tabla
-                    })
+                            DatosBarcoApp.mostrarAlerta('success', 'Éxito', 'Datos del barco eliminados correctamente.', 2000);
+                            DatosBarcoApp.cargarDatosBarco();
+                        })
                         .catch(error => {
-                        DatosBarcoApp.mostrarAlerta('error', 'Error', 'No se pudo eliminar los datos del barco.');
-                    });
+                            DatosBarcoApp.mostrarAlerta('error', 'Error', 'No se pudo eliminar los datos del barco.');
+                        });
                 }
             });
         },
 
-        // Función para crear una nueva fila editable
         crearDatosBarco: () => {
             const tbody = document.querySelector('tbody');
             const nuevaFila = document.createElement('tr');
@@ -424,13 +444,11 @@ cargarConfiguraciones().then(() => {
             nuevaFila.classList.add('modificado', 'new-row');
         },
 
-        // Función para eliminar una fila antes de guardarla
         eliminarFila: (boton) => {
             const fila = boton.closest('tr');
             fila.remove();
         },
 
-        // Función para ordenar la tabla
         sortTable: (campo) => {
             if (sortBy === campo) {
                 sortDir = sortDir === 'asc' ? 'desc' : 'asc';
@@ -443,15 +461,13 @@ cargarConfiguraciones().then(() => {
             DatosBarcoApp.cargarDatosBarco();
         },
 
-        // Funciones para mostrar y ocultar la búsqueda y filtros
         toggleSearch: () => {
             const searchInput = document.getElementById('search-input');
-                searchInput.value = '';
-                search = '';
-                searchFields = [];
-                currentPage = 1;
-                DatosBarcoApp.cargarDatosBarco();
-
+            searchInput.value = '';
+            search = '';
+            searchFields = [];
+            currentPage = 1;
+            DatosBarcoApp.cargarDatosBarco();
         },
 
         toggleFilter: () => {
@@ -459,29 +475,22 @@ cargarConfiguraciones().then(() => {
             filterContainer.classList.toggle('expanded');
         },
 
-        // Función para filtrar detalles (servidor)
         filtrarDetalles: () => {
             const searchInput = document.getElementById('search-input').value.trim();
             const columnasSeleccionadas = Array.from(document.querySelectorAll('input[name="columnFilter"]:checked'))
                 .map(input => parseInt(input.value));
-            searchFields = columnasSeleccionadas.map(index => columnasAtributos[index]).filter(field => field); // Obtener nombres de campos
+            searchFields = columnasSeleccionadas.map(index => columnasAtributos[index]).filter(field => field);
 
             if (searchFields.length === 0) {
                 DatosBarcoApp.mostrarAlerta('warning', 'Advertencia', 'Debes seleccionar al menos una columna para la búsqueda.');
                 return;
             }
 
-            // Actualizar variables de estado
             search = searchInput;
-
-            // Resetear la paginación a la primera página
             currentPage = 1;
-
-            // Cargar los datos con los nuevos parámetros de búsqueda
             DatosBarcoApp.cargarDatosBarco();
         },
 
-        // Función para inicializar el scroll en la tabla
         initTableScroll: () => {
             const tableContainer = document.querySelector('.table-container');
             let isDown = false;
@@ -515,17 +524,14 @@ cargarConfiguraciones().then(() => {
         }
     };
 
-    // Exponer globalmente para que las funciones sean accesibles desde el HTML
     window.DatosBarcoApp = DatosBarcoApp;
 
-    // Verificar si el DOM ya está cargado
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
             DatosBarcoApp.initTableScroll();
             DatosBarcoApp.cargarDatosBarco();
         });
     } else {
-        // DOM ya está cargado
         DatosBarcoApp.initTableScroll();
         DatosBarcoApp.cargarDatosBarco();
     }

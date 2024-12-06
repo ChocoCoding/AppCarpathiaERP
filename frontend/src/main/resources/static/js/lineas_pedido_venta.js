@@ -9,65 +9,65 @@ let sortDir = 'desc'; // Dirección de ordenamiento inicial
 let proveedor = '';
 let cliente = '';
 let search = '';
-let searchFields = []; // Debes definir cómo se manejan los campos de búsqueda
+let searchFields = []; // Campos de búsqueda seleccionados
 
+// Mapeo de índices de columnas a nombres de campos
 const columnasAtributos = {
-    2: 'pedidoVenta.idPedidoVenta',
-    3: 'nLinea',
-    4: 'nOperacion',
-    5: 'proveedor',
-    6: 'cliente',
-    7: 'contratoVenta',
-    8: 'facturaVenta',
-    9: 'nContenedor',
-    10: 'producto',
-    11: 'talla',
-    12: 'paisOrigen',
-    13: 'pNeto',
-    14: 'unidad',
-    15: 'bultos',
-    16: 'precio',
-    17: 'valorVenta',
-    18: 'incoterm',
-    19: 'moneda',
-    20: 'comerciales',
-    21: 'transporte'
-
+    1: 'idPedidoVenta',
+    2: 'nLinea',
+    3: 'nOperacion',
+    4: 'proveedor',
+    5: 'cliente',
+    6: 'contratoVenta',
+    7: 'facturaVenta',
+    8: 'nContenedor',
+    9: 'producto',
+    10: 'talla',
+    11: 'paisOrigen',
+    12: 'pNeto',
+    13: 'unidad',
+    14: 'bultos',
+    15: 'precio',
+    16: 'valorVenta',
+    17: 'incoterm',
+    18: 'moneda',
+    19: 'comerciales',
+    20: 'transporte'
 };
 
 // Cargar configuraciones de endpoints y mensajes desde el backend
 function cargarConfiguraciones() {
     return fetch('http://localhost:8703/api/ventas/config')  // Asegúrate de que la URL sea correcta y accesible
         .then(response => {
-        if (!response.ok) {
-            throw new Error('Error al cargar la configuración del backend');
-        }
-        return response.json();
-    })
+            if (!response.ok) {
+                throw new Error('Error al cargar la configuración del backend');
+            }
+            return response.json();
+        })
         .then(data => {
-        config = data;
-        console.log('Configuracion cargada: ',config)
-        currentPage = config.currentPage || 1;
-        size = config.size || 10;
-        sortBy = config.sortBy || 'pedidoVenta.idPedidoVenta';
-        sortDir = config.sortDir || 'asc';
-        proveedor = config.proveedor || '';
-        cliente = config.cliente || '';
-        return config;
-    })
+            config = data;
+            console.log('Configuración cargada:', config);
+            currentPage = config.currentPage || 1;
+            size = config.size || 10;
+            sortBy = config.sortBy || 'pedidoVenta.idPedidoVenta';
+            sortDir = config.sortDir || 'desc';
+            proveedor = config.proveedor || '';
+            cliente = config.cliente || '';
+            return config;
+        })
         .catch(error => {
-        console.error('Error al cargar la configuración:', error);
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'No se pudo cargar la configuración de la aplicación.',
-            toast: true,
-            position: 'top-end',
-            timer: 3000,
-            timerProgressBar: true,
-            showConfirmButton: false
+            console.error('Error al cargar la configuración:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'No se pudo cargar la configuración de la aplicación.',
+                toast: true,
+                position: 'top-end',
+                timer: 3000,
+                timerProgressBar: true,
+                showConfirmButton: false
+            });
         });
-    });
 }
 
 cargarConfiguraciones().then(() => {
@@ -76,57 +76,47 @@ cargarConfiguraciones().then(() => {
     const LineasPedidoApp = {
         // Navegación
         goBack: () => {
-                    // Verificar si hay cambios sin guardar
-                    const filasModificadas = document.querySelectorAll('tbody tr.modificado');
-                    if (filasModificadas.length > 0) {
-                        // Mostrar alerta de confirmación usando SweetAlert2
-                        Swal.fire({
-                            title: 'Hay cambios sin guardar',
-                            text: '¿Estás seguro de que quieres salir?',
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'Sí, salir',
-                            cancelButtonText: 'Cancelar'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                // Si el usuario confirma, navegar atrás
-                                window.location.href = "/ventas";
-                            }
-                            // Si el usuario cancela, no hacer nada
-                        });
-                    } else {
-                        // Si no hay cambios sin guardar, navegar directamente
+            const filasModificadas = document.querySelectorAll('tbody tr.modificado');
+            if (filasModificadas.length > 0) {
+                Swal.fire({
+                    title: 'Hay cambios sin guardar',
+                    text: '¿Estás seguro de que quieres salir?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, salir',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
                         window.location.href = "/ventas";
                     }
-                },
+                });
+            } else {
+                window.location.href = "/ventas";
+            }
+        },
         goHome: () => {
-                    // Verificar si hay cambios sin guardar
-                    const filasModificadas = document.querySelectorAll('tbody tr.modificado');
-                    if (filasModificadas.length > 0) {
-                        // Mostrar alerta de confirmación usando SweetAlert2
-                        Swal.fire({
-                            title: 'Hay cambios sin guardar',
-                            text: '¿Estás seguro de que quieres salir?',
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'Sí, salir',
-                            cancelButtonText: 'Cancelar'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                // Si el usuario confirma, navegar atrás
-                                window.location.href = "/ventas";
-                            }
-                            // Si el usuario cancela, no hacer nada
-                        });
-                    } else {
-                        // Si no hay cambios sin guardar, navegar directamente
-                        window.location.href = "/ventas";
+            const filasModificadas = document.querySelectorAll('tbody tr.modificado');
+            if (filasModificadas.length > 0) {
+                Swal.fire({
+                    title: 'Hay cambios sin guardar',
+                    text: '¿Estás seguro de que quieres salir?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, salir',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "/home";
                     }
-                },
+                });
+            } else {
+                window.location.href = "/home";
+            }
+        },
 
         logout: () => {
             window.location.href = "/logout";
@@ -172,14 +162,14 @@ cargarConfiguraciones().then(() => {
 
             middleware.get(url.toString())
                 .then(data => {
-                console.log('Datos recibidos:', data);
-                LineasPedidoApp.renderTabla(data.content);
-                LineasPedidoApp.actualizarPaginacion(data.number + 1, data.totalPages);
-            })
+                    console.log('Datos recibidos:', data);
+                    LineasPedidoApp.renderTabla(data.content);
+                    LineasPedidoApp.actualizarPaginacion(data.number + 1, data.totalPages);
+                })
                 .catch(error => {
-                LineasPedidoApp.mostrarAlerta('error', 'Error', 'Error al cargar las líneas de pedido de venta.');
-                console.error('Error al cargar las líneas de pedido de venta:', error);
-            });
+                    LineasPedidoApp.mostrarAlerta('error', 'Error', 'Error al cargar las líneas de pedido de venta.');
+                    console.error('Error al cargar las líneas de pedido de venta:', error);
+                });
         },
 
         // Renderizar la tabla con las líneas de pedido de venta
@@ -216,7 +206,7 @@ cargarConfiguraciones().then(() => {
                 </td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.idPedidoVenta || ''}</td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.n_linea || ''}</td>
-                <td contenteditable="false" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.n_operacion || ''}</td>
+                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.n_operacion || ''}</td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.proveedor || ''}</td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.cliente || ''}</td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.contratoVenta || ''}</td>
@@ -308,68 +298,153 @@ cargarConfiguraciones().then(() => {
         // Función para guardar cambios (crear y actualizar)
         guardarCambios: () => {
             const filasModificadas = document.querySelectorAll('tbody tr.modificado');
+            const formatoDecimal = /^-?\d+(\.\d+)?$/;
 
+            // Función auxiliar para validar un campo numérico
+            function validarCampoNumerico(valor, nombreCampo, esEntero = true) {
+                if (valor === '') {
+                    // Campo vacío, podría ser permitido si es una nueva fila
+                    return true;
+                }
+
+                if (esEntero) {
+                    const numero = parseInt(valor, 10);
+                    if (isNaN(numero)) {
+                        return false;
+                    }
+                } else {
+                    const numero = parseFloat(valor);
+                    if (isNaN(numero)) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            // Validar todos los campos numéricos de todas las filas modificadas
+            for (const fila of filasModificadas) {
+                const idPedidoVenta = fila.children[1].innerText.trim();
+                const nLinea = fila.children[2].innerText.trim();
+                const nOperacion = fila.children[3].innerText.trim();
+                const pNeto = fila.children[12].innerText.trim();
+                const bultos = fila.children[14].innerText.trim();
+                const precio = fila.children[15].innerText.trim();
+                const transporte = fila.children[20].innerText.trim();
+
+                // Validaciones
+                if (!validarCampoNumerico(idPedidoVenta, 'ID Pedido Venta')) {
+                    LineasPedidoApp.mostrarAlerta('error', 'Error de datos', 'El campo "ID Pedido Venta" debe ser un número entero.');
+                    return;
+                }
+                if (!validarCampoNumerico(nLinea, 'Nº Línea')) {
+                    LineasPedidoApp.mostrarAlerta('error', 'Error de datos', 'El campo "Nº Línea" debe ser un número entero.');
+                    return;
+                }
+                if (!validarCampoNumerico(nOperacion, 'Nº Operación')) {
+                    LineasPedidoApp.mostrarAlerta('error', 'Error de datos', 'El campo "Nº Operación" debe ser un número entero.');
+                    return;
+                }
+                if (!validarCampoNumerico(pNeto, 'Peso Neto', false)) {
+                    LineasPedidoApp.mostrarAlerta('error', 'Error de datos', 'El campo "Peso Neto" debe ser un número decimal.');
+                    return;
+                }
+                if (!validarCampoNumerico(bultos, 'Bultos')) {
+                    LineasPedidoApp.mostrarAlerta('error', 'Error de datos', 'El campo "Bultos" debe ser un número entero.');
+                    return;
+                }
+                if (!validarCampoNumerico(precio, 'Precio', false)) {
+                    LineasPedidoApp.mostrarAlerta('error', 'Error de datos', 'El campo "Precio" debe ser un número decimal.');
+                    return;
+                }
+                if (!validarCampoNumerico(transporte, 'Transporte', false)) {
+                    LineasPedidoApp.mostrarAlerta('error', 'Error de datos', 'El campo "Transporte" debe ser un número decimal.');
+                    return;
+                }
+            }
+
+            // Si todas las validaciones pasan, proceder con el guardado
             filasModificadas.forEach(fila => {
                 const idLineaPedido = fila.getAttribute('data-id-linea-pedido');
                 const idPedidoVenta = fila.children[1].innerText.trim();
+                const nLinea = fila.children[2].innerText.trim();
+                const nOperacion = fila.children[3].innerText.trim();
+                const proveedor = fila.children[4].innerText.trim();
+                const cliente = fila.children[5].innerText.trim();
+                const contratoVenta = fila.children[6].innerText.trim();
+                const facturaVenta = fila.children[7].innerText.trim();
+                const nContenedor = fila.children[8].innerText.trim();
+                const producto = fila.children[9].innerText.trim();
+                const talla = fila.children[10].innerText.trim();
+                const paisOrigen = fila.children[11].innerText.trim();
+                const pNeto = parseFloat(fila.children[12].innerText.trim()) || 0;
+                const unidad = fila.children[13].innerText.trim();
+                const bultos = parseInt(fila.children[14].innerText.trim(), 10) || 0;
+                const precio = parseFloat(fila.children[15].innerText.trim()) || 0;
+                const valorVenta = parseFloat(fila.querySelector('.valor-venta-total').innerText.trim()) || 0;
+                const incoterm = fila.children[17].innerText.trim();
+                const moneda = fila.children[18].innerText.trim();
+                const comerciales = fila.children[19].innerText.trim();
+                const transporte = parseFloat(fila.children[20].innerText.trim()) || 0;
 
-                LineasPedidoApp.validarExistenciaPedidoVenta(idPedidoVenta)
-                    .then(existe => {
-                    if (!existe) {
-                        LineasPedidoApp.mostrarAlerta('error', 'Error', 'ID de Pedido de Venta inválido.', 3000);
-                        return;
-                    }
+                const datos = {
+                    idPedidoVenta: idPedidoVenta ? parseInt(idPedidoVenta, 10) : null,
+                    n_linea: nLinea ? parseInt(nLinea, 10) : null,
+                    n_operacion: nOperacion ? parseInt(nOperacion, 10) : null,
+                    proveedor: proveedor,
+                    cliente: cliente,
+                    contratoVenta: contratoVenta,
+                    facturaVenta: facturaVenta,
+                    n_contenedor: nContenedor,
+                    producto: producto,
+                    talla: talla,
+                    paisOrigen: paisOrigen,
+                    p_neto: pNeto,
+                    unidad: unidad,
+                    bultos: bultos,
+                    precio: precio,
+                    valor_venta: valorVenta,
+                    incoterm: incoterm,
+                    moneda: moneda,
+                    comerciales: comerciales,
+                    transporte: transporte
+                };
 
-                    const datos = {
-                        idPedidoVenta: parseLong(idPedidoVenta),
-                        n_linea: parseLong(fila.children[2].innerText.trim()),
-                        n_operacion: parseLong(fila.children[3].innerText.trim()),
-                        proveedor: fila.children[4].innerText.trim(),
-                        cliente: fila.children[5].innerText.trim(),
-                        contratoVenta: fila.children[6].innerText.trim(),
-                        facturaVenta: fila.children[7].innerText.trim(),
-                        n_contenedor: fila.children[8].innerText.trim(),
-                        producto: fila.children[9].innerText.trim(),
-                        talla: fila.children[10].innerText.trim(),
-                        paisOrigen: fila.children[11].innerText.trim(),
-                        p_neto: parseFloat(fila.children[12].innerText.trim()) || 0,
-                        unidad: fila.children[13].innerText.trim(),
-                        bultos: parseLong(fila.children[14].innerText.trim()),
-                        precio: parseFloat(fila.children[15].innerText.trim()) || 0,
-                        valor_venta: parseFloat(fila.querySelector('.valor-venta-total').innerText.trim()) || 0,
-                        incoterm: fila.children[17].innerText.trim(),
-                        moneda: fila.children[18].innerText.trim(),
-                        comerciales: fila.children[19].innerText.trim(),
-                        transporte: parseFloat(fila.children[20].innerText.trim()),
-                    };
+                console.log(`Guardando línea de pedido: ${idLineaPedido ? 'Actualización' : 'Creación'}`, datos); // Depuración
 
-                    if (!idLineaPedido) {
-                        // Crear nueva línea
-                        middleware.post(config.lineasPedidosVentaEndpoint, datos)
-                            .then((nuevaLinea) => {
-                            LineasPedidoApp.mostrarAlerta('success', 'Éxito', 'Línea de pedido creada correctamente.', 500);
-                            LineasPedidoApp.cargarLineasPedidoVenta(); // Recargar datos
+                if (idLineaPedido) {
+                    // Actualizar línea existente
+                    LineasPedidoApp.validarExistenciaPedidoVenta(idPedidoVenta)
+                        .then(existe => {
+                            if (!existe) {
+                                LineasPedidoApp.mostrarAlerta('error', 'Error', 'ID de Pedido de Venta inválido.', 3000);
+                                return;
+                            }
+
+                            const url = config.lineasPedidosVentaIdEndpoint.replace('{id}', idLineaPedido);
+                            middleware.put(url, datos)
+                                .then(() => {
+                                    LineasPedidoApp.mostrarAlerta('success', 'Éxito', 'Cambios guardados correctamente.', 2000);
+                                    fila.classList.remove('modificado');
+                                    LineasPedidoApp.cargarLineasPedidoVenta(); // Recargar la tabla
+                                })
+                                .catch(() => {
+                                    LineasPedidoApp.mostrarAlerta('error', 'Error', 'No se pudo guardar los cambios.');
+                                });
                         })
-                            .catch(() => {
+                        .catch(() => {
+                            LineasPedidoApp.mostrarAlerta('error', 'Error', 'Error al validar el ID de Pedido de Venta.');
+                        });
+                } else {
+                    // Crear nueva línea
+                    middleware.post(config.lineasPedidosVentaEndpoint, datos)
+                        .then((nuevaLinea) => {
+                            LineasPedidoApp.mostrarAlerta('success', 'Éxito', 'Línea de pedido creada correctamente.', 2000);
+                            LineasPedidoApp.cargarLineasPedidoVenta(); // Recargar la tabla
+                        })
+                        .catch(() => {
                             LineasPedidoApp.mostrarAlerta('error', 'Error', 'No se pudo crear la línea de pedido.');
                         });
-                    } else {
-                        // Actualizar línea existente
-                        const endpoint = config.lineasPedidosVentaIdEndpoint.replace('{id}', idLineaPedido);
-                        middleware.put(endpoint, datos)
-                            .then(() => {
-                            LineasPedidoApp.mostrarAlerta('success', 'Éxito', 'Cambios guardados correctamente.', 500);
-                            fila.classList.remove('modificado');
-                            // Opcionalmente, actualizar solo la fila modificada
-                        })
-                            .catch(() => {
-                            LineasPedidoApp.mostrarAlerta('error', 'Error', 'No se pudo guardar los cambios.');
-                        });
-                    }
-                })
-                    .catch(() => {
-                    LineasPedidoApp.mostrarAlerta('error', 'Error', 'Error al validar el ID de Pedido de Venta.');
-                });
+                }
             });
         },
 
@@ -378,9 +453,9 @@ cargarConfiguraciones().then(() => {
             return middleware.get(`${config.pedidosVentaEndpoint}/${idPedidoVenta}/exists`)
                 .then(data => data.existe)
                 .catch(error => {
-                console.error('Error en la validación del ID del Pedido de Venta:', error);
-                return false;
-            });
+                    console.error('Error en la validación del ID del Pedido de Venta:', error);
+                    return false;
+                });
         },
 
         // Función para eliminar una línea de pedido
@@ -404,12 +479,12 @@ cargarConfiguraciones().then(() => {
                     const url = config.lineasPedidosVentaIdEndpoint.replace('{id}', idLineaPedido);
                     middleware.delete(url)
                         .then(() => {
-                        LineasPedidoApp.mostrarAlerta('success', 'Éxito', 'Línea de pedido eliminada correctamente.', 300);
-                        LineasPedidoApp.cargarLineasPedidoVenta(); // Recargar datos
-                    })
+                            LineasPedidoApp.mostrarAlerta('success', 'Éxito', 'Línea de pedido eliminada correctamente.', 2000);
+                            LineasPedidoApp.cargarLineasPedidoVenta(); // Recargar la tabla
+                        })
                         .catch(() => {
-                        LineasPedidoApp.mostrarAlerta('error', 'Error', 'No se pudo eliminar la línea de pedido.');
-                    });
+                            LineasPedidoApp.mostrarAlerta('error', 'Error', 'No se pudo eliminar la línea de pedido.');
+                        });
                 }
             });
         },
@@ -434,26 +509,26 @@ cargarConfiguraciones().then(() => {
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
-                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
                 <td contenteditable="true" class="editable peso-neto" oninput="LineasPedidoApp.calcularValorVenta(this)"></td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
                 <td contenteditable="true" class="editable precio" oninput="LineasPedidoApp.calcularValorVenta(this)"></td>
-                <td contenteditable="true" class="editable valor-venta-total"></td>
+                <td contenteditable="false" class="editable valor-venta-total"></td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
-
             `;
 
             tbody.insertBefore(nuevaFila, tbody.firstChild);
             nuevaFila.classList.add('modificado', 'new-row');
+            console.log('Fila nueva creada y agregada al DOM'); // Depuración
         },
 
         // Función para eliminar una fila antes de guardarla
         eliminarFila: (boton) => {
             const fila = boton.closest('tr');
+            console.log('Eliminando fila:', fila); // Depuración
             fila.remove();
         },
 
@@ -514,9 +589,11 @@ cargarConfiguraciones().then(() => {
         // Funciones para mostrar y ocultar la búsqueda y filtros
         toggleSearch: () => {
             const searchInput = document.getElementById('search-input');
-                searchInput.value = '';
-                LineasPedidoApp.filtrarLineas();
-
+            searchInput.value = '';
+            search = '';
+            searchFields = [];
+            currentPage = 1;
+            LineasPedidoApp.cargarLineasPedidoVenta();
         },
 
         toggleFilter: () => {
@@ -532,7 +609,7 @@ cargarConfiguraciones().then(() => {
 
             searchFields = columnasSeleccionadas.map(index => columnasAtributos[index]).filter(field => field);
 
-            if (searchFields.length === 0) {
+            if (searchFields.length === 0 && search !== '') {
                 LineasPedidoApp.mostrarAlerta('warning', 'Advertencia', 'Debes seleccionar al menos una columna para la búsqueda.');
                 return;
             }
@@ -540,6 +617,7 @@ cargarConfiguraciones().then(() => {
             currentPage = 1; // Reiniciar a la primera página
             LineasPedidoApp.cargarLineasPedidoVenta();
         },
+
 
         // Función para inicializar el scroll en la tabla
         initTableScroll: () => {

@@ -288,6 +288,51 @@ cargarConfiguraciones().then(() => {
             const filasModificadas = document.querySelectorAll('tbody tr.modificado');
             const formatoFecha = /^\d{2}\/\d{2}\/\d{4}$/;
 
+            // Función auxiliar para validar un campo numérico
+            function validarCampoNumerico(fila, index, nombreCampo, esEntero = true) {
+                const valor = fila.children[index].innerText.trim();
+                if (valor !== '') {
+                    const numero = esEntero ? parseInt(valor, 10) : parseFloat(valor);
+                    if (isNaN(numero)) {
+                        const idPedidoCompraDet = fila.getAttribute('data-id-pedido-compra-det');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error de datos',
+                            text: `La celda "${nombreCampo}" en la fila ${
+                                idPedidoCompraDet
+                                    ? 'con ID ' + idPedidoCompraDet
+                                    : 'nueva'
+                            } requiere un valor numérico.`,
+                            toast: true,
+                            position: 'top-end',
+                            timer: 3000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        });
+                        return false; // Validación fallida
+                    }
+                }
+                return true; // Validación exitosa
+            }
+
+            for (const fila of filasModificadas) {
+                // Validar campos numéricos
+                // idPedidoCompra (columna 1, entero)
+                if (!validarCampoNumerico(fila, 1, 'ID Pedido Compra')) return;
+                // n_operacion (columna 2, entero)
+                if (!validarCampoNumerico(fila, 2, 'Nº Operación')) return;
+                // pesoNetoTotal (columna 9, decimal)
+                if (!validarCampoNumerico(fila, 9, 'Peso Neto Total', false)) return;
+                // totalBultos (columna 10, entero)
+                if (!validarCampoNumerico(fila, 10, 'Total Bultos')) return;
+                // promedio (columna 11, decimal)
+                if (!validarCampoNumerico(fila, 11, 'Promedio', false)) return;
+                // valorCompraTotal (columna 12, decimal)
+                if (!validarCampoNumerico(fila, 12, 'Valor Compra Total', false)) return;
+            }
+
+            // Si llegamos aquí, todos los campos numéricos están validados correctamente.
+            // Ahora procedemos con el guardado real.
             filasModificadas.forEach(fila => {
                 const idPedidoCompraDet = fila.getAttribute('data-id-pedido-compra-det');
                 const idPedidoCompra = fila.children[1].innerText.trim();
@@ -306,58 +351,57 @@ cargarConfiguraciones().then(() => {
 
                 PedidoCompraDetApp.validarExistenciaPedidoCompra(idPedidoCompra)
                     .then(existe => {
-                    if (!existe) {
-                        PedidoCompraDetApp.mostrarAlerta('error', 'Error', 'ID de Pedido de Compra inválido.', 3000);
-                        return;
-                    }
+                        if (!existe) {
+                            PedidoCompraDetApp.mostrarAlerta('error', 'Error', 'ID de Pedido de Compra inválido.', 3000);
+                            return;
+                        }
 
-                    const datos = {
-                        idPedidoCompra,
-                        n_operacion: fila.children[2].innerText.trim(),
-                        contratoCompra: fila.children[3].innerText.trim(),
-                        terminado,
-                        factProveedor: fila.children[5].innerText.trim(),
-                        n_fact_flete: fila.children[6].innerText.trim(),
-                        fecha_pago_flete: fechaPagoFlete,
-                        n_bl: fila.children[8].innerText.trim(),
-                        pesoNetoTotal: fila.children[9].innerText.trim(),
-                        totalBultos: fila.children[10].innerText.trim(),
-                        promedio: fila.children[11].innerText.trim(),
-                        valorCompraTotal: fila.children[12].innerText.trim(),
-                        observaciones: fila.children[13].innerText.trim()
-                    };
+                        const datos = {
+                            idPedidoCompra,
+                            n_operacion: fila.children[2].innerText.trim(),
+                            contratoCompra: fila.children[3].innerText.trim(),
+                            terminado,
+                            factProveedor: fila.children[5].innerText.trim(),
+                            n_fact_flete: fila.children[6].innerText.trim(),
+                            fecha_pago_flete: fechaPagoFlete,
+                            n_bl: fila.children[8].innerText.trim(),
+                            pesoNetoTotal: fila.children[9].innerText.trim(),
+                            totalBultos: fila.children[10].innerText.trim(),
+                            promedio: fila.children[11].innerText.trim(),
+                            valorCompraTotal: fila.children[12].innerText.trim(),
+                            observaciones: fila.children[13].innerText.trim()
+                        };
 
-                    if (!idPedidoCompraDet) {
-                        middleware.post(config.pedidosCompraDetEndpoint, datos)
-                            .then(() => {
-                            PedidoCompraDetApp.mostrarAlerta('success', 'Éxito', 'Detalle creado correctamente.', 2000);
-                            PedidoCompraDetApp.cargarDetallesPedidoCompra(); // Recargar la tabla
-                        })
-                            .catch(error => {
-                            if (error.message.includes('El detalle ya existe.')) {
-                                PedidoCompraDetApp.mostrarAlerta('error', 'Error', 'El detalle ya existe.');
-                            } else {
-                                PedidoCompraDetApp.mostrarAlerta('error', 'Error', 'No se pudo crear el detalle.');
-                            }
-                        });
-                    } else {
-                        const url = config.pedidoCompraDetIdEndpoint.replace('{id}', idPedidoCompraDet);
-                        middleware.put(url, datos)
-                            .then(() => {
-                            PedidoCompraDetApp.mostrarAlerta('success', 'Éxito', 'Cambios guardados correctamente.', 2000);
-                            fila.classList.remove('modificado');
-                            PedidoCompraDetApp.cargarDetallesPedidoCompra(); // Recargar la tabla
-                        })
-                            .catch(error => {
-                            PedidoCompraDetApp.mostrarAlerta('error', 'Error', 'No se pudo guardar los cambios.');
-                        });
-                    }
-                })
+                        if (!idPedidoCompraDet) {
+                            middleware.post(config.pedidosCompraDetEndpoint, datos)
+                                .then(() => {
+                                    PedidoCompraDetApp.mostrarAlerta('success', 'Éxito', 'Detalle creado correctamente.', 2000);
+                                    PedidoCompraDetApp.cargarDetallesPedidoCompra();
+                                })
+                                .catch(error => {
+                                    if (error.message && error.message.includes('El detalle ya existe.')) {
+                                        PedidoCompraDetApp.mostrarAlerta('error', 'Error', 'El detalle ya existe.');
+                                    } else {
+                                        PedidoCompraDetApp.mostrarAlerta('error', 'Error', 'No se pudo crear el detalle.');
+                                    }
+                                });
+                        } else {
+                            const url = config.pedidoCompraDetIdEndpoint.replace('{id}', idPedidoCompraDet);
+                            middleware.put(url, datos)
+                                .then(() => {
+                                    PedidoCompraDetApp.mostrarAlerta('success', 'Éxito', 'Cambios guardados correctamente.', 2000);
+                                    fila.classList.remove('modificado');
+                                    PedidoCompraDetApp.cargarDetallesPedidoCompra();
+                                })
+                                .catch(error => {
+                                    PedidoCompraDetApp.mostrarAlerta('error', 'Error', 'No se pudo guardar los cambios.');
+                                });
+                        }
+                    })
                     .catch(error => {
-                    PedidoCompraDetApp.mostrarAlerta('error', 'Error', 'Error al validar el ID de Pedido de Compra.');
-                });
+                        PedidoCompraDetApp.mostrarAlerta('error', 'Error', 'Error al validar el ID de Pedido de Compra.');
+                    });
             });
-
         },
 
         // Función para validar la existencia de un Pedido de Compra
@@ -418,10 +462,10 @@ cargarConfiguraciones().then(() => {
                 <td contenteditable="true" class="editable"></td>
                 <td contenteditable="true" class="editable"></td>
                 <td contenteditable="true" class="editable"></td>
-                <td contenteditable="true" class="editable"></td>
-                <td contenteditable="true" class="editable"></td>
-                <td contenteditable="true" class="editable"></td>
-                <td contenteditable="true" class="editable"></td>
+                <td contenteditable="false" class="editable"></td>
+                <td contenteditable="false" class="editable"></td>
+                <td contenteditable="false" class="editable"></td>
+                <td contenteditable="false" class="editable"></td>
                 <td contenteditable="true" class="editable"></td>
             `;
 

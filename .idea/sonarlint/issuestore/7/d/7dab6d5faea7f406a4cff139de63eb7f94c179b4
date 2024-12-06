@@ -1,19 +1,19 @@
 
-j
-java:S1192P"ODefine a constant instead of duplicating this literal "reverseSortDir" 3 times.(Ù·Ÿ şÿÿÿÿ
-d
-java:S1192K"NDefine a constant instead of duplicating this literal "totalElements" 3 times.(Ö©ï‚
-f
-java:S1192J"KDefine a constant instead of duplicating this literal "totalPages" 3 times.(ğ¦³Áùÿÿÿÿ
-]
-java:S1192N"GDefine a constant instead of duplicating this literal "sortBy" 3 times.(ß³²Ú
-g
-java:S1192I"LDefine a constant instead of duplicating this literal "currentPage" 3 times.(â–ãúÿÿÿÿÿ
-^
-java:S1192O"HDefine a constant instead of duplicating this literal "sortDir" 3 times.(ÃÑº‹
-X
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ
-X
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ
-X
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ
+
+java:S1192M"ODefine a constant instead of duplicating this literal "reverseSortDir" 3 times.(Ù·Ÿ şÿÿÿÿJ$15ce9d63-e963-411f-878a-6116d4da0726
+Š
+java:S1192I"NDefine a constant instead of duplicating this literal "totalElements" 3 times.(Ö©ï‚J$abf26dde-2147-4751-8918-36f08fc38167
+Œ
+java:S1192H"KDefine a constant instead of duplicating this literal "totalPages" 3 times.(ğ¦³ÁùÿÿÿÿJ$8c8a0800-49ca-42e6-8001-7a2a03414e89
+ƒ
+java:S1192K"GDefine a constant instead of duplicating this literal "sortBy" 3 times.(ß³²ÚJ$ab073b40-9018-452d-8443-480a774b66bc
+
+java:S1192G"LDefine a constant instead of duplicating this literal "currentPage" 3 times.(â–ãúÿÿÿÿÿJ$e900d916-22fc-4916-a45e-6d06b123bb7e
+„
+java:S1192L"HDefine a constant instead of duplicating this literal "sortDir" 3 times.(ÃÑº‹J$9c1cbc74-f767-43db-b547-eb5ec9a38198
+~
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞJ$1d9c8e65-b9cc-4721-955d-808b130774e6
+~
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞJ$f82cc411-fd80-43ad-b4e0-4e8b2e0e6fbe
+~
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞJ$2ec323df-b0e9-45fa-adb9-95a682178c55

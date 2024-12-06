@@ -1,9 +1,13 @@
 
 _
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8çè¹Ö´2
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8Š”ºÕ¹2
 _
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8èè¹Ö´2
-G	java:S1067"+Replace this use of System.err by a logger.(ô¤ü²8øè¹Ö´2
-L	java:S106j"+Replace this use of System.err by a logger.(’€šûÿÿÿÿ8€é¹Ö´2
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8Š”ºÕ¹2
+_
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8Š”ºÕ¹2
+G	java:S1066"+Replace this use of System.err by a logger.(ô¤ü²8”ºÕ¹2
+L	java:S106m"+Replace this use of System.err by a logger.(’€šûÿÿÿÿ8“”ºÕ¹2
 o
-java:S6204s"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8ƒé¹Ö´2
+java:S6204v"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8””ºÕ¹2
+K
+java:S1128".Remove this unused import 'java.util.Objects'.(¼¸õ›8š”ºÕ¹2
