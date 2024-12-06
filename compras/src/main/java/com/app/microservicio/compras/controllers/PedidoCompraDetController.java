@@ -28,12 +28,12 @@ public class PedidoCompraDetController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "pedidoCompra.idPedidoCompra") String sortBy,
-            @RequestParam(defaultValue = "asc") String sortDir,
+            @RequestParam(defaultValue = "desc") String sortDir,
             @RequestParam(required = false) String search,
             @RequestParam(required = false) List<String> searchFields
     ) {
-        Sort sort = sortDir.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending()
-                : Sort.by(sortBy).descending();
+        Sort sort = sortDir.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending()
+                : Sort.by(sortBy).ascending();
         Pageable pageable = PageRequest.of(page, size, sort);
 
         Page<PedidoCompraDetDTO> pedidosCompraDetPage = pedidoCompraDetService.listarPedidosCompraDet(pageable, search, searchFields);

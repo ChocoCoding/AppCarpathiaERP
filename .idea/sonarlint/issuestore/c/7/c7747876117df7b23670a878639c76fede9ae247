@@ -1,23 +1,23 @@
 
-q
-java:S1192m"ODefine a constant instead of duplicating this literal "reverseSortDir" 5 times.(Ù·Ÿ şÿÿÿÿ8òÜ…Ÿ¸2
-k
-java:S1192g"NDefine a constant instead of duplicating this literal "totalElements" 5 times.(Ö©ï‚8òÜ…Ÿ¸2
-m
-java:S1192f"KDefine a constant instead of duplicating this literal "totalPages" 5 times.(ğ¦³Áùÿÿÿÿ8óÜ…Ÿ¸2
-d
-java:S1192k"GDefine a constant instead of duplicating this literal "sortBy" 5 times.(ß³²Ú8óÜ…Ÿ¸2
-n
-java:S1192e"LDefine a constant instead of duplicating this literal "currentPage" 5 times.(â–ãúÿÿÿÿÿ8óÜ…Ÿ¸2
-e
-java:S1192l"HDefine a constant instead of duplicating this literal "sortDir" 5 times.(ÃÑº‹8óÜ…Ÿ¸2
-_
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8ø°µâ§2
-_
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8ø°µâ§2
-_
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8ø°µâ§2
-_
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8ø°µâ§2
-_
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8ù°µâ§2
+—
+java:S1192i"ODefine a constant instead of duplicating this literal "reverseSortDir" 5 times.(Ù·Ÿ şÿÿÿÿ8òÜ…Ÿ¸2J$9857b183-1d96-4021-af6b-d3b34e62a02b
+‘
+java:S1192e"NDefine a constant instead of duplicating this literal "totalElements" 5 times.(Ö©ï‚8òÜ…Ÿ¸2J$8c6b835a-c76f-4672-8d19-e3d5687ea3d5
+“
+java:S1192d"KDefine a constant instead of duplicating this literal "totalPages" 5 times.(ğ¦³Áùÿÿÿÿ8óÜ…Ÿ¸2J$386b7ca3-81f0-482d-acb6-7bb86d39d41d
+Š
+java:S1192g"GDefine a constant instead of duplicating this literal "sortBy" 5 times.(ß³²Ú8óÜ…Ÿ¸2J$07e8dad4-ae9d-471a-8b8a-5783d8b9910f
+”
+java:S1192c"LDefine a constant instead of duplicating this literal "currentPage" 5 times.(â–ãúÿÿÿÿÿ8óÜ…Ÿ¸2J$57f01929-62bf-423a-b863-b7388dfa6526
+‹
+java:S1192h"HDefine a constant instead of duplicating this literal "sortDir" 5 times.(ÃÑº‹8óÜ…Ÿ¸2J$e68c3f20-df4d-48c2-8273-30342f401721
+…
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8ø°µâ§2J$8153b1c1-8f14-40fc-9a29-7f87dec3c5de
+…
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8ø°µâ§2J$bd35fbf7-b122-4a2d-889a-d6526bc69f44
+…
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8ø°µâ§2J$66a4b699-a009-4f2e-9c99-66fe9adfa3fa
+…
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8ø°µâ§2J$cb58f0b3-ccd3-4f0f-a68f-1cfe2f590b7c
+…
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8ù°µâ§2J$4d4fa22f-a6f8-423a-8371-0b6844046160

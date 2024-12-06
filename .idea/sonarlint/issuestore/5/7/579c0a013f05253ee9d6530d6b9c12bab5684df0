@@ -1,15 +1,23 @@
 
+™
+java:S3655à"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(–İ¯Èúÿÿÿÿ8ŠÂ›Ù¹2J$c6fc0837-47bd-42f7-803a-a451ad1d40fb
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8¾œ­œ2J$909af178-75b7-40cf-af86-40b387942382
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8¾œ­œ2J$65ce0b17-46d0-4fa4-9d86-dbaac3724068
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8¾œ­œ2J$3fc6437a-a860-4490-b276-e39bc91474d9
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8¾œ­œ2J$be4fc62a-c300-4d33-9e36-c2820784ce5e
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8¾œ­œ2J$23d0a71a-2d59-472f-a471-3a73a0eba074
+java:S6813""BRemove this field injection and use constructor injection instead.(êæÄŞ8¾œ­œ2J$4c46b899-0d30-4e19-9b83-98661f68d380
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8¾œ­œ2J$c855a29c-724a-4752-976c-b4850df2cd3d
-•
-java:S6204s"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8Òœ­œ2J$911590e8-529d-4bba-9263-4e0829084b0e
+java:S6813%"BRemove this field injection and use constructor injection instead.(êæÄŞ8¾œ­œ2J$7dca8606-41ff-4262-814d-0b5cb9e64acb
+š
+java:S3776z"RRefactor this method to reduce its Cognitive Complexity from 34 to the 15 allowed.(öÇ÷Öúÿÿÿÿ8–Â›Ù¹2J$feb186de-08a0-422a-a6a8-724be4412845
+Z
+java:S3972¥"7Move this "if" to a new line or add the missing "else".(²íë…şÿÿÿÿ8˜ÅÄÚ¹2
+
+java:S1128"KRemove this unused import 'org.springframework.cache.annotation.Cacheable'.(İºØ“8Â›Ù¹2J$0fb327e9-a975-4cd4-8a0c-4fde4d2fd8ec
 Œ
-java:S1128"DRemove this unused import 'org.springframework.http.ResponseEntity'.(¶¯ø¦úÿÿÿÿ8Öœ­œ2J$c6da4024-268a-4ad3-a8a2-d3a78f89e058
+java:S1128"DRemove this unused import 'org.springframework.http.ResponseEntity'.(¶¯ø¦úÿÿÿÿ8Öœ­œ2J$06c084c1-8212-42cd-827f-1c167e979da1
 v
-java:S1128"3Remove this unused import 'java.math.RoundingMode'.(¿ì†‹8Öœ­œ2J$9a5f875a-e450-4896-b6a4-2670214fe416
+java:S1128"3Remove this unused import 'java.math.RoundingMode'.(¿ì†‹8Öœ­œ2J$152f4a04-4ce4-4e45-bfcb-3602eee2befd
+€
+java:S1128"8Remove this unused import 'java.util.stream.Collectors'.(Óóº´úÿÿÿÿ8Â›Ù¹2J$77115924-4bc2-4e88-868a-dd63db8bbf1a

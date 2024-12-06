@@ -30,51 +30,37 @@ public class PedidoCompraService {
     @Autowired
     EntityManager entityManager;
 
-    @Cacheable(
-            value = "pedidosCompra",
-            key = "#pageable.pageNumber + '-' + #pageable.pageSize + '-' + #pageable.sort.toString() + '-' + #proveedor + '-' + #cliente + '-' + #search + '-' + #searchFields"
-    )
-    public Page<PedidoCompraDTO> listarPedidosCompra(Pageable pageable, String proveedor, String cliente, String search, List<String> searchFields) {
+
+    public Page<PedidoCompraDTO> listarPedidosCompra(Pageable pageable, String search, List<String> searchFields) {
         Specification<PedidoCompra> spec = Specification.where(null);
 
-        // Filtro por proveedor
-        if (proveedor != null && !proveedor.isEmpty()) {
-            spec = spec.and((root, query, criteriaBuilder) ->
-                    criteriaBuilder.like(criteriaBuilder.lower(root.get("proveedor")), "%" + proveedor.toLowerCase() + "%")
-            );
-        }
-
-        // Filtro por cliente
-        if (cliente != null && !cliente.isEmpty()) {
-            spec = spec.and((root, query, criteriaBuilder) ->
-                    criteriaBuilder.like(criteriaBuilder.lower(root.get("cliente")), "%" + cliente.toLowerCase() + "%")
-            );
-        }
-
-        // Lógica de búsqueda
         if (search != null && !search.isEmpty() && searchFields != null && !searchFields.isEmpty()) {
             Specification<PedidoCompra> searchSpec = Specification.where(null);
+            String searchLower = search.toLowerCase();
+
             for (String field : searchFields) {
-                if (field.equals("idPedidoCompra") || field.equals("nOperacion")) { // Campos numéricos
+                if (field.equals("idPedidoCompra") || field.equals("nOperacion")) {
+                    // Campos numéricos
                     try {
                         Long value = Long.parseLong(search);
-                        searchSpec = searchSpec.or((root, query, criteriaBuilder) ->
-                                criteriaBuilder.equal(root.get(field), value)
+                        // Si la conversión tiene éxito, filtrar por igualdad exacta
+                        searchSpec = searchSpec.or((root, query, cb) ->
+                                cb.equal(root.get(field), value)
                         );
                     } catch (NumberFormatException e) {
-                        // Manejar si el input no es numérico
-                        // Opcional: Puedes optar por ignorar este campo o lanzar una excepción
-                        System.err.println("Valor de búsqueda no es numérico para el campo: " + field);
+                        // Si no es número, ignorar este campo
                     }
-                } else { // Campos de texto
-                    searchSpec = searchSpec.or((root, query, criteriaBuilder) ->
-                            criteriaBuilder.like(criteriaBuilder.lower(root.get(field)), "%" + search.toLowerCase() + "%")
+                } else {
+                    // Campos de texto: aplicar coincidencia parcial
+                    // Ejemplo: LIKE '%searchLower%'
+                    searchSpec = searchSpec.or((root, query, cb) ->
+                            cb.like(cb.lower(root.get(field)), "%" + searchLower + "%")
                     );
                 }
             }
+
             spec = spec.and(searchSpec);
         }
-
 
         return pedidoCompraRepository.findAll(spec, pageable).map(this::convertirADTO);
     }

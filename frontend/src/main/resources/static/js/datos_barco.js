@@ -4,7 +4,7 @@ let config = {};
 let currentPage = 1; // Página inicial
 let size = 10;       // Tamaño de página inicial
 let sortBy = 'pedidoCompra.idPedidoCompra'; // Campo de ordenamiento inicial
-let sortDir = 'asc';
+let sortDir = 'desc';
 let search = '';
 let searchFields = [];
 
@@ -18,10 +18,10 @@ const columnasAtributos = {
     7: 'naviera',
     8: 'puertoEmbarque',
     9: 'puertoLlegada',
-    10: 'fechaEmbarque',
-    11: 'fechaLlegada',
+    10: 'fecha_embarque',
+    11: 'fecha_llegada',
     12: 'flete',
-    13: 'fechaPagoFlete',
+    13: 'fecha_pago_flete',
     14: 'facturaFlete'
 };
 

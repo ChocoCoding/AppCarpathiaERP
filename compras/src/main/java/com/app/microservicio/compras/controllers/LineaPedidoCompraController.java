@@ -34,12 +34,12 @@ public class LineaPedidoCompraController {
             @RequestParam(required = false) String proveedor,
             @RequestParam(required = false) String cliente,
             @RequestParam(defaultValue = "pedidoCompra.idPedidoCompra") String sortBy,
-            @RequestParam(defaultValue = "asc") String sortDir,
+            @RequestParam(defaultValue = "desc") String sortDir,
             @RequestParam(required = false) String search,
             @RequestParam(required = false) List<String> searchFields
     ) {
-        Sort sort = sortDir.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending()
-                : Sort.by(sortBy).descending();
+        Sort sort = sortDir.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending()
+                : Sort.by(sortBy).ascending();
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<LineaPedidoCompraDTO> lineasPedidosPage = lineaPedidoCompraService.listarLineasPedidoCompra(pageable, proveedor, cliente, search, searchFields);
         return ResponseEntity.ok(lineasPedidosPage);

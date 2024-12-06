@@ -195,3 +195,5 @@ Bfrontend/src/main/java/com/app/frontend/DTO/PedidoVentaDetDTO.java,5\4\54b3097
 [ventas/src/main/java/com/app/microservicio/ventas/controllers/PedidoVentaDetController.java,3\3\338539fbe0def7dd83e85b8e5a14afd798719d56
 É
 Sventas/src/main/java/com/app/microservicio/ventas/controllers/ConfigController.java,0\9\09164922a87e83b76f247a361fd968d19d199cb8
+è
+_compras/src/main/java/com/app/microservicio/compras/services/DatosBarcoPedidoCompraService.java,f\7\f7ba1a191303739e22b7741fb3428a61a7eb37a0

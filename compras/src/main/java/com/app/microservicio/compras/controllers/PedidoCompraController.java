@@ -30,18 +30,16 @@ public class PedidoCompraController {
     public ResponseEntity<Page<PedidoCompraDTO>> listarPedidosCompra(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(required = false) String proveedor,
-            @RequestParam(required = false) String cliente,
             @RequestParam(defaultValue = "idPedidoCompra") String sortBy,
-            @RequestParam(defaultValue = "asc") String sortDir,
+            @RequestParam(defaultValue = "desc") String sortDir,
             @RequestParam(required = false) String search,
             @RequestParam(required = false) List<String> searchFields
     ) {
 
-        Sort sort = sortDir.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending()
-                : Sort.by(sortBy).descending();
+        Sort sort = sortDir.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending()
+                : Sort.by(sortBy).ascending();
         Pageable pageable = PageRequest.of(page, size, sort);
-        Page<PedidoCompraDTO> pedidosPage = pedidoCompraService.listarPedidosCompra(pageable, proveedor, cliente, search, searchFields);
+        Page<PedidoCompraDTO> pedidosPage = pedidoCompraService.listarPedidosCompra(pageable, search, searchFields);
         return ResponseEntity.ok(pedidosPage);
     }
 

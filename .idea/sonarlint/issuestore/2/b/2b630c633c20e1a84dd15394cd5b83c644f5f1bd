@@ -1,12 +1,13 @@
 
-_
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8ƒ™¡Ó¹2
-_
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8ƒ™¡Ó¹2
-_
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8ƒ™¡Ó¹2
-t
-java:S3776%"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(Ç«Ô¾ùÿÿÿÿ8ˆ™¡Ó¹2
-G	java:S106C"+Replace this use of System.err by a logger.(ô¤ü²8™¡Ó¹2
-Y	java:S125ƒ"<This block of commented-out lines of code should be removed.(ÕÏûï8 ™¡Ó¹2
-M	java:S106"+Replace this use of System.err by a logger.(’€šûÿÿÿÿ8 ™¡Ó¹2
+…
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8ïˆÉÙ¹2J$7cf9240a-55fb-471a-adbe-05c6842f3e85
+…
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8ïˆÉÙ¹2J$fc229a06-00c1-4429-aa2a-585c875ca971
+…
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8ïˆÉÙ¹2J$a2e38d72-752f-43e9-991a-28a8163c86f7
+~	java:S125u"<This block of commented-out lines of code should be removed.(ÕÏûï8ùˆÉÙ¹2J$5cb5bf9d-1d52-465e-be64-979be47cc5e2
+s	java:S106€"+Replace this use of System.err by a logger.(’€šûÿÿÿÿ8ùˆÉÙ¹2J$0c85e6a6-4e4e-4952-be6c-ed8c120f998f
+
+java:S1128"KRemove this unused import 'org.springframework.cache.annotation.Cacheable'.(İºØ“8ÿˆÉÙ¹2J$3bec1358-ac41-4248-a133-3fe6cfc54a0d
+€
+java:S1128"8Remove this unused import 'java.util.stream.Collectors'.(Óóº´úÿÿÿÿ8ÿˆÉÙ¹2J$4f01a5af-5cc3-42f2-910c-73b85aeb7e77

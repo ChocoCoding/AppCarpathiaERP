@@ -1,5 +1,5 @@
 
-X
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ
-l
-java:S1128"QRemove this unused import 'com.app.microservicio.compras.DTO.PedidoCompraDetDTO'.(ÏÛŽªýÿÿÿÿ
+~
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞJ$e2524906-498f-4c9c-b72e-4ed6e6536327
+’
+java:S1128"QRemove this unused import 'com.app.microservicio.compras.DTO.PedidoCompraDetDTO'.(ÏÛŽªýÿÿÿÿJ$75f81c8a-cdb1-4625-9517-6a5649c2fbf9

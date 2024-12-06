@@ -4,7 +4,7 @@ let config = {};
 let currentPage = 1; // Página inicial
 let size = 10;       // Tamaño de página inicial
 let sortBy = 'pedidoCompra.idPedidoCompra'; // Campo de ordenamiento inicial
-let sortDir = 'asc';
+let sortDir = 'desc';
 let search = '';
 let searchFields = [];
 

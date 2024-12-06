@@ -1,16 +1,22 @@
 
+v
+java:S3655ã"XCall "pedidoCompra.isPresent()" or "!pedidoCompra.isEmpty()" before accessing the value.(Óú ¢8òÄ¯Ø¹2
+{
+java:S3655Ð"XCall "pedidoCompra.isPresent()" or "!pedidoCompra.isEmpty()" before accessing the value.(¶©´µùÿÿÿÿ8óÄ¯Ø¹2
+{
+java:S3655Ú"XCall "pedidoCompra.isPresent()" or "!pedidoCompra.isEmpty()" before accessing the value.(¦²úÛýÿÿÿÿ8óÄ¯Ø¹2
+v
+java:S3655î"XCall "pedidoCompra.isPresent()" or "!pedidoCompra.isEmpty()" before accessing the value.(¤æÏ˜8óÄ¯Ø¹2
 _
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8Á¤–¢¤2
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8Á¤–¢¤2
 _
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8Â¤–¢¤2
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8Â¤–¢¤2
 _
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8Ã¤–¢¤2
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8Ã¤–¢¤2
 _
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8Ä¤–¢¤2
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8Ä¤–¢¤2
 _
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8Å¤–¢¤2
-G	java:S106N"+Replace this use of System.out by a logger.(„’Ú™8Ô¤–¢¤2
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8Å¤–¢¤2
+G	java:S106L"+Replace this use of System.out by a logger.(„’Ú™8Ô¤–¢¤2
 Y
-java:S1854r"<Remove this useless assignment to local variable "promedio".(Ê‘Åö8Ü¤–¢¤2
-|
-java:S1128"ZRemove this unused import 'com.app.microservicio.compras.entities.DatosBarcoPedidoCompra'.(ò°Ì¿ùÿÿÿÿ8ì¤–¢¤2
+java:S1854p"<Remove this useless assignment to local variable "promedio".(Ê‘Åö8Ü¤–¢¤2

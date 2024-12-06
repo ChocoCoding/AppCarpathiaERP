@@ -1,0 +1,22 @@
+
+…
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8“ÏÒÚ¹2J$1abc0345-38dc-4721-99e4-f398ed86b6b6
+…
+java:S6813 "BRemove this field injection and use constructor injection instead.(êæÄŞ8“ÏÒÚ¹2J$e60aeb86-1577-4e32-81d6-58479a35effa
+…
+java:S6813#"BRemove this field injection and use constructor injection instead.(êæÄŞ8“ÏÒÚ¹2J$25c70089-2781-4bd2-a955-9d21e140f98c
+•
+java:S3776+"RRefactor this method to reduce its Cognitive Complexity from 27 to the 15 allowed.(‡û½¶8—ÏÒÚ¹2J$36564a13-4b79-4c11-9c21-606cdaab8a5f
+L	java:S106P"+Replace this use of System.out by a logger.(äîÓÕşÿÿÿÿ8«‡ŒÛ¹2
+
+java:S1128"HRemove this unused import 'com.app.microservicio.compras.DTO.CostesDTO'.(ë¦ö‹ıÿÿÿÿ8¦ÏÒÚ¹2J$4dc6a7b1-4bc3-4332-863a-c6cedc16dfff
+™
+java:S1128"QRemove this unused import 'com.app.microservicio.compras.DTO.PedidoCompraDetDTO'.(ÏÛªıÿÿÿÿ8§ÏÒÚ¹2J$73b9090d-c45d-4748-a7a8-64fcc11eb3dc
+˜
+java:S1128"URemove this unused import 'com.app.microservicio.compras.entities.CostePedidoCompra'.(ßµÌ¶8§ÏÒÚ¹2J$ab3bf585-6a6a-4ccb-b3f7-3f8fea022b1c
+›
+java:S1128"SRemove this unused import 'com.app.microservicio.compras.entities.PedidoCompraDet'.(®…ªüÿÿÿÿ8§ÏÒÚ¹2J$d9d8b252-1898-4904-b9ba-e8acd3baf4f2
+t
+java:S1128"1Remove this unused import 'java.math.BigDecimal'.(êêŠ8§ÏÒÚ¹2J$ad49c26f-da84-4635-8c14-61f0a71099da
+€
+java:S1128"8Remove this unused import 'java.util.stream.Collectors'.(Óóº´úÿÿÿÿ8§ÏÒÚ¹2J$f7e26830-cdfe-4f25-92f9-c1d8c8541b2e

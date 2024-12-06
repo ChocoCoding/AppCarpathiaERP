@@ -1,9 +1,9 @@
 
-a
-java:S1192,"KDefine a constant instead of duplicating this literal "dd/MM/yyyy" 3 times.(ıø•
-t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÁŠ¨ ùÿÿÿÿ
-p	java:S116"VRename this field "n_operacion" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¡úíóøÿÿÿÿ
-q	java:S116"WRename this field "n_contenedor" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(«îÏÒÿÿÿÿÿ
-n	java:S116"YRename this field "fecha_embarque" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ç½ƒŸ
-m	java:S116 "XRename this field "fecha_llegada" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Û
-u	java:S116&"[Rename this field "fecha_pago_flete" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¸õ‚Ûùÿÿÿÿ
+‡
+java:S1192,"KDefine a constant instead of duplicating this literal "dd/MM/yyyy" 3 times.(ıø•J$0c198f90-711f-451e-850c-ac0000f99c15
+š	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÁŠ¨ ùÿÿÿÿJ$c0600519-fd6d-442f-a942-af2ae8c95a87
+–	java:S116"VRename this field "n_operacion" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¡úíóøÿÿÿÿJ$c3b2cb2d-2630-47c0-86c1-d36987472487
+—	java:S116"WRename this field "n_contenedor" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(«îÏÒÿÿÿÿÿJ$3dec4184-daf1-4f8c-9c11-082eb83bfb84
+”	java:S116"YRename this field "fecha_embarque" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ç½ƒŸJ$2b917d1b-a0fe-4275-981d-e42f19c1549e
+“	java:S116 "XRename this field "fecha_llegada" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÛJ$0b73f9d4-5a32-4d02-8c1d-c1a34fc01393
+›	java:S116&"[Rename this field "fecha_pago_flete" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¸õ‚ÛùÿÿÿÿJ$eb344bc4-2d7f-4691-8ef3-31d51efc9b68

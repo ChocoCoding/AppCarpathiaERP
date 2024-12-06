@@ -162,22 +162,28 @@ public class PedidoCompraDetService {
                     }catch (NumberFormatException e) {
                         // Ignorar si no es numérico
                     }
-                }else if (field.equals("fechaPagoFlete")) {
-                    // Campo de fecha
-                    try {
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                        LocalDate dateValue = LocalDate.parse(search, formatter);
-                        searchSpec = searchSpec.or((root, query, criteriaBuilder) ->
-                                criteriaBuilder.equal(root.get(field), dateValue)
-                        );
-                    } catch (Exception e) {
-                        // Ignorar si no es una fecha válida
+                }if (field.equals("fechaPagoFlete")) {
+                    String[] partes = search.split("/");
+                    if (partes.length == 3) {
+                        // Formato dd/MM/yyyy exacto
+                        LocalDate dateValue = LocalDate.parse(search, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                        searchSpec = searchSpec.or((root, query, cb) -> cb.equal(root.get(field), dateValue));
+                    } else if (partes.length == 2) {
+                        // Formato MM/yyyy (mes y año)
+                        int mes = Integer.parseInt(partes[0]);
+                        int anio = Integer.parseInt(partes[1]);
+                        LocalDate start = LocalDate.of(anio, mes, 1);
+                        LocalDate end = start.withDayOfMonth(start.lengthOfMonth());
+                        searchSpec = searchSpec.or((root, query, cb) ->
+                                cb.between(root.get(field), start, end));
+                    } else if (partes.length == 1) {
+                        // Sólo año
+                        int anio = Integer.parseInt(partes[0]);
+                        LocalDate start = LocalDate.of(anio, 1, 1);
+                        LocalDate end = LocalDate.of(anio, 12, 31);
+                        searchSpec = searchSpec.or((root, query, cb) ->
+                                cb.between(root.get(field), start, end));
                     }
-                } else {
-                    // Campos de texto
-                    searchSpec = searchSpec.or((root, query, criteriaBuilder) ->
-                            criteriaBuilder.like(criteriaBuilder.lower(root.get(field)), "%" + search.toLowerCase() + "%")
-                    );
                 }
             }
             spec = spec.and(searchSpec);
