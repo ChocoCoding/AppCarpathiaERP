@@ -3,7 +3,6 @@ const DatosBarcoFormApp = {
     getDatosBarcoData: (pedidoCompraId) => {
        return {
             idPedidoCompra: pedidoCompraId,
-            n_operacion: document.getElementById('operacionBarco').value,
             nombreBarco: document.getElementById('nombreBarco').value,
             viaje: document.getElementById('viaje').value,
             naviera: document.getElementById('naviera').value,

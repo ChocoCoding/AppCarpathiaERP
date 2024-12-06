@@ -17,7 +17,6 @@
                     <span class="visually-hidden">Go back</span>
                 </button>
             </div>
-
             <!-- Center - Home, Add, Search, Configuration -->
             <div class="d-flex align-items-center gap-3">
                 <button class="btn btn-link p-0" title="Home" onclick="PedidoVentaApp.goHome()">
@@ -41,10 +40,11 @@
                     <div class="filter-container">
                         <label><input type="checkbox" name="columnFilter" value="2"> ID</label>
                         <label><input type="checkbox" name="columnFilter" value="3"> Nº Operación</label>
-                        <label><input type="checkbox" name="columnFilter" value="4"> Proforma</label>
-                        <label><input type="checkbox" name="columnFilter" value="5"> Proveedor</label>
-                        <label><input type="checkbox" name="columnFilter" value="6"> Incoterm</label>
-                        <label><input type="checkbox" name="columnFilter" value="7"> Referencia Proveedor</label>
+                        <label><input type="checkbox" name="columnFilter" value="4"> Nº Contenedor</label>
+                        <label><input type="checkbox" name="columnFilter" value="5"> Proforma</label>
+                        <label><input type="checkbox" name="columnFilter" value="6"> Proveedor</label>
+                        <label><input type="checkbox" name="columnFilter" value="7"> Incoterm</label>
+                        <label><input type="checkbox" name="columnFilter" value="8"> Referencia Proveedor</label>
                     </div>
                 </div>
                 <button class="btn btn-link p-0" title="Add new" onclick="PedidoVentaApp.crearPedidoVenta()">
@@ -74,6 +74,7 @@
             <th>Eliminar</th>
             <th class="sortable" onclick="PedidoVentaApp.sortTable('idPedidoVenta')">ID</th>
             <th class="sortable" onclick="PedidoVentaApp.sortTable('nOperacion')">Nº Operación</th>
+            <th class="sortable" onclick="PedidoVentaApp.sortTable('nContenedor')">Nº Contenedor</th>
             <th class="sortable" onclick="PedidoVentaApp.sortTable('proforma')">Proforma</th>
             <th class="sortable" onclick="PedidoVentaApp.sortTable('proveedor')">Proveedor</th>
             <th class="sortable" onclick="PedidoVentaApp.sortTable('incoterm')">Incoterm</th>

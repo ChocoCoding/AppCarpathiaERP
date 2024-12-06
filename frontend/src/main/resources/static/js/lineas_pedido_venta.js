@@ -76,11 +76,57 @@ cargarConfiguraciones().then(() => {
     const LineasPedidoApp = {
         // Navegación
         goBack: () => {
-            window.location.href = "/ventas";
-        },
+                    // Verificar si hay cambios sin guardar
+                    const filasModificadas = document.querySelectorAll('tbody tr.modificado');
+                    if (filasModificadas.length > 0) {
+                        // Mostrar alerta de confirmación usando SweetAlert2
+                        Swal.fire({
+                            title: 'Hay cambios sin guardar',
+                            text: '¿Estás seguro de que quieres salir?',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Sí, salir',
+                            cancelButtonText: 'Cancelar'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // Si el usuario confirma, navegar atrás
+                                window.location.href = "/ventas";
+                            }
+                            // Si el usuario cancela, no hacer nada
+                        });
+                    } else {
+                        // Si no hay cambios sin guardar, navegar directamente
+                        window.location.href = "/ventas";
+                    }
+                },
         goHome: () => {
-            window.location.href='/home';
-        },
+                    // Verificar si hay cambios sin guardar
+                    const filasModificadas = document.querySelectorAll('tbody tr.modificado');
+                    if (filasModificadas.length > 0) {
+                        // Mostrar alerta de confirmación usando SweetAlert2
+                        Swal.fire({
+                            title: 'Hay cambios sin guardar',
+                            text: '¿Estás seguro de que quieres salir?',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Sí, salir',
+                            cancelButtonText: 'Cancelar'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // Si el usuario confirma, navegar atrás
+                                window.location.href = "/ventas";
+                            }
+                            // Si el usuario cancela, no hacer nada
+                        });
+                    } else {
+                        // Si no hay cambios sin guardar, navegar directamente
+                        window.location.href = "/ventas";
+                    }
+                },
 
         logout: () => {
             window.location.href = "/logout";
@@ -170,7 +216,7 @@ cargarConfiguraciones().then(() => {
                 </td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.idPedidoVenta || ''}</td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.n_linea || ''}</td>
-                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.n_operacion || ''}</td>
+                <td contenteditable="false" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.n_operacion || ''}</td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.proveedor || ''}</td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.cliente || ''}</td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.contratoVenta || ''}</td>

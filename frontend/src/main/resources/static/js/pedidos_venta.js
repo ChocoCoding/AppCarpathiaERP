@@ -14,10 +14,11 @@ let cliente = '';
 const columnasAtributos = {
     2: 'idPedidoVenta',
     3: 'nOperacion',
-    4: 'proforma',
-    5: 'proveedor',
-    6: 'incoterm',
-    7: 'referenciaProveedor'
+    4: 'nContenedor',
+    5: 'proforma',
+    6: 'proveedor',
+    7: 'incoterm',
+    8: 'referenciaProveedor'
 };
 
 // Cargar configuraciones de endpoints y mensajes desde el backend
@@ -61,11 +62,57 @@ cargarConfiguraciones().then(() => {
     const PedidoVentaApp = {
         // Navegación
         goBack: () => {
-            window.location.href = "/ventas";
-        },
+                    // Verificar si hay cambios sin guardar
+                    const filasModificadas = document.querySelectorAll('tbody tr.modificado');
+                    if (filasModificadas.length > 0) {
+                        // Mostrar alerta de confirmación usando SweetAlert2
+                        Swal.fire({
+                            title: 'Hay cambios sin guardar',
+                            text: '¿Estás seguro de que quieres salir?',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Sí, salir',
+                            cancelButtonText: 'Cancelar'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // Si el usuario confirma, navegar atrás
+                                window.location.href = "/ventas";
+                            }
+                            // Si el usuario cancela, no hacer nada
+                        });
+                    } else {
+                        // Si no hay cambios sin guardar, navegar directamente
+                        window.location.href = "/ventas";
+                    }
+                },
         goHome: () => {
-            window.location.href= '/home';
-        },
+                    // Verificar si hay cambios sin guardar
+                    const filasModificadas = document.querySelectorAll('tbody tr.modificado');
+                    if (filasModificadas.length > 0) {
+                        // Mostrar alerta de confirmación usando SweetAlert2
+                        Swal.fire({
+                            title: 'Hay cambios sin guardar',
+                            text: '¿Estás seguro de que quieres salir?',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Sí, salir',
+                            cancelButtonText: 'Cancelar'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // Si el usuario confirma, navegar atrás
+                                window.location.href = "/ventas";
+                            }
+                            // Si el usuario cancela, no hacer nada
+                        });
+                    } else {
+                        // Si no hay cambios sin guardar, navegar directamente
+                        window.location.href = "/ventas";
+                    }
+                },
 
         logout: () => {
             window.location.href = "/logout";
@@ -152,6 +199,7 @@ cargarConfiguraciones().then(() => {
                 </td>
                 <td>${pedido.idPedidoVenta}</td>
                 <td contenteditable="true" class="editable" oninput="PedidoVentaApp.marcarModificado(this)">${pedido.n_operacion || ''}</td>
+                <td contenteditable="true" class="editable" oninput="PedidoVentaApp.marcarModificado(this)">${pedido.n_contenedor || ''}</td>
                 <td contenteditable="true" class="editable" oninput="PedidoVentaApp.marcarModificado(this)">${pedido.proforma || ''}</td>
                 <td contenteditable="true" class="editable" oninput="PedidoVentaApp.marcarModificado(this)">${pedido.proveedor || ''}</td>
                 <td contenteditable="true" class="editable" oninput="PedidoVentaApp.marcarModificado(this)">${pedido.incoterm || ''}</td>
@@ -237,10 +285,11 @@ cargarConfiguraciones().then(() => {
                 const idPedidoVenta = fila.getAttribute('data-id-pedido-venta');
                 const datos = {
                     n_operacion: fila.children[2].innerText.trim(),
-                    proforma: fila.children[3].innerText.trim(),
-                    proveedor: fila.children[4].innerText.trim(),
-                    incoterm: fila.children[5].innerText.trim(),
-                    referenciaProveedor: fila.children[6].innerText.trim()
+                    n_contenedor: fila.children[3].innerText.trim(),
+                    proforma: fila.children[4].innerText.trim(),
+                    proveedor: fila.children[5].innerText.trim(),
+                    incoterm: fila.children[6].innerText.trim(),
+                    referenciaProveedor: fila.children[7].innerText.trim()
                 };
 
                 console.log(`Guardando pedido: ${idPedidoVenta ? 'Actualización' : 'Creación'}`, datos); // Depuración
@@ -310,7 +359,8 @@ cargarConfiguraciones().then(() => {
                 </td>
                 <td></td>
                 <td contenteditable="true" class="editable"></td>
-                <td contenteditable="true" class="editable"></td>
+                <td contenteditable="false" class="editable"></td>
+                <td contenteditable="false" class="editable"></td>
                 <td contenteditable="true" class="editable"></td>
                 <td contenteditable="true" class="editable"></td>
                 <td contenteditable="true" class="editable"></td>

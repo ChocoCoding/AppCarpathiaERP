@@ -13,16 +13,17 @@ let searchFields = [];
 const columnasAtributos = {
     2: 'pedidoCompra.idPedidoCompra',
     3: 'nOperacion',
-    4: 'nombreBarco',
-    5: 'viaje',
-    6: 'naviera',
-    7: 'puertoEmbarque',
-    8: 'puertoLlegada',
-    9: 'fechaEmbarque',
-    10: 'fechaLlegada',
-    11: 'flete',
-    12: 'fechaPagoFlete',
-    13: 'facturaFlete'
+    4: 'nContenedor',
+    5: 'nombreBarco',
+    6: 'viaje',
+    7: 'naviera',
+    8: 'puertoEmbarque',
+    9: 'puertoLlegada',
+    10: 'fechaEmbarque',
+    11: 'fechaLlegada',
+    12: 'flete',
+    13: 'fechaPagoFlete',
+    14: 'facturaFlete'
 };
 
 // Cargar configuraciones de endpoints y mensajes desde el backend
@@ -64,11 +65,57 @@ cargarConfiguraciones().then(() => {
     const DatosBarcoApp = {
         // Navegación
         goBack: () => {
-            window.location.href = "/compras";
-        },
+                    // Verificar si hay cambios sin guardar
+                    const filasModificadas = document.querySelectorAll('tbody tr.modificado');
+                    if (filasModificadas.length > 0) {
+                        // Mostrar alerta de confirmación usando SweetAlert2
+                        Swal.fire({
+                            title: 'Hay cambios sin guardar',
+                            text: '¿Estás seguro de que quieres salir?',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Sí, salir',
+                            cancelButtonText: 'Cancelar'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // Si el usuario confirma, navegar atrás
+                                window.location.href = "/compras";
+                            }
+                            // Si el usuario cancela, no hacer nada
+                        });
+                    } else {
+                        // Si no hay cambios sin guardar, navegar directamente
+                        window.location.href = "/compras";
+                    }
+                },
         goHome: () => {
-            window.location.href = "/home";
-        },
+                    // Verificar si hay cambios sin guardar
+                    const filasModificadas = document.querySelectorAll('tbody tr.modificado');
+                    if (filasModificadas.length > 0) {
+                        // Mostrar alerta de confirmación usando SweetAlert2
+                        Swal.fire({
+                            title: 'Hay cambios sin guardar',
+                            text: '¿Estás seguro de que quieres salir?',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Sí, salir',
+                            cancelButtonText: 'Cancelar'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // Si el usuario confirma, navegar atrás
+                                window.location.href = "/home";
+                            }
+                            // Si el usuario cancela, no hacer nada
+                        });
+                    } else {
+                        // Si no hay cambios sin guardar, navegar directamente
+                        window.location.href = "/home";
+                    }
+                },
 
         logout: () => {
             window.location.href = "/logout";
@@ -153,7 +200,8 @@ cargarConfiguraciones().then(() => {
                     <button class="delete-button" onclick="DatosBarcoApp.eliminarDatosBarco(${dato.idDatosBarco})">🗑️</button>
                 </td>
                 <td contenteditable="true" class="editable" oninput="DatosBarcoApp.marcarModificado(this)">${dato.idPedidoCompra || ''}</td>
-                <td contenteditable="true" class="editable" oninput="DatosBarcoApp.marcarModificado(this)">${dato.n_operacion || ''}</td>
+                <td contenteditable="false" class="editable" oninput="DatosBarcoApp.marcarModificado(this)">${dato.n_operacion || ''}</td>
+                <td contenteditable="false" class="editable" oninput="DatosBarcoApp.marcarModificado(this)">${dato.n_contenedor || ''}</td>
                 <td contenteditable="true" class="editable" oninput="DatosBarcoApp.marcarModificado(this)">${dato.nombreBarco || ''}</td>
                 <td contenteditable="true" class="editable" oninput="DatosBarcoApp.marcarModificado(this)">${dato.viaje || ''}</td>
                 <td contenteditable="true" class="editable" oninput="DatosBarcoApp.marcarModificado(this)">${dato.naviera || ''}</td>
@@ -243,9 +291,9 @@ cargarConfiguraciones().then(() => {
             filasModificadas.forEach(fila => {
                 const idDatosBarco = fila.getAttribute('data-id-datos-barco');
                 const idPedidoCompra = fila.children[1].innerText.trim();
-                const fechaPagoFlete = fila.children[11].innerText.trim();
-                const fechaEmbarque = fila.children[8].innerText.trim();
-                const fechaLlegada = fila.children[9].innerText.trim();
+                const fechaPagoFlete = fila.children[12].innerText.trim();
+                const fechaEmbarque = fila.children[9].innerText.trim();
+                const fechaLlegada = fila.children[10].innerText.trim();
 
                 // Validación de fechas
                 if ((fechaPagoFlete && !formatoFecha.test(fechaPagoFlete)) ||
@@ -265,16 +313,17 @@ cargarConfiguraciones().then(() => {
                     const datos = {
                         idPedidoCompra,
                         n_operacion: fila.children[2].innerText.trim(),
-                        nombreBarco: fila.children[3].innerText.trim(),
-                        viaje: fila.children[4].innerText.trim(),
-                        naviera: fila.children[5].innerText.trim(),
-                        puertoEmbarque: fila.children[6].innerText.trim(),
-                        puertoLlegada: fila.children[7].innerText.trim(),
+                        n_contenedor: fila.children[3].innerText.trim(),
+                        nombreBarco: fila.children[4].innerText.trim(),
+                        viaje: fila.children[5].innerText.trim(),
+                        naviera: fila.children[6].innerText.trim(),
+                        puertoEmbarque: fila.children[7].innerText.trim(),
+                        puertoLlegada: fila.children[8].innerText.trim(),
                         fecha_embarque: fechaEmbarque,
                         fecha_llegada: fechaLlegada,
-                        flete: fila.children[10].innerText.trim(),
+                        flete: fila.children[11].innerText.trim(),
                         fecha_pago_flete: fechaPagoFlete,
-                        facturaFlete: fila.children[12].innerText.trim()
+                        facturaFlete: fila.children[13].innerText.trim()
                     };
 
                     if (!idDatosBarco) {
@@ -357,7 +406,8 @@ cargarConfiguraciones().then(() => {
                     <button class="delete-button" onclick="DatosBarcoApp.eliminarFila(this)">🗑️</button>
                 </td>
                 <td contenteditable="true" class="editable"></td>
-                <td contenteditable="true" class="editable"></td>
+                <td contenteditable="false" class="editable"></td>
+                <td contenteditable="false" class="editable"></td>
                 <td contenteditable="true" class="editable"></td>
                 <td contenteditable="true" class="editable"></td>
                 <td contenteditable="true" class="editable"></td>

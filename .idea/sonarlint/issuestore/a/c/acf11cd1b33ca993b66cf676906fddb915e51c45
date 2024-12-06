@@ -1,3 +1,7 @@
 
 …
-java:S1128"DRemove this unused import 'com.app.frontend.DTO.PedidoCompraDetDTO'.(¨ÔñšÿÿÿÿÿJ$99c763a2-1995-47cf-99fa-b3726d9e78c0
+java:S1128"DRemove this unused import 'com.app.frontend.DTO.PedidoCompraDetDTO'.(¨ÔñšÿÿÿÿÿJ$99c763a2-1995-47cf-99fa-b3726d9e78c0
+O
+java:S1128"-Remove this unused import 'java.util.Arrays'.(î–˜Éüÿÿÿÿ8–¨¦Ó¹2
+M
+java:S1128"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8–¨¦Ó¹2

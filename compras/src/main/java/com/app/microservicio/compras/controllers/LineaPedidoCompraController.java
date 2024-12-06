@@ -5,6 +5,7 @@ import com.app.microservicio.compras.DTO.PedidoCompraDTO;
 import com.app.microservicio.compras.services.CalculoService;
 import com.app.microservicio.compras.services.LineaPedidoCompraService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +26,7 @@ public class LineaPedidoCompraController {
     @Autowired
     private CalculoService calculoService;
 
+    @CacheEvict(value = "lineasPedidoCompra", allEntries = true)
     @GetMapping
     public ResponseEntity<Page<LineaPedidoCompraDTO>> listarLineasPedidoCompra(
             @RequestParam(defaultValue = "0") int page,
@@ -42,13 +44,13 @@ public class LineaPedidoCompraController {
         Page<LineaPedidoCompraDTO> lineasPedidosPage = lineaPedidoCompraService.listarLineasPedidoCompra(pageable, proveedor, cliente, search, searchFields);
         return ResponseEntity.ok(lineasPedidosPage);
     }
-
+    @CacheEvict(value = "lineasPedidoCompra", allEntries = true)
     @GetMapping("/{idPedidoCompra}")
     public ResponseEntity<List<LineaPedidoCompraDTO>> getLineasByPedidoCompra(@PathVariable Long idPedidoCompra) {
         List<LineaPedidoCompraDTO> lineas = lineaPedidoCompraService.getLineasByPedidoCompra(idPedidoCompra);
         return ResponseEntity.ok(lineas);
     }
-
+    @CacheEvict(value = "lineasPedidoCompra", allEntries = true)
     @PostMapping
     public ResponseEntity<LineaPedidoCompraDTO> crearLineaPedido(@RequestBody LineaPedidoCompraDTO lineaPedidoCompraDTO) {
         LineaPedidoCompraDTO nuevaLinea = lineaPedidoCompraService.crearLineaPedido(lineaPedidoCompraDTO);
@@ -60,12 +62,14 @@ public class LineaPedidoCompraController {
         return ResponseEntity.ok(nuevaLinea);
     }
 
+    @CacheEvict(value = "lineasPedidoCompra", allEntries = true)
     @PutMapping("/{idNumeroLinea}")
     public ResponseEntity<LineaPedidoCompraDTO> actualizarLineaPedido(@PathVariable Long idNumeroLinea, @RequestBody LineaPedidoCompraDTO lineaPedidoCompraDTO) {
         LineaPedidoCompraDTO lineaActualizada = lineaPedidoCompraService.actualizarLineaPedido(idNumeroLinea, lineaPedidoCompraDTO);
         return ResponseEntity.ok(lineaActualizada);
     }
 
+    @CacheEvict(value = "lineasPedidoCompra", allEntries = true)
     @DeleteMapping("/{idNumeroLinea}")
     public ResponseEntity<Void> eliminarLineaPedido(@PathVariable Long idNumeroLinea) {
         lineaPedidoCompraService.eliminarLineaPedido(idNumeroLinea);

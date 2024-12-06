@@ -211,7 +211,12 @@ public class PedidoCompraDetService {
         //Calculamos el promedio
         pedidoCompraDetDTO.setValorCompraTotal(calculoService.calcularValoresCompra(pedidoCompraDetDTO.getIdPedidoCompra()).getBody());
         pedidoCompraDetDTO.setPromedio(calculoService.calcularPromedio(pedidoCompraDetDTO.getIdPedidoCompra()).getBody());
-    return convertirADTO(pedidoCompraDetRepository.save(convertirAEntidad(pedidoCompraDetDTO)));
+        PedidoCompraDet pedidoCompraDet = convertirAEntidad(pedidoCompraDetDTO);
+        pedidoCompraDetRepository.save(pedidoCompraDet);
+        calculoService.actualizarCamposPedidoCompraDet(pedidoCompraDetDTO.getIdPedidoCompra());
+
+        PedidoCompraDet pedidoAGuardar = pedidoCompraDetRepository.findById(pedidoCompraDet.getIdPedidoCompraDet()).get();
+    return convertirADTO(pedidoAGuardar);
     }
 }
 

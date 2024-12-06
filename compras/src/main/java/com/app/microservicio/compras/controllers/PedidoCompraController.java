@@ -49,8 +49,8 @@ public class PedidoCompraController {
     public ResponseEntity<Optional<PedidoCompraDTO>> obtenerPedidoCompra(@PathVariable Long id) {
         return ResponseEntity.of(Optional.ofNullable(pedidoCompraService.obtenerPedidoCompra(id)));
     }
-    @CacheEvict(value = "pedidosCompra", allEntries = true)
 
+    @CacheEvict(value = "pedidosCompra", allEntries = true)
     @PostMapping()
     public ResponseEntity<PedidoCompraDTO> crearPedidoCompra(@RequestBody PedidoCompraDTO pedidoCompraDTO) {
         PedidoCompraDTO nuevoPedido = pedidoCompraService.guardarPedidoCompra(pedidoCompraDTO);

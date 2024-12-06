@@ -14,6 +14,7 @@ const middleware = {
             throw error;
         }
     },
+    // Función POST modificada
     post: async (url, data) => {
         console.log(`Realizando POST a: ${url} con datos:`, data); // Depuración
         try {
@@ -25,7 +26,16 @@ const middleware = {
                 body: JSON.stringify(data)
             });
             if (!response.ok) {
-                throw new Error(`Error en POST: ${response.status}`);
+                let errorMessage = `Error en POST: ${response.status}`;
+                try {
+                    const errorData = await response.json();
+                    if (errorData.message) {
+                        errorMessage = errorData.message;
+                    }
+                } catch (e) {
+                    console.error('Error al parsear el cuerpo de la respuesta:', e);
+                }
+                throw new Error(errorMessage);
             }
             const responseData = await response.json();
             return responseData;
@@ -34,6 +44,8 @@ const middleware = {
             throw error;
         }
     },
+
+    // Función PUT modificada
     put: async (url, data) => {
         console.log(`Realizando PUT a: ${url} con datos:`, data); // Depuración
         try {
@@ -45,7 +57,16 @@ const middleware = {
                 body: JSON.stringify(data)
             });
             if (!response.ok) {
-                throw new Error(`Error en PUT: ${response.status}`);
+                let errorMessage = `Error en PUT: ${response.status}`;
+                try {
+                    const errorData = await response.json();
+                    if (errorData.message) {
+                        errorMessage = errorData.message;
+                    }
+                } catch (e) {
+                    console.error('Error al parsear el cuerpo de la respuesta:', e);
+                }
+                throw new Error(errorMessage);
             }
             const responseData = await response.json();
             return responseData;
@@ -54,6 +75,7 @@ const middleware = {
             throw error;
         }
     },
+
     delete: async (url) => {
         console.log(`Realizando DELETE a: ${url}`); // Depuración
         try {

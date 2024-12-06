@@ -24,20 +24,12 @@ const LineaPedidoFormApp = {
                     <input type="text" class="form-control" name="numLinea" value="${lineCounter}" readonly>
                 </div>
                 <div class="col-md-6">
-                    <label for="numOperacion" class="form-label">Nº Operación</label>
-                    <input type="text" class="form-control" name="numOperacion" placeholder="Nº Operación">
-                </div>
-                <div class="col-md-6">
                     <label for="proveedorLinea" class="form-label">Proveedor</label>
                     <input type="text" class="form-control" name="proveedorLinea" placeholder="Proveedor">
                 </div>
                 <div class="col-md-6">
                     <label for="clienteLinea" class="form-label">Cliente</label>
                     <input type="text" class="form-control" name="clienteLinea" placeholder="Cliente">
-                </div>
-                <div class="col-md-6">
-                    <label for="numContenedor" class="form-label">Nº Contenedor</label>
-                    <input type="text" class="form-control" name="numContenedor" placeholder="Nº Contenedor">
                 </div>
                 <div class="col-md-6">
                     <label for="producto" class="form-label">Producto</label>
@@ -97,10 +89,8 @@ const LineaPedidoFormApp = {
             const linea = {
                 idPedidoCompra: pedidoCompraId,
                 n_linea: card.querySelector('input[name="numLinea"]').value || '',
-                n_operacion: card.querySelector('input[name="numOperacion"]').value || '',
                 proveedor: card.querySelector('input[name="proveedorLinea"]').value || '',
                 cliente: card.querySelector('input[name="clienteLinea"]').value || '',
-                n_contenedor: card.querySelector('input[name="numContenedor"]').value || '',
                 producto: card.querySelector('input[name="producto"]').value || '',
                 talla: card.querySelector('input[name="talla"]').value || '',
                 p_neto: card.querySelector('input[name="pesoNeto"]').value || '',

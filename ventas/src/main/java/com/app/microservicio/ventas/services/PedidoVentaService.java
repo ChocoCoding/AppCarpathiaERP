@@ -13,6 +13,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -21,6 +22,9 @@ public class PedidoVentaService {
 
     @Autowired
     private PedidoVentaRepository pedidoVentaRepository;
+
+    @Autowired
+    private CalculoService calculoService;
 
     @Autowired
     EntityManager entityManager;
@@ -71,11 +75,15 @@ public class PedidoVentaService {
                 .map(this::convertirADTO);
     }
 
+    @Transactional
     public PedidoVentaDTO guardarPedidoVenta(PedidoVentaDTO pedidoVentaDTO) {
         PedidoVenta pedidoVenta = convertirAEntidad(pedidoVentaDTO);
         PedidoVenta nuevoPedidoVenta = pedidoVentaRepository.save(pedidoVenta);
+        Long idPedidoVenta = nuevoPedidoVenta.getIdPedidoVenta();
+        calculoService.actualizarCamposLineaPedido(idPedidoVenta);
         return convertirADTO(nuevoPedidoVenta);
     }
+
 
     @Transactional
     public boolean eliminarPedidoVenta(Long id) {
@@ -123,12 +131,14 @@ public class PedidoVentaService {
             PedidoVenta pedidoVenta = pedidoVentaOpt.get();
             // Actualizar los campos
             pedidoVenta.setNOperacion(pedidoVentaDTO.getN_operacion());
+            pedidoVenta.setNContenedor(pedidoVentaDTO.getN_contenedor());
             pedidoVenta.setProforma(pedidoVentaDTO.getProforma());
             pedidoVenta.setProveedor(pedidoVentaDTO.getProveedor());
             pedidoVenta.setIncoterm(pedidoVentaDTO.getIncoterm());
             pedidoVenta.setReferenciaProveedor(pedidoVentaDTO.getReferenciaProveedor());
 
             PedidoVenta actualizado = pedidoVentaRepository.save(pedidoVenta);
+            calculoService.actualizarCamposLineaPedido(actualizado.getIdPedidoVenta());
             return convertirADTO(actualizado);
         } else {
             return null;
@@ -143,6 +153,7 @@ public class PedidoVentaService {
         PedidoVentaDTO pedidoVentaDTO = new PedidoVentaDTO();
         pedidoVentaDTO.setIdPedidoVenta(pedidoVenta.getIdPedidoVenta());
         pedidoVentaDTO.setN_operacion(pedidoVenta.getNOperacion());
+        pedidoVentaDTO.setN_contenedor(pedidoVenta.getNContenedor());
         pedidoVentaDTO.setProforma(pedidoVenta.getProforma());
         pedidoVentaDTO.setProveedor(pedidoVenta.getProveedor());
         pedidoVentaDTO.setIncoterm(pedidoVenta.getIncoterm());
@@ -154,6 +165,7 @@ public class PedidoVentaService {
         PedidoVenta pedidoVenta = new PedidoVenta();
         pedidoVenta.setIdPedidoVenta(pedidoVentaDTO.getIdPedidoVenta());
         pedidoVenta.setNOperacion(pedidoVentaDTO.getN_operacion());
+        pedidoVenta.setNContenedor(pedidoVentaDTO.getN_contenedor());
         pedidoVenta.setProforma(pedidoVentaDTO.getProforma());
         pedidoVenta.setProveedor(pedidoVentaDTO.getProveedor());
         pedidoVenta.setIncoterm(pedidoVentaDTO.getIncoterm());

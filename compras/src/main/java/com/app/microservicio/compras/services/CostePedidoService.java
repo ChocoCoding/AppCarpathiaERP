@@ -87,7 +87,8 @@ public class CostePedidoService {
         costePedidoCompra.setTasa_sanitaria(calculoService.calcularTasaSanitaria(costePedidoCompra.getPedidoCompra().getIdPedidoCompra()).getBody());
         costePedidoCompra.setGasto_total(calculoService.calcularGastoTotal(costePedidoCompra.getPedidoCompra().getIdPedidoCompra()).getBody());
         costePedidoCompra.setSuma_costes(calculoService.calcularSumaCostes(costePedidoCompra.getPedidoCompra().getIdPedidoCompra()).getBody());
-        System.out.println(costePedidoCompra.getTasa_sanitaria());
+        calculoService.actualizarCostePedidoCompra(costePedidoCompra.getPedidoCompra().getIdPedidoCompra());
+
         return convertirADTO(costePedidoCompra);
     }
 
@@ -198,6 +199,7 @@ public class CostePedidoService {
        calculoService.calcularSumaCostes(costesDTO.getIdPedidoCompra()).getBody();
        calculoService.calcularTasaSanitaria(costesDTO.getIdPedidoCompra());
        calculoService.calcularGastoTotal(costesDTO.getIdPedidoCompra());
+       calculoService.actualizarCostePedidoCompra(costePedidoCompra.getPedidoCompra().getIdPedidoCompra());
        return convertirADTO(costePedidoCompra);
     }
 

@@ -102,10 +102,6 @@
                         <input type="text" class="form-control" id="idPedidoDetalle" placeholder="ID Pedido de Compra" readonly>
                     </div>
                     <div class="col-md-6">
-                        <label for="operacionDetalle" class="form-label">Nº Operación</label>
-                        <input type="text" class="form-control" id="operacionDetalle" placeholder="Nº Operación">
-                    </div>
-                    <div class="col-md-6">
                         <label for="contrato" class="form-label">Contrato Compra</label>
                         <input type="text" class="form-control" id="contrato" placeholder="Contrato Compra">
                     </div>
@@ -147,10 +143,6 @@
                     <div class="col-md-6">
                         <label for="idPedidoBarco" class="form-label">ID Pedido Compra</label>
                         <input type="text" class="form-control" id="idPedidoBarco" placeholder="ID Pedido Compra" readonly>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="operacionBarco" class="form-label">Nº Operación</label>
-                        <input type="text" class="form-control" id="operacionBarco" placeholder="Nº Operación">
                     </div>
                     <div class="col-md-6">
                         <label for="nombreBarco" class="form-label">Nombre Barco</label>
@@ -202,14 +194,6 @@
                     <div class="col-md-6">
                         <label for="idPedidoCostes" class="form-label">ID Pedido Compra</label>
                         <input type="text" class="form-control" id="idPedidoCostes" placeholder="ID Pedido Compra" readonly>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="operacionCostes" class="form-label">Nº Operación</label>
-                        <input type="text" class="form-control" id="operacionCostes" placeholder="Nº Operación">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="contenedorCostes" class="form-label">Nº Contenedor</label>
-                        <input type="text" class="form-control" id="contenedorCostes" placeholder="Nº Contenedor">
                     </div>
                     <div class="col-md-6">
                         <label for="arancel" class="form-label">Arancel</label>
@@ -268,13 +252,37 @@
 </div>
 <script>
     function goHome() {
-        window.location.href = '/home';
+        // Verificar si hay cambios sin guardar
+        const filasModificadas = document.querySelectorAll('tbody tr.modificado');
+
+        Swal.fire({
+            title: 'Formulario Compras',
+            text: '¿Estás seguro de que quieres salir?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, salir',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Si el usuario confirma, navegar atrás
+                window.location.href = "/home";
+            }
+            // Si el usuario cancela, no hacer nada
+        });
     }
 
     function logout() {
         window.location.href = "/logout";
     }
+
+    // Asignar las funciones al objeto global para que sean accesibles desde el HTML
+    window.goHome = goHome;
+    window.logout = logout;
 </script>
+<!-- Incluir SweetAlert2 antes de tus scripts personalizados -->
+<script src="/js/sweet-alert2/dist/sweetalert2.all.min.js"></script>
 <script type="module">import middleware from '/js/middleware.js';</script>
 <script type="module">
     import PedidoCompraFormApp from './js/formulario/pedidoCompraForm.js';
@@ -305,29 +313,50 @@
 
             middleware.post('http://localhost:8702/api/compras/pedidos_compra', pedidoCompra)
                 .then(response => {
-                pedidoCompraId = response.idPedidoCompra; // Asigna el ID del pedido de compra devuelto
+                    pedidoCompraId = response.idPedidoCompra; // Asigna el ID del pedido de compra devuelto
 
-                // Almacenar el ID en los campos correspondientes si existen
-                if (document.getElementById('idPedidoLinea')) {
-                    document.getElementById('idPedidoLinea').value = pedidoCompraId;
-                }
-                if (document.getElementById('idPedidoDetalle')) {
-                    document.getElementById('idPedidoDetalle').value = pedidoCompraId;
-                }
-                if (document.getElementById('idPedidoBarco')) {
-                    document.getElementById('idPedidoBarco').value = pedidoCompraId;
-                }
-                if (document.getElementById('idPedidoCostes')) {
-                    document.getElementById('idPedidoCostes').value = pedidoCompraId;
-                }
+                    // Almacenar el ID en los campos correspondientes si existen
+                    if (document.getElementById('idPedidoLinea')) {
+                        document.getElementById('idPedidoLinea').value = pedidoCompraId;
+                    }
+                    if (document.getElementById('idPedidoDetalle')) {
+                        document.getElementById('idPedidoDetalle').value = pedidoCompraId;
+                    }
+                    if (document.getElementById('idPedidoBarco')) {
+                        document.getElementById('idPedidoBarco').value = pedidoCompraId;
+                    }
+                    if (document.getElementById('idPedidoCostes')) {
+                        document.getElementById('idPedidoCostes').value = pedidoCompraId;
+                    }
 
-                alert('Pedido de Compra creado con éxito.');
-                currentStep++;
-                updateStep();
-            })
+                    // Reemplazar alert() con Swal.fire
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Éxito',
+                        text: 'Pedido de Compra creado con éxito.',
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true
+                    });
+
+                    currentStep++;
+                    updateStep();
+                })
                 .catch(error => {
-                alert('Error al crear el Pedido de Compra: ' + error.message);
-            });
+                    // Reemplazar alert() con Swal.fire
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Error al crear el Pedido de Compra: ' + error.message,
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true
+                    });
+                });
         } else if (currentStep >= 2 && currentStep < 5) {
             // Pasos 2 a 4: Avanzar sin enviar datos
             // Podrías agregar validaciones aquí si es necesario
@@ -349,38 +378,59 @@
 
             // Enviar las líneas de pedido
             const lineasPromises = formData.lineasPedido.map(linea =>
-            middleware.post('http://localhost:8702/api/compras/lineas_pedidos_compra', linea)
+                middleware.post('http://localhost:8702/api/compras/lineas_pedidos_compra', linea)
             );
 
             Promise.all(lineasPromises)
                 .then(() => {
-                console.log('Todas las líneas de pedido se guardaron con éxito.');
-                // Enviar Detalles de Pedido
-                return middleware.post('http://localhost:8702/api/compras/pedidos_compra_det', formData.detallesPedido);
-            })
+                    console.log('Todas las líneas de pedido se guardaron con éxito.');
+                    // Enviar Detalles de Pedido
+                    return middleware.post('http://localhost:8702/api/compras/pedidos_compra_det', formData.detallesPedido);
+                })
                 .then(() => {
-                console.log('Detalles de Pedido guardados con éxito.');
-                // Enviar Datos del Barco
-                return middleware.post('http://localhost:8702/api/compras/datos_barco', formData.datosBarco);
-            })
+                    console.log('Detalles de Pedido guardados con éxito.');
+                    // Enviar Datos del Barco
+                    return middleware.post('http://localhost:8702/api/compras/datos_barco', formData.datosBarco);
+                })
                 .then(() => {
-                console.log('Datos del Barco guardados con éxito.');
-                // Enviar Costes
-                return middleware.post('http://localhost:8702/api/compras/costes_compra', formData.costesPedido);
-            })
+                    console.log('Datos del Barco guardados con éxito.');
+                    // Enviar Costes
+                    return middleware.post('http://localhost:8702/api/compras/costes_compra', formData.costesPedido);
+                })
                 .then(() => {
-                alert('El pedido se ha guardado exitosamente');
-                window.location.href = 'http://localhost:8708/compras';
-            })
+                    // Reemplazar alert() con Swal.fire
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Éxito',
+                        text: 'El pedido se ha guardado exitosamente.',
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true
+                    }).then(() => {
+                        window.location.href = 'http://localhost:8708/compras';
+                    });
+                })
                 .catch(error => {
-                alert('Error al guardar el pedido: ' + error.message);
-                console.error('Error al guardar el pedido:', error);
-            })
+                    // Reemplazar alert() con Swal.fire
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Error al guardar el pedido: ' + error.message,
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true
+                    });
+                    console.error('Error al guardar el pedido:', error);
+                })
                 .finally(() => {
-                // Rehabilitar el botón y restaurar el texto original
-                nextBtn.disabled = false;
-                nextBtn.textContent = currentStep === totalSteps ? 'Enviar' : 'Siguiente';
-            });
+                    // Rehabilitar el botón y restaurar el texto original
+                    nextBtn.disabled = false;
+                    nextBtn.textContent = currentStep === totalSteps ? 'Enviar' : 'Siguiente';
+                });
         }
     });
 
@@ -402,7 +452,7 @@
         });
 
         // Habilitar o deshabilitar el botón "Anterior"
-        document.getElementById('prevBtn').disabled = currentStep === 1;
+        document.getElementById('prevBtn').disabled = currentStep === 1 || currentStep === 2;
 
         // Cambiar el texto del botón "Siguiente" a "Enviar" en el Paso 5
         document.getElementById('nextBtn').textContent = currentStep === totalSteps ? 'Enviar' : 'Siguiente';
@@ -414,8 +464,6 @@
         document.getElementById('step4Indicator').classList.toggle('step-active', currentStep >= 4);
         document.getElementById('step5Indicator').classList.toggle('step-active', currentStep === 5);
     }
-
-
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>

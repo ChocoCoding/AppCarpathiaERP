@@ -1,6 +1,7 @@
 package com.app.microservicio.ventas.services;
 
 import com.app.microservicio.ventas.entities.LineaPedidoVenta;
+import com.app.microservicio.ventas.entities.PedidoVenta;
 import com.app.microservicio.ventas.entities.PedidoVentaDet;
 import com.app.microservicio.ventas.repository.LineaPedidoVentaRepository;
 import com.app.microservicio.ventas.repository.PedidoVentaDetRepository;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -143,10 +145,6 @@ public class CalculoService {
         return ResponseEntity.ok(totalValoresVenta);
     }
 
-
-
-
-
     public ResponseEntity<BigDecimal> calcularGastoTotal(Long idPedidoVenta){
 
             BigDecimal valorVentaTotal = Optional.ofNullable(lineaPedidoVentaRepository.sumValorVentaByPedidoVentaId(idPedidoVenta))
@@ -173,6 +171,19 @@ public class CalculoService {
             lineaPedidoVentaRepository.save(lineaPedidoVenta);
         }
         return ResponseEntity.ok(valorPedidoVenta);
+    }
+
+    public void actualizarCamposLineaPedido(Long id){
+        System.out.println("Llego aqu´i");
+        List<LineaPedidoVenta> lineaPedidoVentas = lineaPedidoVentaRepository.findByIdPedidoVenta(id);
+        if (!lineaPedidoVentas.isEmpty()){
+            Optional<PedidoVenta> pedidoVenta = pedidoVentaRepository.findById(id);
+            for(LineaPedidoVenta l: lineaPedidoVentas){
+                l.setNOperacion(pedidoVenta.get().getNOperacion());
+                l.setNContenedor(pedidoVenta.get().getNContenedor());
+                lineaPedidoVentaRepository.save(l);
+            }
+        }
     }
 
 }

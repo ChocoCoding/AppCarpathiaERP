@@ -17,6 +17,7 @@ public class DatosBarcoDTO {
     private Long idPedidoCompra;
     private Long idDatosBarco;
     private Long n_operacion;
+    private String n_contenedor;
     private String nombreBarco;
     private String viaje;
     private String naviera;

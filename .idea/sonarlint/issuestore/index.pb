@@ -173,3 +173,9 @@ P
 [compras_ventas/src/main/java/com/microservicio/compras_ventas/client/PedidoVentaClient.java,9\9\998206c9120f5513f106f51e753b701dd376fd15
 
 Ofrontend/src/main/java/com/app/frontend/controllers/ModuloVentasController.java,7\d\7dab6d5faea7f406a4cff139de63eb7f94c179b4
+w
+Gfrontend/src/main/java/com/app/frontend/service/PedidoVentaService.java,f\1\f16b57f4496171e997b918c99afed4a47daf2c7c
+z
+Jfrontend/src/main/java/com/app/frontend/service/PedidoVentaDetService.java,7\1\71a75f4209bc304522fe935ae5cf4c1aab40b818
+|
+Lfrontend/src/main/java/com/app/frontend/service/LineaPedidoVentaService.java,c\9\c9fe9261078a1f567aba7f8fe1e49c30cfb3db58

@@ -69,12 +69,58 @@ cargarConfiguraciones().then(() => {
     const LineasPedidoApp = {
         // Navegación
         goBack: () => {
-            window.location.href = "/compras";
-        },
+                    // Verificar si hay cambios sin guardar
+                    const filasModificadas = document.querySelectorAll('tbody tr.modificado');
+                    if (filasModificadas.length > 0) {
+                        // Mostrar alerta de confirmación usando SweetAlert2
+                        Swal.fire({
+                            title: 'Hay cambios sin guardar',
+                            text: '¿Estás seguro de que quieres salir?',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Sí, salir',
+                            cancelButtonText: 'Cancelar'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // Si el usuario confirma, navegar atrás
+                                window.location.href = "/compras";
+                            }
+                            // Si el usuario cancela, no hacer nada
+                        });
+                    } else {
+                        // Si no hay cambios sin guardar, navegar directamente
+                        window.location.href = "/compras";
+                    }
+                },
 
         goHome: () => {
-            window.location.href = '/home';
-        },
+                    // Verificar si hay cambios sin guardar
+                    const filasModificadas = document.querySelectorAll('tbody tr.modificado');
+                    if (filasModificadas.length > 0) {
+                        // Mostrar alerta de confirmación usando SweetAlert2
+                        Swal.fire({
+                            title: 'Hay cambios sin guardar',
+                            text: '¿Estás seguro de que quieres salir?',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Sí, salir',
+                            cancelButtonText: 'Cancelar'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // Si el usuario confirma, navegar atrás
+                                window.location.href = "/compras";
+                            }
+                            // Si el usuario cancela, no hacer nada
+                        });
+                    } else {
+                        // Si no hay cambios sin guardar, navegar directamente
+                        window.location.href = "/compras";
+                    }
+                },
 
         logout: () => {
             window.location.href = "/logout";
@@ -164,13 +210,13 @@ cargarConfiguraciones().then(() => {
         </td>
         <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.idPedidoCompra || ''}</td>
         <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.n_linea || ''}</td>
-        <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.n_operacion || ''}</td>
+        <td contenteditable="false" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.n_operacion || ''}</td>
         <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.proveedor || ''}</td>
         <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.cliente || ''}</td>
-        <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.n_contenedor || ''}</td>
+        <td contenteditable="false" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.n_contenedor || ''}</td>
         <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.producto || ''}</td>
         <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.talla || ''}</td>
-        <td contenteditable="false" class="editable peso-neto" oninput="LineasPedidoApp.calcularValorCompra(this)">${linea.p_neto ? Number(linea.p_neto).toFixed(4) : ''}</td>
+        <td contenteditable="true" class="editable peso-neto" oninput="LineasPedidoApp.calcularValorCompra(this)">${linea.p_neto ? Number(linea.p_neto).toFixed(4) : ''}</td>
         <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.unidad || ''}</td>
         <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)">${linea.bultos || ''}</td>
         <td contenteditable="true" class="editable precio" oninput="LineasPedidoApp.calcularValorCompra(this)">${linea.precio ? Number(linea.precio).toFixed(4) : ''}</td>
@@ -363,17 +409,17 @@ cargarConfiguraciones().then(() => {
                 </td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
+                <td contenteditable="false" oninput="LineasPedidoApp.marcarModificado(this)"></td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
-                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
-                <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
+                <td contenteditable="false" oninput="LineasPedidoApp.marcarModificado(this)"></td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
                 <td contenteditable="true" class="editable peso-neto" oninput="LineasPedidoApp.calcularValorCompra(this)"></td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
                 <td contenteditable="true" class="editable precio" oninput="LineasPedidoApp.calcularValorCompra(this)"></td>
-                <td contenteditable="true" class="editable valor-compra-total"></td>
+                <td contenteditable="false" class="valor-compra-total"></td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
                 <td contenteditable="true" class="editable" oninput="LineasPedidoApp.marcarModificado(this)"></td>
             `;

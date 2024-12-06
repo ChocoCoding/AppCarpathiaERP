@@ -107,6 +107,8 @@ public class LineaPedidoCompraService {
         if (lineaPedidoCompraDTO.getIdPedidoCompra() == null) {
             throw new IllegalArgumentException("El ID de Pedido de Compra no puede ser nulo.");
         }
+        lineaPedidoCompraDTO.setN_operacion(pedidoCompraRepository.findById(lineaPedidoCompraDTO.getIdPedidoCompra()).get().getNOperacion());
+        lineaPedidoCompraDTO.setN_contenedor(pedidoCompraRepository.findById(lineaPedidoCompraDTO.getIdPedidoCompra()).get().getNContenedor());
         return convertirADTO(lineaPedidoCompraRepository.save(convertirAEntidad(lineaPedidoCompraDTO)));
     }
 
@@ -140,10 +142,10 @@ public class LineaPedidoCompraService {
 
             // Actualizar los campos con los valores del DTO
             lineaPedidoCompra.setNLinea(lineaPedidoCompraDTO.getN_linea());
-            lineaPedidoCompra.setNOperacion(lineaPedidoCompraDTO.getN_operacion());
+            lineaPedidoCompra.setNOperacion(pedidoCompraRepository.findById(lineaPedidoCompraDTO.getIdPedidoCompra()).get().getNOperacion());
             lineaPedidoCompra.setProveedor(lineaPedidoCompraDTO.getProveedor());
             lineaPedidoCompra.setCliente(lineaPedidoCompraDTO.getCliente());
-            lineaPedidoCompra.setNContenedor(lineaPedidoCompraDTO.getN_contenedor());
+            lineaPedidoCompra.setNContenedor(pedidoCompraRepository.findById(lineaPedidoCompraDTO.getIdPedidoCompra()).get().getNContenedor());
             lineaPedidoCompra.setProducto(lineaPedidoCompraDTO.getProducto());
             lineaPedidoCompra.setTalla(lineaPedidoCompraDTO.getTalla());
             lineaPedidoCompra.setPNeto(lineaPedidoCompraDTO.getP_neto());

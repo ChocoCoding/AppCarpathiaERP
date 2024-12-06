@@ -1,11 +1,12 @@
 
-…
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8öºÿ—¸2J$d669598c-1ef1-45ad-8e4c-58a23c9c99a8
-…
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8÷ºÿ—¸2J$3bf138e4-8af6-43a7-85f1-cf57bb6692c0
-š
-java:S3776!"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(Ç«Ô¾ùÿÿÿÿ8üºÿ—¸2J$b7ddef8a-1a57-49a9-ab14-9217dd62652e
-m	java:S106?"+Replace this use of System.err by a logger.(ô¤ü²8…»ÿ—¸2J$d11d09f9-accd-4e21-bc98-126a3ed38a6e
-s	java:S106"+Replace this use of System.err by a logger.(’€šûÿÿÿÿ8‘»ÿ—¸2J$efdd2367-8250-4076-8652-75d956f0e708
-€
-java:S1128"8Remove this unused import 'java.util.stream.Collectors'.(Óóº´úÿÿÿÿ8¡»ÿ—¸2J$b7883d57-791b-4496-83d5-4f5799f2ce7d
+_
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8ƒ™¡Ó¹2
+_
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8ƒ™¡Ó¹2
+_
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8ƒ™¡Ó¹2
+t
+java:S3776%"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(Ç«Ô¾ùÿÿÿÿ8ˆ™¡Ó¹2
+G	java:S106C"+Replace this use of System.err by a logger.(ô¤ü²8™¡Ó¹2
+Y	java:S125ƒ"<This block of commented-out lines of code should be removed.(ÕÏûï8 ™¡Ó¹2
+M	java:S106"+Replace this use of System.err by a logger.(’€šûÿÿÿÿ8 ™¡Ó¹2

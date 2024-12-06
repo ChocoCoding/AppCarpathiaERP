@@ -1,6 +1,8 @@
 package com.app.microservicio.compras.controllers;
 
+import com.app.microservicio.compras.exceptions.OperacionExistenteException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -29,5 +31,13 @@ public class GlobalExceptionHandler {
             response.put("error", "Error de integridad en la base de datos.");
         }
         return ResponseEntity.badRequest().body(response);
+    }
+
+    // Manejar la excepción personalizada
+    @ExceptionHandler(OperacionExistenteException.class)
+    public ResponseEntity<Map<String, String>> handleOperacionExistenteException(OperacionExistenteException ex) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(response); // 409 Conflict
     }
 }
