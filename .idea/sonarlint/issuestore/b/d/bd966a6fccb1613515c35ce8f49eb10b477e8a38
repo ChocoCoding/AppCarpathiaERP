@@ -1,10 +1,10 @@
 
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8ø¨àÄ™2J$616cc0c8-2625-48cb-83a1-122a6b048f82
-m	java:S106"+Replace this use of System.out by a logger.(¤´³8ı¨àÄ™2J$9231ad0e-ebf1-473e-99d9-3855af8607f0
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8ø¨àÄ™2J$687a5bb9-d88e-40fd-acf2-583874bdbf52
+m	java:S106"+Replace this use of System.out by a logger.(¤´³8ı¨àÄ™2J$1dd4b0f0-ee3c-4067-9a8e-243e4d633f1b
 †
-java:S1128"DRemove this unused import 'jakarta.servlet.http.HttpServletRequest'.(õ38’æÄ™2J$13ca9e09-ffe8-4a38-b523-57cbb7cc8c82
+java:S1128"DRemove this unused import 'jakarta.servlet.http.HttpServletRequest'.(õ38’æÄ™2J$0cd8485a-5789-413e-8ca1-a4422b454231
 ˆ
-java:S1128"@Remove this unused import 'org.springframework.http.HttpStatus'.(íŸ¤Šúÿÿÿÿ8€©àÄ™2J$7ef7ef00-738e-427d-a33d-6061b3d02c23
+java:S1128"@Remove this unused import 'org.springframework.http.HttpStatus'.(íŸ¤Šúÿÿÿÿ8€©àÄ™2J$cdee82f8-ddaa-4c4d-89d7-265d3622906e
 ‰
-java:S1128"ARemove this unused import 'javax.naming.AuthenticationException'.(†Ø¯øÿÿÿÿ8€©àÄ™2J$81b86c70-312a-4b9f-93a2-dd90c6c47494
+java:S1128"ARemove this unused import 'javax.naming.AuthenticationException'.(†Ø¯øÿÿÿÿ8€©àÄ™2J$70cd9b5a-4662-41fb-a69f-9be553da0f8a

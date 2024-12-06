@@ -1,11 +1,11 @@
 
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8²Õ¶Ö´2J$1edc0863-2659-4fa2-a4ff-94ab60384a05
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8öºÿ—¸2J$d669598c-1ef1-45ad-8e4c-58a23c9c99a8
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8³Õ¶Ö´2J$d6c9a5cf-87c7-4c4b-a0c8-65a01f4b7c64
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8÷ºÿ—¸2J$3bf138e4-8af6-43a7-85f1-cf57bb6692c0
 š
-java:S3776!"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(Ç«Ô¾ùÿÿÿÿ8¸Õ¶Ö´2J$9cd74cce-276c-4cd2-a4c7-e5489fd0a1e5
-m	java:S106?"+Replace this use of System.err by a logger.(ô¤ü²8½Õ¶Ö´2J$bf6358ef-f2ed-4f6b-ac76-f8ee9a027d7b
-s	java:S106…"+Replace this use of System.err by a logger.(’€šûÿÿÿÿ8ÅÕ¶Ö´2J$77cf76a3-db87-43d6-90a4-d91ff0b6a116
+java:S3776!"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(Ç«Ô¾ùÿÿÿÿ8üºÿ—¸2J$b7ddef8a-1a57-49a9-ab14-9217dd62652e
+m	java:S106?"+Replace this use of System.err by a logger.(ô¤ü²8…»ÿ—¸2J$d11d09f9-accd-4e21-bc98-126a3ed38a6e
+s	java:S106"+Replace this use of System.err by a logger.(’€šûÿÿÿÿ8‘»ÿ—¸2J$efdd2367-8250-4076-8652-75d956f0e708
 €
-java:S1128"8Remove this unused import 'java.util.stream.Collectors'.(Óóº´úÿÿÿÿ8êï¹Ö´2J$1c927c6e-9289-4424-a7c0-a5bd2df1fdd1
+java:S1128"8Remove this unused import 'java.util.stream.Collectors'.(Óóº´úÿÿÿÿ8¡»ÿ—¸2J$b7883d57-791b-4496-83d5-4f5799f2ce7d

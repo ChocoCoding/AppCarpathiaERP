@@ -99,6 +99,9 @@ public class LineaPedidoCompraService {
         return lineaPedidoCompraRepository.findAll(spec, pageable).map(this::convertirADTO);
     }
 
+
+
+
     @CacheEvict(value = "lineasPedidoCompra", allEntries = true)
     public LineaPedidoCompraDTO crearLineaPedido(LineaPedidoCompraDTO lineaPedidoCompraDTO) {
         if (lineaPedidoCompraDTO.getIdPedidoCompra() == null) {

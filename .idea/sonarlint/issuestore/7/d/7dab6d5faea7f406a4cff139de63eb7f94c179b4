@@ -1,0 +1,19 @@
+
+j
+java:S1192P"ODefine a constant instead of duplicating this literal "reverseSortDir" 3 times.(Ù·Ÿ þÿÿÿÿ
+d
+java:S1192K"NDefine a constant instead of duplicating this literal "totalElements" 3 times.(Ö©ï‚
+f
+java:S1192J"KDefine a constant instead of duplicating this literal "totalPages" 3 times.(ð¦³Áùÿÿÿÿ
+]
+java:S1192N"GDefine a constant instead of duplicating this literal "sortBy" 3 times.(ß³²Ú
+g
+java:S1192I"LDefine a constant instead of duplicating this literal "currentPage" 3 times.(â–ãúÿÿÿÿÿ
+^
+java:S1192O"HDefine a constant instead of duplicating this literal "sortDir" 3 times.(ÃÑº‹
+X
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ
+X
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ
+X
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ

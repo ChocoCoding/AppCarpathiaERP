@@ -87,10 +87,6 @@ public class PedidoCompraService {
     }
 
     public PedidoCompraDTO guardarPedidoCompra(PedidoCompraDTO pedidoCompraDTO) {
-        Optional<PedidoCompra> pedidoCompraOperacion = pedidoCompraRepository.findPedidoCompraByNoperacion(pedidoCompraDTO.getN_operacion());
-        if (pedidoCompraOperacion.isPresent() && !Objects.equals(pedidoCompraOperacion.get().getIdPedidoCompra(), pedidoCompraDTO.getIdPedidoCompra())){
-            return null;
-        }
         PedidoCompra pedidoCompra = convertirAEntidad(pedidoCompraDTO);
         PedidoCompra nuevoPedidoCompra = pedidoCompraRepository.save(pedidoCompra);
         return convertirADTO(nuevoPedidoCompra);
@@ -140,7 +136,7 @@ public class PedidoCompraService {
         Optional<PedidoCompra> pedidoCompraOpt = pedidoCompraRepository.findById(id);
 
         if (pedidoCompraOpt.isPresent()) {
-            Optional<PedidoCompra> pedidoCompraOperacion = pedidoCompraRepository.findPedidoCompraByNoperacion(pedidoCompraDTO.getN_operacion());
+            Optional<PedidoCompra> pedidoCompraOperacion = pedidoCompraRepository.findById(id);
             if (pedidoCompraOperacion.isPresent() && !Objects.equals(pedidoCompraOperacion.get().getIdPedidoCompra(), pedidoCompraOpt.get().getIdPedidoCompra())){
                 return null;
             }

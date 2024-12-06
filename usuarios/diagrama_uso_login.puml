@@ -1,0 +1,25 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor Usuario
+
+rectangle "Sistema de Autenticación" {
+    usecase "Iniciar Sesión" as UC_Login
+    usecase "Cerrar Sesión" as UC_Logout
+    usecase "Ir a Página de Inicio" as UC_GoToHomePage
+    usecase "Reedirigir a Login" as UC_GoToLogin
+}
+
+Usuario --> UC_Login
+Usuario --> UC_Logout
+
+
+UC_Login --> (Verificar Credenciales)
+(Verificar Credenciales) --> (Generar Token de Sesión)
+(Verificar Credenciales) --> (Mostrar Error de Autenticación)
+(Generar Token de Sesión) --> UC_GoToHomePage
+(Mostrar Error de Autenticación) --> UC_GoToLogin
+UC_Logout --> (Invalidar Token de Sesión)
+(Invalidar Token de Sesión) --> UC_GoToLogin
+@enduml

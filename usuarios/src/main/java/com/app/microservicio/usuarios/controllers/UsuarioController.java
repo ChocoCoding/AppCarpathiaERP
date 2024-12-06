@@ -35,7 +35,7 @@ public class UsuarioController {
     @PostMapping("/registro")
     public ResponseEntity<UsuarioDTO> registrarUsuario(@RequestBody UsuarioDTO usuarioDTO) {
         if (usuarioService.checkIfUsuarioExist(usuarioDTO.getNombreUsuario())) {
-            return new ResponseEntity<>(HttpStatus.CONFLICT); // Si el usuario ya existe
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         UsuarioDTO nuevoUsuario = usuarioService.registrarUsuario(usuarioDTO);
         return new ResponseEntity<>(nuevoUsuario, HttpStatus.CREATED);

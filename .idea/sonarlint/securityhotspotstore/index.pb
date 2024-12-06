@@ -163,3 +163,13 @@ F
 compras_ventas/pom.xml,4\f\4f93288940c30c4c4282b50266372e941eec3b51
 >
 ventas/pom.xml,d\3\d3abb8fc588b2be081772a53494798ad30d60da4
+à
+Xventas/src/main/java/com/app/microservicio/ventas/controllers/PedidoVentaController.java,f\4\f44894eef9b10a9966a185ac3f5d8f3adc1f5ded
+P
+ usuarios/diagrama_uso_login.puml,7\8\78a99473a1f5153d368d312f6f7a4dbeb12e8d7b
+ê
+`compras/src/main/java/com/app/microservicio/compras/controllers/CostePedidoCompraController.java,b\2\b22bfddba4d692669392cb0a095f6cd670657938
+ã
+[compras_ventas/src/main/java/com/microservicio/compras_ventas/client/PedidoVentaClient.java,9\9\998206c9120f5513f106f51e753b701dd376fd15
+
+Ofrontend/src/main/java/com/app/frontend/controllers/ModuloVentasController.java,7\d\7dab6d5faea7f406a4cff139de63eb7f94c179b4
