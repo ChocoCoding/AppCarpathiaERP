@@ -31,8 +31,6 @@ public class LineaPedidoCompraController {
     public ResponseEntity<Page<LineaPedidoCompraDTO>> listarLineasPedidoCompra(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(required = false) String proveedor,
-            @RequestParam(required = false) String cliente,
             @RequestParam(defaultValue = "pedidoCompra.idPedidoCompra") String sortBy,
             @RequestParam(defaultValue = "desc") String sortDir,
             @RequestParam(required = false) String search,
@@ -41,7 +39,7 @@ public class LineaPedidoCompraController {
         Sort sort = sortDir.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending()
                 : Sort.by(sortBy).ascending();
         Pageable pageable = PageRequest.of(page, size, sort);
-        Page<LineaPedidoCompraDTO> lineasPedidosPage = lineaPedidoCompraService.listarLineasPedidoCompra(pageable, proveedor, cliente, search, searchFields);
+        Page<LineaPedidoCompraDTO> lineasPedidosPage = lineaPedidoCompraService.listarLineasPedidoCompra(pageable, search, searchFields);
         return ResponseEntity.ok(lineasPedidosPage);
     }
     @CacheEvict(value = "lineasPedidoCompra", allEntries = true)

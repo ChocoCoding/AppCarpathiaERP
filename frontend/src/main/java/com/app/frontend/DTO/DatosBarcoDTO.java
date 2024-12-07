@@ -1,6 +1,7 @@
 package com.app.frontend.DTO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,8 +17,10 @@ import java.time.format.DateTimeFormatter;
 public class DatosBarcoDTO {
     private Long idPedidoCompra;
     private Long idDatosBarco;
-    private Long n_operacion;
-    private String n_contenedor;
+    @JsonProperty("nOperacion")
+    private Long nOperacion;
+    @JsonProperty("nContenedor")
+    private String nContenedor;
     private String nombreBarco;
     private String viaje;
     private String naviera;

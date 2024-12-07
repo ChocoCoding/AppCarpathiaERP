@@ -26,10 +26,8 @@ public class LineaPedidoVentaService {
     private String getLineasPedidoVenta;
 
 
-    public PagedResponseDTO<LineaPedidoVentaDTO> obtenerTodasLasLineasPedidoVenta(int page, int size, String proveedor, String cliente, String sortBy, String sortDir) {
+    public PagedResponseDTO<LineaPedidoVentaDTO> obtenerTodasLasLineasPedidoVenta(int page, int size, String sortBy, String sortDir) {
         String url = getLineasPedidoVenta + "?page=" + page + "&size=" + size +
-                (proveedor != null ? "&proveedor=" + proveedor : "") +
-                (cliente != null ? "&cliente=" + cliente : "") +
                 "&sortBy=" + sortBy + "&sortDir=" + sortDir;
 
         ResponseEntity<PagedResponseDTO<LineaPedidoVentaDTO>> response = restTemplate.exchange(

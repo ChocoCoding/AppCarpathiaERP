@@ -84,8 +84,6 @@ public class ModuloVentasController {
             Model model,
             @RequestParam(defaultValue = "1") int page, // uno-based
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(required = false) String proveedor,
-            @RequestParam(required = false) String cliente,
             @RequestParam(defaultValue = "pedidoVenta.idPedidoVenta") String sortBy,
             @RequestParam(defaultValue = "desc") String sortDir
     ) {
@@ -94,7 +92,7 @@ public class ModuloVentasController {
         int backendPage = page - 1;
         if (backendPage < 0) backendPage = 0;
 
-        PagedResponseDTO<LineaPedidoVentaDTO> lineasPage = lineaPedidoVentaService.obtenerTodasLasLineasPedidoVenta(backendPage, size, proveedor, cliente, sortBy, sortDir);
+        PagedResponseDTO<LineaPedidoVentaDTO> lineasPage = lineaPedidoVentaService.obtenerTodasLasLineasPedidoVenta(backendPage, size, sortBy, sortDir);
         List<LineaPedidoVentaDTO> lineasVenta = lineasPage.getContent();
 
         model.addAttribute("lineasPedidoVenta", lineasVenta);
@@ -102,8 +100,6 @@ public class ModuloVentasController {
         model.addAttribute("totalPages", lineasPage.getTotalPages());
         model.addAttribute("totalElements", lineasPage.getTotalElements());
         model.addAttribute("size", size);
-        model.addAttribute("proveedor", proveedor);
-        model.addAttribute("cliente", cliente);
         model.addAttribute("sortBy", sortBy);
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");

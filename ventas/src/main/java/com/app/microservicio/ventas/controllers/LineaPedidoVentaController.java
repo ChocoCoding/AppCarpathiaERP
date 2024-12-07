@@ -39,7 +39,7 @@ public class LineaPedidoVentaController {
         Sort sort = sortDir.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending()
                 : Sort.by(sortBy).descending();
         Pageable pageable = PageRequest.of(page, size, sort);
-        Page<LineaPedidoVentaDTO> lineasPedidosPage = lineaPedidoVentaService.listarLineasPedidoVenta(pageable, proveedor, cliente, search, searchFields);
+        Page<LineaPedidoVentaDTO> lineasPedidosPage = lineaPedidoVentaService.listarLineasPedidoVenta(pageable, search, searchFields);
         return ResponseEntity.ok(lineasPedidosPage);
     }
 

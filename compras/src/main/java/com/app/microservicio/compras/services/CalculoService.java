@@ -224,8 +224,8 @@ public class CalculoService{
         Optional<DatosBarcoPedidoCompra> datosBarcoPedidoCompra = datosBarcoRepository.findByIdPedidoCompra(id);
         Optional<PedidoCompra> pedidoCompra = pedidoCompraRepository.findById(id);
         if (datosBarcoPedidoCompra.isPresent()){
-            datosBarcoPedidoCompra.get().setN_operacion(pedidoCompra.get().getNOperacion());
-            datosBarcoPedidoCompra.get().setN_contenedor(pedidoCompra.get().getNContenedor());
+            datosBarcoPedidoCompra.get().setNOperacion(pedidoCompra.get().getNOperacion());
+            datosBarcoPedidoCompra.get().setNContenedor(pedidoCompra.get().getNContenedor());
            return datosBarcoRepository.save(datosBarcoPedidoCompra.get());
         }
         return null;

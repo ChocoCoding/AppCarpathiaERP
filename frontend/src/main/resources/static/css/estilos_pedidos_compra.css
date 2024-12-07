@@ -217,4 +217,6 @@ input:valid, select:valid, textarea:valid {
 .modified {
     background-color: #fff3cd; /* Amarillo claro */
 }
-
+.status-terminado {
+    background-color: #cce5ff; /* Un azul clarito */
+}

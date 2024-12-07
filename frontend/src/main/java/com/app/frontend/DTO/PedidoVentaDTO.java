@@ -15,4 +15,5 @@ public class PedidoVentaDTO {
     private String proveedor;
     private String incoterm;
     private String referenciaProveedor;
+    private char status;
 }

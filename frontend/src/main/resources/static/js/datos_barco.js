@@ -189,8 +189,8 @@ cargarConfiguraciones().then(() => {
                     <button class="delete-button" onclick="DatosBarcoApp.eliminarDatosBarco(${dato.idDatosBarco})">🗑️</button>
                 </td>
                 <td contenteditable="true" class="editable" oninput="DatosBarcoApp.marcarModificado(this)">${dato.idPedidoCompra || ''}</td>
-                <td contenteditable="false" class="editable" oninput="DatosBarcoApp.marcarModificado(this)">${dato.n_operacion || ''}</td>
-                <td contenteditable="false" class="editable" oninput="DatosBarcoApp.marcarModificado(this)">${dato.n_contenedor || ''}</td>
+                <td contenteditable="false" class="editable" oninput="DatosBarcoApp.marcarModificado(this)">${dato.nOperacion || ''}</td>
+                <td contenteditable="false" class="editable" oninput="DatosBarcoApp.marcarModificado(this)">${dato.nContenedor || ''}</td>
                 <td contenteditable="true" class="editable" oninput="DatosBarcoApp.marcarModificado(this)">${dato.nombreBarco || ''}</td>
                 <td contenteditable="true" class="editable" oninput="DatosBarcoApp.marcarModificado(this)">${dato.viaje || ''}</td>
                 <td contenteditable="true" class="editable" oninput="DatosBarcoApp.marcarModificado(this)">${dato.naviera || ''}</td>
@@ -334,8 +334,8 @@ cargarConfiguraciones().then(() => {
 
                         const datos = {
                             idPedidoCompra,
-                            n_operacion: fila.children[2].innerText.trim(),
-                            n_contenedor: fila.children[3].innerText.trim(),
+                            nOperacion: fila.children[2].innerText.trim(),
+                            nContenedor: fila.children[3].innerText.trim(),
                             nombreBarco: fila.children[4].innerText.trim(),
                             viaje: fila.children[5].innerText.trim(),
                             naviera: fila.children[6].innerText.trim(),

@@ -35,26 +35,15 @@ public class LineaPedidoVentaService {
     @Autowired
     private CalculoService calculoService;
 
+    /*
     @Cacheable(
             value = "lineasPedidoVenta",
             key = "#pageable.pageNumber + '-' + #pageable.pageSize + '-' + #pageable.sort.toString() + '-' + #proveedor + '-' + #cliente + '-' + #search + '-' + #searchFields"
     )
-    public Page<LineaPedidoVentaDTO> listarLineasPedidoVenta(Pageable pageable, String proveedor, String cliente, String search, List<String> searchFields) {
+    */
+    public Page<LineaPedidoVentaDTO> listarLineasPedidoVenta(Pageable pageable, String search, List<String> searchFields) {
         Specification<LineaPedidoVenta> spec = Specification.where(null);
 
-        // Filtro por proveedor
-        if (proveedor != null && !proveedor.isEmpty()) {
-            spec = spec.and((root, query, criteriaBuilder) ->
-                    criteriaBuilder.like(criteriaBuilder.lower(root.get("proveedor")), "%" + proveedor.toLowerCase() + "%")
-            );
-        }
-
-        // Filtro por cliente
-        if (cliente != null && !cliente.isEmpty()) {
-            spec = spec.and((root, query, criteriaBuilder) ->
-                    criteriaBuilder.like(criteriaBuilder.lower(root.get("cliente")), "%" + cliente.toLowerCase() + "%")
-            );
-        }
 
         // Lógica de búsqueda
         if (search != null && !search.isEmpty() && searchFields != null && !searchFields.isEmpty()) {
@@ -69,13 +58,21 @@ public class LineaPedidoVentaService {
                                     "%" + search.toLowerCase() + "%"
                             )
                     );
-                } else if (field.equals("nOperacion") || field.equals("nLinea") || field.equals("bultos")) {
-                    // Campos numéricos
+                } else if (field.equals("nOperacion") || field.equals("nLinea") || field.equals("bultos") ||
+                        field.equals("pNeto") || field.equals("precio") || field.equals("valorVenta")) {
+                    // Campos numéricos (Long y BigDecimal)
                     try {
-                        Long value = Long.parseLong(search);
-                        searchSpec = searchSpec.or((root, query, criteriaBuilder) ->
-                                criteriaBuilder.equal(root.get(field), value)
-                        );
+                        if (field.equals("pNeto") || field.equals("precio") || field.equals("valorVenta")) {
+                            BigDecimal value = new BigDecimal(search);
+                            searchSpec = searchSpec.or((root, query, criteriaBuilder) ->
+                                    criteriaBuilder.equal(root.get(field), value)
+                            );
+                        } else {
+                            Long value = Long.parseLong(search);
+                            searchSpec = searchSpec.or((root, query, criteriaBuilder) ->
+                                    criteriaBuilder.equal(root.get(field), value)
+                            );
+                        }
                     } catch (NumberFormatException e) {
                         // Ignorar si no es numérico
                     }

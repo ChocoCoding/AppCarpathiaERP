@@ -42,6 +42,9 @@ public class PedidoCompra {
     @Column(name = "referencia_proveedor", length = 200)
     private String referenciaProveedor;
 
+    @Column(name = "status", length = 1)
+    private char status;
+
     @OneToMany(mappedBy = "pedidoCompra")
     private Set<LineaPedidoCompra> lineasPedidoCompra;
 

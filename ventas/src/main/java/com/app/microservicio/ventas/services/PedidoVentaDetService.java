@@ -136,7 +136,7 @@ public class PedidoVentaDetService {
                     } catch (NumberFormatException e) {
                         // Ignorar si no es numérico
                     }
-                }else if (field.equals("pesoNetoTotal") || field.equals("promedio") || field.equals("valorVentaTotal")){
+                }else if (field.equals("pesoNetoTotal") || field.equals("promedio") || field.equals("valorVentaTotal") ||field.equals("precioTotal")){
                     try {
                         Double value = Double.parseDouble(search);
                         searchSpec = searchSpec.or(((root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(field),value)));

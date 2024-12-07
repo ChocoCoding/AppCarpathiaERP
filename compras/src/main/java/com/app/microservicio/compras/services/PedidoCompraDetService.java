@@ -1,4 +1,5 @@
 package com.app.microservicio.compras.services;
+import com.app.microservicio.compras.entities.LineaPedidoCompra;
 import com.app.microservicio.compras.repository.LineaPedidoCompraRepository;
 import com.app.microservicio.compras.repository.PedidoCompraRepository;
 import jakarta.transaction.Transactional;
@@ -162,7 +163,7 @@ public class PedidoCompraDetService {
                     }catch (NumberFormatException e) {
                         // Ignorar si no es numérico
                     }
-                }if (field.equals("fechaPagoFlete")) {
+                }else if (field.equals("fechaPagoFlete")) {
                     String[] partes = search.split("/");
                     if (partes.length == 3) {
                         // Formato dd/MM/yyyy exacto
@@ -184,6 +185,11 @@ public class PedidoCompraDetService {
                         searchSpec = searchSpec.or((root, query, cb) ->
                                 cb.between(root.get(field), start, end));
                     }
+                }else {
+                    // Campos de texto
+                    searchSpec = searchSpec.or((root, query, criteriaBuilder) ->
+                            criteriaBuilder.like(criteriaBuilder.lower(root.get(field)), "%" + search.toLowerCase() + "%")
+                    );
                 }
             }
             spec = spec.and(searchSpec);

@@ -13,7 +13,7 @@ let searchFields = []; // Campos de búsqueda seleccionados
 
 // Mapeo de índices de columnas a nombres de campos
 const columnasAtributos = {
-    1: 'idPedidoVenta',
+    1: 'pedidoVenta.idPedidoVenta',
     2: 'nLinea',
     3: 'nOperacion',
     4: 'proveedor',

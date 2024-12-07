@@ -20,10 +20,10 @@ public class DatosBarcoPedidoCompra {
     private Long idDatosBarco;
 
     @Column(name = "n_operacion")
-    private Long n_operacion;
+    private Long nOperacion;
 
     @Column(name = "n_contenedor", length = 200)
-    private String n_contenedor;
+    private String nContenedor;
 
     @Column(name = "nombre_barco", length = 50)
     private String nombreBarco;

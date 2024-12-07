@@ -38,22 +38,9 @@ public class LineaPedidoCompraService {
             value = "lineasPedidoCompra",
             key = "#pageable.pageNumber + '-' + #pageable.pageSize + '-' + #pageable.sort.toString() + '-' + #proveedor + '-' + #cliente + '-' + #search + '-' + #searchFields"
     )
-    public Page<LineaPedidoCompraDTO> listarLineasPedidoCompra(Pageable pageable, String proveedor, String cliente, String search, List<String> searchFields) {
+    public Page<LineaPedidoCompraDTO> listarLineasPedidoCompra(Pageable pageable, String search, List<String> searchFields) {
         Specification<LineaPedidoCompra> spec = Specification.where(null);
 
-        // Filtro por proveedor
-        if (proveedor != null && !proveedor.isEmpty()) {
-            spec = spec.and((root, query, criteriaBuilder) ->
-                    criteriaBuilder.like(criteriaBuilder.lower(root.get("proveedor")), "%" + proveedor.toLowerCase() + "%")
-            );
-        }
-
-        // Filtro por cliente
-        if (cliente != null && !cliente.isEmpty()) {
-            spec = spec.and((root, query, criteriaBuilder) ->
-                    criteriaBuilder.like(criteriaBuilder.lower(root.get("cliente")), "%" + cliente.toLowerCase() + "%")
-            );
-        }
 
         // Lógica de búsqueda
         if (search != null && !search.isEmpty() && searchFields != null && !searchFields.isEmpty()) {
@@ -68,11 +55,11 @@ public class LineaPedidoCompraService {
                                     "%" + search.toLowerCase() + "%"
                             )
                     );
-                } else if (field.equals("n_operacion") || field.equals("n_linea") || field.equals("bultos") ||
-                        field.equals("p_neto") || field.equals("precio") || field.equals("valor_compra")) {
+                } else if (field.equals("nOperacion") || field.equals("nLinea") || field.equals("bultos") ||
+                        field.equals("pNeto") || field.equals("precio") || field.equals("valorCompra")) {
                     // Campos numéricos (Long y BigDecimal)
                     try {
-                        if (field.equals("p_neto") || field.equals("precio") || field.equals("valor_compra")) {
+                        if (field.equals("pNeto") || field.equals("precio") || field.equals("valorCompra")) {
                             BigDecimal value = new BigDecimal(search);
                             searchSpec = searchSpec.or((root, query, criteriaBuilder) ->
                                     criteriaBuilder.equal(root.get(field), value)
