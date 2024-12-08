@@ -55,6 +55,9 @@ public class PedidoCompraDet {
     @Column(name = "observaciones", columnDefinition = "TEXT")
     private String observaciones;
 
+    @Column(name = "status", length = 1)
+    private char status;
+
     @OneToOne
     @JoinColumn(name = "id_pedido_compra")
     private PedidoCompra pedidoCompra;

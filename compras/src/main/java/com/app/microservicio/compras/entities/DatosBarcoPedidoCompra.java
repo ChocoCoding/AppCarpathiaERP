@@ -55,6 +55,9 @@ public class DatosBarcoPedidoCompra {
     @Column(name = "factura_flete", length = 50)
     private String factura_flete;
 
+    @Column(name = "status", length = 1)
+    private char status;
+
     @OneToOne
     @JoinColumn(name = "id_pedido_compra")
     private PedidoCompra pedidoCompra;

@@ -1,4 +1,5 @@
 package com.app.frontend.DTO;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,4 +28,6 @@ public class CostesDTO {
     private BigDecimal tasa_sanitaria;
     private BigDecimal suma_costes;
     private BigDecimal gasto_total;
+    @JsonProperty("status")
+    private char status;
 }

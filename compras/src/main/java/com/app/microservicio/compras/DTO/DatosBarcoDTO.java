@@ -41,6 +41,8 @@ public class DatosBarcoDTO {
     private LocalDate fecha_pago_flete;
 
     private String facturaFlete;
+    @JsonProperty("status")
+    private char status;
 
     // Método para obtener la fecha como String en formato dd/MM/yyyy
     public String getFechaPagoFleteBarcoFormatted() {

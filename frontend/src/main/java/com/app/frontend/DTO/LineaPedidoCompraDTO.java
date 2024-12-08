@@ -1,5 +1,6 @@
 package com.app.frontend.DTO;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,4 +27,6 @@ public class LineaPedidoCompraDTO {
     private BigDecimal valor_compra;
     private String moneda;
     private String paisOrigen;
+    @JsonProperty("status")
+    private char status;
 }

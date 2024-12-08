@@ -1,7 +1,8 @@
 
-¡	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÁŠ¨ ùÿÿÿÿ8ñ²å2J$156c0127-ca47-470e-9683-fa23a07f571d
-	java:S116"VRename this field "n_operacion" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¡úíóøÿÿÿÿ8ÃÛ³å2J$4679f1ff-f60d-43d6-8c96-a16e1c27fce1
-	java:S116"WRename this field "n_contenedor" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(«îÏÒÿÿÿÿÿ8¬’´å2J$0682369c-b763-42f5-b20f-a238a491964e
-”	java:S116"RRename this field "dec_iva" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(£âı8ë½¹å2J$1d990123-84c7-4ecb-8026-df845bf513b8
-›	java:S116"YRename this field "tasa_sanitaria" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(±ŸÉ­8æ›ºå2J$189faa94-6e94-4abd-afd3-9a5acb2c83dd
-	java:S116"VRename this field "gasto_total" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(î°²úÿÿÿÿ8©¸‰© 2J$e83de56e-660d-4ba8-baab-7250728e7989
+¡	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÁŠ¨ ùÿÿÿÿ8ñ²å2J$660efd04-d640-4f1d-b674-1b6f7c80957b
+	java:S116"VRename this field "n_operacion" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¡úíóøÿÿÿÿ8ÃÛ³å2J$16bf7ce5-1a6f-40a5-a9a7-3df0131e0c35
+	java:S116"WRename this field "n_contenedor" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(«îÏÒÿÿÿÿÿ8¬’´å2J$e84d8caa-0ca3-411a-8523-f62d7952d1fb
+”	java:S116"RRename this field "dec_iva" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(£âı8ë½¹å2J$93295673-4bb6-430e-be47-7b5c2966311d
+›	java:S116"YRename this field "tasa_sanitaria" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(±ŸÉ­8æ›ºå2J$2d2c1db1-5d30-4e78-b7f8-ff70e178835e
+˜	java:S116"VRename this field "suma_costes" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(“¬Éà8¢å¸ºº2J$2983f83f-c8be-4ea4-9439-d7aba5b2c00c
+	java:S116"VRename this field "gasto_total" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(î°²úÿÿÿÿ8©¸‰© 2J$d163670e-95fb-4a06-a929-63f35ca9af07

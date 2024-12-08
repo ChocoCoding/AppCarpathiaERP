@@ -72,7 +72,7 @@ public class PedidoCompraDetService {
         pedidoCompraDet.setValorCompraTotal(pedidoCompraDetDTO.getValorCompraTotal());
         pedidoCompraDet.setObservaciones(pedidoCompraDetDTO.getObservaciones());
         pedidoCompraDet.setPedidoCompra(pedidoCompraRepository.findById(pedidoCompraDetDTO.getIdPedidoCompra()).orElse(null));
-
+        pedidoCompraDet.setStatus(pedidoCompraDetDTO.getStatus());
         //Calculamos el promedio
         calculoService.recalcularPromedio(pedidoCompraDet.getIdPedidoCompraDet());
         return convertirADTO(pedidoCompraDetRepository.save(pedidoCompraDet));
@@ -96,6 +96,7 @@ public class PedidoCompraDetService {
         pedidoCompraDetDTO.setPromedio(pedidoCompraDet.getPromedio());
         pedidoCompraDetDTO.setValorCompraTotal(pedidoCompraDet.getValorCompraTotal());
         pedidoCompraDetDTO.setObservaciones(pedidoCompraDet.getObservaciones());
+        pedidoCompraDetDTO.setStatus(pedidoCompraDet.getStatus());
         return pedidoCompraDetDTO;
     }
 
@@ -116,6 +117,7 @@ public class PedidoCompraDetService {
         pedidoCompraDet.setPromedio(pedidoCompraDetDTO.getPromedio());
         pedidoCompraDet.setValorCompraTotal(pedidoCompraDetDTO.getValorCompraTotal());
         pedidoCompraDet.setObservaciones(pedidoCompraDetDTO.getObservaciones());
+        pedidoCompraDet.setStatus(pedidoCompraDetDTO.getStatus());
         return pedidoCompraDet;
     }
 
@@ -220,6 +222,7 @@ public class PedidoCompraDetService {
          Long totalBultos = lineaPedidoCompraRepository.sumBultosByPedidoCompraId(idPedidoCompra);
          pedidoCompraDetDTO.setPesoNetoTotal(pesoNetoTotal);
          pedidoCompraDetDTO.setTotalBultos(totalBultos);
+         pedidoCompraDetDTO.setStatus('P');
         //Calculamos el promedio
         pedidoCompraDetDTO.setValorCompraTotal(calculoService.calcularValoresCompra(pedidoCompraDetDTO.getIdPedidoCompra()).getBody());
         pedidoCompraDetDTO.setPromedio(calculoService.calcularPromedio(pedidoCompraDetDTO.getIdPedidoCompra()).getBody());

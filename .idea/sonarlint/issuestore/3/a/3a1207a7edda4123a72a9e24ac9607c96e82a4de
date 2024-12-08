@@ -1,9 +1,9 @@
 
-š	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÁŠ¨ ùÿÿÿÿJ$6ea6ecea-7e94-4e26-9f8e-1e6e4af26874
-™	java:S116"RRename this field "n_linea" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(éñäÕÿÿÿÿÿ8•¼Ô™2J$f98a0838-ccd3-4ede-948e-a4a7ba130e36
-	java:S116"VRename this field "n_operacion" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¡úíóøÿÿÿÿ8ÈåæÓ™2J$738ff540-0157-4e82-9a6d-32a58df2e9dd
-	java:S116"WRename this field "n_contenedor" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(«îÏÒÿÿÿÿÿ8úçÓ™2J$51e43a69-8247-4658-a1af-32541d7e1863
-’	java:S116"QRename this field "p_neto" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³Õ¿h8°ãÔ™2J$0deb8c0a-4060-48e7-82a9-b77b890f873f
-	java:S116"WRename this field "valor_compra" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Úøó…øÿÿÿÿ8‡ÅŒÔ™2J$41ef7b86-2fb7-493e-9be7-5eaf90acc3de
-|
-java:S1128"ZRemove this unused import 'com.fasterxml.jackson.databind.ser.std.ToStringSerializerBase'.(Ãœ¹ıÿÿÿÿ8„Ì°Ó¹2
+š	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÁŠ¨ ùÿÿÿÿJ$31fc4ad4-40ac-40f3-a236-652f1e9a178a
+™	java:S116"RRename this field "n_linea" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(éñäÕÿÿÿÿÿ8•¼Ô™2J$838f032f-9845-47a9-8416-922cd34eb53e
+	java:S116"VRename this field "n_operacion" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¡úíóøÿÿÿÿ8ÈåæÓ™2J$e91dd500-30f5-4683-b21a-f6bc630fe9d0
+	java:S116"WRename this field "n_contenedor" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(«îÏÒÿÿÿÿÿ8úçÓ™2J$f0091b86-43ae-4105-b859-5f19254738ec
+’	java:S116"QRename this field "p_neto" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³Õ¿h8°ãÔ™2J$83e57b31-9118-45e2-b4f3-61abcb17b93a
+	java:S116"WRename this field "valor_compra" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Úøó…øÿÿÿÿ8‡ÅŒÔ™2J$79cf3196-89c9-421c-b962-fa2e8bcb397b
+¢
+java:S1128"ZRemove this unused import 'com.fasterxml.jackson.databind.ser.std.ToStringSerializerBase'.(Ãœ¹ıÿÿÿÿ8½»§µº2J$88636926-6dc0-4767-b1b6-b5757300b221

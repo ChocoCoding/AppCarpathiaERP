@@ -26,7 +26,8 @@ const columnasAtributos = {
     14: 'dec_iva',
     15: 'tasa_sanitaria',
     16: 'suma_costes',
-    17: 'gasto_total'
+    17: 'gasto_total',
+    18: 'status'
 };
 
 // Cargar configuraciones de endpoints y mensajes desde el backend
@@ -187,6 +188,14 @@ cargarConfiguraciones().then(() => {
             }
             const fila = document.createElement('tr');
             fila.setAttribute('data-id-coste-compra', coste.idCosteCompra);
+            fila.setAttribute('data-id-pedido-compra', coste.idPedidoCompra);
+            fila.setAttribute('data-status', coste.status);
+                                        // Añadir clase basada en el estado
+                                       if (coste.status && coste.status.toUpperCase() === 'T') {
+                                           fila.classList.add('status-terminado');
+                                       } else {
+                                           fila.classList.remove('status-terminado'); // Asegurar que no tenga la clase si es 'P'
+                                       }
 
             fila.innerHTML = `
                 <td>
@@ -284,6 +293,14 @@ cargarConfiguraciones().then(() => {
         guardarCambios: () => {
             const filasModificadas = document.querySelectorAll('tbody tr.modificado');
             const formatoFecha = /^\d{2}\/\d{2}\/\d{4}$/;
+
+            const filasTerminado = Array.from(filasModificadas).filter(fila => fila.getAttribute('data-status') === 'T');
+
+                          if (filasTerminado.length > 0) {
+                             const idsPedidosTerminado = [...new Set(Array.from(filasTerminado).map(fila => fila.getAttribute('data-id-pedido-compra')))];
+                             CosteCompraApp.mostrarAlerta('error', 'Error', `El pedido: ${idsPedidosTerminado.join(', ')} está terminado.No se pueden guardar los cambios`);
+                              return;
+                          }
 
             // Función auxiliar para validar un campo numérico
             function validarCampoNumerico(fila, index, nombreCampo, esEntero = true) {

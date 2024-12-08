@@ -203,3 +203,39 @@ table {
      background-color: #f8f9fa;
      cursor: not-allowed;
  }
+
+
+.status-terminado {
+    background-color: #ADD8E6; /* Azul claro */
+    /* Opcional: Cambiar el color del texto para mejorar la legibilidad */
+    color: #000;
+}
+
+/* Aumentar la especificidad si otras reglas están sobrescribiendo el color */
+table tbody tr.status-terminado {
+    background-color: #ADD8E6 !important;
+    color: #000 !important;
+}
+
+/* Estilos adicionales para mejorar la apariencia */
+.icono-estado {
+    cursor: pointer;
+    font-size: 1.2em;
+    margin-left: 5px;
+}
+
+.icono-estado.pendiente {
+    color: gray;
+}
+
+.icono-estado.terminado {
+    color: green;
+}
+
+/* Opcional: Estilos para el botón de eliminar */
+.delete-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em;
+}

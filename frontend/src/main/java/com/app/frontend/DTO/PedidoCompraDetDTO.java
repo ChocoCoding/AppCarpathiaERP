@@ -1,6 +1,7 @@
 package com.app.frontend.DTO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -17,6 +18,8 @@ public class PedidoCompraDetDTO {
     private char terminado;
     private String factProveedor;
     private String n_fact_flete;
+    @JsonProperty("status")
+    private char status;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     @DateTimeFormat(pattern = "dd/MM/yyyy")

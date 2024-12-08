@@ -65,6 +65,24 @@ public class PedidoCompraService {
         return pedidoCompraRepository.findAll(spec, pageable).map(this::convertirADTO);
     }
 
+    @Transactional
+    public PedidoCompraDTO cambiarEstadoPedidoCompra(Long id, char nuevoStatus) {
+        Optional<PedidoCompra> pedidoOpt = pedidoCompraRepository.findById(id);
+        if (pedidoOpt.isPresent()) {
+            PedidoCompra pedido = pedidoOpt.get();
+            pedido.setStatus(nuevoStatus);
+            PedidoCompra actualizado = pedidoCompraRepository.save(pedido);
+
+            calculoService.actualizarStatusLineasPedidoCompra(id,nuevoStatus);
+            calculoService.actualizarStatusPedidoCompraDet(id,nuevoStatus);
+            calculoService.actualizarStatusDatosBarco(id,nuevoStatus);
+            calculoService.actualizarStatusCosteCompra(id,nuevoStatus);
+            return convertirADTO(actualizado);
+        } else {
+            return null;
+        }
+    }
+
 
     public Optional<PedidoCompraDTO> obtenerPedidoCompra(Long id) {
         return pedidoCompraRepository.findById(id)
@@ -81,6 +99,7 @@ public class PedidoCompraService {
         if (pedidoCompraOperacion.isPresent() && !Objects.equals(pedidoCompraOperacion.get().getIdPedidoCompra(), pedidoCompraDTO.getIdPedidoCompra())){
             throw new OperacionExistenteException("El número de operación introducido ya está asignado a un pedido de compra.");
         }
+        pedidoCompraDTO.setStatus('P');
         PedidoCompra pedidoCompra = convertirAEntidad(pedidoCompraDTO);
         PedidoCompra nuevoPedidoCompra = pedidoCompraRepository.save(pedidoCompra);
         calculoService.actualizarCamposLineaPedido(pedidoCompra.getIdPedidoCompra());
@@ -174,6 +193,7 @@ public class PedidoCompraService {
         pedidoCompraDTO.setCliente(pedidoCompra.getCliente());
         pedidoCompraDTO.setIncoterm(pedidoCompra.getIncoterm());
         pedidoCompraDTO.setReferenciaProveedor(pedidoCompra.getReferenciaProveedor());
+        pedidoCompraDTO.setStatus(pedidoCompra.getStatus());
         return pedidoCompraDTO;
     }
 
@@ -187,6 +207,7 @@ public class PedidoCompraService {
         pedidoCompra.setCliente(pedidoCompraDTO.getCliente());
         pedidoCompra.setIncoterm(pedidoCompraDTO.getIncoterm());
         pedidoCompra.setReferenciaProveedor(pedidoCompraDTO.getReferenciaProveedor());
+        pedidoCompra.setStatus(pedidoCompraDTO.getStatus());
         return pedidoCompra;
     }
 }

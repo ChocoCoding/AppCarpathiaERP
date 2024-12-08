@@ -66,6 +66,9 @@ public class CostePedidoCompra {
     @Column(name = "gasto_total", precision = 15, scale = 6)
     private BigDecimal gasto_total;
 
+    @Column(name = "status", length = 1)
+    private char status;
+
     @OneToOne
     @JoinColumn(name = "id_pedido_compra")
     private PedidoCompra pedidoCompra;

@@ -1,13 +1,9 @@
 
-…
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8ı…Ô© 2J$3f7e22fa-557b-4b40-a5b3-6f6bb7f14bd0
-…
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8ş…Ô© 2J$43c9d1e3-1da1-4aa8-af99-0a36d291fb7f
-…
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8ÖĞä £2J$05be19e8-2feb-46bc-8b2c-687577b2b106
+_
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8µ¦Õºº2
+_
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8¶¦Õºº2
+_
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8¶¦Õºº2
 o
-java:S3776e"RRefactor this method to reduce its Cognitive Complexity from 19 to the 15 allowed.(Å •š8—ò¯Ø¹2
-‘
-java:S1128"NRemove this unused import 'java.sql.SQLIntegrityConstraintViolationException'.(¤¡†8€Ñä £2J$bef98c1c-01f3-4806-b42f-5f62989c49c0
-Z
-java:S1128"8Remove this unused import 'java.util.stream.Collectors'.(Óóº´úÿÿÿÿ8Îò¯Ø¹2
+java:S3776h"RRefactor this method to reduce its Cognitive Complexity from 19 to the 15 allowed.(Å •š8¿¦Õºº2

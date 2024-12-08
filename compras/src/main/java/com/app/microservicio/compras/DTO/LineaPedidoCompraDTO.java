@@ -1,8 +1,8 @@
 package com.app.microservicio.compras.DTO;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializerBase;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -29,4 +29,6 @@ public class LineaPedidoCompraDTO {
     private BigDecimal valor_compra;
     private String moneda;
     private String paisOrigen;
+    @JsonProperty("status")
+    private char status;
 }

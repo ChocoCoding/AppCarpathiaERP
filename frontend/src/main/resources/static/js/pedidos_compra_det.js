@@ -23,7 +23,8 @@ const columnasAtributos = {
     11: 'totalBultos',
     12: 'promedio',
     13: 'valorCompraTotal',
-    14: 'observaciones'
+    14: 'observaciones',
+    15: 'status'
 };
 
 // Cargar configuraciones de endpoints y mensajes desde el backend
@@ -193,6 +194,15 @@ cargarConfiguraciones().then(() => {
             }
             const fila = document.createElement('tr');
             fila.setAttribute('data-id-pedido-compra-det', detalle.idPedidoCompraDet);
+            fila.setAttribute('data-id-pedido-compra', detalle.idPedidoCompra);
+            fila.setAttribute('data-status', detalle.status);
+
+                            // Añadir clase basada en el estado
+                           if (detalle.status && detalle.status.toUpperCase() === 'T') {
+                               fila.classList.add('status-terminado');
+                           } else {
+                               fila.classList.remove('status-terminado');
+                           }
 
             fila.innerHTML = `
                 <td>
@@ -288,6 +298,14 @@ cargarConfiguraciones().then(() => {
             const filasModificadas = document.querySelectorAll('tbody tr.modificado');
             const formatoFecha = /^\d{2}\/\d{2}\/\d{4}$/;
 
+            const filasTerminado = Array.from(filasModificadas).filter(fila => fila.getAttribute('data-status') === 'T');
+
+                          if (filasTerminado.length > 0) {
+                             const idsPedidosTerminado = [...new Set(Array.from(filasTerminado).map(fila => fila.getAttribute('data-id-pedido-compra')))];
+                             PedidoCompraDetApp.mostrarAlerta('error', 'Error', `El pedido: ${idsPedidosTerminado.join(', ')} está terminado. No se pueden guardar los cambios`);
+                              return;
+                          }
+
             // Función auxiliar para validar un campo numérico
             function validarCampoNumerico(fila, index, nombreCampo, esEntero = true) {
                 const valor = fila.children[index].innerText.trim();
@@ -309,30 +327,22 @@ cargarConfiguraciones().then(() => {
                             timerProgressBar: true,
                             showConfirmButton: false
                         });
-                        return false; // Validación fallida
+                        return false;
                     }
                 }
-                return true; // Validación exitosa
+                return true;
             }
 
             for (const fila of filasModificadas) {
-                // Validar campos numéricos
-                // idPedidoCompra (columna 1, entero)
                 if (!validarCampoNumerico(fila, 1, 'ID Pedido Compra')) return;
-                // n_operacion (columna 2, entero)
                 if (!validarCampoNumerico(fila, 2, 'Nº Operación')) return;
-                // pesoNetoTotal (columna 9, decimal)
                 if (!validarCampoNumerico(fila, 9, 'Peso Neto Total', false)) return;
-                // totalBultos (columna 10, entero)
                 if (!validarCampoNumerico(fila, 10, 'Total Bultos')) return;
-                // promedio (columna 11, decimal)
                 if (!validarCampoNumerico(fila, 11, 'Promedio', false)) return;
-                // valorCompraTotal (columna 12, decimal)
                 if (!validarCampoNumerico(fila, 12, 'Valor Compra Total', false)) return;
             }
 
-            // Si llegamos aquí, todos los campos numéricos están validados correctamente.
-            // Ahora procedemos con el guardado real.
+
             filasModificadas.forEach(fila => {
                 const idPedidoCompraDet = fila.getAttribute('data-id-pedido-compra-det');
                 const idPedidoCompra = fila.children[1].innerText.trim();

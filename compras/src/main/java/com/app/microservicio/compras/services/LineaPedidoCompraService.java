@@ -94,6 +94,7 @@ public class LineaPedidoCompraService {
         if (lineaPedidoCompraDTO.getIdPedidoCompra() == null) {
             throw new IllegalArgumentException("El ID de Pedido de Compra no puede ser nulo.");
         }
+        lineaPedidoCompraDTO.setStatus('P');
         lineaPedidoCompraDTO.setN_operacion(pedidoCompraRepository.findById(lineaPedidoCompraDTO.getIdPedidoCompra()).get().getNOperacion());
         lineaPedidoCompraDTO.setN_contenedor(pedidoCompraRepository.findById(lineaPedidoCompraDTO.getIdPedidoCompra()).get().getNContenedor());
         return convertirADTO(lineaPedidoCompraRepository.save(convertirAEntidad(lineaPedidoCompraDTO)));
@@ -142,7 +143,7 @@ public class LineaPedidoCompraService {
             lineaPedidoCompra.setValorCompra(lineaPedidoCompraDTO.getValor_compra());
             lineaPedidoCompra.setMoneda(lineaPedidoCompraDTO.getMoneda());
             lineaPedidoCompra.setPaisOrigen(lineaPedidoCompraDTO.getPaisOrigen());
-
+            lineaPedidoCompra.setStatus(lineaPedidoCompra.getStatus());
             // Guardar la línea de pedido actualizada
             LineaPedidoCompra lineaActualizada = lineaPedidoCompraRepository.save(lineaPedidoCompra);
             calculoService.recalcularPesoNetoTotal(lineaActualizada.getPedidoCompra().getIdPedidoCompra());
@@ -185,6 +186,7 @@ public class LineaPedidoCompraService {
         lineaPedidoCompraDTO.setValor_compra(lineaPedidoCompra.getValorCompra());
         lineaPedidoCompraDTO.setMoneda(lineaPedidoCompra.getMoneda());
         lineaPedidoCompraDTO.setPaisOrigen(lineaPedidoCompra.getPaisOrigen());
+        lineaPedidoCompraDTO.setStatus(lineaPedidoCompra.getStatus());
 
         return lineaPedidoCompraDTO;
     }
@@ -206,6 +208,7 @@ public class LineaPedidoCompraService {
         lineaPedidoCompra.setValorCompra(lineaPedidoCompraDTO.getValor_compra());
         lineaPedidoCompra.setMoneda(lineaPedidoCompraDTO.getMoneda());
         lineaPedidoCompra.setPaisOrigen(lineaPedidoCompraDTO.getPaisOrigen());
+        lineaPedidoCompra.setStatus(lineaPedidoCompraDTO.getStatus());
         return lineaPedidoCompra;
     }
 

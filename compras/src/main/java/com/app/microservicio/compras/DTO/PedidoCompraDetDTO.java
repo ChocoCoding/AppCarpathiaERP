@@ -1,6 +1,7 @@
 package com.app.microservicio.compras.DTO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -28,6 +29,9 @@ public class PedidoCompraDetDTO {
     private BigDecimal promedio;
     private BigDecimal valorCompraTotal;
     private String observaciones;
+
+    @JsonProperty("status")
+    private char status;
 
     // Método para obtener la fecha como String en formato dd/MM/yyyy
     public String getFechaPagoFleteFormatted() {

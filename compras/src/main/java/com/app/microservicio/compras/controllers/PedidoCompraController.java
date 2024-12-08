@@ -77,6 +77,26 @@ public class PedidoCompraController {
         }
     }
 
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<PedidoCompraDTO> cambiarEstado(@PathVariable Long id, @RequestBody Map<String, String> body) {
+        if (!body.containsKey("status")) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
+        String statusStr = body.get("status");
+        if (statusStr == null || !(statusStr.equals("P") || statusStr.equals("T"))) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
+        char status = statusStr.charAt(0);
+        PedidoCompraDTO actualizado = pedidoCompraService.cambiarEstadoPedidoCompra(id, status);
+        if (actualizado != null) {
+            return ResponseEntity.ok(actualizado);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @GetMapping("/{idPedidoCompra}/exists")
     public ResponseEntity<Map<String, Boolean>> existePedidoCompra(@PathVariable Long idPedidoCompra) {
         boolean existe = pedidoCompraService.existePedidoCompra(idPedidoCompra);

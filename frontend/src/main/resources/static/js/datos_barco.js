@@ -22,7 +22,8 @@ const columnasAtributos = {
     11: 'fecha_llegada',
     12: 'flete',
     13: 'fecha_pago_flete',
-    14: 'facturaFlete'
+    14: 'facturaFlete',
+    15: 'status'
 };
 
 // Cargar configuraciones de endpoints y mensajes desde el backend
@@ -183,6 +184,14 @@ cargarConfiguraciones().then(() => {
             }
             const fila = document.createElement('tr');
             fila.setAttribute('data-id-datos-barco', dato.idDatosBarco);
+            fila.setAttribute('data-id-pedido-compra', dato.idPedidoCompra);
+            fila.setAttribute('data-status', dato.status);
+                            // Añadir clase basada en el estado
+                           if (dato.status && dato.status.toUpperCase() === 'T') {
+                               fila.classList.add('status-terminado');
+                           } else {
+                               fila.classList.remove('status-terminado'); // Asegurar que no tenga la clase si es 'P'
+                           }
 
             fila.innerHTML = `
                 <td>
@@ -270,6 +279,15 @@ cargarConfiguraciones().then(() => {
 
         guardarCambios: () => {
             const filasModificadas = document.querySelectorAll('tbody tr.modificado');
+
+            const filasTerminado = Array.from(filasModificadas).filter(fila => fila.getAttribute('data-status') === 'T');
+
+              if (filasTerminado.length > 0) {
+                 const idsPedidosTerminado = [...new Set(Array.from(filasTerminado).map(fila => fila.getAttribute('data-id-pedido-compra')))];
+                 DatosBarcoApp.mostrarAlerta('error', 'Error', `El pedido: ${idsPedidosTerminado.join(', ')} está terminado.No se pueden guardar los cambios`);
+                  return;
+              }
+
             const formatoFecha = /^\d{2}\/\d{2}\/\d{4}$/;
 
             // Función auxiliar para validar un campo numérico

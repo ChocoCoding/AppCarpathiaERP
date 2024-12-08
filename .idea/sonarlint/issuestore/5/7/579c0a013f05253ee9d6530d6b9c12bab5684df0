@@ -1,23 +1,13 @@
 
-™
-java:S3655à"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(–İ¯Èúÿÿÿÿ8ŠÂ›Ù¹2J$c6fc0837-47bd-42f7-803a-a451ad1d40fb
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8¾œ­œ2J$65ce0b17-46d0-4fa4-9d86-dbaac3724068
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8•İÁºº2J$60f2cc5d-a5c9-4aa6-b365-48f1539a653e
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8¾œ­œ2J$be4fc62a-c300-4d33-9e36-c2820784ce5e
+java:S6813 "BRemove this field injection and use constructor injection instead.(êæÄŞ8•İÁºº2J$68e34ada-6264-40cf-82ae-fef829b7335a
 …
-java:S6813""BRemove this field injection and use constructor injection instead.(êæÄŞ8¾œ­œ2J$4c46b899-0d30-4e19-9b83-98661f68d380
+java:S6813#"BRemove this field injection and use constructor injection instead.(êæÄŞ8•İÁºº2J$1400b31b-bbdf-49ec-8d1a-cf31d822c410
 …
-java:S6813%"BRemove this field injection and use constructor injection instead.(êæÄŞ8¾œ­œ2J$7dca8606-41ff-4262-814d-0b5cb9e64acb
+java:S6813&"BRemove this field injection and use constructor injection instead.(êæÄŞ8•İÁºº2J$38caaadb-ea20-4fd0-b7f0-f80d31fed1bf
 š
-java:S3776z"RRefactor this method to reduce its Cognitive Complexity from 34 to the 15 allowed.(öÇ÷Öúÿÿÿÿ8–Â›Ù¹2J$feb186de-08a0-422a-a6a8-724be4412845
-Z
-java:S3972¥"7Move this "if" to a new line or add the missing "else".(²íë…şÿÿÿÿ8˜ÅÄÚ¹2
-
-java:S1128"KRemove this unused import 'org.springframework.cache.annotation.Cacheable'.(İºØ“8Â›Ù¹2J$0fb327e9-a975-4cd4-8a0c-4fde4d2fd8ec
-Œ
-java:S1128"DRemove this unused import 'org.springframework.http.ResponseEntity'.(¶¯ø¦úÿÿÿÿ8Öœ­œ2J$06c084c1-8212-42cd-827f-1c167e979da1
-v
-java:S1128"3Remove this unused import 'java.math.RoundingMode'.(¿ì†‹8Öœ­œ2J$152f4a04-4ce4-4e45-bfcb-3602eee2befd
-€
-java:S1128"8Remove this unused import 'java.util.stream.Collectors'.(Óóº´úÿÿÿÿ8Â›Ù¹2J$77115924-4bc2-4e88-868a-dd63db8bbf1a
+java:S3776}"RRefactor this method to reduce its Cognitive Complexity from 33 to the 15 allowed.(öÇ÷Öúÿÿÿÿ8ŸİÁºº2J$bba06796-89b1-4e37-8f67-7649d16fa0b4
+
+java:S6541}"ÅA "Brain Method" was detected. Refactor it to reduce at least one of the following metrics: LOC from 65 to 64, Complexity from 17 to 14, Nesting Level from 5 to 2, Number of Variables from 43 to 6.(öÇ÷Öúÿÿÿÿ8©İÁºº2J$b445aeb1-8e8b-4bea-82fc-3540c04e89eb

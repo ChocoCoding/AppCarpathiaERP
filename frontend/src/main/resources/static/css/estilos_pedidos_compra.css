@@ -218,5 +218,16 @@ input:valid, select:valid, textarea:valid {
     background-color: #fff3cd; /* Amarillo claro */
 }
 .status-terminado {
-    background-color: #cce5ff; /* Un azul clarito */
+    background-color: #D0F0FF; /* Azul clarito */
+}
+.icono-estado {
+    cursor: pointer;
+    font-size: 1.2em;
+    margin-left: 5px;
+}
+.icono-estado.pendiente {
+    color: gray;
+}
+.icono-estado.terminado {
+    color: green;
 }

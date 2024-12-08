@@ -17,4 +17,5 @@ public class PedidoCompraDTO {
     private String cliente;
     private String incoterm;
     private String referenciaProveedor;
+    private char status;
 }

@@ -1,13 +1,21 @@
 
+˜
+java:S3655b"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(¸Ð¿ïýÿÿÿÿ8»¾—ºº2J$c77b82c3-21ed-4c61-a8a4-1c6fc5a5caba
+™
+java:S3655ˆ"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(¿³ûæÿÿÿÿÿ8»¾—ºº2J$12926894-30df-4294-99f5-c15a904a14a6
+˜
+java:S3655c"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(ÐúÌÊûÿÿÿÿ8»¾—ºº2J$14ebc780-5559-4091-93e6-0b669382f3c3
+™
+java:S3655…"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(ÉÃ¦³üÿÿÿÿ8»¾—ºº2J$c8bef9f5-86ce-4639-bab1-d4ca5d7cb0f5
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8•ý×˜¸2J$bd683ca4-0304-403c-8b6a-2410c2c4d00a
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8ò‡¯µº2J$fd287357-bce4-4b9c-b71f-75ae62e79562
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8–ý×˜¸2J$7ee07d4f-b4af-4311-acf7-6eb64422d0ef
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8ò‡¯µº2J$0140222d-389f-4a9d-a921-2900004c4489
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8–ý×˜¸2J$47340d6e-ce1a-417c-966b-afaf736396b0
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8ò‡¯µº2J$61d1be32-6d9c-46ec-a6c6-47c0168cd56d
 …
-java:S6813""BRemove this field injection and use constructor injection instead.(êæÄÞ8–ý×˜¸2J$11ec2b06-f0bc-4272-a544-a40b1f89d445
-•
-java:S3776)"RRefactor this method to reduce its Cognitive Complexity from 24 to the 15 allowed.(¬•§’8™ý×˜¸2J$401db67a-5453-43f7-92a7-cb96846fc4b1
+java:S6813""BRemove this field injection and use constructor injection instead.(êæÄÞ8ò‡¯µº2J$c3a1c470-54ed-4b2d-8e81-da100559e629
+š
+java:S3776)"RRefactor this method to reduce its Cognitive Complexity from 20 to the 15 allowed.(¬Ëâºÿÿÿÿÿ8õ‡¯µº2J$3f04e57e-84cd-4aa7-9eef-d52746f990dc
 –
-java:S6204®"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8¨ý×˜¸2J$e2f4b50c-8f33-4b58-ab3c-82159f0540ce
+java:S6204¤"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8€ˆ¯µº2J$98098214-c4a7-4ac6-8409-199af000611b

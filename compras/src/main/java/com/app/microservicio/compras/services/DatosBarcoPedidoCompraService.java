@@ -128,6 +128,7 @@ public class DatosBarcoPedidoCompraService {
     }
 
     public DatosBarcoDTO crearDatosBarco(DatosBarcoDTO datosBarcoDTO) {
+        datosBarcoDTO.setStatus('P');
         DatosBarcoPedidoCompra datosBarcoPedidoCompra = convertirAEntidad(datosBarcoDTO);
         datosBarcoRepository.save(datosBarcoPedidoCompra);
         DatosBarcoPedidoCompra datosBarcoNuevo = calculoService.actualizarCamposDatosBarco(datosBarcoPedidoCompra.getPedidoCompra().getIdPedidoCompra());
@@ -160,7 +161,7 @@ public class DatosBarcoPedidoCompraService {
         datosBarcoPedidoCompra.setFlete(datosBarcoDTO.getFlete());
         datosBarcoPedidoCompra.setFecha_pago_flete(datosBarcoDTO.getFecha_pago_flete());
         datosBarcoPedidoCompra.setFactura_flete(datosBarcoDTO.getFacturaFlete());
-
+        datosBarcoPedidoCompra.setStatus(datosBarcoDTO.getStatus());
         return convertirADTO(datosBarcoRepository.save(datosBarcoPedidoCompra));
     }
 
@@ -183,7 +184,7 @@ public class DatosBarcoPedidoCompraService {
         datosBarcoDTO.setFlete(datosBarcoPedidoCompra.getFlete());
         datosBarcoDTO.setFecha_pago_flete(datosBarcoPedidoCompra.getFecha_pago_flete());
         datosBarcoDTO.setFacturaFlete(datosBarcoPedidoCompra.getFactura_flete());
-
+        datosBarcoDTO.setStatus(datosBarcoPedidoCompra.getStatus());
         return datosBarcoDTO;
     }
 
@@ -205,6 +206,7 @@ public class DatosBarcoPedidoCompraService {
         datosBarcoPedidoCompra.setFlete(datosBarcoDTO.getFlete());
         datosBarcoPedidoCompra.setFecha_pago_flete(datosBarcoDTO.getFecha_pago_flete());
         datosBarcoPedidoCompra.setFactura_flete(datosBarcoDTO.getFacturaFlete());
+        datosBarcoPedidoCompra.setStatus(datosBarcoDTO.getStatus());
 
         return datosBarcoPedidoCompra;
     }

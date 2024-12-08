@@ -1,11 +1,10 @@
-// pedidos_compra.js
 import middleware from '/js/middleware.js'; // Asegúrate de que la ruta es correcta
 
 // Declaración de variables de estado
 let config = {};
-let currentPage = 1; // Página inicial
-let size = 10;        // Tamaño de página inicial
-let sortBy = 'idPedidoCompra'; // Campo de ordenamiento inicial
+let currentPage = 1;
+let size = 10;
+let sortBy = 'idPedidoCompra';
 let sortDir = 'desc';
 let proveedor = '';
 let cliente = '';
@@ -19,12 +18,13 @@ const columnasAtributos = {
     6: 'proveedor',
     7: 'cliente',
     8: 'incoterm',
-    9: 'referenciaProveedor'
+    9: 'referenciaProveedor',
+    10: 'status'
 };
 
 // Cargar configuraciones de endpoints y mensajes desde el backend
 function cargarConfiguraciones() {
-    return fetch('http://localhost:8702/api/config')  // Asegúrate de que la URL sea correcta y accesible
+    return fetch('http://localhost:8702/api/config')  // Ajusta la URL si es necesario
         .then(response => {
             if (!response.ok) {
                 throw new Error('Error al cargar la configuración del backend');
@@ -33,7 +33,6 @@ function cargarConfiguraciones() {
         })
         .then(data => {
             config = data;
-            // Inicializar variables de estado si están presentes en config
             currentPage = config.currentPage || 1;
             size = config.size || 10;
             sortBy = config.sortBy || 'idPedidoCompra';
@@ -65,7 +64,6 @@ cargarConfiguraciones().then(() => {
         goBack: () => {
             const filasModificadas = document.querySelectorAll('tbody tr.modificado');
             if (filasModificadas.length > 0) {
-                // Mostrar alerta de confirmación usando SweetAlert2
                 Swal.fire({
                     title: 'Hay cambios sin guardar',
                     text: '¿Estás seguro de que quieres salir?',
@@ -114,14 +112,13 @@ cargarConfiguraciones().then(() => {
         // Cargar y renderizar pedidos de compra
         cargarPedidosCompra: () => {
             const url = new URL(config.pedidosCompraEndpoint);
-            url.searchParams.append('page', currentPage - 1); // Backend es zero-based
+            url.searchParams.append('page', currentPage - 1);
             url.searchParams.append('size', size);
             url.searchParams.append('proveedor', proveedor);
             url.searchParams.append('cliente', cliente);
             url.searchParams.append('sortBy', sortBy);
             url.searchParams.append('sortDir', sortDir);
 
-            // Incluir parámetros de búsqueda si existen
             if (config.search && config.searchFields && config.searchFields.length > 0) {
                 url.searchParams.append('search', config.search);
                 config.searchFields.forEach(field => url.searchParams.append('searchFields', field));
@@ -132,7 +129,6 @@ cargarConfiguraciones().then(() => {
             middleware.get(url.toString())
                 .then(data => {
                     console.log('Datos recibidos:', data);
-                    // Ahora simplemente renderizamos la tabla directamente con los datos filtrados del backend
                     PedidoCompraApp.renderTabla(data.content);
                     PedidoCompraApp.actualizarPaginacion(data.number + 1, data.totalPages);
                 })
@@ -156,6 +152,51 @@ cargarConfiguraciones().then(() => {
             });
         },
 
+        toggleStatus: (elemento) => {
+                const fila = elemento.closest('tr');
+                if (!fila) return;
+
+                const idPedidoCompra = fila.getAttribute('data-id-pedido-compra');
+                const estadoActual = fila.getAttribute('data-status') || 'P';
+                const nuevoEstado = estadoActual === 'P' ? 'T' : 'P';
+
+                const cuerpo = { status: nuevoEstado };
+
+                const url = `${config.pedidosCompraEndpoint}/${idPedidoCompra}/status`;
+
+                middleware.patch(url, cuerpo)
+                    .then((pedidoActualizado) => {
+                        PedidoCompraApp.mostrarAlerta('success', 'Éxito', `Estado cambiado a ${nuevoEstado === 'P' ? 'Pendiente' : 'Terminado'}.`);
+                        // Actualizar la fila en el front
+                        fila.setAttribute('data-status', nuevoEstado);
+
+                        // Actualizar el icono de estado
+                        const iconoEstado = fila.querySelector('.icono-estado');
+                        if (iconoEstado) {
+                            if (nuevoEstado === 'T') {
+                                iconoEstado.classList.remove('bi-x-circle', 'pendiente');
+                                iconoEstado.classList.add('bi-check-circle-fill', 'terminado');
+                                iconoEstado.title = 'Estado: Terminado';
+                            } else {
+                                iconoEstado.classList.remove('bi-check-circle-fill', 'terminado');
+                                iconoEstado.classList.add('bi-x-circle', 'pendiente');
+                                iconoEstado.title = 'Estado: Pendiente';
+                            }
+                        }
+
+                        // Aplicar o remover la clase de fondo azul
+                        if (nuevoEstado === 'T') {
+                            fila.classList.add('status-terminado');
+                        } else {
+                            fila.classList.remove('status-terminado');
+                        }
+                    })
+                    .catch((error) => {
+                        console.error('Error al cambiar el estado:', error);
+                        PedidoCompraApp.mostrarAlerta('error', 'Error', 'No se pudo actualizar el estado del pedido.');
+                    });
+            },
+
         renderFilaPedido: (pedido) => {
             console.log('Renderizando fila para pedido:', pedido);
             const tbody = document.querySelector('tbody');
@@ -165,10 +206,23 @@ cargarConfiguraciones().then(() => {
             }
             const fila = document.createElement('tr');
             fila.setAttribute('data-id-pedido-compra', pedido.idPedidoCompra);
+            fila.setAttribute('data-status', pedido.status);
+
+            // Si el status es 'T', agregar la clase para el fondo azul
+            if (pedido.status === 'T') {
+                fila.classList.add('status-terminado');
+            }
+
+            // Icono estado: Usamos el icono de Bootstrap Icons "bi-check-circle-fill" para 'T' y "bi-x-circle" para 'P'
+            const iconClass = pedido.status === 'T' ? 'terminado' : 'pendiente';
+            const iconHTML = pedido.status === 'T'
+                ? `<i class="bi bi-check-circle-fill icono-estado ${iconClass}" title="Estado: Terminado" onclick="PedidoCompraApp.toggleStatus(this)"></i>`
+                : `<i class="bi bi-x-circle icono-estado ${iconClass}" title="Estado: Pendiente" onclick="PedidoCompraApp.toggleStatus(this)"></i>`;
 
             fila.innerHTML = `
                 <td>
                     <button class="delete-button" onclick="PedidoCompraApp.eliminarPedido(${pedido.idPedidoCompra})">🗑️</button>
+                    ${iconHTML}
                 </td>
                 <td>${pedido.idPedidoCompra}</td>
                 <td contenteditable="true" class="editable" oninput="PedidoCompraApp.marcarModificado(this)">${pedido.n_operacion || ''}</td>
@@ -181,6 +235,53 @@ cargarConfiguraciones().then(() => {
             `;
 
             tbody.appendChild(fila);
+        },
+
+        cambiarEstado: (idPedidoCompra) => {
+            const fila = document.querySelector(`tr[data-id-pedido-compra="${idPedidoCompra}"]`);
+            if (!fila) return;
+
+            const estadoActual = fila.getAttribute('data-status') || 'P';
+            const nuevoEstado = estadoActual === 'P' ? 'T' : 'P';
+
+            // Preparar el cuerpo de la petición
+            const cuerpo = { status: nuevoEstado };
+
+            // Construir la URL correcta: /api/compras/pedidos_compra/{id}/status
+            const url = `${config.pedidosCompraEndpoint}/${idPedidoCompra}/status`;
+
+            // Llamar al endpoint PATCH para cambiar el estado
+            middleware.patch(url, cuerpo)
+                .then((pedidoActualizado) => {
+                    PedidoCompraApp.mostrarAlerta('success', 'Éxito', `Estado cambiado a ${nuevoEstado === 'P' ? 'Pendiente' : 'Terminado'}.`);
+                    // Actualizar la fila en el front
+                    fila.setAttribute('data-status', nuevoEstado);
+
+                    // Actualizar el icono de estado
+                    const iconoEstado = fila.querySelector('.icono-estado');
+                    if (iconoEstado) {
+                        if (nuevoEstado === 'T') {
+                            iconoEstado.classList.remove('bi-x-circle', 'pendiente');
+                            iconoEstado.classList.add('bi-check-circle-fill', 'terminado');
+                            iconoEstado.title = 'Estado: Terminado';
+                        } else {
+                            iconoEstado.classList.remove('bi-check-circle-fill', 'terminado');
+                            iconoEstado.classList.add('bi-x-circle', 'pendiente');
+                            iconoEstado.title = 'Estado: Pendiente';
+                        }
+                    }
+
+                    // Aplicar o remover la clase de fondo azul
+                    if (nuevoEstado === 'T') {
+                        fila.classList.add('status-terminado');
+                    } else {
+                        fila.classList.remove('status-terminado');
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error al cambiar el estado:', error);
+                    PedidoCompraApp.mostrarAlerta('error', 'Error', 'No se pudo actualizar el estado del pedido.');
+                });
         },
 
         actualizarPaginacion: (currentPageFromBackend, totalPagesFromBackend) => {
@@ -199,7 +300,6 @@ cargarConfiguraciones().then(() => {
                 return;
             }
 
-            // Actualizar estado de los enlaces de paginación
             if (currentPage <= 1) {
                 primeraPaginaSpan.innerHTML = `<span class="disabled">Primera Página</span>`;
                 anteriorPaginaSpan.innerHTML = `<span class="disabled">Anterior</span>`;
@@ -249,6 +349,14 @@ cargarConfiguraciones().then(() => {
             const filasModificadas = document.querySelectorAll('tbody tr.modificado');
 
             console.log(`Filas modificadas encontradas: ${filasModificadas.length}`);
+            const filasTerminado = Array.from(filasModificadas).filter(fila => fila.getAttribute('data-status') === 'T');
+
+            if (filasTerminado.length > 0) {
+            const idsPedidosTerminado = [...new Set(Array.from(filasTerminado).map(fila => fila.getAttribute('data-id-pedido-compra')))];
+            PedidoCompraApp.mostrarAlerta('error', 'Error', `El pedido: ${idsPedidosTerminado.join(', ')} está terminado.No se pueden guardar los cambios`);
+            return;
+             }
+
 
             for (const fila of filasModificadas) {
                 const idPedidoCompra = fila.getAttribute('data-id-pedido-compra');
@@ -346,6 +454,7 @@ cargarConfiguraciones().then(() => {
             nuevaFila.innerHTML = `
                 <td>
                     <button class="delete-button" onclick="PedidoCompraApp.eliminarFila(this)">🗑️</button>
+                    <i class="bi bi-x-circle icono-estado pendiente" title="Estado: Pendiente" onclick="PedidoCompraApp.toggleStatus(this)"></i>
                 </td>
                 <td></td>
                 <td contenteditable="true" class="editable"></td>

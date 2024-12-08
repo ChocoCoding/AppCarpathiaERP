@@ -26,7 +26,8 @@ const columnasAtributos = {
     13: 'precio',
     14: 'valorCompra',
     15: 'moneda',
-    16: 'paisOrigen'
+    16: 'paisOrigen',
+    17: 'status'
 };
 
 // Cargar configuraciones de endpoints y mensajes desde el backend
@@ -203,6 +204,15 @@ cargarConfiguraciones().then(() => {
             }
             const fila = document.createElement('tr');
             fila.setAttribute('data-id-linea-pedido', linea.idNumeroLinea);
+            fila.setAttribute('data-id-pedido-compra', linea.idPedidoCompra);
+            fila.setAttribute('data-status', linea.status);
+                console.log("Estado LINEA" + linea.status)
+                // Añadir clase basada en el estado
+               if (linea.status && linea.status.toUpperCase() === 'T') {
+                   fila.classList.add('status-terminado');
+               } else {
+                   fila.classList.remove('status-terminado'); // Asegurar que no tenga la clase si es 'P'
+               }
 
             fila.innerHTML = `
         <td>
@@ -297,6 +307,15 @@ cargarConfiguraciones().then(() => {
         // Función para guardar cambios (crear y actualizar)
         guardarCambios: () => {
             const filasModificadas = document.querySelectorAll('tbody tr.modificado');
+
+            // Primero, verificar si alguna fila modificada pertenece a un pedido terminado
+                const filasTerminado = Array.from(filasModificadas).filter(fila => fila.getAttribute('data-status') === 'T');
+
+                if (filasTerminado.length > 0) {
+                    const idsPedidosTerminado = [...new Set(Array.from(filasTerminado).map(fila => fila.getAttribute('data-id-pedido-compra')))];
+                    LineasPedidoApp.mostrarAlerta('error', 'Error', `El pedido(s): ${idsPedidosTerminado.join(', ')} está(n) terminado(s). No se pueden guardar cambios en estos pedidos.`);
+                    return; // Detener la función para prevenir el guardado
+                }
 
             // Función auxiliar para validar un campo numérico
             function validarCampoNumerico(fila, index, nombreCampo, esEntero = true) {

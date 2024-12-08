@@ -51,6 +51,7 @@ public class CostePedidoService {
         costePedidoCompraDTO.setTasa_sanitaria(costePedidoCompra.getTasa_sanitaria());
         costePedidoCompraDTO.setSuma_costes(costePedidoCompra.getSuma_costes());
         costePedidoCompraDTO.setGasto_total(costePedidoCompra.getGasto_total());
+        costePedidoCompraDTO.setStatus(costePedidoCompra.getStatus());
 
         return costePedidoCompraDTO;
     }
@@ -76,12 +77,14 @@ public class CostePedidoService {
         costePedidoCompra.setTasa_sanitaria(costePedidoCompraDTO.getTasa_sanitaria());
         costePedidoCompra.setSuma_costes(costePedidoCompraDTO.getSuma_costes());
         costePedidoCompra.setGasto_total(costePedidoCompraDTO.getGasto_total());
+        costePedidoCompra.setStatus(costePedidoCompraDTO.getStatus());
 
         return costePedidoCompra;
     }
 
     // Crear un nuevo coste
     public CostesDTO crearCoste(CostesDTO costesDTO) {
+        costesDTO.setStatus('P');
         CostePedidoCompra costePedidoCompra = convertirAEntidad(costesDTO);
         costePedidoRepository.save(costePedidoCompra);
         costePedidoCompra.setTasa_sanitaria(calculoService.calcularTasaSanitaria(costePedidoCompra.getPedidoCompra().getIdPedidoCompra()).getBody());
@@ -194,6 +197,7 @@ public class CostePedidoService {
        costePedidoCompra.setDec_iva(costesDTO.getDec_iva());
        costePedidoCompra.setTasa_sanitaria(costesDTO.getTasa_sanitaria());
        costePedidoCompra.setGasto_total(costesDTO.getGasto_total());
+       costePedidoCompra.setStatus(costesDTO.getStatus());
        costePedidoRepository.save(costePedidoCompra);
        //Calculamos los costes
        calculoService.calcularSumaCostes(costesDTO.getIdPedidoCompra()).getBody();

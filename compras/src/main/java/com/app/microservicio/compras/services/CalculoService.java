@@ -242,4 +242,36 @@ public class CalculoService{
         return null;
     }
 
+    public void  actualizarStatusLineasPedidoCompra(Long idPedidoCompra, char nuevoStatus){
+        List<LineaPedidoCompra> lineas = lineaPedidoCompraRepository.findByIdPedidoCompra(idPedidoCompra);
+        for (LineaPedidoCompra linea : lineas) {
+            linea.setStatus(nuevoStatus);
+            lineaPedidoCompraRepository.save(linea);
+        }
+    }
+
+    public void actualizarStatusPedidoCompraDet(Long idPedidoCompra, char nuevoStatus){
+        Optional<PedidoCompraDet> pedidoCompraDet = pedidoCompraDetRepository.findByIdPedidoCompra(idPedidoCompra);
+        if (pedidoCompraDet.isPresent()){
+            pedidoCompraDet.get().setStatus(nuevoStatus);
+            pedidoCompraDetRepository.save(pedidoCompraDet.get());
+        }
+    }
+
+    public void  actualizarStatusDatosBarco(Long idPedidoCompra, char nuevoStatus){
+        Optional<DatosBarcoPedidoCompra> datosBarcoPedidoCompra = datosBarcoRepository.findByIdPedidoCompra(idPedidoCompra);
+        if (datosBarcoPedidoCompra.isPresent()){
+            datosBarcoPedidoCompra.get().setStatus(nuevoStatus);
+            datosBarcoRepository.save(datosBarcoPedidoCompra.get());
+        }
+    }
+
+    public void  actualizarStatusCosteCompra(Long idPedidoCompra, char nuevoStatus){
+        Optional<CostePedidoCompra> costePedidoCompra = costePedidoRepository.findByIdPedidoCompra(idPedidoCompra);
+        if (costePedidoCompra.isPresent()){
+            costePedidoCompra.get().setStatus(nuevoStatus);
+            costePedidoRepository.save(costePedidoCompra.get());
+        }
+    }
+
 }
