@@ -1,5 +1,6 @@
 package com.app.frontend.DTO;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -15,5 +16,7 @@ public class PedidoVentaDetDTO {
     private BigDecimal promedio;
     private BigDecimal valorVentaTotal;
     private String importador;
+    @JsonProperty("status")
+    private char status;
 
 }

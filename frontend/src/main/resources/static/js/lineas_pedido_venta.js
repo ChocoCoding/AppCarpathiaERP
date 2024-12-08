@@ -32,7 +32,8 @@ const columnasAtributos = {
     17: 'incoterm',
     18: 'moneda',
     19: 'comerciales',
-    20: 'transporte'
+    20: 'transporte',
+    21: 'status'
 };
 
 // Cargar configuraciones de endpoints y mensajes desde el backend
@@ -199,6 +200,14 @@ cargarConfiguraciones().then(() => {
             }
             const fila = document.createElement('tr');
             fila.setAttribute('data-id-linea-pedido', linea.idLineaPedidoVenta);
+            fila.setAttribute('data-id-pedido-venta', linea.idPedidoVenta);
+                        fila.setAttribute('data-status', linea.status);
+                            // Añadir clase basada en el estado
+                           if (linea.status && linea.status.toUpperCase() === 'T') {
+                               fila.classList.add('status-terminado');
+                           } else {
+                               fila.classList.remove('status-terminado'); // Asegurar que no tenga la clase si es 'P'
+                           }
 
             fila.innerHTML = `
                 <td>
@@ -299,6 +308,15 @@ cargarConfiguraciones().then(() => {
         guardarCambios: () => {
             const filasModificadas = document.querySelectorAll('tbody tr.modificado');
             const formatoDecimal = /^-?\d+(\.\d+)?$/;
+
+            const filasTerminado = Array.from(filasModificadas).filter(fila => fila.getAttribute('data-status') === 'T');
+
+            if (filasTerminado.length > 0) {
+                   const idsPedidosTerminado = [...new Set(Array.from(filasTerminado).map(fila => fila.getAttribute('data-id-pedido-compra')))];
+                   LineasPedidoApp.mostrarAlerta('error', 'Error', `El pedido(s): ${idsPedidosTerminado.join(', ')} está(n) terminado(s). No se pueden guardar cambios en estos pedidos.`);
+                   return; // Detener la función para prevenir el guardado
+                }
+
 
             // Función auxiliar para validar un campo numérico
             function validarCampoNumerico(valor, nombreCampo, esEntero = true) {

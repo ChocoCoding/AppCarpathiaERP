@@ -82,6 +82,7 @@ public class PedidoVentaDetService {
         pedidoVentaDetDTO.setPromedio(pedidoVentaDet.getPromedio());
         pedidoVentaDetDTO.setValorVentaTotal(pedidoVentaDet.getValorVentaTotal());
         pedidoVentaDetDTO.setImportador(pedidoVentaDet.getImportador());
+        pedidoVentaDetDTO.setStatus(pedidoVentaDet.getStatus());
         return pedidoVentaDetDTO;
     }
 
@@ -96,6 +97,7 @@ public class PedidoVentaDetService {
         pedidoVentaDet.setPromedio(pedidoVentaDetDTO.getPromedio());
         pedidoVentaDet.setValorVentaTotal(pedidoVentaDetDTO.getValorVentaTotal());
         pedidoVentaDet.setImportador(pedidoVentaDetDTO.getImportador());
+        pedidoVentaDet.setStatus(pedidoVentaDetDTO.getStatus());
         return pedidoVentaDet;
     }
 
@@ -190,6 +192,7 @@ public class PedidoVentaDetService {
         pedidoVentaDetDTO.setPesoNetoTotal(pesoNetoTotal);
         pedidoVentaDetDTO.setTotalBultos(totalBultos);
         //Calculamos el promedio
+        pedidoVentaDetDTO.setStatus('P');
         pedidoVentaDetDTO.setValorVentaTotal(calculoService.calcularValoresVenta(pedidoVentaDetDTO.getIdPedidoVenta()).getBody());
         pedidoVentaDetDTO.setPromedio(calculoService.calcularPromedio(pedidoVentaDetDTO.getIdPedidoVenta()).getBody());
         pedidoVentaDetDTO.setPrecioTotal(calculoService.calcularPrecioVenta(pedidoVentaDetDTO.getIdPedidoVenta()).getBody());

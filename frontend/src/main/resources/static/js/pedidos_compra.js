@@ -237,53 +237,6 @@ cargarConfiguraciones().then(() => {
             tbody.appendChild(fila);
         },
 
-        cambiarEstado: (idPedidoCompra) => {
-            const fila = document.querySelector(`tr[data-id-pedido-compra="${idPedidoCompra}"]`);
-            if (!fila) return;
-
-            const estadoActual = fila.getAttribute('data-status') || 'P';
-            const nuevoEstado = estadoActual === 'P' ? 'T' : 'P';
-
-            // Preparar el cuerpo de la petición
-            const cuerpo = { status: nuevoEstado };
-
-            // Construir la URL correcta: /api/compras/pedidos_compra/{id}/status
-            const url = `${config.pedidosCompraEndpoint}/${idPedidoCompra}/status`;
-
-            // Llamar al endpoint PATCH para cambiar el estado
-            middleware.patch(url, cuerpo)
-                .then((pedidoActualizado) => {
-                    PedidoCompraApp.mostrarAlerta('success', 'Éxito', `Estado cambiado a ${nuevoEstado === 'P' ? 'Pendiente' : 'Terminado'}.`);
-                    // Actualizar la fila en el front
-                    fila.setAttribute('data-status', nuevoEstado);
-
-                    // Actualizar el icono de estado
-                    const iconoEstado = fila.querySelector('.icono-estado');
-                    if (iconoEstado) {
-                        if (nuevoEstado === 'T') {
-                            iconoEstado.classList.remove('bi-x-circle', 'pendiente');
-                            iconoEstado.classList.add('bi-check-circle-fill', 'terminado');
-                            iconoEstado.title = 'Estado: Terminado';
-                        } else {
-                            iconoEstado.classList.remove('bi-check-circle-fill', 'terminado');
-                            iconoEstado.classList.add('bi-x-circle', 'pendiente');
-                            iconoEstado.title = 'Estado: Pendiente';
-                        }
-                    }
-
-                    // Aplicar o remover la clase de fondo azul
-                    if (nuevoEstado === 'T') {
-                        fila.classList.add('status-terminado');
-                    } else {
-                        fila.classList.remove('status-terminado');
-                    }
-                })
-                .catch((error) => {
-                    console.error('Error al cambiar el estado:', error);
-                    PedidoCompraApp.mostrarAlerta('error', 'Error', 'No se pudo actualizar el estado del pedido.');
-                });
-        },
-
         actualizarPaginacion: (currentPageFromBackend, totalPagesFromBackend) => {
             currentPage = currentPageFromBackend;
             config.totalPages = totalPagesFromBackend;

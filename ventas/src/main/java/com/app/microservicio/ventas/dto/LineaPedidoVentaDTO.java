@@ -1,6 +1,7 @@
 package com.app.microservicio.ventas.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -28,5 +29,7 @@ public class LineaPedidoVentaDTO {
     private String moneda;
     private String comerciales;
     private BigDecimal transporte;
+    @JsonProperty("status")
+    private char status;
 
 }

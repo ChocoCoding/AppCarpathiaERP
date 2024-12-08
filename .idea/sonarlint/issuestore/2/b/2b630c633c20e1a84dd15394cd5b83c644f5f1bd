@@ -1,8 +1,12 @@
 
-_
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8Í­µºº2
-_
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8Í­µºº2
-_
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8Í­µºº2
-M	java:S106’"+Replace this use of System.err by a logger.(’€žšûÿÿÿÿ8×­µºº2
+…
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8Í­µºº2J$02cbaff7-71bc-45a9-9721-f491c5e0f145
+…
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8Í­µºº2J$765a746b-46c2-4beb-97f4-b4df2feeace3
+…
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8Í­µºº2J$1c5f739d-2a73-44ea-bfbe-3b72db94a222
+s	java:S106’"+Replace this use of System.err by a logger.(’€žšûÿÿÿÿ8×­µºº2J$24387740-6772-442f-a60e-d5a556b97a27
+Ž
+java:S1128"KRemove this unused import 'org.springframework.cache.annotation.Cacheable'.(ÝºØ“8ÉÉ·½º2J$ff46664e-f78d-4d93-94e8-38284ce4aa1e
+€
+java:S1128"8Remove this unused import 'java.util.stream.Collectors'.(Óóº´úÿÿÿÿ8ÉÉ·½º2J$2eb217db-14ff-479c-9f9b-105aa1e98a30

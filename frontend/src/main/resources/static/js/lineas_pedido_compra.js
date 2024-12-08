@@ -308,7 +308,6 @@ cargarConfiguraciones().then(() => {
         guardarCambios: () => {
             const filasModificadas = document.querySelectorAll('tbody tr.modificado');
 
-            // Primero, verificar si alguna fila modificada pertenece a un pedido terminado
                 const filasTerminado = Array.from(filasModificadas).filter(fila => fila.getAttribute('data-status') === 'T');
 
                 if (filasTerminado.length > 0) {

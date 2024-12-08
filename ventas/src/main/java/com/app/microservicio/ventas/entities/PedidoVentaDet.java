@@ -37,6 +37,9 @@ public class PedidoVentaDet {
     @Column(name = "importador", length = 200)
     private String importador;
 
+    @Column(name = "status", length = 1)
+    private char status;
+
     @OneToOne
     @JoinColumn(name = "id_pedido_venta")
     private PedidoVenta pedidoVenta;

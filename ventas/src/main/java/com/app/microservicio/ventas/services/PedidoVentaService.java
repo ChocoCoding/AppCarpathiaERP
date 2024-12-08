@@ -65,6 +65,22 @@ public class PedidoVentaService {
         return pedidoVentaRepository.findAll(spec, pageable).map(this::convertirADTO);
     }
 
+    @Transactional
+    public PedidoVentaDTO cambiarEstadoPedidoVenta(Long id, char nuevoStatus) {
+        Optional<PedidoVenta> pedidoOpt = pedidoVentaRepository.findById(id);
+        if (pedidoOpt.isPresent()) {
+            PedidoVenta pedido = pedidoOpt.get();
+            pedido.setStatus(nuevoStatus);
+            PedidoVenta actualizado = pedidoVentaRepository.save(pedido);
+
+            calculoService.actualizarStatusLineasPedidoVenta(id,nuevoStatus);
+            calculoService.actualizarStatusPedidoVentaDet(id,nuevoStatus);
+            return convertirADTO(actualizado);
+        } else {
+            return null;
+        }
+    }
+
     public Optional<PedidoVentaDTO> obtenerPedidoVenta(Long id) {
         return pedidoVentaRepository.findById(id)
                 .map(this::convertirADTO);
@@ -72,6 +88,7 @@ public class PedidoVentaService {
 
     @Transactional
     public PedidoVentaDTO guardarPedidoVenta(PedidoVentaDTO pedidoVentaDTO) {
+        pedidoVentaDTO.setStatus('P');
         PedidoVenta pedidoVenta = convertirAEntidad(pedidoVentaDTO);
         PedidoVenta nuevoPedidoVenta = pedidoVentaRepository.save(pedidoVenta);
         Long idPedidoVenta = nuevoPedidoVenta.getIdPedidoVenta();
@@ -153,6 +170,7 @@ public class PedidoVentaService {
         pedidoVentaDTO.setProveedor(pedidoVenta.getProveedor());
         pedidoVentaDTO.setIncoterm(pedidoVenta.getIncoterm());
         pedidoVentaDTO.setReferenciaProveedor(pedidoVenta.getReferenciaProveedor());
+        pedidoVentaDTO.setStatus(pedidoVenta.getStatus());
         return pedidoVentaDTO;
     }
 
@@ -165,6 +183,7 @@ public class PedidoVentaService {
         pedidoVenta.setProveedor(pedidoVentaDTO.getProveedor());
         pedidoVenta.setIncoterm(pedidoVentaDTO.getIncoterm());
         pedidoVenta.setReferenciaProveedor(pedidoVentaDTO.getReferenciaProveedor());
+        pedidoVenta.setStatus(pedidoVentaDTO.getStatus());
         return pedidoVenta;
     }
 }

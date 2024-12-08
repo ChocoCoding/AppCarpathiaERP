@@ -1,7 +1,7 @@
 
-•	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¨ŞÄ”J$18b08cb7-fd09-4537-b3d8-807629432f5b
-’	java:S116"RRename this field "n_linea" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(éñäÕÿÿÿÿÿJ$ecd7c1b8-c568-4e03-97d8-6684b2da5a91
-–	java:S116"VRename this field "n_operacion" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¡úíóøÿÿÿÿJ$09e22153-f932-4cbc-a19c-29c6cb68764e
-—	java:S116"WRename this field "n_contenedor" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(«îÏÒÿÿÿÿÿJ$f2856672-31ee-4537-b2e5-949e0ab776b9
-‹	java:S116"QRename this field "p_neto" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³Õ¿hJ$023a1927-3b4d-43ed-a8a8-41099ded3f0b
-	java:S116"VRename this field "valor_venta" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(´€áJ$c729a4bd-cdf1-43ce-8dc5-c8b195446780
+•	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¨ŞÄ”J$b5532891-89f7-4e53-828e-0a73ba3c2049
+’	java:S116"RRename this field "n_linea" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(éñäÕÿÿÿÿÿJ$3489b3ab-f440-4172-bc16-05de74e1dd5a
+–	java:S116"VRename this field "n_operacion" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¡úíóøÿÿÿÿJ$121a6a62-1905-4142-a6b0-c0bfbc79da9c
+—	java:S116"WRename this field "n_contenedor" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(«îÏÒÿÿÿÿÿJ$ec57c493-b600-4a02-83af-eda791efdb3f
+‹	java:S116"QRename this field "p_neto" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³Õ¿hJ$e1da4f72-3aaa-4e4d-b6b6-047e79e38430
+	java:S116"VRename this field "valor_venta" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(´€áJ$a2c89ff1-6e6f-4984-ae12-fe3ee11167e8

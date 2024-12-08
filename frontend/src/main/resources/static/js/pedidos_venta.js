@@ -18,7 +18,8 @@ const columnasAtributos = {
     4: 'proforma',
     5: 'proveedor',
     6: 'incoterm',
-    7: 'referenciaProveedor'
+    7: 'referenciaProveedor',
+    8: 'status'
 };
 
 // Cargar configuraciones de endpoints y mensajes desde el backend
@@ -179,11 +180,25 @@ cargarConfiguraciones().then(() => {
             }
             const fila = document.createElement('tr');
             fila.setAttribute('data-id-pedido-venta', pedido.idPedidoVenta);
+            fila.setAttribute('data-status', pedido.status);
+
+                        // Si el status es 'T', agregar la clase para el fondo azul
+                        if (pedido.status === 'T') {
+                            fila.classList.add('status-terminado');
+                        }
+
+                        // Icono estado: Usamos el icono de Bootstrap Icons "bi-check-circle-fill" para 'T' y "bi-x-circle" para 'P'
+                        const iconClass = pedido.status === 'T' ? 'terminado' : 'pendiente';
+                        const iconHTML = pedido.status === 'T'
+                            ? `<i class="bi bi-check-circle-fill icono-estado ${iconClass}" title="Estado: Terminado" onclick="PedidoVentaApp.toggleStatus(this)"></i>`
+                            : `<i class="bi bi-x-circle icono-estado ${iconClass}" title="Estado: Pendiente" onclick="PedidoVentaApp.toggleStatus(this)"></i>`;
 
             fila.innerHTML = `
                 <td>
                     <button class="delete-button" onclick="PedidoVentaApp.eliminarPedido(${pedido.idPedidoVenta})">🗑️</button>
+                    ${iconHTML}
                 </td>
+
                 <td>${pedido.idPedidoVenta}</td>
                 <td contenteditable="true" class="editable" oninput="PedidoVentaApp.marcarModificado(this)">${pedido.n_operacion || ''}</td>
                 <td contenteditable="true" class="editable" oninput="PedidoVentaApp.marcarModificado(this)">${pedido.n_contenedor || ''}</td>
@@ -195,6 +210,51 @@ cargarConfiguraciones().then(() => {
 
             tbody.appendChild(fila);
         },
+
+        toggleStatus: (elemento) => {
+                        const fila = elemento.closest('tr');
+                        if (!fila) return;
+
+                        const idPedidoVenta = fila.getAttribute('data-id-pedido-venta');
+                        const estadoActual = fila.getAttribute('data-status') || 'P';
+                        const nuevoEstado = estadoActual === 'P' ? 'T' : 'P';
+
+                        const cuerpo = { status: nuevoEstado };
+
+                        const url = `${config.pedidosVentaEndpoint}/${idPedidoVenta}/status`;
+
+                        middleware.patch(url, cuerpo)
+                            .then((pedidoActualizado) => {
+                                PedidoVentaApp.mostrarAlerta('success', 'Éxito', `Estado cambiado a ${nuevoEstado === 'P' ? 'Pendiente' : 'Terminado'}.`);
+                                // Actualizar la fila en el front
+                                fila.setAttribute('data-status', nuevoEstado);
+
+                                // Actualizar el icono de estado
+                                const iconoEstado = fila.querySelector('.icono-estado');
+                                if (iconoEstado) {
+                                    if (nuevoEstado === 'T') {
+                                        iconoEstado.classList.remove('bi-x-circle', 'pendiente');
+                                        iconoEstado.classList.add('bi-check-circle-fill', 'terminado');
+                                        iconoEstado.title = 'Estado: Terminado';
+                                    } else {
+                                        iconoEstado.classList.remove('bi-check-circle-fill', 'terminado');
+                                        iconoEstado.classList.add('bi-x-circle', 'pendiente');
+                                        iconoEstado.title = 'Estado: Pendiente';
+                                    }
+                                }
+
+                                // Aplicar o remover la clase de fondo azul
+                                if (nuevoEstado === 'T') {
+                                    fila.classList.add('status-terminado');
+                                } else {
+                                    fila.classList.remove('status-terminado');
+                                }
+                            })
+                            .catch((error) => {
+                                console.error('Error al cambiar el estado:', error);
+                                PedidoVentaApp.mostrarAlerta('error', 'Error', 'No se pudo actualizar el estado del pedido.');
+                            });
+                    },
 
         // Actualizar los controles de paginación
         actualizarPaginacion: (currentPageFromBackend, totalPagesFromBackend) => {
@@ -266,6 +326,15 @@ cargarConfiguraciones().then(() => {
         guardarCambios: () => {
             const filasModificadas = document.querySelectorAll('tbody tr.modificado');
             const formatoFecha = /^\d{2}\/\d{2}\/\d{4}$/; // No se usan fechas en PedidoVentaDTO, pero se deja por si se requiere
+
+            console.log(`Filas modificadas encontradas: ${filasModificadas.length}`);
+                        const filasTerminado = Array.from(filasModificadas).filter(fila => fila.getAttribute('data-status') === 'T');
+
+                        if (filasTerminado.length > 0) {
+                        const idsPedidosTerminado = [...new Set(Array.from(filasTerminado).map(fila => fila.getAttribute('data-id-pedido-venta')))];
+                        PedidoVentaApp.mostrarAlerta('error', 'Error', `El pedido: ${idsPedidosTerminado.join(', ')} está terminado.No se pueden guardar los cambios`);
+                        return;
+                         }
 
             // Función auxiliar para validar un campo numérico
             function validarCampoNumerico(fila, index, nombreCampo, esEntero = true) {

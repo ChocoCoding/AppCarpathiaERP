@@ -76,6 +76,9 @@ public class LineaPedidoVenta {
     @Column(name = "transporte", length = 200)
     private BigDecimal transporte;
 
+    @Column(name = "status", length = 1)
+    private char status;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_pedido_venta")
     private PedidoVenta pedidoVenta;

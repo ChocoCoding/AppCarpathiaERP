@@ -186,4 +186,20 @@ public class CalculoService {
         }
     }
 
+    public void  actualizarStatusLineasPedidoVenta(Long idPedidoVenta, char nuevoStatus){
+        List<LineaPedidoVenta> lineas = lineaPedidoVentaRepository.findByIdPedidoVenta(idPedidoVenta);
+        for (LineaPedidoVenta linea : lineas) {
+            linea.setStatus(nuevoStatus);
+            lineaPedidoVentaRepository.save(linea);
+        }
+    }
+
+    public void actualizarStatusPedidoVentaDet(Long idPedidoVenta, char nuevoStatus){
+        Optional<PedidoVentaDet> pedidoVentaDet = pedidoVentaDetRepository.findByIdPedidoVenta(idPedidoVenta);
+        if (pedidoVentaDet.isPresent()){
+            pedidoVentaDet.get().setStatus(nuevoStatus);
+            pedidoVentaDetRepository.save(pedidoVentaDet.get());
+        }
+    }
+
 }

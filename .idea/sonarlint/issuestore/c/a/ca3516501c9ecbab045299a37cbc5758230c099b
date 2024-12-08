@@ -1,13 +1,13 @@
 
-_
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8Š”ºÕ¹2
-_
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8Š”ºÕ¹2
-_
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8Š”ºÕ¹2
-G	java:S1066"+Replace this use of System.err by a logger.(ô¤ü²8”ºÕ¹2
-L	java:S106m"+Replace this use of System.err by a logger.(’€šûÿÿÿÿ8“”ºÕ¹2
-o
-java:S6204v"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8””ºÕ¹2
-K
-java:S1128".Remove this unused import 'java.util.Objects'.(¼¸õ›8š”ºÕ¹2
+}
+java:S3516‹"9Refactor this method to not always return the same value.(èØæÃ8°æå½º2J$019afe32-6f08-42a8-accf-97496004d5c6
+…
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8Š”ºÕ¹2J$e883f08c-b1dc-4d32-853f-054ec7101355
+…
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8Š”ºÕ¹2J$bd961a71-3768-48ee-bb31-1dbfbd83f317
+…
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8Š”ºÕ¹2J$6cfd4bf5-0359-459f-86ac-1c1833476e66
+m	java:S1066"+Replace this use of System.err by a logger.(ô¤ü²8”ºÕ¹2J$5450d493-6bc2-4c8a-bf53-c01e46ca76f4
+r	java:S106~"+Replace this use of System.err by a logger.(’€šûÿÿÿÿ8“”ºÕ¹2J$1302e56d-09d2-4419-bf3d-8bc26e68a3e5
+–
+java:S6204‡"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8””ºÕ¹2J$33de513d-94c9-40e8-b7f5-58f577d01f24

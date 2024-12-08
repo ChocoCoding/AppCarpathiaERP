@@ -1,0 +1,14 @@
+
+˜
+java:S3655¶"VCall "pedidoVenta.isPresent()" or "!pedidoVenta.isEmpty()" before accessing the value.(Ü¯ùÿÿÿÿJ$47732c72-6ef4-40ef-8250-c63f1a69c929
+~
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞJ$d705823a-ab0e-497b-a1d3-1fb09b2bb7dc
+~
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞJ$85c3fcd7-e2a5-4d90-90f6-1bf8cd2acf3e
+~
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞJ$e42fd08f-1679-48cd-b236-8d23d9eb9684
+f	java:S106C"+Replace this use of System.out by a logger.(¿¯–ÍJ$192a3824-070c-4c2c-9393-9463c9bab528
+f	java:S106W"+Replace this use of System.out by a logger.(Ï°ª°J$3b8b180a-256f-4f10-9d88-e55d430296de
+x
+java:S1854x"<Remove this useless assignment to local variable "promedio".(Ê‘ÅöJ$2fb910de-095d-4aa4-a0f4-4e9ea13537a5
+g	java:S106±"+Replace this use of System.out by a logger.(İ°ƒJ$da27b44a-fd41-4402-9671-ba366aef8b04

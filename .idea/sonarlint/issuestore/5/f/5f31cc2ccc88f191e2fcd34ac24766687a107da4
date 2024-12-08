@@ -1,20 +1,22 @@
 
 ¡
-java:S3655ã"XCall "pedidoCompra.isPresent()" or "!pedidoCompra.isEmpty()" before accessing the value.(“¯í•ÿÿÿÿÿ8à´ãºº2J$5307daac-820b-4a86-abe3-2f308e622778
+java:S3655Ú"XCall "pedidoCompra.isPresent()" or "!pedidoCompra.isEmpty()" before accessing the value.(¦²úÛýÿÿÿÿ8à´ãºº2J$497ce14b-a132-4b5a-8967-2e3475b27727
 ¡
-java:S3655Ð"XCall "pedidoCompra.isPresent()" or "!pedidoCompra.isEmpty()" before accessing the value.(¶©´µùÿÿÿÿ8à´ãºº2J$13724e3e-10ff-4021-804c-6546ff97a143
-¡
-java:S3655Ú"XCall "pedidoCompra.isPresent()" or "!pedidoCompra.isEmpty()" before accessing the value.(¦²úÛýÿÿÿÿ8à´ãºº2J$2bfdb32a-76a0-4ae2-8a6a-acfcae2d2040
+java:S3655Ð"XCall "pedidoCompra.isPresent()" or "!pedidoCompra.isEmpty()" before accessing the value.(¶©´µùÿÿÿÿ8à´ãºº2J$73418c74-031c-4cf8-8ed8-830f08f82361
+œ
+java:S3655î"XCall "pedidoCompra.isPresent()" or "!pedidoCompra.isEmpty()" before accessing the value.(¤æÏ˜8à´ãºº2J$f89f153e-89c8-4de5-a873-2dcf67d8e188
+{
+java:S3655ã"XCall "pedidoCompra.isPresent()" or "!pedidoCompra.isEmpty()" before accessing the value.(“¯í•ÿÿÿÿÿ8çˆ·½º2
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8á´ãºº2J$04b0fbca-6aa4-4b55-9e14-825518881a90
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8á´ãºº2J$81953162-dc18-475d-91e3-95aaad47fef7
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8á´ãºº2J$72f75865-ebed-458e-a8a4-d2ed0c8a510c
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8á´ãºº2J$a0cd283d-e664-4c1c-b35c-aa91064ac2aa
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8á´ãºº2J$94e22837-b57d-4697-8808-28ea726899b4
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8á´ãºº2J$c60eafd9-f924-4a0d-97cb-fe544496d944
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8á´ãºº2J$bd7337de-7a87-4053-8741-9ef963cf9273
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8á´ãºº2J$c10e8a97-5184-44ce-a0da-596badf53d52
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8á´ãºº2J$5cb538aa-853c-414c-9784-0530eea08928
-m	java:S106L"+Replace this use of System.out by a logger.(„’Ú™8æ´ãºº2J$0d2dce80-12f8-43a3-a80c-07ef2bdd94ad
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8á´ãºº2J$ecd1caa9-6ff0-43ed-ac72-c019b896a11c
+m	java:S106L"+Replace this use of System.out by a logger.(„’Ú™8æ´ãºº2J$197aea4d-dde9-483f-a978-53e721897418
 
-java:S1854p"<Remove this useless assignment to local variable "promedio".(Ê‘Åö8é´ãºº2J$1e527f21-c413-47f6-8617-3b573df563b3
+java:S1854p"<Remove this useless assignment to local variable "promedio".(Ê‘Åö8é´ãºº2J$4cda060d-2956-48f3-b5b4-b058266eebd2

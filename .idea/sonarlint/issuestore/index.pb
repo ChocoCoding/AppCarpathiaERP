@@ -197,3 +197,17 @@ Bfrontend/src/main/java/com/app/frontend/DTO/PedidoVentaDetDTO.java,5\4\54b3097
 Sventas/src/main/java/com/app/microservicio/ventas/controllers/ConfigController.java,0\9\09164922a87e83b76f247a361fd968d19d199cb8
 è
 _compras/src/main/java/com/app/microservicio/compras/services/DatosBarcoPedidoCompraService.java,f\7\f7ba1a191303739e22b7741fb3428a61a7eb37a0
+á
+Wventas/src/main/java/com/app/microservicio/ventas/services/LineaPedidoVentaService.java,d\f\dfca7ab9fa676f8fc73e276444c5d78313764448
+Ö
+Uventas/src/main/java/com/app/microservicio/ventas/services/PedidoVentaDetService.java,8\5\85a45fce001568034d76956a8590dd9f5a02e090
+~
+Nventas/src/main/java/com/app/microservicio/ventas/services/CalculoService.java,c\5\c5e0b85025f0064882d6134de7b1d40f75ed6dc6
+å
+\ventas/src/main/java/com/app/microservicio/ventas/repository/LineaPedidoVentaRepository.java,5\f\5fa1a80421d224f7190dc7208b5d6f474bdab06f
+w
+Gventas/src/main/java/com/app/microservicio/ventas/config/WebConfig.java,c\4\c4c60e607bf636c69c8d8a198d7c4a6448251849
+~
+Nventas/src/main/java/com/app/microservicio/ventas/dto/LineaPedidoVentaDTO.java,f\3\f3364a83d49ece737f8bf8404760d15b17b6675e
+|
+Lventas/src/main/java/com/app/microservicio/ventas/dto/PedidoVentaDetDTO.java,0\4\048ed130bc0d1bbdb4a609167405413e07db1a2e

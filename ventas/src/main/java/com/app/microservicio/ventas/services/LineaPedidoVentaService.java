@@ -1,7 +1,9 @@
 package com.app.microservicio.ventas.services;
 
 import com.app.microservicio.ventas.dto.LineaPedidoVentaDTO;
+import com.app.microservicio.ventas.dto.PedidoVentaDTO;
 import com.app.microservicio.ventas.entities.LineaPedidoVenta;
+import com.app.microservicio.ventas.entities.PedidoVenta;
 import com.app.microservicio.ventas.repository.LineaPedidoVentaRepository;
 import com.app.microservicio.ventas.repository.PedidoVentaDetRepository;
 import com.app.microservicio.ventas.repository.PedidoVentaRepository;
@@ -89,6 +91,8 @@ public class LineaPedidoVentaService {
         return lineaPedidoVentaRepository.findAll(spec, pageable).map(this::convertirADTO);
     }
 
+
+
     private LineaPedidoVentaDTO convertirADTO(LineaPedidoVenta lineaPedidoVenta) {
         LineaPedidoVentaDTO lineaPedidoVentaDTO = new LineaPedidoVentaDTO();
         lineaPedidoVentaDTO.setIdLineaPedidoVenta(lineaPedidoVenta.getIdLineaPedidoVenta());
@@ -112,7 +116,7 @@ public class LineaPedidoVentaService {
         lineaPedidoVentaDTO.setMoneda(lineaPedidoVenta.getMoneda());
         lineaPedidoVentaDTO.setComerciales(lineaPedidoVenta.getComerciales());
         lineaPedidoVentaDTO.setTransporte(lineaPedidoVenta.getTransporte());
-
+        lineaPedidoVentaDTO.setStatus(lineaPedidoVenta.getStatus());
         return lineaPedidoVentaDTO;
     }
 
@@ -138,7 +142,7 @@ public class LineaPedidoVentaService {
         lineaPedidoVenta.setMoneda(lineaPedidoVentaDTO.getMoneda());
         lineaPedidoVenta.setComerciales(lineaPedidoVentaDTO.getComerciales());
         lineaPedidoVenta.setTransporte(lineaPedidoVentaDTO.getTransporte());
-
+        lineaPedidoVenta.setStatus(lineaPedidoVentaDTO.getStatus());
 
         return lineaPedidoVenta;
     }
@@ -148,6 +152,7 @@ public class LineaPedidoVentaService {
         if (lineaPedidoVentaDTO.getIdPedidoVenta() == null) {
             throw new IllegalArgumentException("El ID de Pedido de Venta no puede ser nulo.");
         }
+        lineaPedidoVentaDTO.setStatus('P');
         LineaPedidoVenta lineaPedidoVenta = convertirAEntidad(lineaPedidoVentaDTO);
         lineaPedidoVentaRepository.save(lineaPedidoVenta);
         calculoService.actualizarCamposLineaPedido(lineaPedidoVenta.getPedidoVenta().getIdPedidoVenta());

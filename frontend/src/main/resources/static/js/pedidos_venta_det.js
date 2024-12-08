@@ -17,7 +17,8 @@ const columnasAtributos = {
     5: 'precioTotal',
     6: 'promedio',
     7: 'valorVentaTotal',
-    8: 'importador'
+    8: 'importador',
+    9: 'status'
 };
 
 // Cargar configuraciones de endpoints y mensajes desde el backend
@@ -189,7 +190,15 @@ cargarConfiguraciones().then(() => {
             }
             const fila = document.createElement('tr');
             fila.setAttribute('data-id-pedido-venta-det', detalle.idPedidoVentaDet);
+            fila.setAttribute('data-id-pedido-venta', detalle.idPedidoVenta);
+            fila.setAttribute('data-status', detalle.status);
 
+                                        // Añadir clase basada en el estado
+                                       if (detalle.status && detalle.status.toUpperCase() === 'T') {
+                                           fila.classList.add('status-terminado');
+                                       } else {
+                                           fila.classList.remove('status-terminado');
+                                       }
             fila.innerHTML = `
                 <td>
                     <button class="delete-button" onclick="PedidoVentaDetApp.eliminarPedidoVentaDet(${detalle.idPedidoVentaDet})">🗑️</button>
@@ -275,6 +284,14 @@ cargarConfiguraciones().then(() => {
         // Función para guardar cambios (crear y actualizar)
         guardarCambios: () => {
             const filasModificadas = document.querySelectorAll('tbody tr.modificado');
+
+            const filasTerminado = Array.from(filasModificadas).filter(fila => fila.getAttribute('data-status') === 'T');
+
+                                      if (filasTerminado.length > 0) {
+                                         const idsPedidosTerminado = [...new Set(Array.from(filasTerminado).map(fila => fila.getAttribute('data-id-pedido-venta')))];
+                                         PedidoVentaDetApp.mostrarAlerta('error', 'Error', `El pedido: ${idsPedidosTerminado.join(', ')} está terminado. No se pueden guardar los cambios`);
+                                          return;
+                                      }
 
             if (filasModificadas.length === 0) {
                 PedidoVentaDetApp.mostrarAlerta('info', 'Información', 'No hay cambios para guardar.');
