@@ -9,4 +9,4 @@ RUN mvn clean package -DskipTests -X
 FROM openjdk:17-jdk-slim
 COPY --from=build /app/target/*.jar frontend.jar
 EXPOSE 8708
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "frontend.jar"]

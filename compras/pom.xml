@@ -81,7 +81,6 @@
 						<exclude>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
-							<encoding>UTF-8</encoding>
 						</exclude>
 					</excludes>
 				</configuration>

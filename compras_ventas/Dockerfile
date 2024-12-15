@@ -8,4 +8,4 @@ RUN mvn clean package -DskipTests
 FROM openjdk:17-jdk-slim
 COPY --from=build /app/target/*.jar compras_ventas.jar
 EXPOSE 8704
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "compras_ventas.jar"]

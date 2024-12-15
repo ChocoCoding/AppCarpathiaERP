@@ -8,4 +8,4 @@ RUN mvn clean package -DskipTests
 FROM openjdk:17-jdk-slim
 COPY --from=build /app/target/*.jar usuarios.jar
 EXPOSE 8701
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "usuarios.jar"]
