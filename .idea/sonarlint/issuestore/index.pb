@@ -211,3 +211,7 @@ Gventas/src/main/java/com/app/microservicio/ventas/config/WebConfig.java,c\4\c4
 Nventas/src/main/java/com/app/microservicio/ventas/dto/LineaPedidoVentaDTO.java,f\3\f3364a83d49ece737f8bf8404760d15b17b6675e
 |
 Lventas/src/main/java/com/app/microservicio/ventas/dto/PedidoVentaDetDTO.java,0\4\048ed130bc0d1bbdb4a609167405413e07db1a2e
+â
+Yventas/src/main/java/com/app/microservicio/ventas/controllers/GlobalExceptionHandler.java,1\4\14b0542427e99fc1651d7c9ddd6cb6c48e9341a1
+ç
+]ventas/src/main/java/com/app/microservicio/ventas/controllers/LineaPedidoVentaController.java,b\5\b5e2562ae4841ff974ac44f42ef8745c73151593

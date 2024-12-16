@@ -1,6 +1,6 @@
 
 …
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8”ˆŸë™2J$e23e0eaf-1507-4d0b-8582-816486e84c6e
-m	java:S1062"+Replace this use of System.out by a logger.(ä³ÿô8·’Õœ¸2J$37d4b92e-deb7-4cf0-88d0-a075e32ece4d
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8”ˆŸë™2J$4dc8e880-80d5-45eb-825f-23113e096b1e
+m	java:S1062"+Replace this use of System.out by a logger.(ä³ÿô8·’Õœ¸2J$22f068c0-6ca4-4cf1-9864-a5ea89987d13
 ›
-java:S1128"SRemove this unused import 'com.app.microservicio.compras.entities.PedidoCompraDet'.(®ž…ªüÿÿÿÿ8ü’‘º›2J$93660dcc-66f4-403a-9cd0-be95780e43f2
+java:S1128"SRemove this unused import 'com.app.microservicio.compras.entities.PedidoCompraDet'.(®ž…ªüÿÿÿÿ8ü’‘º›2J$491f5f55-9a50-42cf-9047-3de4fabded37
